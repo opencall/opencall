@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+
+<project name="stomp-cli" basedir="." default="deploy">
+  
+  <target name="clean" description="--> Clean output directories">
+    <delete dir="target"/>
+  </target>
+  
+  <target name="deploy" depends="clean" description="--> Deploy library">
+    <mkdir dir="target"/>
+    <tar destfile="target/stomp-php-1.1-SNAPSHOT.tar.gz" compression="gzip">
+      <fileset dir="src/main/">
+        <include name="**/*"/>
+      </fileset>
+      <tarfileset dir="src/examples" prefix="examples">
+          <include name="**/*"/>
+      </tarfileset>
+    </tar>
+  </target>
+</project>

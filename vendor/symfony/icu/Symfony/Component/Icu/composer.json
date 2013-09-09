@@ -17,7 +17,6 @@
     ],
     "require": {
         "php": ">=5.3.3",
-        "lib-ICU": ">=4.4",
         "symfony/intl": "~2.3"
     },
     "autoload": {

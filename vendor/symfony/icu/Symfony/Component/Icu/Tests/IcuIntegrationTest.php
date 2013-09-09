@@ -15,41 +15,41 @@ use Symfony\Component\Icu\IcuCurrencyBundle;
 use Symfony\Component\Icu\IcuLanguageBundle;
 use Symfony\Component\Icu\IcuLocaleBundle;
 use Symfony\Component\Icu\IcuRegionBundle;
-use Symfony\Component\Intl\ResourceBundle\Reader\BinaryBundleReader;
+use Symfony\Component\Intl\ResourceBundle\Reader\PhpBundleReader;
 use Symfony\Component\Intl\ResourceBundle\Reader\StructuredBundleReader;
 
 /**
- * Verifies that the binary data files can actually be read.
+ * Verifies that the data files can actually be read.
  *
  * @author Bernhard Schussek <bschussek@gmail.com>
  */
-class IcuIntegrationTest extends IcuTestCase
+class IcuIntegrationTest extends \PHPUnit_Framework_TestCase
 {
     public function testCurrencyBundle()
     {
-        $bundle = new IcuCurrencyBundle(new StructuredBundleReader(new BinaryBundleReader()));
+        $bundle = new IcuCurrencyBundle(new StructuredBundleReader(new PhpBundleReader()));
 
-        $this->assertSame('€', $bundle->getCurrencySymbol('EUR'));
+        $this->assertSame('€', $bundle->getCurrencySymbol('EUR', 'en'));
     }
 
     public function testLanguageBundle()
     {
-        $bundle = new IcuLanguageBundle(new StructuredBundleReader(new BinaryBundleReader()));
+        $bundle = new IcuLanguageBundle(new StructuredBundleReader(new PhpBundleReader()));
 
         $this->assertSame('German', $bundle->getLanguageName('de', null, 'en'));
     }
 
     public function testLocaleBundle()
     {
-        $bundle = new IcuLocaleBundle(new StructuredBundleReader(new BinaryBundleReader()));
+        $bundle = new IcuLocaleBundle(new StructuredBundleReader(new PhpBundleReader()));
 
-        $this->assertSame('azéri', $bundle->getLocaleName('az', 'fr'));
+        $this->assertSame('Azerbaijani', $bundle->getLocaleName('az', 'en'));
     }
 
     public function testRegionBundle()
     {
-        $bundle = new IcuRegionBundle(new StructuredBundleReader(new BinaryBundleReader()));
+        $bundle = new IcuRegionBundle(new StructuredBundleReader(new PhpBundleReader()));
 
-        $this->assertSame('Vereinigtes Königreich', $bundle->getCountryName('GB', 'de'));
+        $this->assertSame('United Kingdom', $bundle->getCountryName('GB', 'en'));
     }
 }
