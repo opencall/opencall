@@ -17,6 +17,7 @@ return array(
     'Sensio\\Bundle\\FrameworkExtraBundle' => array($vendorDir . '/sensio/framework-extra-bundle'),
     'Sensio\\Bundle\\DistributionBundle' => array($vendorDir . '/sensio/distribution-bundle'),
     'Psr\\Log\\' => array($vendorDir . '/psr/log'),
+    'Predis' => array($vendorDir . '/predis/predis/lib'),
     'Monolog' => array($vendorDir . '/monolog/monolog/src'),
     'Incenteev\\ParameterHandler' => array($vendorDir . '/incenteev/composer-parameter-handler'),
     'FuseSource' => array($vendorDir . '/fusesource/stomp-php/src/main'),
