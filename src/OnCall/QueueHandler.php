@@ -2,120 +2,40 @@
 
 namespace OnCall;
 
-use FuseSource\Stomp\Stomp,
-    FuseSource\Stomp\Exception\StompException;
+use Predis\Client;
 
 class QueueHandler
 {
-    protected $user;
-    protected $pass;
-    protected $broker;
-    protected $conn;
-    protected $queue_id;
+    protected $redis;
+    protected $list_id;
 
-    public function __construct($broker)
+    public function __construct(Client $redis, $list_id)
     {
-        $this->broker = $broker;
-        $this->user = 'guest';
-        $this->pass = 'guest';
-        $this->conn = null;
-        $this->queue_id = '/queue/plivoin';
+        $this->redis = $redis;
+        $this->list_id = $list_id;
     }
 
-    public function __destruct()
+    protected function push(QueueMessage $data)
     {
-        $this->disconnect();
-    }
-
-    public function setUser($user)
-    {
-        $this->user = $user;
-        return $this;
-    }
-
-    public function setPass($pass)
-    {
-        $this->pass = $pass;
-        return $this;
-    }
-
-    public function connect()
-    {
-        try
-        {
-            $this->conn = new Stomp('tcp://localhost:61613');
-            $this->conn->connect($this->user, $this->pass);
-            return $this;
-        }
-        catch (StompException $e)
-        {
-            throw new Exception('Could not connect to Stomp Broker');
-        }
-    }
-
-    public function disconnect()
-    {
-        if ($this->conn != null)
-            $this->conn->disconnect();
+        $serial = serialize($data);
+        $ret = $this->redis->rpush($this->list_id, $serial);
+        error_log($ret);
 
         return $this;
     }
 
-    public function send($data)
+    protected function pop()
     {
-        try
-        {
-            $serial = serialize($data);
-            $this->conn->send($this->queue_id, $serial);
-            return $this;
-        }
-        catch (StompException $e)
-        {
-            throw new Exception('Could not send data to Stomp Broker');
-        }
+        return $this->redis->lpop($this->list_id);
+    }
+
+    public function send(QueueMessage $data)
+    {
+        return $this->push($data);
     }
 
     public function recv()
     {
-        try
-        {
-            echo "subscribe\n";
-            $this->conn->subscribe($this->queue_id);
-            echo "readFrame\n";
-            $frame = $this->conn->readFrame();
-            if ($frame == null)
-                return null;
-            echo "ack\n";
-            if (!$this->conn->ack($frame))
-                var_dump($this->conn->error());
-
-            $data = unserialize($frame->body);
-            if ($data === false)
-                throw new Exception('Could not unserialize data from Stomp Broker');
-
-            $this->disconnect();
-
-            return $data;
-        }
-        catch (StompException $e)
-        {
-            print_r($e);
-            throw new Exception('Could not recieve data from Stomp Broker');
-        }
-    }
-
-    public function recvAll()
-    {
-        $this->conn->subscribe($this->queue_id);
-        while (true)
-        {
-            $frame = $this->conn->readFrame();
-            if ($frame != null)
-            {
-                $data = unserialize($frame->body);
-                print_r($data);
-                $this->conn->ack($frame);
-            }
-        }
+        return $this->pop();
     }
 }

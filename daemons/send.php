@@ -2,8 +2,14 @@
 
 require_once(__DIR__ . '/../app/autoload.php');
 
-use OnCall\QueueHandler;
+use OnCall\QueueHandler,
+    OnCall\QueueMessage,
+    Predis\Client;
 
+// setup redis
+$redis = new Client();
+
+// sample $_POST emulation
 $data = array(
     'sample' => 'test',
     '1' => '1233409',
@@ -11,8 +17,8 @@ $data = array(
     'float' => 213.00
 );
 
-$sender = new QueueHandler('tcp://localhost:61613');
-$sender->setUser('guest')
-    ->setPass('guest')
-    ->connect()
-    ->send($data);
+$msg = new QueueMessage();
+$msg->setParams($data);
+
+$sender = new QueueHandler($redis, 'plivo_in');
+$sender->send($msg);

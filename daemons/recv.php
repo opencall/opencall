@@ -2,12 +2,26 @@
 
 require_once(__DIR__ . '/../app/autoload.php');
 
-use OnCall\QueueHandler;
+use OnCall\QueueHandler,
+    Predis\Client;
 
-$qh = new QueueHandler('tcp://localhost:61613');
-$qh->setUser('guest')
-    ->setPass('guest')
-    ->connect();
+// redis setup
+$redis = new Client();
 
-$data = $qh->recv();
-print_r($data);
+// queue handler
+$qh = new QueueHandler($redis, 'plivo_in');
+
+while (true)
+{
+    $data = $qh->recv();
+    if ($data == null)
+    {
+        sleep(1);
+        continue;
+    }
+
+    echo "\n-----------------------------------\n";
+    print_r($data);
+    echo "\n-----------------------------------\n";
+}
+
