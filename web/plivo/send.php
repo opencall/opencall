@@ -6,6 +6,7 @@ use OnCall\QueueHandler,
     OnCall\QueueMessage,
     Predis\Client;
 
+// dev server
 // setup redis
 $rconf = array(
     'scheme' => 'tcp',
@@ -13,6 +14,11 @@ $rconf = array(
     'port' => 6379
 );
 $redis = new Client($rconf);
+
+/*
+// local
+$redis = new Client();
+*/
 
 // sample $_POST emulation
 $data = array(
@@ -27,3 +33,5 @@ $msg->setParams($data);
 
 $sender = new QueueHandler($redis, 'plivo_in');
 $sender->send($msg);
+
+echo "Message sent to queue";

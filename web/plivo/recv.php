@@ -14,6 +14,11 @@ $rconf = array(
 );
 $redis = new Client($rconf);
 
+/*
+// local
+$redis = new Client();
+*/
+
 // queue handler
 $qh = new QueueHandler($redis, 'plivo_in');
 
