@@ -2,8 +2,8 @@
 
 require_once(__DIR__ . '/../../app/autoload.php');
 
-use OnCall\QueueHandler,
-    OnCall\QueueMessage,
+use OnCall\Entity\QueueHandler,
+    OnCall\Entity\QueueMessage,
     Predis\Client;
 
 // dev server

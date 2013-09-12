@@ -1,6 +1,6 @@
 <?php
 
-namespace OnCall;
+namespace OnCall\Entity;
 
 class NumberRouter
 {

@@ -2,7 +2,7 @@
 
 require_once(__DIR__ . '/../../app/autoload.php');
 
-use OnCall\QueueHandler,
+use OnCall\Entity\QueueHandler,
     Predis\Client;
 
 // redis setup
