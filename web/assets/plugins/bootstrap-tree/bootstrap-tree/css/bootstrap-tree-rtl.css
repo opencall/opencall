@@ -1,0 +1,61 @@
+/*!
+ * Bootstrap Tree v0.3
+ *
+ * Copyright 2012 Cutters Crossing
+ * Bootstrap is Copyright 2012 Twitter, Inc.
+ * Licensed under the Apache License v2.0
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Designed and built with all the love in the world by @cutterbl.
+ */
+ 
+.tree,
+.branch {
+  list-style: none outside none;
+}
+.branch {
+  postion: relative;
+  height: 0;
+  margin: 0 15px 0 0;
+  overflow: hidden;
+}
+.branch.in {
+  height: auto;
+}
+
+a:link,
+a:visited,
+a:hover,
+a:active {
+  color: #000;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+  cursor: pointer;
+}
+/* Work in progress */
+a.tree-toggle-icon-only {
+  height: 16px;
+  width: 20px;
+  line-height: 16px;
+  vertical-align: middle;
+  display: block;
+  background-image: url("../img/bstree-halflings-rtl.png") no-repeat;
+  background-position: right -20px;
+}
+
+a.tree-toggle {
+  height: 16px;
+  padding-right: 23px;
+  line-height: 16px;
+  vertical-align: middle;
+  display: block;
+  background: url("../img/bstree-halflings-rtl.png") no-repeat;
+  background-position: right -20px;
+}
+
+a.tree-toggle.closed, a.tree-toggle-icon-only.closed {
+  background-position: right 3px;
+}
