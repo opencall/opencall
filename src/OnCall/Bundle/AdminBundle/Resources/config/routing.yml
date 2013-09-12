@@ -1,0 +1,7 @@
+oncall_admin_main:
+    pattern: /
+    defaults: { _controller: OnCallAdminBundle:Main:index }
+
+on_call_admin_homepage:
+    pattern:  /hello/{name}
+    defaults: { _controller: OnCallAdminBundle:Default:index }

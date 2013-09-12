@@ -1,0 +1,3 @@
+on_call_admin:
+    resource: "@OnCallAdminBundle/Resources/config/routing.yml"
+    prefix:   /
