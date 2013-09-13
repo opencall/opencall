@@ -2,6 +2,30 @@ oncall_admin_main:
     pattern: /
     defaults: { _controller: OnCallAdminBundle:Main:index }
 
-on_call_admin_homepage:
-    pattern:  /hello/{name}
-    defaults: { _controller: OnCallAdminBundle:Default:index }
+
+
+oncall_admin_accounts:
+    pattern: /accounts
+    defaults: { _controller: OnCallAdminBundle:Account:index }
+    methods: [GET]
+
+oncall_admin_account_create:
+    pattern: /account
+    defaults: { _controller: OnCallAdminBundle:Account:create }
+    methods: [POST]
+
+oncall_admin_account_get:
+    pattern: /account/{id}
+    defaults: { _controller: OnCallAdminBundle:Account:get }
+    methods: [GET]
+
+oncall_admin_account_update:
+    pattern: /account/{id}
+    defaults: { _controller: OnCallAdminBundle:Account:update }
+    methods: [POST]
+
+
+
+oncall_admin_numbers:
+    pattern: /numbers
+    defaults: { _controller: OnCallAdminBundle:Number:index }
