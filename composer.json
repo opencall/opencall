@@ -21,7 +21,8 @@
         "sensio/generator-bundle": "2.3.*",
         "incenteev/composer-parameter-handler": "~2.0",
         "fusesource/stomp-php" : "2.0",
-        "predis/predis" : "v0.8.4"
+        "predis/predis" : "v0.8.4",
+        "friendsofsymfony/user-bundle": "~2.0@dev"
     },
     "scripts": {
         "post-install-cmd": [
