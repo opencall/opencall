@@ -3,8 +3,7 @@
 namespace OnCall\Bundle\AdminBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-//use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-// use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use OnCall\Bundle\AdminBundle\Model\MenuHandler;
 
 class MainController extends Controller
 {
@@ -12,7 +11,9 @@ class MainController extends Controller
     {
         return $this->render(
             'OnCallAdminBundle:Main:index.html.twig',
-            array()
+            array(
+                'sidebar_menu' => MenuHandler::getMenu()
+            )
         );
 
     }

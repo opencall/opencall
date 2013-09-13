@@ -1,0 +1,21 @@
+{% macro display_item(menu_item) %}
+    {% if menu_item.isActive() %}
+    <li class="active">
+    {% else %}
+    <li>
+    {% endif %}
+        <a href="{{ menu_item.getURL() }}">
+            <i class="{{ menu_item.getIcon() }}"></i>
+            <span class="title">{{ menu_item.getName() }}</span>
+        </a>
+    </li>
+{% endmacro %}
+
+{% macro display_group(menu_group) %}
+    {% import _self as menu %}
+    <ul class="page-sidebar-menu">
+        {% for menu_item in menu_group %}
+            {{ menu.display_item(menu_item) }}
+        {% endfor %}
+    </ul>
+{% endmacro %}

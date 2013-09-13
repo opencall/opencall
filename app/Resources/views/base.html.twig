@@ -1,3 +1,4 @@
+{% import "::menu.html.twig" as menu %}
 <!DOCTYPE html>
 <!--[if IE 8]> <html lang="en" class="ie8"> <![endif]-->
 <!--[if IE 9]> <html lang="en" class="ie9"> <![endif]-->
@@ -79,22 +80,23 @@
 		<!-- BEGIN SIDEBAR -->
 		<div class="page-sidebar nav-collapse collapse">
 			<!-- BEGIN SIDEBAR MENU -->   
+            {{ menu.display_group(sidebar_menu) }}
+            <!--
 			<ul class="page-sidebar-menu">
-
-
-				<li class="active start ">
+				<li class="active">
 					<a href="">
-					<i class="icon-signal"></i> 
-					<span class="title">Account Management</span>
-					</a>
+                    <i class="icon-signal"></i> 
+                    <span class="title">Account Management</span>
+                    </a>
 				</li>
 				<li>
 					<a href="numbers.html">
-					<i class="icon-th"></i> 
-					<span class="title">Number Management</span>
-					</a>
+                    <i class="icon-th"></i>
+                    <span class="title">Number Management</span>
+                    </a>
 				</li>
 			</ul>
+            -->
 			<!-- END SIDEBAR MENU -->
 		</div>
 		<!-- END SIDEBAR -->
