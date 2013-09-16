@@ -1,0 +1,142 @@
+{% extends '::base.html.twig' %}
+
+{% block body %}
+			<!-- BEGIN PAGE CONTAINER-->
+			<div class="container-fluid">
+				<!-- BEGIN PAGE HEADER-->
+				<div class="row-fluid">
+					<div class="span12">
+
+						<!-- BEGIN PAGE TITLE & BREADCRUMB-->
+						<h3 class="page-title">
+							Account Management 
+						</h3>
+
+							<button class="btn green" style="margin-bottom: 4px;"  data-toggle="modal" href="#addAccount"><i class="icon-plus"></i> Add New Account</button>
+							 
+							<div class="portlet-body no-more-tables">
+								<table class="table-bordered table-striped table-condensed cf">
+									<thead class="cf">
+										<tr>
+									  	<th></th>
+										  <th>Business Details</th>
+										  <th>Billing Details</th>
+									  	<th>Total Active Clients</th>
+									  	<th>Total Numbers</th>
+									  	<th>Calls Received</th>
+									  	<th>Total Call Duration<br /><small>hh:mm:ss</small></th>
+									  	<th>Action</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr>
+											<td data-title="Status" style="text-align: center;" valign="top"><i class="icon-ok-sign"></i></td>  
+											<td data-title="Business Details" valign="top"><strong>Ogilvy</strong><br /><small><strong>Multi-Client Account?</strong> Yes<br /><strong>Username:</strong> ogilvy<br /><strong>Contact: <a href="mailto:scott.bowler@ogilvy.com">Scott Bowler</a></strong><br /><strong>Phone:</strong> +852 6682 1490<br /><strong>Address:</strong> Flat 5a, 13 Square Street, Sheung Wan, Hong Kong<br /><strong>Account Created:</strong> 12 March 2013</small></td>  
+											<td data-title="Billing Details" valign="top"><small><strong>Contact: <a href="mailto:arlockley@hotmail.com">Anna Rose Lockley</a></strong><br /><strong>Phone:</strong> +852 1111 2222<br /><strong>Address:</strong> 24 Connaught Road, Central, Hong Kong</small></td>  
+											<td data-title="Total Active Clients" valign="top"><small><strong>03/13</strong>: 1<br /><strong>04/13</strong>: 1<br /><strong>05/13</strong>: 1<br /><strong>06/13</strong>: 3<br /><strong>07/13</strong>: 3<br /><strong>08/13</strong>: 3<br /><strong>09/13</strong>: 5</small></td>
+											<td data-title="Total Numbers" valign="top"><small><strong>03/13</strong>: 20<br /><strong>04/13</strong>: 30<br /><strong>05/13</strong>: 30<br /><strong>06/13</strong>: 80<br /><strong>07/13</strong>: 82<br /><strong>08/13</strong>: 85<br /><strong>09/13</strong>: 120</small></td>
+											<td data-title="Calls Received" valign="top"><small><strong>03/13</strong>: 120<br /><strong>04/13</strong>: 200<br /><strong>05/13</strong>: 269<br /><strong>06/13</strong>: 680<br /><strong>07/13</strong>: 1,008<br /><strong>08/13</strong>: 1,120<br /><strong>09/13</strong>: 2,053</small></td>
+											<td data-title="Total Call Duration" valign="top"><small><strong>03/13</strong>: 00:45:12<br /><strong>04/13</strong>: 01:05:12<br /><strong>05/13</strong>: 00:02:12<br /><strong>06/13</strong>: 02:45:12<br /><strong>07/13</strong>: 03:01:10<br /><strong>08/13</strong>: 05:45:12<br /><strong>09/13</strong>: 11:45:12</small></td>
+											<td data-title="Action" valign="top">
+												<button href="" data-toggle="modal" role="button" class="btn mini" ><i class="icon-key"></i> login as account</button>												
+												<button href="#editAccount" data-toggle="modal" role="button" class="btn mini" ><i class="icon-edit"></i> edit</button>
+											</td>   
+										</tr>  
+
+
+
+									</tbody>
+								</table>
+								
+								<!-- Add MODAL -->
+								<div id="addAccount" class="modal hide fade" tabindex="-1" data-width="760">
+									<div class="modal-header">
+										<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+										<h3>Add Client</h3>
+									</div>
+									<div class="modal-body">
+										<div class="row-fluid">
+											<div class="span6">
+												<h4>Business Details</h4>
+												<p><input type="checkbox" value=""> Multi-Client Account?</p>
+												<p>Username *<br /><input type="text" class="span12 m-wrap"></p>
+												<p>Password *<br /><input type="password" class="span12 m-wrap"></p>
+												<p>Contact Name *<br /><input type="text" class="span12 m-wrap"></p>
+												<p>Email *<br /><input type="text" class="span12 m-wrap"></p>
+												<p>Business Trading Name *<br /><input type="text" class="span12 m-wrap"></p>
+												<p>Phone *<br /><input type="text" class="span12 m-wrap"></p>
+												<p>Address<br /><input type="text" class="span12 m-wrap"></p>
+											</div>
+											<div class="span6">
+												<h4>Billing Details</h4>
+												<p>&nbsp;</p>
+												<p>Billing Full Business Name<br /><input type="text" class="span12 m-wrap"></p>
+												<p>Billing Contact Name<br /><input type="text" class="span12 m-wrap"></p>
+												<p>Billing Email<br /><input type="text" class="span12 m-wrap"></p>
+												<p>Billing Phone<br /><input type="text" class="span12 m-wrap"></p>
+												<p>Billing Address<br /><input type="text" class="span12 m-wrap"></p>
+												<p>Account Status *<br />
+													<select class="small m-wrap" tabindex="1">
+															<option value="Category 1">Active</option>
+															<option value="Category 2">Disabled</option>
+														</select></p>
+											</div>
+										</div>
+									</div>
+							
+									<div class="modal-footer">
+										<button type="button" data-dismiss="modal" class="btn">Cancel</button>
+										<button type="button" class="btn green">Add account</button>
+									</div>
+								</div>															
+								<!-- End Add MODAL -->
+								
+								<!-- Edit MODAL -->
+								<div id="editAccount" class="modal hide fade" tabindex="-1" data-width="760">
+									<div class="modal-header">
+										<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+										<h3>Edit Account</h3>
+									</div>
+									<div class="modal-body">
+										<div class="row-fluid">
+											<div class="span6">
+												<h4>Business Details</h4>
+												<p><input type="checkbox" value=""> Multi-Client Account?</p>
+												<p>Username *<br /><input type="text" class="span12 m-wrap"></p>
+												<p>Password<br /><input type="password" class="span12 m-wrap"></p>
+												<p>Contact Name *<br /><input type="text" class="span12 m-wrap"></p>
+												<p>Email *<br /><input type="text" class="span12 m-wrap"></p>
+												<p>Business Trading Name *<br /><input type="text" class="span12 m-wrap"></p>
+												<p>Phone *<br /><input type="text" class="span12 m-wrap"></p>
+												<p>Address<br /><input type="text" class="span12 m-wrap"></p>
+											</div>
+											<div class="span6">
+												<h4>Billing Details</h4>
+												<p>&nbsp;</p>
+												<p>Billing Full Business Name<br /><input type="text" class="span12 m-wrap"></p>
+												<p>Billing Contact Name<br /><input type="text" class="span12 m-wrap"></p>
+												<p>Billing Email<br /><input type="text" class="span12 m-wrap"></p>
+												<p>Billing Phone<br /><input type="text" class="span12 m-wrap"></p>
+												<p>Billing Address<br /><input type="text" class="span12 m-wrap"></p>
+												<p>Account Status *<br />
+													<select class="small m-wrap" tabindex="1">
+															<option value="Category 1">Active</option>
+															<option value="Category 2">Disabled</option>
+														</select></p>
+											</div>
+										</div>
+									</div>
+							
+									<div class="modal-footer">
+										<button type="button" data-dismiss="modal" class="btn">Cancel</button>
+										<button type="button" class="btn green">Save changes</button>
+									</div>
+								</div>															
+								<!-- End Edit MODAL -->
+							</div>
+
+					</div>
+				</div>
+			</div>
+			<!-- END PAGE CONTAINER--> 
+{% endblock %}
