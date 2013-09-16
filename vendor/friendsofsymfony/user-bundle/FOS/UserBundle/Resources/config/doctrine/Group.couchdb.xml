@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<doctrine-mapping>
+    <mapped-superclass name="FOS\UserBundle\CouchDocument\Group" indexed="true"/>
+</doctrine-mapping>
