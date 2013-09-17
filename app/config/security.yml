@@ -25,7 +25,7 @@ security:
             logout:
                 path:   /logout
                 target: /
-                invalidate_session: false
+                #invalidate_session: false
             anonymous: ~
             #http_basic:
             #    realm: "Secured Demo Area"
