@@ -2,7 +2,7 @@
 parameters:
     database_driver: pdo_mysql
     #database_host: 127.0.0.1
-    database_host: 54.254.140.2
+    database_host: 54.254.135.246
     database_port: null
     database_name: oncall
     database_user: webuser
