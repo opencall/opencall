@@ -116,7 +116,7 @@ class User extends BaseUser
 
     public function setBillBusinessName($name)
     {
-        $this->bill_busines_name = $name;
+        $this->bill_business_name = $name;
         return $this;
     }
 
@@ -215,4 +215,25 @@ class User extends BaseUser
         return $this->date_create->format('d M Y');
     }
     // end getters
+
+    public function jsonify()
+    {
+        $json = array(
+            'multi_client' => $this->isMultiClient(),
+            'username' => $this->getUsername(),
+            'name' => $this->getName(),
+            'email' => $this->getEmail(),
+            'business_name' => $this->getBusinessName(),
+            'phone' => $this->getPhone(),
+            'address' => $this->getAddress(),
+            'bill_business_name' => $this->getBillBusinessName(),
+            'bill_name' => $this->getBillName(),
+            'bill_email' => $this->getBillEmail(),
+            'bill_phone' => $this->getBillPhone(),
+            'bill_address' => $this->getBillAddress(),
+            'enable' => $this->isEnabled() ? 1 : 0
+        );
+
+        return json_encode($json);
+    }
 }

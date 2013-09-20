@@ -12,7 +12,7 @@ class AccountController extends Controller
     {
         $dql = 'select u from OnCall\Bundle\UserBundle\Entity\User u where u.roles = :role';
         $query = $this->getDoctrine()
-            ->getEntityManager()
+            ->getManager()
             ->createQuery($dql)
             ->setParameter('role', 'a:0:{}');
         $accounts = $query->getResult();
@@ -61,6 +61,13 @@ class AccountController extends Controller
         */
 
         $data = $req->request->all();
+        $this->updateUser($user, $data);
+        $mgr->updateUser($user);
+        return $this->redirect($this->generateUrl('oncall_admin_accounts'));
+    }
+
+    protected function updateUser($user, $data)
+    {
         $user->setUsername($data['username'])
             ->setPlainPassword($data['password'])
             ->setName($data['name'])
@@ -75,15 +82,24 @@ class AccountController extends Controller
             ->setBillAddress($data['bill_address'])
             ->setEnabled($data['enabled'])
             ->setRoles(array('ROLE_USER'));
-        $mgr->updateUser($user);
-        return $this->redirect($this->generateUrl('oncall_admin_accounts'));
+
+        // check if multi-client
+        if (isset($data['multi_client']) && $data['multi_client'] == 1)
+            $user->setMultiClient(true);
+        else
+            $user->setMultiCilent(false);
     }
 
-    public function find()
+    public function getAction($id)
     {
+        $mgr = $this->get('fos_user.user_manager');
+        $edit_user = $mgr->findUserBy(array('id' => $id));
+
+        return new Response($edit_user->jsonify());
     }
 
-    public function update()
+    public function updateAction($id)
     {
+        
     }
 }

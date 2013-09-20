@@ -1,5 +1,29 @@
 {% extends '::base.html.twig' %}
 
+{% block javascript %}
+<script type="text/javascript">
+$('.account_edit').click(function () {
+    var acc_id = $(this).data('id');
+    $('#edit_form').attr('action', '/account/' + acc_id);
+    $.get('/account/' + acc_id, function(acc) {
+        $('#acc_multi_client').prop('checked', acc.multi_client);
+        $('#acc_username').val(acc.username);
+        $('#acc_name').val(acc.name);
+        $('#acc_email').val(acc.email);
+        $('#acc_business_name').val(acc.business_name);
+        $('#acc_phone').val(acc.phone);
+        $('#acc_address').val(acc.address);
+        $('#acc_bill_business_name').val(acc.bill_business_name);
+        $('#acc_bill_name').val(acc.bill_name);
+        $('#acc_bill_email').val(acc.bill_email);
+        $('#acc_bill_phone').val(acc.bill_phone);
+        $('#acc_bill_address').val(acc.bill_address);
+        $('#acc_enable').val(acc.enable);
+    }, 'json');
+});
+</script>
+{% endblock %}
+
 {% block body %}
 			<!-- BEGIN PAGE CONTAINER-->
 			<div class="container-fluid">
@@ -103,7 +127,7 @@
                                             </td>
 											<td data-title="Action" valign="top">
 												<button href="" data-toggle="modal" role="button" class="btn mini" ><i class="icon-key"></i> login as account</button>												
-												<button href="#editAccount" data-toggle="modal" role="button" class="btn mini" ><i class="icon-edit"></i> edit</button>
+												<button href="#editAccount" data-toggle="modal" data-id="{{ acc.getID }}" role="button" class="btn mini account_edit" ><i class="icon-edit"></i> edit</button>
 											</td>   
 										</tr>
                                     {% endfor %}
@@ -164,11 +188,38 @@
 										<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
 										<h3>Edit Account</h3>
 									</div>
+                                    <form id="edit_form" method="post" action="/account/0">
 									<div class="modal-body">
 										<div class="row-fluid">
+                                            <div class="span6">
+                                                <h4>Business Details</h4>
+                                                <p><input id="acc_multi_client" name="multi_client" type="checkbox" value="1"> Multi-Client Account?</p>
+                                                <p>Username *<br /><input id="acc_username" name="username" type="text" class="span12 m-wrap"></p>
+                                                <p>Password *<br /><input name="password" type="password" class="span12 m-wrap"></p>
+                                                <p>Contact Name *<br /><input id="acc_name" name="name" type="text" class="span12 m-wrap"></p>
+                                                <p>Email *<br /><input id="acc_email" name="email" type="text" class="span12 m-wrap"></p>
+                                                <p>Business Trading Name *<br /><input id="acc_business_name" name="business_name" type="text" class="span12 m-wrap"></p>
+                                                <p>Phone *<br /><input id="acc_phone" name="phone" type="text" class="span12 m-wrap"></p>
+                                                <p>Address<br /><input id="acc_address" name="address" type="text" class="span12 m-wrap"></p>
+                                            </div>
+                                            <div class="span6">
+                                                <h4>Billing Details</h4>
+                                                <p>&nbsp;</p>
+                                                <p>Billing Full Business Name<br /><input id="acc_bill_business_name" name="bill_business_name" type="text" class="span12 m-wrap"></p>
+                                                <p>Billing Contact Name<br /><input id="acc_bill_name" name="bill_name" type="text" class="span12 m-wrap"></p>
+                                                <p>Billing Email<br /><input id="acc_bill_email" name="bill_email" type="text" class="span12 m-wrap"></p>
+                                                <p>Billing Phone<br /><input id="acc_bill_phone" name="bill_phone" type="text" class="span12 m-wrap"></p>
+                                                <p>Billing Address<br /><input id="acc_bill_address" name="bill_address" type="text" class="span12 m-wrap"></p>
+                                                <p>Account Status *<br />
+                                                    <select id="acc_enable" name="enabled" class="small m-wrap" tabindex="1">
+                                                            <option value="1">Active</option>
+                                                            <option value="0">Disabled</option>
+                                                        </select></p>
+                                            </div>
+<!--
 											<div class="span6">
 												<h4>Business Details</h4>
-												<p><input type="checkbox" value=""> Multi-Client Account?</p>
+												<p><input type="checkbox" value="1"> Multi-Client Account?</p>
 												<p>Username *<br /><input type="text" class="span12 m-wrap"></p>
 												<p>Password<br /><input type="password" class="span12 m-wrap"></p>
 												<p>Contact Name *<br /><input type="text" class="span12 m-wrap"></p>
@@ -191,13 +242,15 @@
 															<option value="Category 2">Disabled</option>
 														</select></p>
 											</div>
+-->
 										</div>
 									</div>
 							
 									<div class="modal-footer">
 										<button type="button" data-dismiss="modal" class="btn">Cancel</button>
-										<button type="button" class="btn green">Save changes</button>
+										<input type="submit" class="btn green" value="Save Changes" />
 									</div>
+                                    </form>
 								</div>															
 								<!-- End Edit MODAL -->
 							</div>
