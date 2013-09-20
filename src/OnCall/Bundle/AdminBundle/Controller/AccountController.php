@@ -100,6 +100,12 @@ class AccountController extends Controller
 
     public function updateAction($id)
     {
-        
+        $mgr = $this->get('fos_user.user_manager');
+        $edit_user = $mgr->findUserBy(array('id' => $id));
+
+        $data = $this->getRequest()->request->all();
+        $this->updateUser($edit_user, $data);
+        $mgr->updateUser($edit_user);
+        return $this->redirect($this->generateUrl('oncall_admin_accounts'));
     }
 }
