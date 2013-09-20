@@ -54,31 +54,32 @@
 										<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
 										<h3>Add Client</h3>
 									</div>
+                                    <form method="post" action="/account">
 									<div class="modal-body">
 										<div class="row-fluid">
 											<div class="span6">
 												<h4>Business Details</h4>
-												<p><input type="checkbox" value=""> Multi-Client Account?</p>
-												<p>Username *<br /><input type="text" class="span12 m-wrap"></p>
-												<p>Password *<br /><input type="password" class="span12 m-wrap"></p>
-												<p>Contact Name *<br /><input type="text" class="span12 m-wrap"></p>
-												<p>Email *<br /><input type="text" class="span12 m-wrap"></p>
-												<p>Business Trading Name *<br /><input type="text" class="span12 m-wrap"></p>
-												<p>Phone *<br /><input type="text" class="span12 m-wrap"></p>
-												<p>Address<br /><input type="text" class="span12 m-wrap"></p>
+												<p><input name="multi_client" type="checkbox" value="1"> Multi-Client Account?</p>
+												<p>Username *<br /><input name="username" type="text" class="span12 m-wrap"></p>
+												<p>Password *<br /><input name="password" type="password" class="span12 m-wrap"></p>
+												<p>Contact Name *<br /><input name="name" type="text" class="span12 m-wrap"></p>
+												<p>Email *<br /><input name="email" type="text" class="span12 m-wrap"></p>
+												<p>Business Trading Name *<br /><input name="business_name" type="text" class="span12 m-wrap"></p>
+												<p>Phone *<br /><input name="phone" type="text" class="span12 m-wrap"></p>
+												<p>Address<br /><input name="address" type="text" class="span12 m-wrap"></p>
 											</div>
 											<div class="span6">
 												<h4>Billing Details</h4>
 												<p>&nbsp;</p>
-												<p>Billing Full Business Name<br /><input type="text" class="span12 m-wrap"></p>
-												<p>Billing Contact Name<br /><input type="text" class="span12 m-wrap"></p>
-												<p>Billing Email<br /><input type="text" class="span12 m-wrap"></p>
-												<p>Billing Phone<br /><input type="text" class="span12 m-wrap"></p>
-												<p>Billing Address<br /><input type="text" class="span12 m-wrap"></p>
+												<p>Billing Full Business Name<br /><input name="bill_business_name" type="text" class="span12 m-wrap"></p>
+												<p>Billing Contact Name<br /><input name="bill_name" type="text" class="span12 m-wrap"></p>
+												<p>Billing Email<br /><input name="bill_email" type="text" class="span12 m-wrap"></p>
+												<p>Billing Phone<br /><input name="bill_phone" type="text" class="span12 m-wrap"></p>
+												<p>Billing Address<br /><input name="bill_address" type="text" class="span12 m-wrap"></p>
 												<p>Account Status *<br />
-													<select class="small m-wrap" tabindex="1">
-															<option value="Category 1">Active</option>
-															<option value="Category 2">Disabled</option>
+													<select name="enabled" class="small m-wrap" tabindex="1">
+															<option value="1">Active</option>
+															<option value="0">Disabled</option>
 														</select></p>
 											</div>
 										</div>
@@ -86,8 +87,9 @@
 							
 									<div class="modal-footer">
 										<button type="button" data-dismiss="modal" class="btn">Cancel</button>
-										<button type="button" class="btn green">Add account</button>
+										<input type="submit" class="btn green" value="Add Account" />
 									</div>
+                                    </form>
 								</div>															
 								<!-- End Add MODAL -->
 								
