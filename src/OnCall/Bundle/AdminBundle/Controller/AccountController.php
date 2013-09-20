@@ -10,10 +10,19 @@ class AccountController extends Controller
 {
     public function indexAction()
     {
+        $dql = 'select u from OnCall\Bundle\UserBundle\Entity\User u where u.roles = :role';
+        $query = $this->getDoctrine()
+            ->getEntityManager()
+            ->createQuery($dql)
+            ->setParameter('role', 'a:0:{}');
+        $accounts = $query->getResult();
+
+
         return $this->render(
             'OnCallAdminBundle:Account:index.html.twig',
             array(
-                'sidebar_menu' => MenuHandler::getMenu('account')
+                'sidebar_menu' => MenuHandler::getMenu('account'),
+                'accounts' => $accounts
             )
         );
 

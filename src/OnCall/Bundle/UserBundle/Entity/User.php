@@ -151,6 +151,13 @@ class User extends BaseUser
         return $this->multi_client;
     }
 
+    public function isMultiClientText()
+    {
+        if ($this->isMultiClient())
+            return 'Yes';
+        return 'No';
+    }
+
     public function getName()
     {
         return $this->name;
@@ -194,6 +201,18 @@ class User extends BaseUser
     public function getBillAddress()
     {
         return $this->bill_address;
+    }
+
+    public function getDateCreate()
+    {
+        return $this->date_create;
+    }
+
+    public function getDateCreateFormatted()
+    {
+        if ($this->date_create == null)
+            return '';
+        return $this->date_create->format('d M Y');
     }
     // end getters
 }
