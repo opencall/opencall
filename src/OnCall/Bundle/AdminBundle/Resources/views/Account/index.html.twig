@@ -31,7 +31,7 @@
 									<tbody>
                                     {% for acc in accounts %}
 										<tr>
-											<td data-title="Status" style="text-align: center;" valign="top"><i class="icon-ok-sign"></i></td>  
+											<td data-title="Status" style="text-align: center;" valign="top"><i class="{{ acc.isEnabled ? 'icon-ok-sign' : 'icon-remove-sign' }}"></i></td>  
 											<td data-title="Business Details" valign="top">
                                                 <strong>{{ acc.getBusinessName }}</strong><br />
                                                 <small>
