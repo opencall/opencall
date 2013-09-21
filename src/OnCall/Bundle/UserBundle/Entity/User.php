@@ -236,4 +236,13 @@ class User extends BaseUser
 
         return json_encode($json);
     }
+
+    public function getRoleHash()
+    {
+        $role_hash = array();
+        foreach ($this->roles as $role)
+            $role_hash[$role] = true;
+
+        return $role_hash;
+    }
 }

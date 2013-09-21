@@ -12,7 +12,7 @@ class MainController extends Controller
         return $this->render(
             'OnCallAdminBundle:Main:index.html.twig',
             array(
-                'sidebar_menu' => MenuHandler::getMenu()
+                'sidebar_menu' => MenuHandler::getMenu($this->getUser()->getRoleHash())
             )
         );
 

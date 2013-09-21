@@ -17,11 +17,14 @@ class AccountController extends Controller
             ->setParameter('role', 'a:0:{}');
         $accounts = $query->getResult();
 
+        $user = $this->getUser();
+        $role_hash = $user->getRoleHash();
+
 
         return $this->render(
             'OnCallAdminBundle:Account:index.html.twig',
             array(
-                'sidebar_menu' => MenuHandler::getMenu('account'),
+                'sidebar_menu' => MenuHandler::getMenu($role_hash, 'account'),
                 'accounts' => $accounts
             )
         );
