@@ -2,24 +2,28 @@
 
 {% block javascript %}
 <script type="text/javascript">
-$('.account_edit').click(function () {
-    var acc_id = $(this).data('id');
-    $('#edit_form').attr('action', '/account/' + acc_id);
-    $.get('/account/' + acc_id, function(acc) {
-        $('#acc_multi_client').prop('checked', acc.multi_client);
-        $('#acc_username').val(acc.username);
-        $('#acc_name').val(acc.name);
-        $('#acc_email').val(acc.email);
-        $('#acc_business_name').val(acc.business_name);
-        $('#acc_phone').val(acc.phone);
-        $('#acc_address').val(acc.address);
-        $('#acc_bill_business_name').val(acc.bill_business_name);
-        $('#acc_bill_name').val(acc.bill_name);
-        $('#acc_bill_email').val(acc.bill_email);
+$(document).ready(function() {
+    $('.account_edit').click(function () {
+        var acc_id = $(this).data('id');
+        $('#edit_form').attr('action', '/account/' + acc_id);
+        $.get('/account/' + acc_id, function(acc) {
+            $('#acc_multi_client').prop('checked', acc.multi_client);
+            $.uniform.update();
+
+            $('#acc_username').val(acc.username);
+            $('#acc_name').val(acc.name);
+            $('#acc_email').val(acc.email);
+            $('#acc_business_name').val(acc.business_name);
+            $('#acc_phone').val(acc.phone);
+            $('#acc_address').val(acc.address);
+            $('#acc_bill_business_name').val(acc.bill_business_name);
+            $('#acc_bill_name').val(acc.bill_name);
+            $('#acc_bill_email').val(acc.bill_email);
         $('#acc_bill_phone').val(acc.bill_phone);
         $('#acc_bill_address').val(acc.bill_address);
         $('#acc_enable').val(acc.enable);
     }, 'json');
+    });
 });
 </script>
 {% endblock %}

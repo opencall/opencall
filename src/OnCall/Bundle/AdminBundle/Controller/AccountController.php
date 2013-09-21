@@ -90,7 +90,7 @@ class AccountController extends Controller
         if (isset($data['multi_client']) && $data['multi_client'] == 1)
             $user->setMultiClient(true);
         else
-            $user->setMultiCilent(false);
+            $user->setMultiClient(false);
     }
 
     public function getAction($id)
