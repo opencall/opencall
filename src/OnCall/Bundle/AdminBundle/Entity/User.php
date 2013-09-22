@@ -8,7 +8,6 @@ use DateTime;
 
 /**
  * @ORM\Entity
- * @ORM\Table(name="User")
  */
 class User extends BaseUser
 {
