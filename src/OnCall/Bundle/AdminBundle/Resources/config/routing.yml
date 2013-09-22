@@ -1,12 +1,14 @@
+# fos user bundle routes
 fos_user_security:
     resource: "@FOSUserBundle/Resources/config/routing/security.xml"
 
+# admin index page
 oncall_admin_main:
     pattern: /
     defaults: { _controller: OnCallAdminBundle:Main:index }
+    methods: [GET]
 
-
-
+# account routes
 oncall_admin_accounts:
     pattern: /accounts
     defaults: { _controller: OnCallAdminBundle:Account:index }
@@ -37,8 +39,34 @@ oncall_admin_password_submit:
     defaults: { _controller: OnCallAdminBundle:Account:passwordSubmit }
     methods: [POST]
 
-
-
+# number routes
 oncall_admin_numbers:
     pattern: /numbers
     defaults: { _controller: OnCallAdminBundle:Number:index }
+    methods: [GET]
+
+oncall_admin_number_create_multiple:
+    pattern: /numbers
+    defaults: { _controller: OnCallAdminBundle:Number:createMultiple }
+    methods: [POST]
+
+oncall_admin_number_get:
+    pattern: /number/{id}
+    defaults: { _controller: OnCallAdminBundle:Number:get }
+    methods: [GET]
+
+oncall_admin_number_update:
+    pattern: /number/{id}
+    defaults: { _controller: OnCallAdminBundle:Number:update }
+    methods: [POST]
+
+oncall_admin_number_assign:
+    pattern: /account/{id}/numbers
+    defaults: { _controller: OnCallAdminBundle:Number:assign }
+    methods: [POST]
+
+oncall_admin_number_delete:
+    pattern: /number/{id}/delete
+    defaults: { _controller: OnCallAdminBundle:Number:delete }
+    methods: [POST]
+

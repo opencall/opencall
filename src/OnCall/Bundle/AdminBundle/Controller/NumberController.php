@@ -18,6 +18,8 @@ class NumberController extends Controller
             ->setParameter('role', 'a:0:{}');
         $accounts = $query->getResult();
 
+        // TODO: type filter
+
         // get role hash for menu
         $user = $this->getUser();
         $role_hash = $user->getRoleHash();
@@ -29,6 +31,25 @@ class NumberController extends Controller
                 'accounts' => $accounts
             )
         );
+    }
 
+    public function createMultipleAction()
+    {
+    }
+
+    public function getAction()
+    {
+    }
+
+    public function updateAction()
+    {
+    }
+
+    public function assignAction()
+    {
+    }
+
+    public function deleteAction()
+    {
     }
 }
