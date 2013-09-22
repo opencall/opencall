@@ -17,5 +17,5 @@ _oncall_admin:
     resource: "@OnCallAdminBundle/Resources/config/routing.yml"
     prefix: /
 
-_user_bundle:
-    resource: "@OnCallUserBundle/Resources/config/routing.yml"
+#_user_bundle:
+#    resource: "@OnCallUserBundle/Resources/config/routing.yml"

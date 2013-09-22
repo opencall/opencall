@@ -1,3 +1,6 @@
+fos_user_security:
+    resource: "@FOSUserBundle/Resources/config/routing/security.xml"
+
 oncall_admin_main:
     pattern: /
     defaults: { _controller: OnCallAdminBundle:Main:index }

@@ -5,14 +5,13 @@ namespace OnCall\Bundle\AdminBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use OnCall\Bundle\AdminBundle\Model\MenuHandler;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\Session\Session;
 
 class AccountController extends Controller
 {
     public function indexAction()
     {
         // get accounts (all users who have no roles (ROLE_USER)
-        $dql = 'select u from OnCall\Bundle\UserBundle\Entity\User u where u.roles = :role';
+        $dql = 'select u from OnCall\Bundle\AdminBundle\Entity\User u where u.roles = :role';
         $query = $this->getDoctrine()
             ->getManager()
             ->createQuery($dql)

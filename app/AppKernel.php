@@ -19,7 +19,7 @@ class AppKernel extends Kernel
             new FOS\UserBundle\FOSUserBundle(),
 
             new OnCall\Bundle\AdminBundle\OnCallAdminBundle(),
-            new OnCall\Bundle\UserBundle\OnCallUserBundle(),
+            // new OnCall\Bundle\UserBundle\OnCallUserBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {
