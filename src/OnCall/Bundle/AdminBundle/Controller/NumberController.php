@@ -38,7 +38,7 @@ class NumberController extends Controller
             $num_query->where('n.user is null');
 
         // type filter
-        if ($type !== '')
+        if ($type != null && $type !== '')
         {
             $num_query->andWhere('n.type = :type')
                 ->setParameter('type', $type);
