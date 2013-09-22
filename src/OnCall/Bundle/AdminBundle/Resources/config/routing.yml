@@ -24,6 +24,16 @@ oncall_admin_account_update:
     defaults: { _controller: OnCallAdminBundle:Account:update }
     methods: [POST]
 
+oncall_admin_password_form:
+    pattern: /password
+    defaults: { _controller: OnCallAdminBundle:Account:passwordForm }
+    methods: [GET]
+
+oncall_admin_password_submit:
+    pattern: /password
+    defaults: { _controller: OnCallAdminBundle:Account:passwordSubmit }
+    methods: [POST]
+
 
 
 oncall_admin_numbers:

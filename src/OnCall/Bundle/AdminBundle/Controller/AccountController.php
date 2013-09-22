@@ -5,11 +5,13 @@ namespace OnCall\Bundle\AdminBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use OnCall\Bundle\AdminBundle\Model\MenuHandler;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Session\Session;
 
 class AccountController extends Controller
 {
     public function indexAction()
     {
+        // get accounts (all users who have no roles (ROLE_USER)
         $dql = 'select u from OnCall\Bundle\UserBundle\Entity\User u where u.roles = :role';
         $query = $this->getDoctrine()
             ->getManager()
@@ -17,9 +19,9 @@ class AccountController extends Controller
             ->setParameter('role', 'a:0:{}');
         $accounts = $query->getResult();
 
+        // get role hash for menu
         $user = $this->getUser();
         $role_hash = $user->getRoleHash();
-
 
         return $this->render(
             'OnCallAdminBundle:Account:index.html.twig',
@@ -36,34 +38,7 @@ class AccountController extends Controller
         $mgr = $this->get('fos_user.user_manager');
         $user = $mgr->createUser();
 
-        $req = $this->getRequest();
-        /*
-        $form = $this->createFormBuilder($user)
-            ->add('multi_client', 'checkbox')
-            ->add('username', 'text')
-            ->add('password', 'password')
-            ->add('name', 'text')
-            ->add('email', 'text')
-            ->add('business_name', 'text')
-            ->add('phone', 'text')
-            ->add('address', 'text')
-            ->add('bill_business_name', 'text')
-            ->add('bill_name', 'text')
-            ->add('bill_email', 'text')
-            ->add('bill_phone', 'text')
-            ->add('bill_address', 'text')
-            ->add('enabled', 'choice', array(
-                'choices' => array(
-                    '1' => 'Active',
-                    '0' => 'Disabled'
-                )
-            ))
-            ->getForm();
-
-        $form->handleRequest($req);
-        */
-
-        $data = $req->request->all();
+        $data = $this->getRequest()->request->all();
         $this->updateUser($user, $data);
         $mgr->updateUser($user);
         return $this->redirect($this->generateUrl('oncall_admin_accounts'));
@@ -103,12 +78,67 @@ class AccountController extends Controller
 
     public function updateAction($id)
     {
+        // find user
         $mgr = $this->get('fos_user.user_manager');
         $edit_user = $mgr->findUserBy(array('id' => $id));
 
         $data = $this->getRequest()->request->all();
+
+        // update user data and persist
         $this->updateUser($edit_user, $data);
         $mgr->updateUser($edit_user);
+
         return $this->redirect($this->generateUrl('oncall_admin_accounts'));
+    }
+
+    public function passwordFormAction()
+    {
+        $user = $this->getUser();
+        $role_hash = $user->getRoleHash();
+
+        // check for errors
+        $session = $this->getRequest()->getSession();
+        $errors = array();
+        foreach ($session->getFlashBag()->get('message/password_change', array()) as $err)
+            $errors[] = $err;
+
+
+        return $this->render(
+            'OnCallAdminBundle:Account:password.html.twig',
+             array(
+                'sidebar_menu' => MenuHandler::getMenu($role_hash),
+                'errors' => $errors
+            )
+        );
+    }
+
+    public function passwordSubmitAction()
+    {
+        $session = $this->getRequest()->getSession();
+
+        $data = $this->getRequest()->request->all();
+
+        // field check
+        if (!isset($data['pass1']) || !isset($data['pass2']) || empty($data['pass1']) || empty($data['pass2']))
+        {
+            $session->getFlashBag()->add('message/password_change', 'Password cannot be blank.');
+            return $this->redirect($this->generateUrl('oncall_admin_password_form'));
+        }
+
+        // match check
+        if ($data['pass1'] != $data['pass2'])
+        {
+            $session->getFlashBag()->add('message/password_change', 'Passwords do not match.');
+            return $this->redirect($this->generateUrl('oncall_admin_password_form'));
+        }
+
+        // change password
+        $user = $this->getUser();
+        $user->setPlainPassword($data['pass1']);
+        $mgr = $this->get('fos_user.user_manager');
+        $mgr->updateUser($user);
+
+        $session->getFlashBag()->add('message/password_change', 'Password changed successfully.');
+        return $this->redirect($this->generateUrl('oncall_admin_password_form'));
     }
 }
