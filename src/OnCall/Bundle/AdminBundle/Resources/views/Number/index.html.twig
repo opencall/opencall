@@ -2,7 +2,17 @@
 
 {% block javascript %}
 <script type="text/javascript">
+function filter_redirect()
+{
+    var ftype = $('#filter_type').val();
+    var fusage = $('#filter_usage').val();
+
+    window.location.replace('/numbers?usage=' + fusage + '&type=' + ftype);
+}
+
 $(document).ready(function() {
+    $('#filter_usage').change(filter_redirect);
+    $('#filter_type').change(filter_redirect);
 });
 </script>
 {% endblock %}
@@ -30,15 +40,15 @@ $(document).ready(function() {
             <button class="btn blue" style="margin-bottom: 4px;" ><i class="m-icon-swapright m-icon-white"></i> Assign</button>
             
             <span style="padding-left: 150px;">Filter By Usage:</span> 
-            <select id="filter_in_use" class="small m-wrap" tabindex="1">
-                <option>-</option>
+            <select id="filter_usage" class="small m-wrap" tabindex="1">
+                <option value="">-</option>
                 <option value="1">In Use</option>
                 <option value="0">Not In Use</option>
             </select>
 
             Filter By Type: 
             <select id="filter_type" class="small m-wrap" tabindex="1">
-                <option value="0">-</option>
+                <option value="">-</option>
                 <option value="1">Class 1</option>
                 <option value="2">Class 2</option>
                 <option value="3">Class 3</option>
@@ -178,25 +188,6 @@ $(document).ready(function() {
                         </td>
                     </tr>
                     {% endfor %}
-                    <!--
-                    <tr>
-                        <td><input type="checkbox" class="checkboxes" value="1" /></td>
-                        <td>+852 6682 1001</td>
-                        <td>Class 1</td>
-                        <td>CiticTelecom</td>
-                        <td>No</td>
-                        <td>-</td>
-                        <td>25 HKD</td>
-                        <td>5 USD</td>
-                        <td>10 Jun 2013</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>
-                            <button href="#editNumber" data-toggle="modal" role="button" class="btn mini" ><i class="icon-edit"></i> edit</button>
-                            <button href="#deleteNumber" data-toggle="modal" role="button" class="btn mini"><i class="icon-trash"></i> delete</button>
-                        </td>
-                    </tr>
-                    -->
                 </tbody>
             </table>
         </div>
