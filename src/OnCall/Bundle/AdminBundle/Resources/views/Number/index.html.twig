@@ -59,23 +59,44 @@ $(document).ready(function() {
                     </ul>
 
                 </div>
-                <div class="modal-body">
-                    <div class="row-fluid">
-                        <div class="span12">
-                            <h4>Number Details</h4>
-                            <p>Numbers *<br /><textarea class="span12 m-wrap"></textarea></p>
-                            <p>Number Provider (e.g. CiticTelecom) *<br /><input type="password" class="span12 m-wrap"></p>
-                            <p>Number Type (e.g. Class 1)*<br /><input type="text" class="span12 m-wrap"></p>
-                            <p>Cost Per Number (for us) in USD *<br /> <input type="text" class="span12 m-wrap"></p>
-                            <p>Resale Price in USD*<br /> <input type="text" class="span12 m-wrap"></p>
+                <form method="post">
+                    <div class="modal-body">
+                        <div class="row-fluid">
+                            <div class="span12">
+                                <h4>Number Details</h4>
+                                <p>
+                                    Numbers *<br />
+                                    <textarea name="numbers" class="span12 m-wrap"></textarea>
+                                </p>
+                                <p>
+                                    Number Provider (e.g. CiticTelecom) *<br />
+                                    <input name="provider" type="text" class="span12 m-wrap">
+                                </p>
+                                <p>
+                                    Number Type (e.g. Class 1)*<br />
+                                    <select name="type">
+                                        <option value="1">Class 1</option>
+                                        <option value="2">Class 2</option>
+                                        <option value="3">Class 3</option>
+                                    </select>
+                                </p>
+                                <p>
+                                    Cost Per Number (for us) in USD *<br />
+                                    <input name="price_buy" type="text" class="span12 m-wrap">
+                                </p>
+                                <p>
+                                    Resale Price in USD*<br />
+                                    <input name="price_resale" type="text" class="span12 m-wrap">
+                                </p>
+                            </div>
                         </div>
                     </div>
-                </div>
-        
-                <div class="modal-footer">
-                    <button type="button" data-dismiss="modal" class="btn">Cancel</button>
-                    <button type="button" class="btn green">Add numbers</button>
-                </div>
+            
+                    <div class="modal-footer">
+                        <button type="button" data-dismiss="modal" class="btn">Cancel</button>
+                        <input type="submit" class="btn green" value="Add numbers" />
+                    </div>
+                </form>
             </div>                                                          
             <!-- End Add Number MODAL -->
             
@@ -138,22 +159,26 @@ $(document).ready(function() {
                     </tr>
                 </thead>
                 <tbody>
+                    {% for num in numbers %}
                     <tr>
                         <td><input type="checkbox" class="checkboxes" value="1" /></td>
-                        <td>+852 6682 1000</td>
-                        <td>Class 1</td>
-                        <td>CiticTelecom</td>
-                        <td>Yes</td>
-                        <td>ogilvy</td>
-                        <td>25 HKD</td>
-                        <td>5 USD</td>
-                        <td>10 Jun 2013</td>
-                        <td>21 Aug 2013</td>
-                        <td>10/06/13 15:32</td>
+                        <td>{{ num.getNumberFormatted }}</td>
+                        <td>{{ num.getTypeText }}</td>
+                        <td>{{ num.getProvider }}</td>
+                        <td>{{ num.isInUse ? 'Yes' : 'No' }}</td>
+                        <td>{{ num.getUser ? num.getUser.getUsername : '-' }}</td>
+                        <td>{{ num.getPriceBuyFormatted }} USD</td>
+                        <td>{{ num.getPriceResaleFormatted }} USD</td>
+                        <td>{{ num.getDateCreateFormatted }}</td>
+                        <td>{{ num.getDateAssignFormatted }}</td>
+                        <td>{{ num.getDateLastCallFormatted }}</td>
                         <td>
                             <button href="#editNumber" data-toggle="modal" role="button" class="btn mini" ><i class="icon-edit"></i> edit</button>
+                            <button href="#deleteNumber" data-toggle="modal" role="button" class="btn mini"><i class="icon-trash"></i> delete</button>
                         </td>
                     </tr>
+                    {% endfor %}
+                    <!--
                     <tr>
                         <td><input type="checkbox" class="checkboxes" value="1" /></td>
                         <td>+852 6682 1001</td>
@@ -171,6 +196,7 @@ $(document).ready(function() {
                             <button href="#deleteNumber" data-toggle="modal" role="button" class="btn mini"><i class="icon-trash"></i> delete</button>
                         </td>
                     </tr>
+                    -->
                 </tbody>
             </table>
         </div>

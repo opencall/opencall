@@ -4,6 +4,7 @@ namespace OnCall\Bundle\AdminBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use DateTime;
+use OnCall\Bundle\AdminBundle\Model\NumberType;
 
 /**
  * @ORM\Entity
@@ -28,7 +29,7 @@ class Number
     protected $type;
 
     /**
-     * @ORM\Column(type="string", length="50")
+     * @ORM\Column(type="string", length=50)
      */
     protected $provider;
 
@@ -95,13 +96,15 @@ class Number
 
     public function setPriceBuy($price)
     {
-        $this->price_buy = $price;
+        // 2 decimal places
+        $this->price_buy = round($price * 100);
         return $this;
     }
 
     public function setPriceResale($price)
     {
-        $this->price_resale = $price;
+        // 2 decimal places
+        $this->price_resale = round($price * 100);
         return $this;
     }
 
@@ -129,9 +132,27 @@ class Number
         return $this->number;
     }
 
+    public function getNumberFormatted()
+    {
+        return $this->number;
+    }
+
     public function getType()
     {
         return $this->type;
+    }
+
+    public function getTypeText()
+    {
+        return NumberType::getName($this->type);
+    }
+
+    public function isInUse()
+    {
+        if ($this->user == null)
+            return false;
+
+        return true;
     }
 
     public function getProvider()
@@ -144,14 +165,44 @@ class Number
         return $this->user;
     }
 
-    public function getPriceBuy()
+    public function getRawPriceBuy()
     {
         return $this->price_buy;
     }
 
-    public function getPriceResale()
+    public function getRawPriceResale()
     {
         return $this->price_resale;
+    }
+
+    public function getPriceBuy()
+    {
+        return $this->price_buy / 100;
+    }
+
+    public function getPriceBuyFormatted()
+    {
+        return number_format($this->getPriceBuy(), 2);
+    }
+
+    public function getPriceResale()
+    {
+        return $this->price_resale / 100;
+    }
+
+    public function getPriceResaleFormatted()
+    {
+        return number_format($this->getPriceResale(), 2);
+    }
+
+    public function getDateCreate()
+    {
+        return $this->date_create;
+    }
+
+    public function getDateCreateFormatted()
+    {
+        return $this->date_create->format('d M Y');
     }
 
     public function getDateAssign()
@@ -159,9 +210,23 @@ class Number
         return $this->date_assign;
     }
 
+    public function getDateAssignFormatted()
+    {
+        if ($this->date_assign == null)
+            return '-';
+        return $this->date_assign->format('d M Y');
+    }
+
     public function getDateLastCall()
     {
         return $this->date_lastcall;
+    }
+
+    public function getDateLastCallFormatted()
+    {
+        if ($this->date_lastcall == null)
+            return '-';
+        return $this->date_lastcall->format('m/d/y H:i');
     }
     // end getters
 }
