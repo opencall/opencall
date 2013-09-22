@@ -19,4 +19,9 @@ abstract class NamedValue
 
         return static::$names[$value];
     }
+
+    public static function getAll()
+    {
+        return static::$names;
+    }
 }

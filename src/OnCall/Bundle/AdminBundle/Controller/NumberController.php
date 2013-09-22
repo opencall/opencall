@@ -6,12 +6,14 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use OnCall\Bundle\AdminBundle\Model\MenuHandler;
 use Symfony\Component\HttpFoundation\Response;
 use OnCall\Bundle\AdminBundle\Entity\Number;
+use OnCall\Bundle\AdminBundle\Model\NumberType;
 
 class NumberController extends Controller
 {
     public function indexAction()
     {
         $em = $this->getDoctrine()->getManager();
+        $req = $this->getRequest();
 
         // get accounts (all users who have no roles (ROLE_USER)
         $dql = 'select u from OnCall\Bundle\AdminBundle\Entity\User u where u.roles = :role';
@@ -20,10 +22,33 @@ class NumberController extends Controller
         $accounts = $acc_query->getResult();
 
         // get numbers
-        // TODO: type and usage filter
-        $dql = 'select n from OnCall\Bundle\AdminBundle\Entity\Number n order by n.number';
-        $num_query = $em->createQuery($dql);
-        $numbers = $num_query->getResult();
+        $repo = $this->getDoctrine()->getRepository('OnCallAdminBundle:Number');
+        $num_query = $repo->createQueryBuilder('n');
+        
+        $type = $req->get('type');
+        $usage = $req->get('usage');
+        
+        // get types
+        $types = NumberType::getAll();
+
+        // usage filter
+        if ($usage === '1')
+            $num_query->where('n.user is not null');
+        else if ($usage === '0')
+            $num_query->where('n.user is null');
+
+        // type filter
+        if ($type !== '')
+        {
+            $num_query->andWhere('n.type = :type')
+                ->setParameter('type', $type);
+        }
+
+        // sort by
+        $num_query->orderBy('n.number', 'asc');
+
+        // actual query
+        $numbers = $num_query->getQuery()->getResult();
 
         // get role hash for menu
         $user = $this->getUser();
@@ -34,7 +59,10 @@ class NumberController extends Controller
             array(
                 'sidebar_menu' => MenuHandler::getMenu($role_hash, 'number'),
                 'accounts' => $accounts,
-                'numbers' => $numbers
+                'numbers' => $numbers,
+                'types' => $types,
+                'type' => $type,
+                'usage' => $usage
             )
         );
     }

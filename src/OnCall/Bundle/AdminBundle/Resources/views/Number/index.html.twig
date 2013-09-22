@@ -41,17 +41,17 @@ $(document).ready(function() {
             
             <span style="padding-left: 150px;">Filter By Usage:</span> 
             <select id="filter_usage" class="small m-wrap" tabindex="1">
-                <option value="">-</option>
-                <option value="1">In Use</option>
-                <option value="0">Not In Use</option>
+                <option value="" {{ (usage is sameas('')) ? 'selected="selected"' : '' }}>-</option>
+                <option value="1" {{ (usage is sameas('1')) ? 'selected="selected"' : '' }}>In Use</option>
+                <option value="0" {{ (usage is sameas('0')) ? 'selected="selected"' : '' }}>Not In Use</option>
             </select>
 
             Filter By Type: 
             <select id="filter_type" class="small m-wrap" tabindex="1">
                 <option value="">-</option>
-                <option value="1">Class 1</option>
-                <option value="2">Class 2</option>
-                <option value="3">Class 3</option>
+                {% for value,text in types %}
+                    <option value="{{ value }}" {{ (type == value) ? 'selected="selected"' : '' }}>{{ text }}</option>
+                {% endfor %}
             </select>       
             <br />
 
@@ -85,9 +85,9 @@ $(document).ready(function() {
                                 <p>
                                     Number Type (e.g. Class 1)*<br />
                                     <select name="type">
-                                        <option value="1">Class 1</option>
-                                        <option value="2">Class 2</option>
-                                        <option value="3">Class 3</option>
+                                    {% for value,text in types %}
+                                        <option value="{{ value }}">{{ text }}</option>
+                                    {% endfor %}
                                     </select>
                                 </p>
                                 <p>
