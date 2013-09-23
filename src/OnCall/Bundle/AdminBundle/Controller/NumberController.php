@@ -143,8 +143,52 @@ class NumberController extends Controller
         return $this->redirect($this->generateUrl('oncall_admin_numbers'));
     }
 
-    public function assignAction()
+    public function assignAction($acc_id)
     {
+        $em = $this->getDoctrine()->getManager();
+
+        // find user
+        $mgr = $this->get('fos_user.user_manager');
+        $user = $mgr->findUserBy(array('id' => $acc_id));
+
+        // no user found
+        if ($user == null)
+        {
+            // TODO: error message?
+            return $this->redirect($this->generateUrl('oncall_admin_numbers'));
+        }
+
+        // get the numbers
+        $num_ids = $this->getRequest()->request->get('number_ids');
+        if ($num_ids == null || !is_array($num_ids))
+        {
+            // TODO: error message?
+            return $this->redirect($this->generateUrl('oncall_admin_numbers'));
+        }
+
+        // iterate through all numbers checked
+        foreach ($num_ids as $num)
+        {
+            // find number
+            $repo = $this->getDoctrine()->getRepository('OnCallAdminBundle:Number');
+            $num_object = $repo->find($num);
+            if ($num_object == null)
+            {
+                continue;
+            }
+
+            // TODO: check if we can assign
+
+            // TODO: log number assignment
+
+            // assign
+            $num_object->setUser($user);
+        }
+
+        // flush db
+        $em->flush();
+
+        return $this->redirect($this->generateUrl('oncall_admin_numbers'));
     }
 
     public function deleteAction($id)

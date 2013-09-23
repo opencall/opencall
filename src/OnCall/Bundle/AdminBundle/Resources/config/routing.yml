@@ -61,7 +61,7 @@ oncall_admin_number_update:
     methods: [POST]
 
 oncall_admin_number_assign:
-    pattern: /account/{id}/numbers
+    pattern: /account/{acc_id}/numbers
     defaults: { _controller: OnCallAdminBundle:Number:assign }
     methods: [POST]
 

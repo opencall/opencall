@@ -31,6 +31,11 @@ $(document).ready(function() {
         $('#dnum_id').html(num_id);
         $('#dnum_form').attr('action', '/number/' + num_id + '/delete');
     });
+
+    $('#assign_submit').click(function() {
+        var acc_id = $('#assign_acc_id').val();
+        $('#assign_form').attr('action', '/account/' + acc_id + '/numbers').submit();
+    });
 });
 </script>
 {% endblock %}
@@ -49,13 +54,13 @@ $(document).ready(function() {
                             
             <br /><br /><br />
             Assign Selected to Account: 
-            <select class="small m-wrap" tabindex="1" style="margin-bottom: 4px;">
+            <select id="assign_acc_id" class="small m-wrap" tabindex="1" style="margin-bottom: 4px;">
                 <option value="0">-</option>
                 {% for acc in accounts %}
                 <option value="{{ acc.getID }}">{{ acc.getBusinessName }}</option>
                 {% endfor %}
             </select>
-            <button class="btn blue" style="margin-bottom: 4px;" ><i class="m-icon-swapright m-icon-white"></i> Assign</button>
+            <button id="assign_submit" class="btn blue" style="margin-bottom: 4px;" ><i class="m-icon-swapright m-icon-white"></i> Assign</button>
             
             <span style="padding-left: 150px;">Filter By Usage:</span> 
             <select id="filter_usage" class="small m-wrap" tabindex="1">
@@ -188,7 +193,7 @@ $(document).ready(function() {
                             </div>
                         </div>
                         <!-- END Number MODAL -->
-            
+            <form id="assign_form" method="post" action="/account/0/numbers">
             <table class="table-bordered table-striped table-condensed cf">
                 <thead>
                     <tr>
@@ -209,7 +214,7 @@ $(document).ready(function() {
                 <tbody>
                     {% for num in numbers %}
                     <tr>
-                        <td><input type="checkbox" class="checkboxes" value="1" /></td>
+                        <td><input name="number_ids[]" type="checkbox" class="checkboxes" value="{{ num.getID }}" /></td>
                         <td>{{ num.getIDFormatted }}</td>
                         <td>{{ num.getTypeText }}</td>
                         <td>{{ num.getProvider }}</td>
@@ -230,6 +235,7 @@ $(document).ready(function() {
                     {% endfor %}
                 </tbody>
             </table>
+            </form>
         </div>
     </div>
 </div>

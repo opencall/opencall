@@ -79,7 +79,7 @@ class Number
 
     public function setUser(User $user)
     {
-        $tis->user = $user;
+        $this->user = $user;
         return $this;
     }
 
