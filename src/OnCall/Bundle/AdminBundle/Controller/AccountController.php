@@ -47,7 +47,6 @@ class AccountController extends Controller
     protected function updateUser(User $user, $data)
     {
         $user->setUsername($data['username'])
-            ->setPlainPassword($data['password'])
             ->setName($data['name'])
             ->setEmail($data['email'])
             ->setBusinessName($data['business_name'])
@@ -60,6 +59,10 @@ class AccountController extends Controller
             ->setBillAddress($data['bill_address'])
             ->setEnabled($data['enabled'])
             ->setRoles(array('ROLE_USER'));
+
+        // check if password was specified
+        if (!empty($data['password']))
+            $user->setPlainPassword($data['password']);
 
         // check if multi-client
         if (isset($data['multi_client']) && $data['multi_client'] == 1)
