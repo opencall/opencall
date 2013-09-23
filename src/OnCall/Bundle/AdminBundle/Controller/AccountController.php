@@ -5,6 +5,7 @@ namespace OnCall\Bundle\AdminBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use OnCall\Bundle\AdminBundle\Model\MenuHandler;
 use Symfony\Component\HttpFoundation\Response;
+use OnCall\Bundle\AdminBundle\Entity\User;
 
 class AccountController extends Controller
 {
@@ -43,7 +44,7 @@ class AccountController extends Controller
         return $this->redirect($this->generateUrl('oncall_admin_accounts'));
     }
 
-    protected function updateUser($user, $data)
+    protected function updateUser(User $user, $data)
     {
         $user->setUsername($data['username'])
             ->setPlainPassword($data['password'])

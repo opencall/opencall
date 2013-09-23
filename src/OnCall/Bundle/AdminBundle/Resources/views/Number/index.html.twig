@@ -13,6 +13,24 @@ function filter_redirect()
 $(document).ready(function() {
     $('#filter_usage').change(filter_redirect);
     $('#filter_type').change(filter_redirect);
+
+    $('.edit_num').click(function() {
+        var num_id = $(this).data('id');
+        $('#edit_form').attr('action', '/number/' + num_id);
+        $.get('/number/' + num_id, function(num_data) {
+            $('#num_id').html(num_data.id);
+            $('#num_provider').val(num_data.provider);
+            $('#num_type').val(num_data.type);
+            $('#num_price_buy').val(num_data.price_buy_formatted);
+            $('#num_price_resale').val(num_data.price_resale_formatted);
+        }, 'json');
+    });
+
+    $('.delete_num').click(function() {
+        var num_id = $(this).data('id');
+        $('#dnum_id').html(num_id);
+        $('#dnum_form').attr('action', '/number/' + num_id + '/delete');
+    });
 });
 </script>
 {% endblock %}
@@ -118,22 +136,40 @@ $(document).ready(function() {
 
 
                 </div>
+                <form id="edit_form" method="post" action="/number/0">
                 <div class="modal-body">
                     <div class="row-fluid">
                         <div class="span12">
-                            <p>Number: 85266821490 </p>
-                            <p>Number Provider (e.g. CiticTelecom) *<br /><input type="password" class="span12 m-wrap"></p>
-                            <p>Number Type (e.g. Class 1)*<br /><input type="text" class="span12 m-wrap"></p>
-                            <p>Cost Per Number (for us) in USD *<br /> <input type="text" class="span12 m-wrap"></p>
-                            <p>Resale Price in USD*<br /> <input type="text" class="span12 m-wrap"></p>
+                            <p>Number: <span id="num_id"></span> </p>
+                            <p>
+                                Number Provider (e.g. CiticTelecom) *<br />
+                                <input id="num_provider" name="provider" type="text" class="span12 m-wrap" />
+                            </p>
+                            <p>
+                                Number Type (e.g. Class 1)*<br />
+                                <select id="num_type" name="type">
+                                {% for value,text in types %}
+                                    <option value="{{ value }}">{{ text }}</option>
+                                {% endfor %}
+                                </select>
+                            </p>
+                            <p>
+                                Cost Per Number (for us) in USD *<br />
+                                <input id="num_price_buy" name="price_buy" type="text" class="span12 m-wrap" />
+                            </p>
+                            <p>
+                                Resale Price in USD*<br />
+                                <input id="num_price_resale" name="price_resale" type="text" class="span12 m-wrap" />
+                            </p>
                         </div>
                     </div>
                 </div>
         
                 <div class="modal-footer">
                     <button type="button" data-dismiss="modal" class="btn">Cancel</button>
-                    <button type="button" class="btn green">Save changes</button>
+                    <input type="submit" class="btn green" value="Save changes" />
                 </div>
+                </form>
             </div>                                                          
             <!-- End Add Number MODAL -->
             
@@ -141,12 +177,14 @@ $(document).ready(function() {
                         <div id="deleteNumber" class="modal hide fade" tabindex="-1" role="dialog" aria-hidden="true">
                             <div class="modal-header">
                                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
-                                <h3 id="myModalLabel3">Delete 85266821490?</h3>
+                                <h3>Delete <span id="dnum_id">85266821490</span>?</h3>
                             </div>
 
                             <div class="modal-footer">
                                 <button class="btn pull-left green" data-dismiss="modal" aria-hidden="true">Cancel</button>
-                                <button data-dismiss="modal" class="btn red">Delete Number</button>
+                                <form id="dnum_form" method="post" action="number/0/delete">
+                                <input type="submit" class="btn red" value="Delete Number" />
+                                </form>
                             </div>
                         </div>
                         <!-- END Number MODAL -->
@@ -172,7 +210,7 @@ $(document).ready(function() {
                     {% for num in numbers %}
                     <tr>
                         <td><input type="checkbox" class="checkboxes" value="1" /></td>
-                        <td>{{ num.getNumberFormatted }}</td>
+                        <td>{{ num.getIDFormatted }}</td>
                         <td>{{ num.getTypeText }}</td>
                         <td>{{ num.getProvider }}</td>
                         <td>{{ num.isInUse ? 'Yes' : 'No' }}</td>
@@ -183,8 +221,10 @@ $(document).ready(function() {
                         <td>{{ num.getDateAssignFormatted }}</td>
                         <td>{{ num.getDateLastCallFormatted }}</td>
                         <td>
-                            <button href="#editNumber" data-toggle="modal" role="button" class="btn mini" ><i class="icon-edit"></i> edit</button>
-                            <button href="#deleteNumber" data-toggle="modal" role="button" class="btn mini"><i class="icon-trash"></i> delete</button>
+                            <button href="#editNumber" data-toggle="modal" data-id="{{ num.getID }}" role="button" class="btn mini edit_num" ><i class="icon-edit"></i> edit</button>
+                            {% if (not num.isInUse) %}
+                            <button href="#deleteNumber" data-toggle="modal" data-id="{{ num.getID }}" role="button" class="btn mini delete_num"><i class="icon-trash"></i> delete</button>
+                            {% endif %}
                         </td>
                     </tr>
                     {% endfor %}

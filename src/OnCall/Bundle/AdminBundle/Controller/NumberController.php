@@ -45,7 +45,7 @@ class NumberController extends Controller
         }
 
         // sort by
-        $num_query->orderBy('n.number', 'asc');
+        $num_query->orderBy('n.id', 'asc');
 
         // actual query
         $numbers = $num_query->getQuery()->getResult();
@@ -67,6 +67,20 @@ class NumberController extends Controller
         );
     }
 
+    protected function updateNumber(Number $num, $data)
+    {
+        // TODO: cleanup parameters / default value
+        $provider = trim($data['provider']);
+        $type = $data['type'];
+        $price_buy = $data['price_buy'];
+        $price_resale = $data['price_resale'];
+
+        $num->setProvider($provider)
+            ->setType($type)
+            ->setPriceBuy($price_buy)
+            ->setPriceResale($price_resale);
+    }
+
     public function createMultipleAction()
     {
         $data = $this->getRequest()->request->all();
@@ -81,35 +95,51 @@ class NumberController extends Controller
         for ($i = 0; $i < $nlen; $i++)
             $numbers[$i] = trim($numbers[$i]);
 
-        // TODO: cleanup parameters / default value
-        $provider = trim($data['provider']);
-        $type = $data['type'];
-        $price_buy = $data['price_buy'];
-        $price_resale = $data['price_resale'];
 
         // create the numbers
         foreach ($numbers as $num_text)
         {
-            $num = new Number();
-            $num->setNumber($num_text)
-                ->setProvider($provider)
-                ->setType($type)
-                ->setPriceBuy($price_buy)
-                ->setPriceResale($price_resale);
+            $num = new Number($num_text);
+            $this->updateNumber($num, $data);
             $em->persist($num);
         }
         $em->flush();
 
         return $this->redirect($this->generateUrl('oncall_admin_numbers'));
-        
     }
 
-    public function getAction()
+    public function getAction($id)
     {
+        $repo = $this->getDoctrine()->getRepository('OnCallAdminBundle:Number');
+        $num = $repo->find($id);
+        if ($num == null)
+        {
+            // TODO: error message?
+            return $this->redirect($this->generateUrl('oncall_admin_numbers'));
+        }
+
+        return new Response($num->jsonify());
     }
 
-    public function updateAction()
+    public function updateAction($id)
     {
+        $data = $this->getRequest()->request->all();
+        $em = $this->getDoctrine()->getManager();
+
+        // find
+        $repo = $this->getDoctrine()->getRepository('OnCallAdminBundle:Number');
+        $num = $repo->find($id);
+        if ($num == null)
+        {
+            // TODO: error message?
+            return $this->redirect($this->generateUrl('oncall_admin_numbers'));
+        }
+
+        // update
+        $this->updateNumber($num, $data);
+        $em->flush();
+
+        return $this->redirect($this->generateUrl('oncall_admin_numbers'));
     }
 
     public function assignAction()

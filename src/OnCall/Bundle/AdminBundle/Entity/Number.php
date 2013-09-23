@@ -14,14 +14,8 @@ class Number
     /**
      * @ORM\Id
      * @ORM\Column(type="integer")
-     * @ORM\GeneratedValue(strategy="AUTO")
      */
     protected $id;
-
-    /**
-     * @ORM\Column(type="integer")
-     */
-    protected $number;
 
     /**
      * @ORM\Column(type="integer")
@@ -64,18 +58,13 @@ class Number
      */
     protected $date_lastcall;
 
-    public function __construct()
+    public function __construct($id)
     {
+        $this->id = $id;
         $this->date_create = new DateTime();
     }
 
     // begin setters
-    public function setNumber($num)
-    {
-        $this->number = $num;
-        return $this;
-    }
-
     public function setType($type)
     {
         $this->type = $type;
@@ -127,14 +116,9 @@ class Number
         return $this->id;
     }
 
-    public function getNumber()
+    public function getIDFormatted()
     {
-        return $this->number;
-    }
-
-    public function getNumberFormatted()
-    {
-        return $this->number;
+        return $this->id;
     }
 
     public function getType()
@@ -229,4 +213,19 @@ class Number
         return $this->date_lastcall->format('m/d/y H:i');
     }
     // end getters
+
+    public function jsonify()
+    {
+        $data = array(
+            'id' => $this->getID(),
+            'provider' => $this->getProvider(),
+            'type' => $this->getType(),
+            'price_buy' => $this->getPriceBuy(),
+            'price_buy_formatted' => $this->getPriceBuyFormatted(),
+            'price_resale' => $this->getPriceResale(),
+            'price_resale_formatted' => $this->getPriceResaleFormatted()
+        );
+
+        return json_encode($data);
+    }
 }
