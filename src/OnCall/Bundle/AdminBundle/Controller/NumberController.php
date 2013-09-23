@@ -54,6 +54,7 @@ class NumberController extends Controller
         $user = $this->getUser();
         $role_hash = $user->getRoleHash();
 
+        // TODO: messages?
         return $this->render(
             'OnCallAdminBundle:Number:index.html.twig',
             array(
@@ -146,7 +147,30 @@ class NumberController extends Controller
     {
     }
 
-    public function deleteAction()
+    public function deleteAction($id)
     {
+        $em = $this->getDoctrine()->getManager();
+
+        // find
+        $repo = $this->getDoctrine()->getRepository('OnCallAdminBundle:Number');
+        $num = $repo->find($id);
+        if ($num == null)
+        {
+            // TODO: error message?
+            return $this->redirect($this->generateUrl('oncall_admin_numbers'));
+        }
+
+        // check if we can delete
+        if ($num->isInUse())
+        {
+            // TODO: error message?
+            return $this->redirect($this->generateUrl('oncall_admin_numbers'));
+        }
+
+        // delete
+        $em->remove($num);
+        $em->flush();
+
+        return $this->redirect($this->generateUrl('oncall_admin_numbers'));
     }
 }
