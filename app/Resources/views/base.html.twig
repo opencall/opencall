@@ -54,14 +54,29 @@
 				<!-- END RESPONSIVE MENU TOGGLER -->    
 				<!-- BEGIN TOP NAVIGATION MENU -->              
 				<ul class="nav pull-right">
-	
-							<li>
-								<a href="/password"><i class="icon-cog"></i>Modify Account</a>
-							</li>
+                    {% if not is_granted('ROLE_ADMIN') %}
+                    <li>
+                        <a href="/clients"><i class="icon-male"></i>Clients</a>
+                    </li>
+                    {% endif %}
 
-							<li>
-								<a href="/logout"><i class="icon-off"></i>Log Out </a>
-							</li>
+                    <li>
+                        <a href="/password"><i class="icon-cog"></i>Modify Account</a>
+                    </li>
+
+                    {% if not is_granted('ROLE_ADMIN') %}
+                    <li>
+                        <a href="/billing"><i class="icon-cog"></i>Billing</a>
+                    </li>
+
+                    <li>
+                        <a href="/support"><i class="icon-heart"></i>Support</a>
+                    </li>
+                    {% endif %}
+
+                    <li>
+                        <a href="/logout"><i class="icon-off"></i>Log Out </a>
+                    </li>
 				</ul>
 				<!-- END TOP NAVIGATION MENU --> 
 			</div>

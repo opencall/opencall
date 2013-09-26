@@ -27,6 +27,30 @@ class MenuHandler
         // normal user menu
         else 
         {
+            $menu_group->addItem(new MenuItem(
+                'campaigns',
+                'Campaigns',
+                '/clients',
+                'icon-signal'
+            ));
+            $menu_group->addItem(new MenuItem(
+                'call_log',
+                'Call Log',
+                '/call_log',
+                'icon-phone'
+            ));
+            $menu_group->addItem(new MenuItem(
+                'number_client',
+                'Number Management',
+                '/numbers',
+                'icon-th'
+            ));
+            $menu_group->addItem(new MenuItem(
+                'quotas',
+                'Quotas and Usage',
+                '/quotas',
+                'icon-tasks'
+            ));
         }
 
         $menu_group->setActive($active);
