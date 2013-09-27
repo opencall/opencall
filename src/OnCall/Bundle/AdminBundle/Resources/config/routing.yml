@@ -70,3 +70,34 @@ oncall_admin_number_delete:
     defaults: { _controller: OnCallAdminBundle:Number:delete }
     methods: [POST]
 
+#client routes
+oncall_admin_clients:
+    pattern: /clients
+    defaults: { _controller: OnCallAdminBundle:Client:index }
+    methods: [GET]
+
+oncall_admin_client_add:
+    pattern: /clients
+    defaults: { _controller: OnCallAdminBundle:Client:create }
+    methods: [POST]
+
+oncall_admin_client_get:
+    pattern: /client/{cid}
+    defaults: { _controller: OnCallAdminBundle:Client:get }
+    methods: [GET]
+
+oncall_admin_client_update:
+    pattern: /client/{cid}
+    defaults: { _controller: OnCallAdminBundle:Client:update }
+    methods: [POST]
+
+oncall_admin_client_delete:
+    pattern: /client/{cid}/delete
+    defaults: { _controller: OnCallAdminBundle:Client:delete }
+    methods: [POST]
+
+#campaign routes
+oncall_admin_campaign:
+    pattern: /client/{cid}/campaign
+    defaults: { _controller: OnCallAdminBundle:Campaign:campaign }
+    methods: [GET]
