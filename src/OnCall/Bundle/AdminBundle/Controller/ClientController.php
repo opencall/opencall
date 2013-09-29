@@ -15,13 +15,13 @@ class ClientController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
         $req = $this->getRequest();
+        $user = $this->getUser();
 
         // get clients
         $repo = $this->getDoctrine()->getRepository('OnCallAdminBundle:Client');
-        $clients = $repo->findAll();
+        $clients = $repo->findBy(array('user_id' => $user->getID()));
 
         // get role hash for menu
-        $user = $this->getUser();
         $role_hash = $user->getRoleHash();
 
         return $this->render(

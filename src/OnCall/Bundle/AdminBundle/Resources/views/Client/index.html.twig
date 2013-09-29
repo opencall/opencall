@@ -142,7 +142,12 @@
                     {% for cli in clients %}
                     <div class="span3">
                         <div class="pricing-table">
-                            <h3><a href="client/{{ cli.getID }}">{{ cli.getName }}</a></h3>
+                            <h3>
+                                {% if cli.isInactive %}
+                                    <i class="icon-remove-sign"></i> 
+                                {% endif %}
+                                <a href="client/{{ cli.getID }}">{{ cli.getName }}</a>
+                            </h3>
                             <ul>
                                 <li><i class="icon-angle-right"></i> {{ cli.getNumberCount }} numbers assigned</li>
                                 <li><i class="icon-angle-right"></i> 0 calls in the past 24 hours</li>
@@ -158,21 +163,6 @@
                         </div>
                     </div>
                     {% endfor %}
-                    <!-- Kendrick - this is how deleted clients should look -->
-                    <!--
-                    <div class="span3">
-                        <div class="pricing-table">
-                            <h3><i class="icon-remove-sign"></i> <a href="#" >Adidas</a></h3>
-                            <ul>
-                                <li><i class="icon-angle-right"></i> 0 numbers assigned</li>
-                                <li><i class="icon-angle-right"></i> 19 calls in the past 24 hours</li>
-                                <li><i class="icon-angle-right"></i> 240 calls this month</li>
-                            </ul>
-                            <button href="#" class="btn mini green" ><i class="icon-edit"></i> view</button>
-                            <button data-toggle="modal" href="#editClient" class="btn mini " ><i class="icon-edit"></i> edit</button>
-                        </div>
-                    </div>
-                    -->
                     <!-- add a client box -->
                     <div class="span3">
                         <div class="pricing-table selected">

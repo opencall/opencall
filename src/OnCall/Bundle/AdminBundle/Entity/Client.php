@@ -25,6 +25,11 @@ class Client
     protected $user;
 
     /**
+     * @ORM\Column(type="integer")
+     */
+    protected $user_id;
+
+    /**
      * @ORM\Column(type="string", length=50)
      */
     protected $name;
@@ -115,7 +120,7 @@ class Client
         return false;
     }
 
-    public function isInacive()
+    public function isInactive()
     {
         if ($this->status == ClientStatus::INACTIVE)
             return true;
