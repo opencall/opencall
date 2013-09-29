@@ -53,11 +53,11 @@ $(document).ready(function() {
             <button class="btn green" style="margin-bottom: 4px;"  data-toggle="modal" href="#addNumbers"><i class="icon-plus"></i> Bulk Add Numbers to Pool</button> 
                             
             <br /><br /><br />
-            Assign Selected to Account: 
+            Assign Selected to Client: 
             <select id="assign_acc_id" class="small m-wrap" tabindex="1" style="margin-bottom: 4px;">
                 <option value="0">-</option>
-                {% for acc in accounts %}
-                <option value="{{ acc.getID }}">{{ acc.getBusinessName }}</option>
+                {% for client in clients %}
+                <option value="{{ client.getID }}">{{ client.getUser.getBusinessName }} - {{ client.getName }}</option>
                 {% endfor %}
             </select>
             <button id="assign_submit" class="btn blue" style="margin-bottom: 4px;" ><i class="m-icon-swapright m-icon-white"></i> Assign</button>
@@ -203,10 +203,11 @@ $(document).ready(function() {
                         <th>Provider</th>
                         <th>In Use</th>
                         <th>Username</th>
+                        <th>Client</th>
                         <th>Buy Price</th>
                         <th>Resale Price</th>
                         <th style="width:90px;">Date Added to System</th>
-                        <th style="width:90px;">Date Added to Account</th>
+                        <th style="width:90px;">Date Added to Client</th>
                         <th>Last Called<br /><small>dd/mm/yy hh:mm</small></th>
                         <th>Action</th>
                     </tr>
@@ -219,7 +220,8 @@ $(document).ready(function() {
                         <td>{{ num.getTypeText }}</td>
                         <td>{{ num.getProvider }}</td>
                         <td>{{ num.isInUse ? 'Yes' : 'No' }}</td>
-                        <td>{{ num.getUser ? num.getUser.getUsername : '-' }}</td>
+                        <td>{{ num.getClient ? num.getClient.getUser.getUsername : '-' }}</td>
+                        <td>{{ num.getClient ? num.getClient.getName : '-' }}</td>
                         <td>{{ num.getPriceBuyFormatted }} USD</td>
                         <td>{{ num.getPriceResaleFormatted }} USD</td>
                         <td>{{ num.getDateCreateFormatted }}</td>

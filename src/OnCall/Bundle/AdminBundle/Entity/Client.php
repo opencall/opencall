@@ -44,6 +44,11 @@ class Client
      */
     protected $date_create;
 
+    /**
+     * @ORM\OneToMany(targetEntity="Number", mappedBy="client")
+     */
+    protected $numbers;
+
     public function __construct()
     {
         $this->status = ClientStatus::ACTIVE;
@@ -126,6 +131,16 @@ class Client
     public function getDateCreateFormatted()
     {
         return $this->date_create->format('d M Y');
+    }
+
+    public function getNumbers()
+    {
+        return $this->numbers;
+    }
+
+    public function getNumberCount()
+    {
+        return count($this->numbers);
     }
     // end getters
 

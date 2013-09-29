@@ -2,7 +2,7 @@
 fos_user_security:
     resource: "@FOSUserBundle/Resources/config/routing/security.xml"
 
-# admin index page
+# admin index page (goes to account index)
 oncall_admin_main:
     pattern: /
     defaults: { _controller: OnCallAdminBundle:Main:index }
@@ -61,7 +61,7 @@ oncall_admin_number_update:
     methods: [POST]
 
 oncall_admin_number_assign:
-    pattern: /account/{acc_id}/numbers
+    pattern: /account/{client_id}/numbers
     defaults: { _controller: OnCallAdminBundle:Number:assign }
     methods: [POST]
 

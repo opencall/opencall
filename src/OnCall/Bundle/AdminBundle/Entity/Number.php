@@ -28,10 +28,10 @@ class Number
     protected $provider;
 
     /**
-     * @ORM\ManyToOne(targetEntity="User")
-     * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
+     * @ORM\ManyToOne(targetEntity="Client", inversedBy="numbers")
+     * @ORM\JoinColumn(name="client_id", referencedColumnName="id")
      */
-    protected $user;
+    protected $client;
 
     /**
      * @ORM\Column(type="integer")
@@ -77,9 +77,9 @@ class Number
         return $this;
     }
 
-    public function setUser(User $user)
+    public function setClient(Client $client)
     {
-        $this->user = $user;
+        $this->client = $client;
         return $this;
     }
 
@@ -133,7 +133,7 @@ class Number
 
     public function isInUse()
     {
-        if ($this->user == null)
+        if ($this->client == null)
             return false;
 
         return true;
@@ -144,9 +144,9 @@ class Number
         return $this->provider;
     }
 
-    public function getUser()
+    public function getClient()
     {
-        return $this->user;
+        return $this->client;
     }
 
     public function getRawPriceBuy()

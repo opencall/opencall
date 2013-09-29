@@ -6,6 +6,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use OnCall\Bundle\AdminBundle\Model\MenuHandler;
 use Symfony\Component\HttpFoundation\Response;
 use OnCall\Bundle\AdminBundle\Entity\Number;
+use OnCall\Bundle\AdminBundle\Entity\Client;
 use OnCall\Bundle\AdminBundle\Model\NumberType;
 
 class NumberController extends Controller
@@ -15,11 +16,10 @@ class NumberController extends Controller
         $em = $this->getDoctrine()->getManager();
         $req = $this->getRequest();
 
-        // get accounts (all users who have no roles (ROLE_USER)
-        $dql = 'select u from OnCall\Bundle\AdminBundle\Entity\User u where u.roles = :role';
-        $acc_query = $em->createQuery($dql)
-            ->setParameter('role', 'a:0:{}');
-        $accounts = $acc_query->getResult();
+        // get clients, eager load users
+        $dql = 'select c,u from OnCall\Bundle\AdminBundle\Entity\Client c join c.user u order by u.business_name asc, c.name asc';
+        $cl_query = $em->createQuery($dql);
+        $clients = $cl_query->getResult();
 
         // get numbers
         $repo = $this->getDoctrine()->getRepository('OnCallAdminBundle:Number');
@@ -33,9 +33,9 @@ class NumberController extends Controller
 
         // usage filter
         if ($usage === '1')
-            $num_query->where('n.user is not null');
+            $num_query->where('n.client is not null');
         else if ($usage === '0')
-            $num_query->where('n.user is null');
+            $num_query->where('n.client is null');
 
         // type filter
         if ($type != null && $type !== '')
@@ -59,7 +59,7 @@ class NumberController extends Controller
             'OnCallAdminBundle:Number:index.html.twig',
             array(
                 'sidebar_menu' => MenuHandler::getMenu($role_hash, 'number'),
-                'accounts' => $accounts,
+                'clients' => $clients,
                 'numbers' => $numbers,
                 'types' => $types,
                 'type' => $type,
@@ -143,16 +143,17 @@ class NumberController extends Controller
         return $this->redirect($this->generateUrl('oncall_admin_numbers'));
     }
 
-    public function assignAction($acc_id)
+    public function assignAction($client_id)
     {
         $em = $this->getDoctrine()->getManager();
 
-        // find user
-        $mgr = $this->get('fos_user.user_manager');
-        $user = $mgr->findUserBy(array('id' => $acc_id));
+        // find client
+        $client = $this->getDoctrine()
+            ->getRepository('OnCallAdminBundle:Client')
+            ->find($client_id);
 
-        // no user found
-        if ($user == null)
+        // no client found
+        if ($client == null)
         {
             // TODO: error message?
             return $this->redirect($this->generateUrl('oncall_admin_numbers'));
@@ -170,8 +171,9 @@ class NumberController extends Controller
         foreach ($num_ids as $num)
         {
             // find number
-            $repo = $this->getDoctrine()->getRepository('OnCallAdminBundle:Number');
-            $num_object = $repo->find($num);
+            $num_object = $this->getDoctrine()
+                ->getRepository('OnCallAdminBundle:Number')
+                ->find($num);
             if ($num_object == null)
             {
                 continue;
@@ -182,7 +184,7 @@ class NumberController extends Controller
             // TODO: log number assignment
 
             // assign
-            $num_object->setUser($user);
+            $num_object->setClient($client);
         }
 
         // flush db
