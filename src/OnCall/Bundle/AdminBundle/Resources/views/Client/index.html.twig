@@ -2,18 +2,28 @@
 
 {% block javascript %}
 <script type="text/javascript">
+function update_client(client_id)
+{
+    $.get('/client/' + client_id, function(client) {
+        $('.cl_name').val(client.name);
+        $('.cl_name_text').text(client.name);
+        $('.cl_delete_text').val('Delete All Data for ' + client.name);
+        $('.cl_timezone').val(client.timezone);
+        $('.cl_status').val(client.status);
+    }, 'json');
+}
+
 $(document).ready(function() {
     $('.client_edit').click(function() {
         var client_id = $(this).data('id');
         $('#edit_form').attr('action', '/client/' + client_id);
-        $.get('/client/' + client_id, function(client) {
-            $('#cl_name').val(client.name);
-            $('#cl_timezone').val(client.timezone);
-            $('#cl_status').val(client.status);
-        }, 'json');
+        update_client(client_id);
     });
 
     $('.client_delete').click(function() {
+        var client_id = $(this).data('id');
+        $('#delete_form').attr('action', '/client/' + client_id + '/delete');
+        update_client(client_id);
     });
 });
 </script>
@@ -45,12 +55,12 @@ $(document).ready(function() {
                         <div class="row-fluid">
                             <div class="span6">
                                 <h4>Client Name</h4>
-                                <p><input id="cl_name" name="name" type="text" class="span12 m-wrap"></p>
+                                <p><input name="name" type="text" class="cl_name span12 m-wrap"></p>
                             </div>
                             <div class="span6">
                                 <h4>Client Timezone</h4>
                                 <p>
-                                    <select id="cl_timezone" name="timezone" id="edit_timezone">
+                                    <select class="cl_timezone" name="timezone">
                                     {% for tz_key,tz_name in timezones %}
                                         <option value="{{ tz_key }}">{{ tz_name }}</option>
                                     {% endfor %}
@@ -63,7 +73,7 @@ $(document).ready(function() {
                             <div class="row-fluid">
                                 <div class="span6">
                                     <h4>Client Status</h4>
-                                    <p><select id="cl_status" name="status" class="small m-wrap" tabindex="1">
+                                    <p><select name="status" class="cl_status small m-wrap" tabindex="1">
                                         <option value="active">Active</option>
                                         <option value="deleted">Deleted</option>
                                     </select></p>
@@ -83,15 +93,17 @@ $(document).ready(function() {
                 <div id="deleteClient" class="modal hide fade" tabindex="-1" role="dialog" aria-hidden="true">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
-                        <h3 id="myModalLabel3">Delete McDonalds</h3>
+                        <h3 id="myModalLabel3">Delete <span class="cl_name_text"></span></h3>
                     </div>
+                    <form id="delete_form" method="post" action="/client/0/delete">
                     <div class="modal-body">
                         <p>Deleting a client will permanently delete all Campaigns, Ad Groups and Adverts contained within it. All tracking data tied to these campaigns will also be deleted and any phone numbers will be relinquished (meaning that if anyone tries to call these numbers they will not be able to connect). Press "Delete All Data" to proceed.</p>
                     </div>
                     <div class="modal-footer">
                         <button class="btn pull-left green" data-dismiss="modal" aria-hidden="true">Cancel</button>
-                        <button data-dismiss="modal" class="btn red">Delete All Data for McDonalds</button>
+                        <input type="submit" class="btn red cl_delete_text" value="Delete All Data for McDonalds" />
                     </div>
+                    </form>
                 </div>
                 <!-- END DELETE MODAL -->
                 <!-- ADD CLIENT MODAL -->
@@ -152,7 +164,7 @@ $(document).ready(function() {
                             </ul>
                             <a href="client/{{ cli.getID }}/campaign" class="btn mini green" ><i class="icon-edit"></i> view</a>
                             <button data-toggle="modal" data-id="{{ cli.getID }}" href="#editClient" class="btn mini client_edit" ><i class="icon-edit"></i> edit</button>
-                            <button data-toggle="modal" data-id="{{ cli.getID }}" href="#deleteClient" href="#" class="btn mini "><i class="icon-trash"></i> delete</button>
+                            <button data-toggle="modal" data-id="{{ cli.getID }}" href="#deleteClient" href="#" class="btn mini client_delete"><i class="icon-trash"></i> delete</button>
                         </div>
                     </div>
                     {% endfor %}

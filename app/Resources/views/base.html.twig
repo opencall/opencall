@@ -54,7 +54,7 @@
 				<!-- END RESPONSIVE MENU TOGGLER -->    
 				<!-- BEGIN TOP NAVIGATION MENU -->              
 				<ul class="nav pull-right">
-                    {% if not is_granted('ROLE_ADMIN') %}
+                    {% if (not is_granted('ROLE_ADMIN')) and (user.isMultiClient) %}
                     <li>
                         <a href="/clients"><i class="icon-male"></i>Clients</a>
                     </li>

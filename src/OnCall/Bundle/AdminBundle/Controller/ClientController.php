@@ -19,7 +19,10 @@ class ClientController extends Controller
 
         // get clients
         $repo = $this->getDoctrine()->getRepository('OnCallAdminBundle:Client');
-        $clients = $repo->findBy(array('user_id' => $user->getID()));
+        $clients = $repo->findBy(array(
+            'user_id' => $user->getID(),
+            'status' => ClientStatus::ACTIVE
+        ));
 
         // get role hash for menu
         $role_hash = $user->getRoleHash();
@@ -27,6 +30,7 @@ class ClientController extends Controller
         return $this->render(
             'OnCallAdminBundle:Client:index.html.twig',
             array(
+                'user' => $user,
                 'sidebar_menu' => MenuHandler::getMenu($role_hash, 'campaigns'),
                 'clients' => $clients,
                 'timezones' => Timezone::getAll(),
@@ -155,25 +159,19 @@ class ClientController extends Controller
         $em = $this->getDoctrine()->getManager();
 
         // find
-        $repo = $this->getDoctrine()->getRepository('OnCallAdminBundle:Number');
-        $num = $repo->find($id);
-        if ($num == null)
+        $client = $this->getDoctrine()
+            ->getRepository('OnCallAdminBundle:Client')
+            ->find($id);
+        if ($client == null)
         {
             // TODO: error message?
-            return $this->redirect($this->generateUrl('oncall_admin_numbers'));
+            return $this->redirect($this->generateUrl('oncall_admin_clients'));
         }
 
-        // check if we can delete
-        if ($num->isInUse())
-        {
-            // TODO: error message?
-            return $this->redirect($this->generateUrl('oncall_admin_numbers'));
-        }
-
-        // delete
-        $em->remove($num);
+        // set inactive
+        $client->setStatus(ClientStatus::INACTIVE);
         $em->flush();
 
-        return $this->redirect($this->generateUrl('oncall_admin_numbers'));
+        return $this->redirect($this->generateUrl('oncall_admin_clients'));
     }
 }
