@@ -2,23 +2,42 @@
 
 {% block javascript %}
 <script type="text/javascript">
+
 $(document).ready(function() {
-    $('#add_form').validate({
-        errorElement: 'span',
-        errorClass: 'help-inline',
-        focusInvalid: true,
-        ignore: "",
-        rules: {
-            username: {
-                minlength: 2,
-                required: true
-            },
+    validate_init('#add_form', {
+        username: {
+            minlength: 2,
+            required: true
+        },
 
-            password: {
-                minlength: 3,
-                required: true
-            },
+        password: {
+            minlength: 3,
+            required: true
+        },
 
+        name: {
+            minlength: 1,
+            required: true
+        },
+
+        email: {
+            email: true,
+            required: true
+        },
+
+        business_name: {
+            minlength: 1,
+            required: true
+        },
+
+        phone: {
+            number: true,
+            required: true,
+            minlength: 7
+        }
+    });
+
+    validate_init('#edit_form', {
             name: {
                 minlength: 1,
                 required: true
@@ -39,87 +58,8 @@ $(document).ready(function() {
                 required: true,
                 minlength: 7
             }
-        },
-
-        invalidHandler: function(event, validator) {
-        },
-
-        highlight: function(element) {
-            $(element)
-                .closest('.help-inline').removeClass('ok');
-            $(element)
-                .closest('.control-group').removeClass('success').addClass('error');
-        },
-
-        unhighlight: function(element) {
-            $(element)
-                .closest('.control-group').removeClass('error');
-        },
-
-        success: function(label) {
-            label.closest('.control-group').removeClass('error').addClass('success');
-            label.remove();
-        },
-
-        submitHandler: function(form) {
-            form.submit();
-        }
-
     });
 
-    $('#edit_form').validate({
-        errorElement: 'span',
-        errorClass: 'help-inline',
-        focusInvalid: true,
-        ignore: "",
-        rules: {
-            name: {
-                minlength: 1,
-                required: true
-            },
-
-            email: {
-                email: true,
-                required: true
-            },
-
-            business_name: {
-                minlength: 1,
-                required: true
-            },
-
-            phone: {
-                number: true,
-                required: true,
-                minlength: 7
-            }
-        },
-
-        invalidHandler: function(event, validator) {
-        },
-
-        highlight: function(element) {
-            $(element)
-                .closest('.help-inline').removeClass('ok');
-            $(element)
-                .closest('.control-group').removeClass('success').addClass('error');
-        },
-
-        unhighlight: function(element) {
-            $(element)
-                .closest('.control-group').removeClass('error');
-        },
-
-        success: function(label) {
-            label.closest('.control-group').removeClass('error').addClass('success');
-            label.remove();
-        },
-
-        submitHandler: function(form) {
-            form.submit();
-        }
-
-    });
 
     $('.account_add').click(function() {
         $('.acc_username').val('');

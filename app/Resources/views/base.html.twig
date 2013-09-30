@@ -168,6 +168,44 @@
 
 
 	<!-- END PAGE LEVEL SCRIPTS -->  
+    <script type="text/javascript">
+    function validate_init(selector, rules)
+    {
+        $(selector).validate({
+            errorElement: 'span',
+            errorClass: 'help-inline',
+            focusInvalid: true,
+            ignore: "",
+            rules: rules,
+
+            invalidHandler: function(event, validator) {
+            },
+
+            highlight: function(element) {
+                $(element)
+                    .closest('.help-inline').removeClass('ok');
+                $(element)
+                    .closest('.control-group').removeClass('success').addClass('error');
+            },
+
+            unhighlight: function(element) {
+                $(element)
+                    .closest('.control-group').removeClass('error');
+            },
+
+            success: function(label) {
+                label.closest('.control-group').removeClass('error').addClass('success');
+                label.remove();
+            },
+
+            submitHandler: function(form) {
+                form.submit();
+            }
+
+        });
+    }
+    </script>
+
 	<script>
 		jQuery(document).ready(function() {   
 		   App.init(); // initlayout and core plugins

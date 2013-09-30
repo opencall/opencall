@@ -25,6 +25,8 @@ $(document).ready(function() {
         $('#delete_form').attr('action', '/client/' + client_id + '/delete');
         update_client(client_id);
     });
+
+
 });
 </script>
 {% endblock %}
@@ -35,7 +37,6 @@ $(document).ready(function() {
     <!-- BEGIN PAGE HEADER-->
     <div class="row-fluid">
         <div class="span12">
-
             <!-- BEGIN PAGE TITLE & BREADCRUMB-->
             <h3 class="page-title">
                 Clients
@@ -68,7 +69,6 @@ $(document).ready(function() {
                                 </p>
                             </div>
                             <div class="clearfix"></div>
-                            <!-- Kendrick : this only shows to the admin -->
                             {% if is_granted('ROLE_PREVIOUS_ADMIN') %}
                             <div class="row-fluid">
                                 <div class="span6">
