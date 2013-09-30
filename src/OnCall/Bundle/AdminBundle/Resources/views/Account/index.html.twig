@@ -67,6 +67,60 @@ $(document).ready(function() {
 
     });
 
+    $('#edit_form').validate({
+        errorElement: 'span',
+        errorClass: 'help-inline',
+        focusInvalid: true,
+        ignore: "",
+        rules: {
+            name: {
+                minlength: 1,
+                required: true
+            },
+
+            email: {
+                email: true,
+                required: true
+            },
+
+            business_name: {
+                minlength: 1,
+                required: true
+            },
+
+            phone: {
+                number: true,
+                required: true,
+                minlength: 7
+            }
+        },
+
+        invalidHandler: function(event, validator) {
+        },
+
+        highlight: function(element) {
+            $(element)
+                .closest('.help-inline').removeClass('ok');
+            $(element)
+                .closest('.control-group').removeClass('success').addClass('error');
+        },
+
+        unhighlight: function(element) {
+            $(element)
+                .closest('.control-group').removeClass('error');
+        },
+
+        success: function(label) {
+            label.closest('.control-group').removeClass('error').addClass('success');
+            label.remove();
+        },
+
+        submitHandler: function(form) {
+            form.submit();
+        }
+
+    });
+
     $('.account_add').click(function() {
         $('.acc_username').val('');
         $('.acc_name').val('');
@@ -280,13 +334,13 @@ $(document).ready(function() {
                             <div class="row-fluid">
                                 <div class="span6">
                                     <h4>Business Details</h4>
-                                    <p><input class="acc_multi_client" name="multi_client" type="checkbox" value="1"> Multi-Client Account?</p>
-                                    <p>Username *<br /><input name="username" type="text" class="span12 m-wrap acc_username" disabled="disabled"></p>
-                                    <p>Password<br /><input name="password" type="password" class="span12 m-wrap acc_password"></p>
-                                    <p>Contact Name *<br /><input id="acc_name" name="name" type="text" class="span12 m-wrap acc_name"></p>
-                                    <p>Email *<br /><input id="acc_email" name="email" type="text" class="span12 m-wrap acc_email"></p>
-                                    <p>Business Trading Name *<br /><input id="acc_business_name" name="business_name" type="text" class="span12 m-wrap acc_business_name"></p>
-                                    <p>Phone *<br /><input id="acc_phone" name="phone" type="text" class="span12 m-wrap acc_phone"></p>
+                                    <p class="control-group"><input class="acc_multi_client" name="multi_client" type="checkbox" value="1"> Multi-Client Account?</p>
+                                    <p class="control-group">Username *<br /><input name="username" type="text" class="span12 m-wrap acc_username" disabled="disabled"></p>
+                                    <p class="control-group">Password<br /><input name="password" type="password" class="span12 m-wrap acc_password"></p>
+                                    <p class="control-group"><span class="control-label">Contact Name *</span><br /><input id="acc_name" name="name" type="text" class="span12 m-wrap acc_name"></p>
+                                    <p class="control-group"><span class="control-label">Email *</span><br /><input id="acc_email" name="email" type="text" class="span12 m-wrap acc_email"></p>
+                                    <p class="control-group"><span class="control-label">Business Trading Name *</span><br /><input id="acc_business_name" name="business_name" type="text" class="span12 m-wrap acc_business_name"></p>
+                                    <p class="control-group"><span class="control-label">Phone *</span><br /><input id="acc_phone" name="phone" type="text" class="span12 m-wrap acc_phone"></p>
                                     <p>Address<br /><input id="acc_address" name="address" type="text" class="span12 m-wrap acc_address"></p>
                                 </div>
                                 <div class="span6">
