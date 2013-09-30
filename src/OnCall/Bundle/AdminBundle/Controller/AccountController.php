@@ -2,10 +2,11 @@
 
 namespace OnCall\Bundle\AdminBundle\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use OnCall\Bundle\AdminBundle\Model\MenuHandler;
 use Symfony\Component\HttpFoundation\Response;
 use OnCall\Bundle\AdminBundle\Entity\User;
+use OnCall\Bundle\AdminBundle\Model\Controller;
+
 
 class AccountController extends Controller
 {
@@ -79,15 +80,6 @@ class AccountController extends Controller
         $edit_user = $mgr->findUserBy(array('id' => $id));
 
         return new Response($edit_user->jsonify());
-    }
-
-    protected function addFlash($type, $message)
-    {
-        $this->get('session')
-            ->getFlashBag()
-            ->add($type, $message);
-
-        return $this;
     }
 
     public function updateAction($id)

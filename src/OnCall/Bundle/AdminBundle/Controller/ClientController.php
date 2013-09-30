@@ -2,7 +2,7 @@
 
 namespace OnCall\Bundle\AdminBundle\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use OnCall\Bundle\AdminBundle\Model\Controller;
 use Symfony\Component\HttpFoundation\Response;
 use OnCall\Bundle\AdminBundle\Model\MenuHandler;
 use OnCall\Bundle\AdminBundle\Model\Timezone;

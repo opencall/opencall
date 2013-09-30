@@ -2,12 +2,13 @@
 
 namespace OnCall\Bundle\AdminBundle\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use OnCall\Bundle\AdminBundle\Model\Controller;
 use OnCall\Bundle\AdminBundle\Model\MenuHandler;
 use Symfony\Component\HttpFoundation\Response;
 use OnCall\Bundle\AdminBundle\Entity\Number;
 use OnCall\Bundle\AdminBundle\Entity\Client;
 use OnCall\Bundle\AdminBundle\Model\NumberType;
+use Doctrine\DBAL\DBALException;
 
 class NumberController extends Controller
 {
@@ -16,6 +17,7 @@ class NumberController extends Controller
         $em = $this->getDoctrine()->getManager();
         $req = $this->getRequest();
 
+        // TODO: create method in custom repo
         // get clients, eager load users
         $dql = 'select c,u from OnCall\Bundle\AdminBundle\Entity\Client c join c.user u order by u.business_name asc, c.name asc';
         $cl_query = $em->createQuery($dql);
@@ -54,7 +56,6 @@ class NumberController extends Controller
         $user = $this->getUser();
         $role_hash = $user->getRoleHash();
 
-        // TODO: messages?
         return $this->render(
             'OnCallAdminBundle:Number:index.html.twig',
             array(
@@ -92,19 +93,26 @@ class NumberController extends Controller
         $nlen = count($numbers);
 
         // trim numbers
-        // TODO: check if numbers already exist
         for ($i = 0; $i < $nlen; $i++)
             $numbers[$i] = trim($numbers[$i]);
 
 
         // create the numbers
-        foreach ($numbers as $num_text)
+        try
         {
-            $num = new Number($num_text);
-            $this->updateNumber($num, $data);
-            $em->persist($num);
+            foreach ($numbers as $num_text)
+            {
+                $num = new Number($num_text);
+                $this->updateNumber($num, $data);
+                $em->persist($num);
+            }
+
+            $em->flush();
         }
-        $em->flush();
+        catch (DBALException $e)
+        {
+            
+        }
 
         return $this->redirect($this->generateUrl('oncall_admin_numbers'));
     }
