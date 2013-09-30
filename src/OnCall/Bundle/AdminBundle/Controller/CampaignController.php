@@ -43,6 +43,7 @@ class CampaignController extends Controller
             array(
                 'user' => $user,
                 'sidebar_menu' => MenuHandler::getMenu($role_hash, 'campaigns'),
+                'client' => $client,
                 'campaigns' => $campaigns,
             )
         );
