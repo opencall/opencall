@@ -27,6 +27,7 @@ security:
                 target: /
                 #invalidate_session: false
             anonymous: ~
+            switch_user: { role: ROLE_ADMIN, parameter: _switch }
             #http_basic:
             #    realm: "Secured Demo Area"
 

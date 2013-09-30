@@ -54,6 +54,12 @@
 				<!-- END RESPONSIVE MENU TOGGLER -->    
 				<!-- BEGIN TOP NAVIGATION MENU -->              
 				<ul class="nav pull-right">
+                    {% if is_granted('ROLE_PREVIOUS_ADMIN') %}
+                    <li>
+                        <a href="/?_switch=_exit"><i class="icon-male"></i>Back to Admin</a>
+                    </li>
+                    {% endif %}
+
                     {% if (not is_granted('ROLE_ADMIN')) and (user.isMultiClient) %}
                     <li>
                         <a href="/clients"><i class="icon-male"></i>Clients</a>
