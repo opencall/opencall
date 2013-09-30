@@ -1,6 +1,22 @@
 {% extends '::base.html.twig' %}
 
 {% block javascript %}
+<script type="text/javascript">
+$(document).ready(function() {
+    $('.client_edit').click(function() {
+        var client_id = $(this).data('id');
+        $('#edit_form').attr('action', '/client/' + client_id);
+        $.get('/client/' + client_id, function(client) {
+            $('#cl_name').val(client.name);
+            $('#cl_timezone').val(client.timezone);
+            $('#cl_status').val(client.status);
+        }, 'json');
+    });
+
+    $('.client_delete').click(function() {
+    });
+});
+</script>
 {% endblock %}
 
 {% block body %}
@@ -24,16 +40,17 @@
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
                         <h3>Edit Client</h3>
                     </div>
+                    <form id="edit_form" method="post" action="/client/0">
                     <div class="modal-body">
                         <div class="row-fluid">
                             <div class="span6">
                                 <h4>Client Name</h4>
-                                <p><input type="text" class="span12 m-wrap"></p>
+                                <p><input id="cl_name" name="name" type="text" class="span12 m-wrap"></p>
                             </div>
                             <div class="span6">
                                 <h4>Client Timezone</h4>
                                 <p>
-                                    <select name="timezone" id="edit_timezone">
+                                    <select id="cl_timezone" name="timezone" id="edit_timezone">
                                     {% for tz_key,tz_name in timezones %}
                                         <option value="{{ tz_key }}">{{ tz_name }}</option>
                                     {% endfor %}
@@ -41,22 +58,25 @@
                                 </p>
                             </div>
                             <div class="clearfix"></div>
+                            <!-- Kendrick : this only shows to the admin -->
+                            {% if is_granted('ROLE_ADMIN') %}
                             <div class="row-fluid">
                                 <div class="span6">
-                                    <!-- Kendrick : this only shows to the admin -->
                                     <h4>Client Status</h4>
-                                    <p><select class="small m-wrap" tabindex="1">
+                                    <p><select id="cl_status" name="status" class="small m-wrap" tabindex="1">
                                         <option value="active">Active</option>
                                         <option value="deleted">Deleted</option>
                                     </select></p>
                                 </div>
                             </div>
+                            {% endif %}
                         </div>
                     </div>
                     <div class="modal-footer">
                         <button type="button" data-dismiss="modal" class="btn">Cancel</button>
-                        <button type="button" class="btn green">Save changes</button>
+                        <input type="submit" class="btn green" value="Save changes" />
                     </div>
+                    </form>
                 </div>
                 <!-- End EDIT MODAL -->
                 <!-- DELETE Client MODAL -->
@@ -119,7 +139,7 @@
                                 {% if cli.isInactive %}
                                     <i class="icon-remove-sign"></i> 
                                 {% endif %}
-                                <a href="client/{{ cli.getID }}">{{ cli.getName }}</a>
+                                <a href="client/{{ cli.getID }}/campaign">{{ cli.getName }}</a>
                             </h3>
                             <ul>
                                 <li><i class="icon-angle-right"></i> {{ cli.getNumberCount }} numbers assigned</li>
@@ -130,8 +150,8 @@
                                 <!--<li><i class="icon-angle-right"></i> $XXX/month + $0 overage in Aug</li>-->
 
                             </ul>
-                            <a href="client/{{ cli.getID }}" class="btn mini green" ><i class="icon-edit"></i> view</a>
-                            <button data-toggle="modal" data-id="{{ cli.getID }}" href="#editClient" class="btn mini " ><i class="icon-edit"></i> edit</button>
+                            <a href="client/{{ cli.getID }}/campaign" class="btn mini green" ><i class="icon-edit"></i> view</a>
+                            <button data-toggle="modal" data-id="{{ cli.getID }}" href="#editClient" class="btn mini client_edit" ><i class="icon-edit"></i> edit</button>
                             <button data-toggle="modal" data-id="{{ cli.getID }}" href="#deleteClient" href="#" class="btn mini "><i class="icon-trash"></i> delete</button>
                         </div>
                     </div>

@@ -9,13 +9,35 @@ class MainController extends Controller
 {
     public function indexAction()
     {
-        $role_hash = $this->getUser()->getRoleHash();
+        $user = $this->getUser();
+        $role_hash = $user->getRoleHash();
 
-        // check if admin
+        // admin
         if (isset($role_hash['ROLE_ADMIN']))
             return $this->redirect($this->generateUrl('oncall_admin_accounts'));
 
-        // everyone else
-        return $this->redirect($this->generateUrl('oncall_admin_clients'));
+        // multi-client account
+        if ($user->isMultiClient())
+            return $this->redirect($this->generateUrl('oncall_admin_clients'));
+
+        // single client account
+        $user_id = $user->getID();
+        $client = $this->getDoctrine()
+            ->getRepository('OnCallAdminBundle:Client')
+            ->findFirst($user_id);
+
+        // no client? (should never reach this)
+        if ($client == null)
+        {
+            // TODO: handle error by creating client automatically?
+            return $this->redirect($this->generateUrl('oncall_admin_clients'));
+        }
+
+        return $this->redirect(
+            $this->generateUrl(
+                'oncall_admin_campaign',
+                array('cid' => $client->getID())
+            )
+        );
     }
 }

@@ -82,17 +82,17 @@ oncall_admin_client_add:
     methods: [POST]
 
 oncall_admin_client_get:
-    pattern: /client/{cid}
+    pattern: /client/{id}
     defaults: { _controller: OnCallAdminBundle:Client:get }
     methods: [GET]
 
 oncall_admin_client_update:
-    pattern: /client/{cid}
+    pattern: /client/{id}
     defaults: { _controller: OnCallAdminBundle:Client:update }
     methods: [POST]
 
 oncall_admin_client_delete:
-    pattern: /client/{cid}/delete
+    pattern: /client/{id}/delete
     defaults: { _controller: OnCallAdminBundle:Client:delete }
     methods: [POST]
 

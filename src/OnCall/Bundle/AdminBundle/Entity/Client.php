@@ -7,7 +7,7 @@ use DateTime;
 use OnCall\Bundle\AdminBundle\Model\ClientStatus;
 
 /**
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="OnCall\Bundle\AdminBundle\Repositories\Client")
  */
 class Client
 {
@@ -154,6 +154,8 @@ class Client
         $data = array(
             'id' => $this->getID(),
             'name' => $this->getName(),
+            'timezone' => $this->getTimezone(),
+            'status' => $this->getStatus(),
             'date_create' => $this->getDateCreateFormatted()
         );
 

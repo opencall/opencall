@@ -38,15 +38,21 @@ class ClientController extends Controller
     protected function updateClient(Client $client, $data)
     {
         // TODO: cleanup parameters / default value
-        $user = $data['user'];
         $name = trim($data['name']);
         $timezone = $data['timezone'];
-        $status = $data['status'];
 
         $client->setName($name)
-            ->setUser($user)
-            ->setTimezone($timezone)
-            ->setStatus($status);
+            ->setTimezone($timezone);
+
+        if (isset($data['status']))
+        {
+            // TODO: check valid status
+            $status = $data['status'];
+            $client->setStatus($status);
+        }
+
+        if (isset($data['user']))
+            $client->setUser($user);
     }
 
     public function createAction()
@@ -65,44 +71,14 @@ class ClientController extends Controller
         return $this->redirect($this->generateUrl('oncall_admin_clients'));
     }
 
-    public function createMultipleAction()
-    {
-        $data = $this->getRequest()->request->all();
-        $em = $this->getDoctrine()->getManager();
-
-        // get numbers
-        $numbers = explode("\n", $data['numbers']);
-        $nlen = count($numbers);
-
-        // trim numbers
-        // TODO: check if numbers already exist
-        for ($i = 0; $i < $nlen; $i++)
-            $numbers[$i] = trim($numbers[$i]);
-
-
-        // create the numbers
-        foreach ($numbers as $num_text)
-        {
-            $num = new Number($num_text);
-            $this->updateNumber($num, $data);
-            $em->persist($num);
-        }
-        $em->flush();
-
-        return $this->redirect($this->generateUrl('oncall_admin_numbers'));
-    }
-
     public function getAction($id)
     {
-        $repo = $this->getDoctrine()->getRepository('OnCallAdminBundle:Number');
-        $num = $repo->find($id);
-        if ($num == null)
-        {
-            // TODO: error message?
-            return $this->redirect($this->generateUrl('oncall_admin_numbers'));
-        }
+        $repo = $this->getDoctrine()->getRepository('OnCallAdminBundle:Client');
+        $client = $repo->find($id);
+        if ($client == null)
+            return new Response('');
 
-        return new Response($num->jsonify());
+        return new Response($client->jsonify());
     }
 
     public function updateAction($id)
@@ -111,19 +87,19 @@ class ClientController extends Controller
         $em = $this->getDoctrine()->getManager();
 
         // find
-        $repo = $this->getDoctrine()->getRepository('OnCallAdminBundle:Number');
-        $num = $repo->find($id);
-        if ($num == null)
+        $repo = $this->getDoctrine()->getRepository('OnCallAdminBundle:Client');
+        $client = $repo->find($id);
+        if ($client == null)
         {
             // TODO: error message?
-            return $this->redirect($this->generateUrl('oncall_admin_numbers'));
+            return $this->redirect($this->generateUrl('oncall_admin_clients'));
         }
 
         // update
-        $this->updateNumber($num, $data);
+        $this->updateClient($client, $data);
         $em->flush();
 
-        return $this->redirect($this->generateUrl('oncall_admin_numbers'));
+        return $this->redirect($this->generateUrl('oncall_admin_clients'));
     }
 
     public function assignAction($acc_id)
