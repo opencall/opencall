@@ -3,25 +3,104 @@
 {% block javascript %}
 <script type="text/javascript">
 $(document).ready(function() {
+    $('#add_form').validate({
+        errorElement: 'span',
+        errorClass: 'help-inline',
+        focusInvalid: true,
+        ignore: "",
+        rules: {
+            username: {
+                minlength: 2,
+                required: true
+            },
+
+            password: {
+                minlength: 3,
+                required: true
+            },
+
+            name: {
+                minlength: 1,
+                required: true
+            },
+
+            email: {
+                email: true,
+                required: true
+            },
+
+            business_name: {
+                minlength: 1,
+                required: true
+            },
+
+            phone: {
+                number: true,
+                required: true,
+                minlength: 7
+            }
+        },
+
+        invalidHandler: function(event, validator) {
+        },
+
+        highlight: function(element) {
+            $(element)
+                .closest('.help-inline').removeClass('ok');
+            $(element)
+                .closest('.control-group').removeClass('success').addClass('error');
+        },
+
+        unhighlight: function(element) {
+            $(element)
+                .closest('.control-group').removeClass('error');
+        },
+
+        success: function(label) {
+            label.closest('.control-group').removeClass('error').addClass('success');
+            label.remove();
+        },
+
+        submitHandler: function(form) {
+            form.submit();
+        }
+
+    });
+
+    $('.account_add').click(function() {
+        $('.acc_username').val('');
+        $('.acc_name').val('');
+        $('.acc_email').val('');
+        $('.acc_business_name').val('');
+        $('.acc_phone').val('');
+        $('.acc_address').val('');
+        $('.acc_bill_business_name').val('');
+        $('.acc_bill_name').val('');
+        $('.acc_bill_email').val('');
+        $('.acc_bill_phone').val('');
+        $('.acc_bill_address').val('');
+        $('.acc_enable').val('1');
+    });
+
     $('.account_edit').click(function () {
         var acc_id = $(this).data('id');
         $('#edit_form').attr('action', '/account/' + acc_id);
         $.get('/account/' + acc_id, function(acc) {
-            $('#acc_multi_client').prop('checked', acc.multi_client);
+            $('.acc_multi_client').prop('checked', acc.multi_client);
             $.uniform.update();
 
-            $('#acc_username').val(acc.username);
-            $('#acc_name').val(acc.name);
-            $('#acc_email').val(acc.email);
-            $('#acc_business_name').val(acc.business_name);
-            $('#acc_phone').val(acc.phone);
-            $('#acc_address').val(acc.address);
-            $('#acc_bill_business_name').val(acc.bill_business_name);
-            $('#acc_bill_name').val(acc.bill_name);
-            $('#acc_bill_email').val(acc.bill_email);
-            $('#acc_bill_phone').val(acc.bill_phone);
-            $('#acc_bill_address').val(acc.bill_address);
-            $('#acc_enable').val(acc.enable);
+            $('.acc_username').val(acc.username);
+            $('.acc_name').val(acc.name);
+            $('.acc_email').val(acc.email);
+            $('.acc_business_name').val(acc.business_name);
+            $('.acc_phone').val(acc.phone);
+            $('.acc_address').val(acc.address);
+            $('.acc_bill_business_name').val(acc.bill_business_name);
+            $('.acc_bill_name').val(acc.bill_name);
+            $('.acc_bill_email').val(acc.bill_email);
+            $('.acc_bill_phone').val(acc.bill_phone);
+            $('.acc_bill_address').val(acc.bill_address);
+            $('.acc_enable').val(acc.enable);
         }, 'json');
     });
 });
@@ -41,7 +120,7 @@ $(document).ready(function() {
             </h3>
                 {{ flash.display_flash_messages }}
 
-                <button class="btn green" style="margin-bottom: 4px;"  data-toggle="modal" href="#addAccount"><i class="icon-plus"></i> Add New Account</button>
+                <button class="btn green account_add" style="margin-bottom: 4px;"  data-toggle="modal" href="#addAccount"><i class="icon-plus"></i> Add New Account</button>
                  
                 <div class="portlet-body no-more-tables">
                     <table class="table-bordered table-striped table-condensed cf">
@@ -148,30 +227,33 @@ $(document).ready(function() {
                             <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
                             <h3>Add Client</h3>
                         </div>
-                        <form method="post" action="/account">
+                        <form id="add_form" method="post" action="/account">
                         <div class="modal-body">
                             <div class="row-fluid">
                                 <div class="span6">
                                     <h4>Business Details</h4>
-                                    <p><input name="multi_client" type="checkbox" value="1"> Multi-Client Account?</p>
-                                    <p>Username *<br /><input name="username" type="text" class="span12 m-wrap"></p>
-                                    <p>Password *<br /><input name="password" type="password" class="span12 m-wrap"></p>
-                                    <p>Contact Name *<br /><input name="name" type="text" class="span12 m-wrap"></p>
-                                    <p>Email *<br /><input name="email" type="text" class="span12 m-wrap"></p>
-                                    <p>Business Trading Name *<br /><input name="business_name" type="text" class="span12 m-wrap"></p>
-                                    <p>Phone *<br /><input name="phone" type="text" class="span12 m-wrap"></p>
-                                    <p>Address<br /><input name="address" type="text" class="span12 m-wrap"></p>
+                                    <p class="control-group"><input name="multi_client" type="checkbox" class="acc_multi_client" value="1"> Multi-Client Account?</p>
+                                    <p class="control-group">
+                                        <span class="control-label">Username *</span><br />
+                                        <input name="username" type="text" class="span12 m-wrap acc_username">
+                                    </p>
+                                    <p class="control-group"><span class="control-label">Password *</span><br /><input name="password" type="password" class="span12 m-wrap acc_password"></p>
+                                    <p class="control-group"><span class="control-label">Contact Name *</span><br /><input name="name" type="text" class="span12 m-wrap acc_name"></p>
+                                    <p class="control-group"><span class="control-label">Email *</span><br /><input name="email" type="text" class="span12 m-wrap acc_email"></p>
+                                    <p class="control-group"><span class="control-label">Business Trading Name *</span><br /><input name="business_name" type="text" class="span12 m-wrap acc_business_name"></p>
+                                    <p class="control-group"><span class="control-label">Phone *</span><br /><input name="phone" type="text" class="span12 m-wrap acc_phone"></p>
+                                    <p>Address<br /><input name="address" type="text" class="span12 m-wrap acc_address"></p>
                                 </div>
                                 <div class="span6">
                                     <h4>Billing Details</h4>
                                     <p>&nbsp;</p>
-                                    <p>Billing Full Business Name<br /><input name="bill_business_name" type="text" class="span12 m-wrap"></p>
-                                    <p>Billing Contact Name<br /><input name="bill_name" type="text" class="span12 m-wrap"></p>
-                                    <p>Billing Email<br /><input name="bill_email" type="text" class="span12 m-wrap"></p>
-                                    <p>Billing Phone<br /><input name="bill_phone" type="text" class="span12 m-wrap"></p>
-                                    <p>Billing Address<br /><input name="bill_address" type="text" class="span12 m-wrap"></p>
+                                    <p>Billing Full Business Name<br /><input name="bill_business_name" type="text" class="span12 m-wrap acc_bill_business_name"></p>
+                                    <p>Billing Contact Name<br /><input name="bill_name" type="text" class="span12 m-wrap acc_bill_name"></p>
+                                    <p>Billing Email<br /><input name="bill_email" type="text" class="span12 m-wrap acc_bill_email"></p>
+                                    <p>Billing Phone<br /><input name="bill_phone" type="text" class="span12 m-wrap acc_bill_phone"></p>
+                                    <p>Billing Address<br /><input name="bill_address" type="text" class="span12 m-wrap acc_bill_address"></p>
                                     <p>Account Status *<br />
-                                        <select name="enabled" class="small m-wrap" tabindex="1">
+                                        <select name="enabled" class="acc_enable small m-wrap" tabindex="1">
                                                 <option value="1">Active</option>
                                                 <option value="0">Disabled</option>
                                             </select></p>
@@ -198,25 +280,25 @@ $(document).ready(function() {
                             <div class="row-fluid">
                                 <div class="span6">
                                     <h4>Business Details</h4>
-                                    <p><input id="acc_multi_client" name="multi_client" type="checkbox" value="1"> Multi-Client Account?</p>
-                                    <p>Username *<br /><input id="acc_username" name="username" type="text" class="span12 m-wrap" disabled="disabled"></p>
-                                    <p>Password *<br /><input name="password" type="password" class="span12 m-wrap"></p>
-                                    <p>Contact Name *<br /><input id="acc_name" name="name" type="text" class="span12 m-wrap"></p>
-                                    <p>Email *<br /><input id="acc_email" name="email" type="text" class="span12 m-wrap"></p>
-                                    <p>Business Trading Name *<br /><input id="acc_business_name" name="business_name" type="text" class="span12 m-wrap"></p>
-                                    <p>Phone *<br /><input id="acc_phone" name="phone" type="text" class="span12 m-wrap"></p>
-                                    <p>Address<br /><input id="acc_address" name="address" type="text" class="span12 m-wrap"></p>
+                                    <p><input class="acc_multi_client" name="multi_client" type="checkbox" value="1"> Multi-Client Account?</p>
+                                    <p>Username *<br /><input name="username" type="text" class="span12 m-wrap acc_username" disabled="disabled"></p>
+                                    <p>Password<br /><input name="password" type="password" class="span12 m-wrap acc_password"></p>
+                                    <p>Contact Name *<br /><input id="acc_name" name="name" type="text" class="span12 m-wrap acc_name"></p>
+                                    <p>Email *<br /><input id="acc_email" name="email" type="text" class="span12 m-wrap acc_email"></p>
+                                    <p>Business Trading Name *<br /><input id="acc_business_name" name="business_name" type="text" class="span12 m-wrap acc_business_name"></p>
+                                    <p>Phone *<br /><input id="acc_phone" name="phone" type="text" class="span12 m-wrap acc_phone"></p>
+                                    <p>Address<br /><input id="acc_address" name="address" type="text" class="span12 m-wrap acc_address"></p>
                                 </div>
                                 <div class="span6">
                                     <h4>Billing Details</h4>
                                     <p>&nbsp;</p>
-                                    <p>Billing Full Business Name<br /><input id="acc_bill_business_name" name="bill_business_name" type="text" class="span12 m-wrap"></p>
-                                    <p>Billing Contact Name<br /><input id="acc_bill_name" name="bill_name" type="text" class="span12 m-wrap"></p>
-                                    <p>Billing Email<br /><input id="acc_bill_email" name="bill_email" type="text" class="span12 m-wrap"></p>
-                                    <p>Billing Phone<br /><input id="acc_bill_phone" name="bill_phone" type="text" class="span12 m-wrap"></p>
-                                    <p>Billing Address<br /><input id="acc_bill_address" name="bill_address" type="text" class="span12 m-wrap"></p>
+                                    <p>Billing Full Business Name<br /><input id="acc_bill_business_name" name="bill_business_name" type="text" class="span12 m-wrap acc_bill_business_name"></p>
+                                    <p>Billing Contact Name<br /><input id="acc_bill_name" name="bill_name" type="text" class="span12 m-wrap acc_bill_name"></p>
+                                    <p>Billing Email<br /><input id="acc_bill_email" name="bill_email" type="text" class="span12 m-wrap acc_bill_email"></p>
+                                    <p>Billing Phone<br /><input id="acc_bill_phone" name="bill_phone" type="text" class="span12 m-wrap acc_bill_phone"></p>
+                                    <p>Billing Address<br /><input id="acc_bill_address" name="bill_address" type="text" class="span12 m-wrap acc_bill_address"></p>
                                     <p>Account Status *<br />
-                                        <select id="acc_enable" name="enabled" class="small m-wrap" tabindex="1">
+                                        <select id="acc_enable" name="enabled" class="acc_enable small m-wrap" tabindex="1">
                                                 <option value="1">Active</option>
                                                 <option value="0">Disabled</option>
                                             </select></p>

@@ -58,8 +58,7 @@ class AccountController extends Controller
 
     protected function updateUser(User $user, $data)
     {
-        $user->setUsername($data['username'])
-            ->setName($data['name'])
+        $user->setName($data['name'])
             ->setEmail($data['email'])
             ->setBusinessName($data['business_name'])
             ->setPhone($data['phone'])
@@ -71,6 +70,10 @@ class AccountController extends Controller
             ->setBillAddress($data['bill_address'])
             ->setEnabled($data['enabled'])
             ->setRoles(array('ROLE_USER'));
+
+        // username is not set on edit
+        if (isset($data['username']) && !empty($data['username']))
+            $user->setUsername($data['username']);
 
         // check if password was specified
         if (!empty($data['password']))
