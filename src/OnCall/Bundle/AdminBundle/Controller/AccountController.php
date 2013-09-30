@@ -22,11 +22,13 @@ class AccountController extends Controller
         // get role hash for menu
         $user = $this->getUser();
         $role_hash = $user->getRoleHash();
+        $alerts = array();
 
         return $this->render(
             'OnCallAdminBundle:Account:index.html.twig',
             array(
                 'sidebar_menu' => MenuHandler::getMenu($role_hash, 'account'),
+                'alerts' => $alerts,
                 'accounts' => $accounts
             )
         );
@@ -79,6 +81,15 @@ class AccountController extends Controller
         return new Response($edit_user->jsonify());
     }
 
+    protected function addFlash($type, $message)
+    {
+        $this->get('session')
+            ->getFlashBag()
+            ->add($type, $message);
+
+        return $this;
+    }
+
     public function updateAction($id)
     {
         // find user
@@ -91,6 +102,8 @@ class AccountController extends Controller
         $this->updateUser($edit_user, $data);
         $mgr->updateUser($edit_user);
 
+        $this->addFlash('success', 'Account ' . $edit_user->getUsername() . ' updated.');
+
         return $this->redirect($this->generateUrl('oncall_admin_accounts'));
     }
 
@@ -99,39 +112,29 @@ class AccountController extends Controller
         $user = $this->getUser();
         $role_hash = $user->getRoleHash();
 
-        // check for errors
-        $session = $this->getRequest()->getSession();
-        $errors = array();
-        foreach ($session->getFlashBag()->get('message/password_change', array()) as $err)
-            $errors[] = $err;
-
-
         return $this->render(
             'OnCallAdminBundle:Account:password.html.twig',
              array(
                 'sidebar_menu' => MenuHandler::getMenu($role_hash),
-                'errors' => $errors
             )
         );
     }
 
     public function passwordSubmitAction()
     {
-        $session = $this->getRequest()->getSession();
-
         $data = $this->getRequest()->request->all();
 
         // field check
         if (!isset($data['pass1']) || !isset($data['pass2']) || empty($data['pass1']) || empty($data['pass2']))
         {
-            $session->getFlashBag()->add('message/password_change', 'Password cannot be blank.');
+            $this->addFlash('error', 'Password cannot be blank.');
             return $this->redirect($this->generateUrl('oncall_admin_password_form'));
         }
 
         // match check
         if ($data['pass1'] != $data['pass2'])
         {
-            $session->getFlashBag()->add('message/password_change', 'Passwords do not match.');
+            $this->addFlash('error', 'Passwords do not match.');
             return $this->redirect($this->generateUrl('oncall_admin_password_form'));
         }
 
@@ -141,7 +144,8 @@ class AccountController extends Controller
         $mgr = $this->get('fos_user.user_manager');
         $mgr->updateUser($user);
 
-        $session->getFlashBag()->add('message/password_change', 'Password changed successfully.');
+        $this->addFlash('success', 'Password changed successfully.');
+
         return $this->redirect($this->generateUrl('oncall_admin_password_form'));
     }
 }

@@ -1,0 +1,7 @@
+{% macro display_alert(alert) %}
+<div class="alert {{ alert.getClass }}">
+    <button class="close" data-dimsiss="alert"></button>
+    <strong>{{ alert.getTitle }}</strong>
+    {{ alert.getMessage }}
+</div>
+{% endmacro %}

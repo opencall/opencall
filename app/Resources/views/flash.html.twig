@@ -1,0 +1,37 @@
+{% macro display_flash_messages() %}
+<div class="portlet">
+    <div class="portlet-body">
+        {% for flash_msg in app.session.flashbag.get('error') %}
+        <div class="alert alert-error">
+            <button class="close" data-dimsiss="alert"></button>
+            <strong>Error!</strong>
+            {{ flash_msg }}
+        </div>
+        {% endfor %}
+
+        {% for flash_msg in app.session.flashbag.get('warning') %}
+        <div class="alert">
+            <button class="close" data-dimsiss="alert"></button>
+            <strong>Warning!</strong>
+            {{ flash_msg }}
+        </div>
+        {% endfor %}
+
+        {% for flash_msg in app.session.flashbag.get('success') %}
+        <div class="alert alert-success">
+            <button class="close" data-dimsiss="alert"></button>
+            <strong>Success!</strong>
+            {{ flash_msg }}
+        </div>
+        {% endfor %}
+
+        {% for flash_msg in app.session.flashbag.get('error') %}
+        <div class="alert alert-info">
+            <button class="close" data-dimsiss="alert"></button>
+            <strong>Info!</strong>
+            {{ flash_msg }}
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endmacro %}
