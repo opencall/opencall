@@ -69,13 +69,13 @@ $(document).ready(function() {
                             </div>
                             <div class="clearfix"></div>
                             <!-- Kendrick : this only shows to the admin -->
-                            {% if is_granted('ROLE_ADMIN') %}
+                            {% if is_granted('ROLE_PREVIOUS_ADMIN') %}
                             <div class="row-fluid">
                                 <div class="span6">
                                     <h4>Client Status</h4>
                                     <p><select name="status" class="cl_status small m-wrap" tabindex="1">
-                                        <option value="active">Active</option>
-                                        <option value="deleted">Deleted</option>
+                                        <option value="1">Active</option>
+                                        <option value="0">Inactive</option>
                                     </select></p>
                                 </div>
                             </div>

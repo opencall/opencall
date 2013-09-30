@@ -17,15 +17,28 @@ class ClientController extends Controller
         $req = $this->getRequest();
         $user = $this->getUser();
 
-        // get clients
-        $repo = $this->getDoctrine()->getRepository('OnCallAdminBundle:Client');
-        $clients = $repo->findBy(array(
-            'user_id' => $user->getID(),
-            'status' => ClientStatus::ACTIVE
-        ));
-
         // get role hash for menu
         $role_hash = $user->getRoleHash();
+
+        // get clients
+        $repo = $this->getDoctrine()->getRepository('OnCallAdminBundle:Client');
+
+        // for admin switched user
+        if ($this->get('security.context')->isGranted('ROLE_PREVIOUS_ADMIN'))
+        {
+            $clients = $repo->findBy(array(
+                'user_id' => $user->getID()
+            ));
+        }
+        // for normal users
+        else
+        {
+            $clients = $repo->findBy(array(
+                'user_id' => $user->getID(),
+                'status' => ClientStatus::ACTIVE
+            ));
+        }
+
 
         return $this->render(
             'OnCallAdminBundle:Client:index.html.twig',
