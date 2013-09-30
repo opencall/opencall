@@ -69,7 +69,7 @@ class ClientController extends Controller
         }
 
         if (isset($data['user']))
-            $client->setUser($user);
+            $client->setUser($data['user']);
     }
 
     public function createAction()
