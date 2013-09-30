@@ -142,6 +142,7 @@ class AccountController extends Controller
             'OnCallAdminBundle:Account:password.html.twig',
              array(
                 'sidebar_menu' => MenuHandler::getMenu($role_hash),
+                'user' => $user
             )
         );
     }
