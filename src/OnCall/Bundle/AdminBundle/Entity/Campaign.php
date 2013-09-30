@@ -4,12 +4,12 @@ namespace OnCall\Bundle\AdminBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use DateTime;
-use OnCall\Bundle\AdminBundle\Model\ClientStatus;
+use OnCall\Bundle\AdminBundle\Model\ItemStatus;
 
 /**
- * @ORM\Entity(repositoryClass="OnCall\Bundle\AdminBundle\Repositories\Client")
+ * @ORM\Entity
  */
-class Client
+class Campaign
 {
     /**
      * @ORM\Id
@@ -19,25 +19,20 @@ class Client
     protected $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="User")
-     * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
+     * @ORM\ManyToOne(targetEntity="Client")
+     * @ORM\JoinColumn(name="client_id", referencedColumnName="id")
      */
-    protected $user;
+    protected $client;
 
     /**
      * @ORM\Column(type="integer")
      */
-    protected $user_id;
+    protected $client_id;
 
     /**
      * @ORM\Column(type="string", length=50)
      */
     protected $name;
-
-    /**
-     * @ORM\Column(type="decimal", precision=5, scale=2)
-     */
-    protected $timezone;
 
     /**
      * @ORM\Column(type="smallint")
@@ -49,39 +44,23 @@ class Client
      */
     protected $date_create;
 
-    /**
-     * @ORM\OneToMany(targetEntity="Number", mappedBy="client")
-     */
-    protected $numbers;
-
-    /**
-     * @ORM\OneToMany(targetEntity="Campaign", mappedBy="client")
-     */
-    protected $campaigns;
-
     public function __construct()
     {
-        $this->status = ClientStatus::ACTIVE;
+        $this->status = ItemStatus::ACTIVE;
         $this->date_create = new DateTime();
     }
 
     // begin setters
-    public function setUser(User $user)
+    public function setClient(Client $client)
     {
-        $this->user = $user;
-        $this->user_id = $user->getID();
+        $this->client = $client;
+        $this->client_id = $user->getID();
         return $this;
     }
 
     public function setName($name)
     {
         $this->name = $name;
-        return $this;
-    }
-
-    public function setTimezone($timezone)
-    {
-        $this->timezone = $timezone;
         return $this;
     }
 
@@ -98,19 +77,14 @@ class Client
         return $this->id;
     }
 
-    public function getUser()
+    public function getClient()
     {
-        return $this->user;
+        return $this->client;
     }
 
     public function getName()
     {
         return $this->name;
-    }
-
-    public function getTimezone()
-    {
-        return $this->timezone;
     }
 
     public function getStatus()
@@ -120,7 +94,7 @@ class Client
 
     public function isActive()
     {
-        if ($this->status == ClientStatus::ACTIVE)
+        if ($this->status == ItemStatus::ACTIVE)
             return true;
 
         return false;
@@ -128,7 +102,7 @@ class Client
 
     public function isInactive()
     {
-        if ($this->status == ClientStatus::INACTIVE)
+        if ($this->status == ItemStatus::INACTIVE)
             return true;
 
         return false;
@@ -143,25 +117,6 @@ class Client
     {
         return $this->date_create->format('d M Y');
     }
-
-    public function getNumbers()
-    {
-        return $this->numbers;
-    }
-
-    public function getNumberCount()
-    {
-        return count($this->numbers);
-    }
-
-    public function getCampaigns()
-    {
-    }
-
-    public function getCampaignCount()
-    {
-        return count($this->campaigns);
-    }
     // end getters
 
     public function jsonify()
@@ -169,7 +124,6 @@ class Client
         $data = array(
             'id' => $this->getID(),
             'name' => $this->getName(),
-            'timezone' => $this->getTimezone(),
             'status' => $this->getStatus(),
             'date_create' => $this->getDateCreateFormatted()
         );

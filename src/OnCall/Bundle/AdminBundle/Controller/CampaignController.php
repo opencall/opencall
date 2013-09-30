@@ -35,7 +35,7 @@ class CampaignController extends Controller
             throw new AccessDeniedException();
 
         // campaigns
-        $campaigns = array();
+        $campaigns = $cilent->getCampaigns();
 
 
         return $this->render(
