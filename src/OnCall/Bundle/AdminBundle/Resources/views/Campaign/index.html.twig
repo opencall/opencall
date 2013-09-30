@@ -411,19 +411,21 @@ $('#containerHourly').highcharts({
                             <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
                             <h3>Add Campaign</h3>
                         </div>
+                        <form method="post" action="/client/{{ client.getID }}/campaign">
                         <div class="modal-body">
                             <div class="row-fluid">
                                 <div class="span6">
                                     <h4>Campaign Name</h4>
-                                    <p><input type="text" class="span12 m-wrap"></p>
+                                    <p><input name="name" type="text" class="span12 m-wrap"></p>
                                 </div>
 
                             </div>
                         </div>
                         <div class="modal-footer">
                             <button type="button" data-dismiss="modal" class="btn">Cancel</button>
-                            <button type="button" class="btn green">Add campaign</button>
+                            <input type="submit" class="btn green" value="Add campaign" />
                         </div>
+                        </form>
                     </div>                              
                     <!-- End Add MODAL -->
                     

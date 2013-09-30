@@ -19,7 +19,7 @@ class Campaign
     protected $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Client")
+     * @ORM\ManyToOne(targetEntity="Client", inversedBy="campaigns")
      * @ORM\JoinColumn(name="client_id", referencedColumnName="id")
      */
     protected $client;
@@ -54,7 +54,7 @@ class Campaign
     public function setClient(Client $client)
     {
         $this->client = $client;
-        $this->client_id = $user->getID();
+        $this->client_id = $client->getID();
         return $this;
     }
 

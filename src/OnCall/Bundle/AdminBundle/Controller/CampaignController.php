@@ -8,7 +8,8 @@ use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use OnCall\Bundle\AdminBundle\Model\Controller;
 use OnCall\Bundle\AdminBundle\Model\MenuHandler;
 use OnCall\Bundle\AdminBundle\Entity\Client;
-use OnCall\Bundle\AdminBundle\Model\ClientStatus;
+use OnCall\Bundle\AdminBundle\Entity\Campaign;
+use OnCall\Bundle\AdminBundle\Model\ItemStatus;
 
 class CampaignController extends Controller
 {
@@ -37,7 +38,6 @@ class CampaignController extends Controller
         // campaigns
         $campaigns = $client->getCampaigns();
 
-
         return $this->render(
             'OnCallAdminBundle:Campaign:index.html.twig',
             array(
@@ -49,40 +49,49 @@ class CampaignController extends Controller
         );
     }
 
-    protected function updateClient(Client $client, $data)
+    protected function update(Campaign $campaign, $data)
     {
         // TODO: cleanup parameters / default value
         $name = trim($data['name']);
-        $timezone = $data['timezone'];
 
-        $client->setName($name)
-            ->setTimezone($timezone);
+        $campaign->setName($name);
 
         if (isset($data['status']))
         {
-            // TODO: check valid status
             $status = $data['status'];
-            $client->setStatus($status);
+            $campaign->setStatus($status);
         }
 
-        if (isset($data['user']))
-            $client->setUser($user);
+        if (isset($data['client']))
+            $campaign->setClient($data['client']);
     }
 
-    public function createAction()
+    public function createAction($cid)
     {
         $data = $this->getRequest()->request->all();
         $em = $this->getDoctrine()->getManager();
 
-        $client = new Client();
-        $data['user'] = $this->getUser();
-        $data['status'] = ClientStatus::ACTIVE;
-        $this->updateClient($client, $data);
+        // find client
+        $client = $this->getDoctrine()
+            ->getRepository('OnCallAdminBundle:Client')
+            ->find($cid);
 
-        $em->persist($client);
+        // not found
+        if ($client == null)
+        {
+            $this->addFlash('error', 'Could not find client.');
+            return $this->redirect($this->generateUrl('/'));
+        }
+
+        $camp = new Campaign();
+        $data['client'] = $client;
+        $data['status'] = ItemStatus::ACTIVE;
+        $this->update($camp, $data);
+
+        $em->persist($camp);
         $em->flush();
 
-        return $this->redirect($this->generateUrl('oncall_admin_clients'));
+        return $this->redirect($this->generateUrl('oncall_admin_campaigns', array('cid' => $cid)));
     }
 
     public function getAction($id)
