@@ -26,7 +26,19 @@ $(document).ready(function() {
         update_client(client_id);
     });
 
+    validate_init('#add_form', {
+        name: {
+            minlength: 1,
+            required: true
+        }
+    });
 
+    validate_init('#edit_form', {
+        name: {
+            minlength: 1,
+            required: true
+        }
+    });
 });
 </script>
 {% endblock %}
@@ -54,8 +66,8 @@ $(document).ready(function() {
                     <form id="edit_form" method="post" action="/client/0">
                     <div class="modal-body">
                         <div class="row-fluid">
-                            <div class="span6">
-                                <h4>Client Name</h4>
+                            <div class="span6 control-group">
+                                <h4 class="control-label">Client Name</h4>
                                 <p><input name="name" type="text" class="cl_name span12 m-wrap"></p>
                             </div>
                             <div class="span6">
@@ -112,15 +124,15 @@ $(document).ready(function() {
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
                         <h3>Add Client</h3>
                     </div>
-                    <form method="post">
+                    <form id="add_form" method="post">
                     <div class="modal-body">
                         <div class="row-fluid">
-                            <div class="span6">
-                                <h4>Client Name</h4>
+                            <div class="span6 control-group">
+                                <h4 class="control-label">Client Name</h4>
                                 <p><input name="name" type="text" class="span12 m-wrap"></p>
                             </div>
-                            <div class="span6">
-                                <h4>Client Timezone</h4>
+                            <div class="span6 control-group">
+                                <h4 class="control-label">Client Timezone</h4>
                                 <p>
                                     <select name="timezone" id="add_timezone">
                                     {% for tz_key,tz_name in timezones %}
