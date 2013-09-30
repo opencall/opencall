@@ -6,6 +6,7 @@ use OnCall\Bundle\AdminBundle\Model\MenuHandler;
 use Symfony\Component\HttpFoundation\Response;
 use OnCall\Bundle\AdminBundle\Entity\User;
 use OnCall\Bundle\AdminBundle\Model\Controller;
+use Doctrine\DBAL\DBALException;
 
 
 class AccountController extends Controller
@@ -38,12 +39,20 @@ class AccountController extends Controller
 
     public function createAction()
     {
-        $mgr = $this->get('fos_user.user_manager');
-        $user = $mgr->createUser();
+        try 
+        {
+            $mgr = $this->get('fos_user.user_manager');
+            $user = $mgr->createUser();
 
-        $data = $this->getRequest()->request->all();
-        $this->updateUser($user, $data);
-        $mgr->updateUser($user);
+            $data = $this->getRequest()->request->all();
+            $this->updateUser($user, $data);
+            $mgr->updateUser($user);
+        }
+        catch (DBALException $e)
+        {
+            $this->addFlash('error', 'Could not create account, username probably exists.');
+        }
+
         return $this->redirect($this->generateUrl('oncall_admin_accounts'));
     }
 
