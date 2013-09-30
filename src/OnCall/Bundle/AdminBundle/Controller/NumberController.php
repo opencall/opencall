@@ -107,11 +107,13 @@ class NumberController extends Controller
                 $em->persist($num);
             }
 
+            $this->addFlash('success', 'Numbers have been added to the pool.');
+
             $em->flush();
         }
         catch (DBALException $e)
         {
-            
+            $this->addFlash('error', 'One or more of the numbers already exist and cannot be added.');
         }
 
         return $this->redirect($this->generateUrl('oncall_admin_numbers'));
@@ -121,11 +123,10 @@ class NumberController extends Controller
     {
         $repo = $this->getDoctrine()->getRepository('OnCallAdminBundle:Number');
         $num = $repo->find($id);
+
+        // not found
         if ($num == null)
-        {
-            // TODO: error message?
-            return $this->redirect($this->generateUrl('oncall_admin_numbers'));
-        }
+            return new Response('');
 
         return new Response($num->jsonify());
     }
@@ -138,15 +139,18 @@ class NumberController extends Controller
         // find
         $repo = $this->getDoctrine()->getRepository('OnCallAdminBundle:Number');
         $num = $repo->find($id);
+
+        // not found
         if ($num == null)
         {
-            // TODO: error message?
+            $this->addFlash('error', 'Number could not be found.');
             return $this->redirect($this->generateUrl('oncall_admin_numbers'));
         }
 
         // update
         $this->updateNumber($num, $data);
         $em->flush();
+        $this->addFlash('success', 'Number information updated.');
 
         return $this->redirect($this->generateUrl('oncall_admin_numbers'));
     }
@@ -163,7 +167,7 @@ class NumberController extends Controller
         // no client found
         if ($client == null)
         {
-            // TODO: error message?
+            $this->addFlash('error', 'Could not find client.');
             return $this->redirect($this->generateUrl('oncall_admin_numbers'));
         }
 
@@ -171,7 +175,7 @@ class NumberController extends Controller
         $num_ids = $this->getRequest()->request->get('number_ids');
         if ($num_ids == null || !is_array($num_ids))
         {
-            // TODO: error message?
+            $this->addFlash('error', 'No numbers to assign.');
             return $this->redirect($this->generateUrl('oncall_admin_numbers'));
         }
 
@@ -198,6 +202,8 @@ class NumberController extends Controller
         // flush db
         $em->flush();
 
+        $this->addFlash('success', 'The numbers have been assigned.');
+
         return $this->redirect($this->generateUrl('oncall_admin_numbers'));
     }
 
@@ -210,20 +216,21 @@ class NumberController extends Controller
         $num = $repo->find($id);
         if ($num == null)
         {
-            // TODO: error message?
+            $this->addFlash('error', 'Number could not be found');
             return $this->redirect($this->generateUrl('oncall_admin_numbers'));
         }
 
         // check if we can delete
         if ($num->isInUse())
         {
-            // TODO: error message?
+            $this->addFlash('error', 'Could not delete number, it is in use.');
             return $this->redirect($this->generateUrl('oncall_admin_numbers'));
         }
 
         // delete
         $em->remove($num);
         $em->flush();
+        $this->addFlash('success', 'Number has been deleted.');
 
         return $this->redirect($this->generateUrl('oncall_admin_numbers'));
     }
