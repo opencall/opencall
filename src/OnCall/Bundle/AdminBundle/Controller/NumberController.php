@@ -107,9 +107,9 @@ class NumberController extends Controller
                 $em->persist($num);
             }
 
-            $this->addFlash('success', 'Numbers have been added to the pool.');
-
             $em->flush();
+
+            $this->addFlash('success', 'Numbers have been added to the pool.');
         }
         catch (DBALException $e)
         {
