@@ -5,6 +5,7 @@ namespace OnCall\Bundle\AdminBundle\Controller;
 use OnCall\Bundle\AdminBundle\Model\MenuHandler;
 use Symfony\Component\HttpFoundation\Response;
 use OnCall\Bundle\AdminBundle\Entity\User;
+use OnCall\Bundle\AdminBundle\Entity\Client;
 use OnCall\Bundle\AdminBundle\Model\Controller;
 use Doctrine\DBAL\DBALException;
 
@@ -39,6 +40,7 @@ class AccountController extends Controller
 
     public function createAction()
     {
+        // add user
         try 
         {
             $mgr = $this->get('fos_user.user_manager');
@@ -51,6 +53,26 @@ class AccountController extends Controller
         catch (DBALException $e)
         {
             $this->addFlash('error', 'Could not create account, username probably exists.');
+        }
+
+        try
+        {
+            $em = $this->getDoctrine()->getManager();
+
+            // add default client for non-multi-client
+            if (!$user->isMultiClient())
+            {
+                $client = new Client();
+                $client->setUser($user)
+                    ->setName($user->getName())
+                    ->setTimezone('8.0');
+                $em->persist($client);
+                $em->flush();
+            }
+        }
+        catch (DBALException $e)
+        {
+            $this->addFlash('error', 'Could not add default client for account.');
         }
 
         return $this->redirect($this->generateUrl('oncall_admin_accounts'));

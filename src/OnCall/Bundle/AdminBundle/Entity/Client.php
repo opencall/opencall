@@ -64,6 +64,7 @@ class Client
     public function setUser(User $user)
     {
         $this->user = $user;
+        $this->user_id = $user->getID();
         return $this;
     }
 
