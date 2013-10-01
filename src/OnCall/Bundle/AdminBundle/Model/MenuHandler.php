@@ -30,7 +30,7 @@ class MenuHandler
             $menu_group->addItem(new MenuItem(
                 'campaigns',
                 'Campaigns',
-                '/clients',
+                '/',
                 'icon-signal'
             ));
             $menu_group->addItem(new MenuItem(

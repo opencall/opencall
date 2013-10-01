@@ -35,7 +35,7 @@ class MainController extends Controller
 
         return $this->redirect(
             $this->generateUrl(
-                'oncall_admin_campaign',
+                'oncall_admin_campaigns',
                 array('cid' => $client->getID())
             )
         );
