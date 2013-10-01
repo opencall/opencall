@@ -106,3 +106,20 @@ oncall_admin_camp_add:
     pattern: /client/{cid}/campaigns
     defaults: { _controller: OnCallAdminBundle:Campaign:create }
     methods: [POST]
+
+oncall_admin_camp_get:
+    pattern: /campaign/{id}
+    defaults: { _controller: OnCallAdminBundle:Campaign:get }
+    methods: [GET]
+
+oncall_admin_camp_update:
+    pattern: /campaign/{id}
+    defaults: { _controller: OnCallAdminBundle:Campaign:update }
+    methods: [POST]
+
+oncall_admin_camp_delete:
+    pattern: /campaign/{id}/delete
+    defaults: { _controller: OnCallAdminBundle:Campaign:delete }
+    methods: [POST]
+
+#ad group routes
