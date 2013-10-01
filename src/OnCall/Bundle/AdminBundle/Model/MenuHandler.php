@@ -47,7 +47,7 @@ class MenuHandler
             ));
             $menu_group->addItem(new MenuItem(
                 'quotas',
-                'Quotas and Usage',
+                'Billing & Usage',
                 '/quotas',
                 'icon-tasks'
             ));
