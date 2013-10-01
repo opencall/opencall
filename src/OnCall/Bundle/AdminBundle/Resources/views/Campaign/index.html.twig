@@ -349,8 +349,8 @@ $('#containerHourly').highcharts({
                                 <td data-title="Total Duration">{{ camp.getDurationFormatted }}</td>
                                 <td data-title="Avg Duration">{{ camp.getDurationAverageFormatted }}</td>
                                 <td data-title="Action">
-                                    <button href="#editCampaign" data-toggle="modal" role="button" class="btn mini" ><i class="icon-edit"></i> edit</button>
-                                    <button href="#deleteCampaign" data-toggle="modal" role="button" class="btn mini" ><i class="icon-trash"></i> delete</button>
+                                    <button href="#editCampaign" data-id="{{ camp.getID }}" data-toggle="modal" role="button" class="edit_button btn mini" ><i class="icon-edit"></i> edit</button>
+                                    <button href="#deleteCampaign" data-id="{{ camp.getID }}" data-toggle="modal" role="button" class="delete_button btn mini" ><i class="icon-trash"></i> delete</button>
                                 </td>   
                             </tr>  
                         {% endfor %}
