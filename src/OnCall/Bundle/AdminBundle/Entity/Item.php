@@ -218,7 +218,7 @@ abstract class Item
     }
     // end getters
 
-    public function jsonify()
+    public function getData()
     {
         $data = array(
             'id' => $this->getID(),
@@ -227,7 +227,12 @@ abstract class Item
             'date_create' => $this->getDateCreateFormatted()
         );
 
-        return json_encode($data);
+        return $data;
+    }
+
+    public function jsonify()
+    {
+        return json_encode($this->getData());
     }
 
     protected function formatSeconds($seconds)
