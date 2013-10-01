@@ -163,7 +163,7 @@ $(document).ready(function() {
                                 {% if cli.isInactive %}
                                     <i class="icon-remove-sign"></i> 
                                 {% endif %}
-                                <a href="client/{{ cli.getID }}/campaign">{{ cli.getName }}</a>
+                                <a href="client/{{ cli.getID }}/campaigns">{{ cli.getName }}</a>
                             </h3>
                             <ul>
                                 <li><i class="icon-angle-right"></i> {{ cli.getNumberCount }} numbers assigned</li>
@@ -174,7 +174,7 @@ $(document).ready(function() {
                                 <!--<li><i class="icon-angle-right"></i> $XXX/month + $0 overage in Aug</li>-->
 
                             </ul>
-                            <a href="client/{{ cli.getID }}/campaign" class="btn mini green" ><i class="icon-edit"></i> view</a>
+                            <a href="client/{{ cli.getID }}/campaigns" class="btn mini green" ><i class="icon-edit"></i> view</a>
                             <button data-toggle="modal" data-id="{{ cli.getID }}" href="#editClient" class="btn mini client_edit" ><i class="icon-edit"></i> edit</button>
                             <button data-toggle="modal" data-id="{{ cli.getID }}" href="#deleteClient" href="#" class="btn mini client_delete"><i class="icon-trash"></i> delete</button>
                         </div>

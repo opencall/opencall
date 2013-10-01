@@ -98,11 +98,11 @@ oncall_admin_client_delete:
 
 #campaign routes
 oncall_admin_campaigns:
-    pattern: /client/{cid}/campaign
+    pattern: /client/{cid}/campaigns
     defaults: { _controller: OnCallAdminBundle:Campaign:index }
     methods: [GET]
 
 oncall_admin_camp_add:
-    pattern: /client/{cid}/campaign
+    pattern: /client/{cid}/campaigns
     defaults: { _controller: OnCallAdminBundle:Campaign:create }
     methods: [POST]

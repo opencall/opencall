@@ -156,6 +156,7 @@ class Client
 
     public function getCampaigns()
     {
+        return $this->campaigns;
     }
 
     public function getCampaignCount()
