@@ -339,15 +339,15 @@ $('#containerHourly').highcharts({
                             <tr>
                                 <td data-title="Status" style="text-align: center;"><i class="{{ camp.isActive ? 'icon-ok-sign' : 'icon-remove-sign' }}"></i></td>  
                                 <td data-title="Campaign Name"><a href="">{{ camp.getName }}</a></td>  
-                                <td data-title="Total Calls"><a href="">{{ camp.getTotalFormatted }}</a></td>
-                                <td data-title="Unique Calls"><a href="">{{ camp.getUniqueFormatted }}</a></td>
-                                <td data-title="Failed Calls"><a href="">{{ camp.getFailedFormatted }}</a></td>
-                                <td data-title="Potential Leads"><a href="">{{ camp.getPLeadFormatted }}</a></td>
-                                <td data-title="% Unique">{{ camp.getUniquePercent }}</td>
-                                <td data-title="% Failed">{{ camp.getFailedPercent }}</td>
-                                <td data-title="% Potential Leads">{{ camp.getPLeadPercent }}</td>
-                                <td data-title="Total Duration">{{ camp.getDurationFormatted }}</td>
-                                <td data-title="Avg Duration">{{ camp.getDurationAverageFormatted }}</td>
+                                <td data-title="Total Calls"><a href=""></a></td>
+                                <td data-title="Unique Calls"><a href=""></a></td>
+                                <td data-title="Failed Calls"><a href=""></a></td>
+                                <td data-title="Potential Leads"><a href=""></a></td>
+                                <td data-title="% Unique"></td>
+                                <td data-title="% Failed"></td>
+                                <td data-title="% Potential Leads"></td>
+                                <td data-title="Total Duration"></td>
+                                <td data-title="Avg Duration"></td>
                                 <td data-title="Action">
                                     <button href="#editCampaign" data-id="{{ camp.getID }}" data-toggle="modal" role="button" class="edit_button btn mini" ><i class="icon-edit"></i> edit</button>
                                     <button href="#deleteCampaign" data-id="{{ camp.getID }}" data-toggle="modal" role="button" class="delete_button btn mini" ><i class="icon-trash"></i> delete</button>
