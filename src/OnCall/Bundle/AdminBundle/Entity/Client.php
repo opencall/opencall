@@ -82,11 +82,11 @@ class Client extends Item
     }
     // end getters
 
-    public function jsonify()
+    public function getData()
     {
         $data = parent::getData();
         $data['timezone'] = $this->getTimezone();
 
-        return json_encode($data);
+        return $data;
     }
 }
