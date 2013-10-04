@@ -120,4 +120,14 @@ class AggregateFilter
         // TODO: error?
         return 'campaign';
     }
+
+    public function getDateFromFormatted()
+    {
+        return $this->date_from->format('F j, Y');
+    }
+
+    public function getDateToFormatted()
+    {
+        return $this->date_to->format('F j, Y');
+    }
 }

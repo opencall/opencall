@@ -13,6 +13,9 @@ jQuery(document).ready(function() {
     Index.init();
     // Index.initDashboardDaterange();
 
+    var date_from = new Date("{{ agg_filter.getDateFromFormatted }}");
+    var date_to = new Date("{{ agg_filter.getDateToFormatted }}");
+
     $('#aggregate_range').daterangepicker({
         ranges: {
             'Today': ['today', 'today'],
@@ -33,12 +36,16 @@ jQuery(document).ready(function() {
         opens: (App.isRTL() ? 'right' : 'left'),
         format: 'MM/dd/yyyy',
         separator: ' to ',
+        startDate: date_from,
+        endDate: date_to,
+        /*
         startDate: Date.today().add({
             days: -29
         }),
         endDate: Date.today(),
-        minDate: '01/01/2012',
-        maxDate: '12/31/2014',
+        */
+        minDate: '01/01/2013',
+        maxDate: '12/31/2017',
         locale: {
             applyLabel: 'Submit',
             fromLabel: 'From',
@@ -63,10 +70,6 @@ jQuery(document).ready(function() {
     });
 
     $('#aggregate_range').show();
-
-    $('#aggregate_range span').html(Date.today().add({
-        days: -6
-    }).toString('MMMM d, yyyy') + ' - ' + Date.today().toString('MMMM d, yyyy'));
 });
 </script>
 
@@ -265,7 +268,7 @@ $('#containerHourly').highcharts({
                 <li class="pull-right no-text-shadow">
                     <div id="aggregate_range" class="dashboard-date-range tooltips no-tooltip-on-touch-device responsive" data-tablet="" data-desktop="tooltips" data-placement="top" data-original-title="Change dashboard date range">
                         <i class="icon-calendar"></i>
-                        <span></span>
+                        <span>{{ agg_filter.getDateFromFormatted }} - {{ agg_filter.getDateToFormatted }}</span>
                         <i class="icon-angle-down"></i>
                     </div>
                 </li>

@@ -59,6 +59,7 @@ class CampaignController extends Controller
                 'sidebar_menu' => MenuHandler::getMenu($role_hash, 'campaigns'),
                 'client' => $client,
                 'agg_client' => $agg_client,
+                'agg_filter' => $filter,
                 'campaigns' => $campaigns,
             )
         );
