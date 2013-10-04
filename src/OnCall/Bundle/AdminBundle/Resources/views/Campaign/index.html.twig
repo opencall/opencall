@@ -414,15 +414,15 @@ $('#containerHourly').highcharts({
                             <tr>
                                 <td></td>
                                 <td><strong>Totals</strong></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td>%</td>
-                                <td>%</td>
-                                <td>%</td>
-                                <td>0:00:00</td>
-                                <td>0:00:00</td>
+                                <td>{{ agg_client.getTotalFormatted }}</td>
+                                <td>{{ agg_client.getUniqueFormatted }}</td>
+                                <td>{{ agg_client.getFailedFormatted }}</td>
+                                <td>{{ agg_client.getPLeadFormatted }}</td>
+                                <td>{{ agg_client.getUniquePercentFormatted }}%</td>
+                                <td>{{ agg_client.getFailedPercentFormatted }}%</td>
+                                <td>{{ agg_client.getPLeadPercentFormatted }}%</td>
+                                <td>{{ agg_client.getDurationFormatted }}</td>
+                                <td>{{ agg_client.getDurationFormatted }}</td>
                                 <td></td>
                             </tr>
                         </tfoot>
