@@ -11,7 +11,62 @@
 <script type="text/javascript">
 jQuery(document).ready(function() {
     Index.init();
-    Index.initDashboardDaterange();
+    // Index.initDashboardDaterange();
+
+    $('#aggregate_range').daterangepicker({
+        ranges: {
+            'Today': ['today', 'today'],
+            'Yesterday': ['yesterday', 'yesterday'],
+            'Last 7 Days': [Date.today().add({
+                    days: -6
+                }), 'today'],
+            'Last 30 Days': [Date.today().add({
+                    days: -29
+                }), 'today'],
+            'This Month': [Date.today().moveToFirstDayOfMonth(), Date.today().moveToLastDayOfMonth()],
+            'Last Month': [Date.today().moveToFirstDayOfMonth().add({
+                    months: -1
+                }), Date.today().moveToFirstDayOfMonth().add({
+                    days: -1
+                })]
+        },
+        opens: (App.isRTL() ? 'right' : 'left'),
+        format: 'MM/dd/yyyy',
+        separator: ' to ',
+        startDate: Date.today().add({
+            days: -29
+        }),
+        endDate: Date.today(),
+        minDate: '01/01/2012',
+        maxDate: '12/31/2014',
+        locale: {
+            applyLabel: 'Submit',
+            fromLabel: 'From',
+            toLabel: 'To',
+            customRangeLabel: 'Custom Range',
+            daysOfWeek: ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'],
+            monthNames: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
+            firstDay: 1
+        },
+        showWeekNumbers: true,
+        buttonClasses: ['btn-danger']
+    },
+
+    function (start, end) {
+        App.blockUI(jQuery("#dashboard"));
+        setTimeout(function () {
+            App.unblockUI(jQuery("#dashboard"));
+            App.scrollTo();
+        }, 1000);
+        $('#aggregate_range span').html(start.toString('MMMM d, yyyy') + ' - ' + end.toString('MMMM d, yyyy'));
+
+    });
+
+    $('#aggregate_range').show();
+
+    $('#aggregate_range span').html(Date.today().add({
+        days: -6
+    }).toString('MMMM d, yyyy') + ' - ' + Date.today().toString('MMMM d, yyyy'));
 });
 </script>
 
@@ -208,7 +263,7 @@ $('#containerHourly').highcharts({
                     Campaigns
                 </li>
                 <li class="pull-right no-text-shadow">
-                    <div id="dashboard-report-range" class="dashboard-date-range tooltips no-tooltip-on-touch-device responsive" data-tablet="" data-desktop="tooltips" data-placement="top" data-original-title="Change dashboard date range">
+                    <div id="aggregate_range" class="dashboard-date-range tooltips no-tooltip-on-touch-device responsive" data-tablet="" data-desktop="tooltips" data-placement="top" data-original-title="Change dashboard date range">
                         <i class="icon-calendar"></i>
                         <span></span>
                         <i class="icon-angle-down"></i>

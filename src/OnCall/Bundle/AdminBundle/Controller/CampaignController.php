@@ -10,6 +10,7 @@ use OnCall\Bundle\AdminBundle\Model\MenuHandler;
 use OnCall\Bundle\AdminBundle\Entity\Client;
 use OnCall\Bundle\AdminBundle\Entity\Campaign;
 use OnCall\Bundle\AdminBundle\Model\ItemStatus;
+use OnCall\Bundle\AdminBundle\Model\AggregateFilter;
 use DateTime;
 
 class CampaignController extends Controller
@@ -38,14 +39,11 @@ class CampaignController extends Controller
 
         // process dates
         // TODO: use date parameters, fallback to default 7 days if not specified
-        $date_now = new DateTime();
-        $date_now_text = $date_now->format('Y-m-d H') . ':00:00';
-        $date_to = DateTime::createFromFormat('Y-m-d H:i:s', $date_now_text);
-        $date_from = DateTime::createFromFormat('Y-m-d H:i:s', $date_now_text);
-        $date_from->modify('-7 day');
+        $filter = new AggregateFilter(AggregateFilter::TYPE_CLIENT);
+        $filter->setItemID($cid);
 
         // get aggregate data for client
-        $agg_client = $count_repo->findAggregateSingle('client', $cid, $date_from, $date_to);
+        $agg_client = $count_repo->findAggregate($filter);
 
         // make sure the user is the account holder
         if ($user->getID() != $client->getUser()->getID())
