@@ -1,0 +1,424 @@
+{% extends '::base.html.twig' %}
+
+{% block plugins %}
+<script src="assets/plugins/bootstrap-daterangepicker/date.js" type="text/javascript"></script>
+<script src="assets/plugins/bootstrap-daterangepicker/daterangepicker.js" type="text/javascript"></script> 
+<script src="assets/plugins/highcharts/highcharts.js" type="text/javascript"></script>
+<script src="assets/plugins/highcharts/modules/exporting.js" type="text/javascript"></script>
+{% endblock %}
+
+{% block javascript %}
+<script type="text/javascript">
+jQuery(document).ready(function() {
+    // date range settings
+    // START DATE RANGE
+    var date_from = new Date("{{ agg_filter.getDateFromFormatted }}");
+    var date_to = new Date("{{ agg_filter.getDateToFormatted }}");
+
+    $('#aggregate_range').daterangepicker({
+        ranges: {
+            'Today': ['today', 'today'],
+            'Yesterday': ['yesterday', 'yesterday'],
+            'Last 7 Days': [Date.today().add({
+                    days: -6
+                }), 'today'],
+            'Last 30 Days': [Date.today().add({
+                    days: -29
+                }), 'today'],
+            'This Month': [Date.today().moveToFirstDayOfMonth(), Date.today().moveToLastDayOfMonth()],
+            'Last Month': [Date.today().moveToFirstDayOfMonth().add({
+                    months: -1
+                }), Date.today().moveToFirstDayOfMonth().add({
+                    days: -1
+                })]
+        },
+        opens: (App.isRTL() ? 'right' : 'left'),
+        format: 'MM/dd/yyyy',
+        separator: ' to ',
+        startDate: date_from,
+        endDate: date_to,
+        minDate: '01/01/2013',
+        maxDate: '12/31/2017',
+        locale: {
+            applyLabel: 'Submit',
+            fromLabel: 'From',
+            toLabel: 'To',
+            customRangeLabel: 'Custom Range',
+            daysOfWeek: ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'],
+            monthNames: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
+            firstDay: 1
+        },
+        showWeekNumbers: true,
+        buttonClasses: ['btn-danger']
+    },
+
+    function (start, end) {
+        App.blockUI(jQuery("#dashboard"));
+        setTimeout(function () {
+            App.unblockUI(jQuery("#dashboard"));
+            App.scrollTo();
+        }, 1000);
+        $('#aggregate_range span').html(start.toString('MMMM d, yyyy') + ' - ' + end.toString('MMMM d, yyyy'));
+        // redirect with params
+        var query_string = '?date_from=' + start.toString('yyyy-MM-dd') + '&date_to=' + end.toString('yyyy-MM-dd');
+        var url = location.protocol + '//' + location.host + location.pathname + query_string;
+        window.location = url;
+
+    });
+
+    $('#aggregate_range').show();
+    // END DATE RANGE
+
+    // daily chart
+    // START DAILY CHART
+    $('#containerDaily').highcharts({
+        chart: {
+            zoomType: 'x',
+            spacingRight: 0,
+            spacingLeft: 0,
+        },
+        title: {
+            text: ''
+        },
+        xAxis: {
+            type: 'datetime',
+            dateTimeLabelFormats: {
+                day: '%e of %b'
+            },
+            //min: 0.5, 
+            // Kendrick: the value below must be the number of data points -1.5
+            // In this example there are 5 categories (above) so the max should be 5 - 1.5 =3.5
+            // this is so that the graph is to the edge
+            //max: 5.5,
+            labels: {                
+                rotation: -45, 
+                style: {
+                  color: '#888'
+                },
+            },
+            tickInterval: 24 * 3600 * 1000, // one day
+        },
+        yAxis: [{ // Calls
+            labels: {
+                format: '{value}',
+                style: {
+                    color: '#888'
+                },
+            },
+            title: {
+                text: 'Calls',
+                style: {
+                    color: '#888'
+                }
+            },
+            min: 0,
+        }],
+        tooltip: {
+            shared: true
+        },
+        series: [{
+            type: 'areaspline',
+                    pointPadding: 0,
+                    groupPadding: 0,
+            name: 'Total Calls',
+            data: {{ daily.total | json_encode() }},
+                // Kendrick - this date needs to be set in all the series to match what is selected
+                // in the calendar. It automatically counts up the date depending on the "data" above
+                pointStart: date_from.getTime(),
+                pointInterval: 24 * 3600 * 1000, // one day
+            fillOpacity: 0.2
+        }, {
+            type: 'areaspline',
+                    pointPadding: 0,
+                    groupPadding: 0,
+            name: 'Failed Calls',
+            data: {{ daily.failed | json_encode() }},
+                pointStart: date_from.getTime(),
+                pointInterval: 24 * 3600 * 1000, // one day
+            fillOpacity: 0.2
+        }, {
+            type: 'areaspline',
+                    pointPadding: 0,
+                    groupPadding: 0,
+            name: 'Potential Leads',
+            data: {{ daily.plead | json_encode() }},
+                pointStart: date_from.getTime(),
+                pointInterval: 24 * 3600 * 1000, // one day
+            fillOpacity: 0.2
+        }],
+        credits: {
+            enabled: false
+        }
+    });
+    // END DAILY CHART
+
+    // START HOURLY CHART
+    $('#containerHourly').highcharts({
+        chart: {
+            zoomType: 'x',
+            spacingRight: 0,
+            spacingLeft: 0,
+                            width: $('#tab_campaign_daily').width() // Kendrick - hack to make the chart render in the second tab, name needs to change if the 1st tab name changes
+            
+        },
+        title: {
+                        text: ''
+        },
+        xAxis: {
+                type: 'datetime',
+                dateTimeLabelFormats: {
+                    hour: '%H:%M'
+                },
+            //min: 0.5, 
+            // Kendrick: the value below must be the number of data points -1.5
+            // In this example there are 5 categories (above) so the max should be 5 - 1.5 =3.5
+            // this is so that the graph is to the edge
+            //max: 5.5,
+            labels: {                
+                rotation: -45, 
+              style: {
+                  color: '#888'
+              },
+                            },
+                            tickInterval: 3600 * 1000, // one day
+        },
+        yAxis: [{ // Calls
+            labels: {
+                format: '{value}',
+                style: {
+                    color: '#888'
+                },
+            },
+            title: {
+                text: 'Calls',
+                style: {
+                    color: '#888'
+                }
+            },
+            min: 0,
+        }],
+        tooltip: {
+            shared: true
+        },
+        series: [{
+
+            type: 'column',
+                    pointPadding: 0,
+                    groupPadding: 0,
+            name: 'Total Calls',
+            data: {{ hourly.total | json_encode() }},
+                // Kendrick - even though we're totalling the data for multiple days, we need to specify
+                // a specific date, so ignore the date in "pointStart" here UNLESS we're looking at a single day
+                pointStart: Date.UTC(2013, 18, 12),
+                pointInterval: 3600 * 1000, // one day
+            fillOpacity: 0.2
+        }, {
+            type: 'column',
+                    pointPadding: 0,
+                    groupPadding: 0,
+            name: 'Failed Calls',
+            data: {{ hourly.failed | json_encode() }},
+                pointStart: Date.UTC(2013, 18, 12),
+                pointInterval: 3600 * 1000, // one day
+            fillOpacity: 0.2
+        }, {
+            type: 'column',
+                    pointPadding: 0,
+                    groupPadding: 0,
+            name: 'Potential Leads',
+            data: {{ hourly.plead | json_encode() }},
+                pointStart: Date.UTC(2013, 18, 12),
+                pointInterval: 3600 * 1000, // one day
+            fillOpacity: 0.2
+        }],
+        credits: {
+            enabled: false
+        }
+    });
+    // END HOURLY CHART
+});
+</script>
+
+{% endblock %}
+
+{% block body %}
+<div class="container-fluid">
+<!-- START CAMPAIGNS -->
+    <div class="row-fluid">
+        <div class="span12">
+
+            <!-- BEGIN PAGE TITLE & BREADCRUMB-->
+            <h3 class="page-title">
+            {% block title %}
+            Title
+            {% endblock %}
+            </h3>
+            {% block breadcrumb %}
+            {% endblock %}
+
+            <!-- END PAGE TITLE & BREADCRUMB-->
+        </div>
+    </div>
+    <!-- END PAGE HEADER-->
+    <!-- BEGIN PAGE CONTENT-->
+    <div >
+        <!-- BEGIN DASHBOARD STATS -->
+        <div class="row-fluid">
+            <div class="span3 responsive" data-tablet="span6" data-desktop="span3">
+                <div class="dashboard-stat {{ top_color }}">
+                    <div class="visual">
+                        <i class="icon-group"></i>
+                    </div>
+                    <div class="details">
+                        <div class="number">{{ agg_parent.getTotalFormatted }}</div>
+                        <div class="desc">Total Calls</div>
+                    </div>
+                    <a class="more" href="#">
+                    View calls <i class="m-icon-swapright m-icon-white"></i>
+                    </a> 
+                </div>
+            </div>
+            <div class="span3 responsive" data-tablet="span6" data-desktop="span3">
+                <div class="dashboard-stat {{ top_color }}">
+                    <div class="visual">
+                        <i class="icon-user"></i>
+                    </div>
+                    <div class="details">
+                        <div class="number">{{ agg_parent.getUniqueFormatted }}</div>
+                        <div class="desc">Unique Calls ({{ agg_parent.getUniquePercentFormatted }}%)</div>
+                    </div>
+                    <a class="more" href="#">
+                    View calls <i class="m-icon-swapright m-icon-white"></i>
+                    </a> 
+                </div>
+            </div>
+            <div class="span3 responsive" data-tablet="span6" data-desktop="span3">
+                <div class="dashboard-stat {{ top_color }}">
+                    <div class="visual">
+                        <i class="icon-star"></i>
+                    </div>
+                    <div class="details">
+                        <div class="number">{{ agg_parent.getPLeadFormatted }}</div>
+                        <div class="desc">P. Leads ({{ agg_parent.getPLeadPercentFormatted }}%)</div>
+                    </div>                
+                    <a class="more" href="#">
+                    View calls <i class="m-icon-swapright m-icon-white"></i>
+                    </a> 
+                </div>
+            </div>
+            <div class="span3 responsive" data-tablet="span6  fix-offset" data-desktop="span3">
+                <div class="dashboard-stat red">
+                    <div class="visual">
+                        <i class="icon-remove-sign"></i>
+                    </div>
+                    <div class="details">
+                        <div class="number">{{ agg_parent.getFailedFormatted }}</div>
+                        <div class="desc">Failed Calls ({{ agg_parent.getFailedPercentFormatted }}%)</div>
+                    </div>
+                    <a class="more" href="#">
+                    View calls <i class="m-icon-swapright m-icon-white"></i>
+                    </a>  
+                </div>
+            </div>
+
+        </div>
+        <!-- END DASHBOARD STATS -->
+        <div class="clearfix"></div>
+    <div class="row-fluid">
+        
+        <div class="span12">
+            <!-- BEGIN SAMPLE TABLE PORTLET-->
+                <!-- BEGIN PORTLET-->
+                <div class="portlet-body solid bordered">
+                    <div class="portlet-body">
+
+                    <div class="tabbable tabbable-custom">
+
+                                <ul class="nav nav-tabs">
+                                    <li class="active"><a href="#tab_campaign_daily" data-toggle="tab">Daily</a></li>
+                                    <li class=""><a href="#tab_campaign_hourly" data-toggle="tab">Hourly</a></li>
+                                </ul>
+                                <div class="tab-content">
+                                    <div class="tab-pane active" id="tab_campaign_daily">
+                                                <div id="containerDaily" style="min-width: 310px; height: 200px; margin: 0 auto"></div>
+                                    </div>
+                                    <div class="tab-pane" id="tab_campaign_hourly">
+                                            <div id="containerHourly" style="width: auto; min-width: 310px; height: 200px; margin: 0 auto"></div>
+                                    </div>
+
+                                </div>
+                            </div>
+
+
+
+                    </div>
+                </div>
+                <!-- END PORTLET-->
+                <button class="btn green" style="margin-bottom: 4px;"  data-toggle="modal" href="#addCampaign"><i class="icon-plus"></i> Add New {{ name }}</button>
+                 
+                <div class="portlet-body no-more-tables">
+                    <table class="table-bordered table-striped table-condensed cf">
+                        <thead class="cf">
+                            <tr>
+                              <th></th>
+                              <th>{{ name }} Name</th>
+                            <th>Total Calls</th> 
+                            <th>Unique Calls</th>
+                            <th>Failed Calls</th>
+                            <th>Potential Leads<br /><small>calls &gt; 2 mins</small></th>
+                            <th>% Unique</th>
+                            <th>% Failed</th>
+                            <th>% Potential</th>
+                            <th>Total Duration<br /><small>hh:mm:ss</small></th>
+                            <th>Avg Duration<br /><small>hh:mm:ss</small></th>
+                            <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        {% for camp in children %}
+                            <tr>
+                                <td data-title="Status" style="text-align: center;"><i class="{{ camp.isActive ? 'icon-ok-sign' : 'icon-remove-sign' }}"></i></td>  
+                                <td data-title="{{ name }} Name"><a href="/campaign/{{ camp.getID }}/adgroups">{{ camp.getName }}</a></td>  
+                                <td data-title="Total Calls">{{ agg_table[camp.getID].getTotalFormatted }}<a href=""></a></td>
+                                <td data-title="Unique Calls">{{ agg_table[camp.getID].getUniqueFormatted }}<a href=""></a></td>
+                                <td data-title="Failed Calls">{{ agg_table[camp.getID].getFailedFormatted }}<a href=""></a></td>
+                                <td data-title="Potential Leads">{{ agg_table[camp.getID].getPLeadFormatted }}<a href=""></a></td>
+                                <td data-title="% Unique">{{ agg_table[camp.getID].getUniquePercentFormatted }}%</td>
+                                <td data-title="% Failed">{{ agg_table[camp.getID].getFailedPercentFormatted }}%</td>
+                                <td data-title="% Potential Leads">{{ agg_table[camp.getID].getPLeadPercentFormatted }}%</td>
+                                <td data-title="Total Duration">{{ agg_table[camp.getID].getDurationFormatted }}</td>
+                                <td data-title="Avg Duration">{{ agg_table[camp.getID].getDurationAverageFormatted }}</td>
+                                <td data-title="Action">
+                                    <button href="#editCampaign" data-id="{{ camp.getID }}" data-toggle="modal" role="button" class="edit_button btn mini" ><i class="icon-edit"></i> edit</button>
+                                    <button href="#deleteCampaign" data-id="{{ camp.getID }}" data-toggle="modal" role="button" class="delete_button btn mini" ><i class="icon-trash"></i> delete</button>
+                                </td>   
+                            </tr>  
+                        {% endfor %}
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <td></td>
+                                <td><strong>Totals</strong></td>
+                                <td>{{ agg_parent.getTotalFormatted }}</td>
+                                <td>{{ agg_parent.getUniqueFormatted }}</td>
+                                <td>{{ agg_parent.getFailedFormatted }}</td>
+                                <td>{{ agg_parent.getPLeadFormatted }}</td>
+                                <td>{{ agg_parent.getUniquePercentFormatted }}%</td>
+                                <td>{{ agg_parent.getFailedPercentFormatted }}%</td>
+                                <td>{{ agg_parent.getPLeadPercentFormatted }}%</td>
+                                <td>{{ agg_parent.getDurationFormatted }}</td>
+                                <td>{{ agg_parent.getDurationAverageFormatted }}</td>
+                                <td></td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+                {% block modals %}
+                {% endblock %}
+                </div>
+            <!-- END SAMPLE TABLE PORTLET-->
+        </div>
+    </div>
+    <!-- END CAMPAIGNS -->
+</div>
+{% endblock %}

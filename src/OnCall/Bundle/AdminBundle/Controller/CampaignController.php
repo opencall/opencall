@@ -52,12 +52,14 @@ class CampaignController extends Controller
                 'user' => $user,
                 'sidebar_menu' => MenuHandler::getMenu($role_hash, 'campaigns'),
                 'parent' => $client,
-                'agg_client' => $agg['client'],
+                'agg_parent' => $agg['client'],
                 'agg_table' => $agg['table'],
                 'agg_filter' => new AggregateFilter(AggregateFilter::TYPE_CLIENT, $cid),
                 'daily' => $agg['daily'],
                 'hourly' => $agg['hourly'],
                 'children' => $campaigns,
+                'top_color' => 'blue',
+                'name' => 'Campaign',
             )
         );
     }
