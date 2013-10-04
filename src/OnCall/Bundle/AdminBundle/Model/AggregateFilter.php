@@ -6,6 +6,7 @@ use DateTime;
 
 class AggregateFilter
 {
+    // item aggregates
     const TYPE_CLIENT                   = 1;
     const TYPE_CLIENT_CHILDREN          = 2;
     const TYPE_CAMPAIGN                 = 3;
@@ -13,14 +14,23 @@ class AggregateFilter
     const TYPE_ADGROUP                  = 5;
     const TYPE_ADGROUP_CHILDREN         = 6;
 
+    // chart aggregates
+    const TYPE_DAILY_CLIENT             = 7;
+    const TYPE_DAILY_CAMPAIGN           = 8;
+    const TYPE_DAILY_ADGROUP            = 9;
+    const TYPE_HOURLY_CLIENT            = 10;
+    const TYPE_HOURLY_CAMPAIGN          = 11;
+    const TYPE_HOURLY_ADGROUP           = 12;
+
     protected $date_from;
     protected $date_to;
     protected $item_id;
     protected $filter_type;
 
-    public function __construct($filter_type)
+    public function __construct($filter_type, $item_id)
     {
         $this->filter_type = $filter_type;
+        $this->item_id = $item_id;
 
         // default date is -7 days to today
         $date_now = new DateTime();
@@ -88,12 +98,18 @@ class AggregateFilter
         {
             case self::TYPE_CLIENT:
             case self::TYPE_CLIENT_CHILDREN:
+            case self::TYPE_DAILY_CLIENT:
+            case self::TYPE_HOURLY_CLIENT:
                 return 'client';
             case self::TYPE_CAMPAIGN:
             case self::TYPE_CAMPAIGN_CHILDREN:
+            case self::TYPE_DAILY_CAMPAIGN:
+            case self::TYPE_HOURLY_CAMPAIGN:
                 return 'campaign';
             case self::TYPE_ADGROUP:
             case self::TYPE_ADGROUP_CHILDREN:
+            case self::TYPE_DAILY_ADGROUP:
+            case self::TYPE_HOURLY_ADGROUP:
                 return 'adgroup';
         }
 
@@ -108,12 +124,18 @@ class AggregateFilter
         {
             case self::TYPE_CLIENT:
             case self::TYPE_CLIENT_CHILDREN:
+            case self::TYPE_DAILY_CLIENT:
+            case self::TYPE_HOURLY_CLIENT:
                 return 'campaign';
             case self::TYPE_CAMPAIGN:
             case self::TYPE_CAMPAIGN_CHILDREN:
+            case self::TYPE_DAILY_CAMPAIGN:
+            case self::TYPE_HOURLY_CAMPAIGN:
                 return 'adgroup';
             case self::TYPE_ADGROUP:
             case self::TYPE_ADGROUP_CHILDREN:
+            case self::TYPE_DAILY_ADGROUP:
+            case self::TYPE_HOURLY_ADGROUP:
                 return 'advert';
         }
 
@@ -129,6 +151,19 @@ class AggregateFilter
     public function getDateToFormatted()
     {
         return $this->date_to->format('F j, Y');
+    }
+
+    public function isDaily()
+    {
+        switch ($this->filter_type)
+        {
+            case self::TYPE_DAILY_CLIENT:
+            case self::TYPE_DAILY_CAMPAIGN:
+            case self::TYPE_DAILY_ADGROUP:
+                return true;
+        }
+
+        return false;
     }
 
     public function needsChildren()

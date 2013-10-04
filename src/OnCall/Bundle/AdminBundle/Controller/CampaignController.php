@@ -37,12 +37,11 @@ class CampaignController extends Controller
         $count_repo = $this->getDoctrine()
             ->getRepository('OnCallAdminBundle:Counter');
 
-        // process dates
-        $filter = new AggregateFilter(AggregateFilter::TYPE_CLIENT);
-        $filter->setItemID($cid);
-
-        $tfilter = new AggregateFilter(AggregateFilter::TYPE_CLIENT_CHILDREN);
-        $tfilter->setItemID($cid);
+        // aggregate top level, table, daily, and hourly
+        $filter = new AggregateFilter(AggregateFilter::TYPE_CLIENT, $cid);
+        $tfilter = new AggregateFilter(AggregateFilter::TYPE_CLIENT_CHILDREN, $cid);
+        $dfilter = new AggregateFilter(AggregateFilter::TYPE_DAILY_CLIENT, $cid);
+        $hfilter = new AggregateFilter(AggregateFilter::TYPE_HOURLY_CLIENT, $cid);
 
         // check for specified dates
         $query = $this->getRequest()->query;
@@ -52,11 +51,15 @@ class CampaignController extends Controller
         {
             $filter->setDateFrom(new DateTime($date_from));
             $tfilter->setDateFrom(new DateTime($date_from));
+            $dfilter->setDateFrom(new DateTime($date_from));
+            $hfilter->setDateFrom(new DateTime($date_from));
         }
         if ($date_to != null)
         {
             $filter->setDateTo(new DateTime($date_to));
             $tfilter->setDateTo(new DateTime($date_to));
+            $dfilter->setDateTo(new DateTime($date_to));
+            $hfilter->setDateTo(new DateTime($date_to));
         }
 
         // campaigns
@@ -66,8 +69,14 @@ class CampaignController extends Controller
             $camp_ids[] = $camp->getID();
 
         // get aggregate data for client
-        $agg_client = $count_repo->findAggregate($filter);
-        $agg_table = $count_repo->findAggregate($tfilter, $camp_ids);
+        $agg_client = $count_repo->findItemAggregate($filter);
+        $agg_table = $count_repo->findItemAggregate($tfilter, $camp_ids);
+        $agg_daily = $count_repo->findChartAggregate($dfilter);
+        $agg_hourly = $count_repo->findChartAggregate($hfilter);
+
+        // separate daily and monthly data
+        $daily = $this->separateChartData($agg_daily);
+        $hourly = $this->separateChartData($agg_hourly);
 
         // make sure the user is the account holder
         if ($user->getID() != $client->getUser()->getID())
@@ -82,9 +91,26 @@ class CampaignController extends Controller
                 'agg_client' => $agg_client,
                 'agg_table' => $agg_table,
                 'agg_filter' => $filter,
+                'daily' => $daily,
+                'hourly' => $hourly,
                 'campaigns' => $campaigns,
             )
         );
+    }
+
+    protected function separateChartData($agg)
+    {
+        $chart['total'] = array();
+        $chart['failed'] = array();
+        $chart['plead'] = array();
+        foreach ($agg as $adata)
+        {
+            $chart['total'][] = $adata->getTotal();
+            $chart['failed'][] = $adata->getFailed();
+            $chart['plead'][] = $adata->getPLead();
+        }
+
+        return $chart;
     }
 
     protected function update(Campaign $campaign, $data)

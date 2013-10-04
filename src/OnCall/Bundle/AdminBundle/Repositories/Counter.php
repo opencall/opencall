@@ -3,6 +3,8 @@
 namespace OnCall\Bundle\AdminBundle\Repositories;
 
 use DateTime;
+use DatePeriod;
+use DateInterval;
 use Doctrine\ORM\EntityRepository;
 use OnCall\Bundle\AdminBundle\Model\ItemAggregate;
 use OnCall\Bundle\AdminBundle\Model\AggregateFilter;
@@ -29,18 +31,28 @@ class Counter extends EntityRepository
         return $this->getDQLPrefix($item_type, $child_type) . ', count(distinct c.number_id) as a_unique' . $this->getDQLSuffix($item_type);
     }
 
+    protected function getDQLChartPrefix($item_type, $child_type)
+    {
+        return $this->getDQLPrefix($item_type, $child_type) . ', sum(c.count_total) as a_total, sum(c.count_plead) as a_plead, sum(c.count_failed) as a_failed, substring(c.date_in, 1, 10) as daily, substring(c.date_in, 12, 2) as hourly' . $this->getDQLSuffix($item_type);
+    }
+
     protected function createItemAggregate($id, $row)
     {
+        if (isset($row['a_duration']))
+            $duration = $row['a_duration'];
+        else
+            $duration = 0;
+
         return new ItemAggregate(
             $id,
             $row['a_total'],
             $row['a_plead'],
             $row['a_failed'],
-            $row['a_duration']
+            $duration
         );
     }
 
-    public function findAggregate(AggregateFilter $filter, $child_ids = array())
+    public function findItemAggregate(AggregateFilter $filter, $child_ids = array())
     {
         // retrieve aggregates based on date range and item_id
         $dql = $this->getDQLSumPrefix($filter->getItemType(), $filter->getChildrenType());
@@ -68,7 +80,6 @@ class Counter extends EntityRepository
             ->setParameter('date_to', $filter->getDateTo())
             ->setParameter('id', $filter->getItemID());
         $u_res = $u_query->getScalarResult();
-        error_log(print_r($u_res, true));
 
         // return single result if no children
         if (!$filter->needsChildren())
@@ -95,6 +106,64 @@ class Counter extends EntityRepository
 
             $multi_ia[$chid] = new ItemAggregate($chid, 0, 0, 0, 0);
         }
+
+        return $multi_ia;
+    }
+
+    public function findChartAggregate(AggregateFilter $filter)
+    {
+        $dql = $this->getDQLChartPrefix($filter->getItemType(), $filter->getChildrenType());
+
+        if ($filter->isDaily())
+            $dql .= ' group by daily';
+        else
+            $dql .= ' group by hourly';
+
+        $query = $this->getEntityManager()
+            ->createQuery($dql)
+            ->setParameter('date_from', $filter->getDateFrom())
+            ->setParameter('date_to', $filter->getDateTo())
+            ->setParameter('id', $filter->getItemID());
+        $res = $query->getScalarResult();
+
+        $multi_ia = array();
+        if ($filter->isDaily())
+        {
+            // cycle through results
+            foreach ($res as $row)
+                $multi_ia[$row['daily']] = $this->createItemAggregate(0, $row);
+
+            // make sure all days have a value
+            $period = new DatePeriod(
+                $filter->getDateFrom(),
+                new DateInterval('P1D'), 
+                $filter->getDateTo()
+            );
+            foreach ($period as $day)
+            {
+                $day_index = $day->format('Y-m-d');
+                if (!isset($multi_ia[$day_index]))
+                    $multi_ia[$day_index] = new ItemAggregate(0, 0, 0, 0, 0);
+            }
+        }
+        else
+        {
+            // cycle through results
+            foreach ($res as $row)
+                $multi_ia[$row['hourly'] + 0] = $this->createItemAggregate(0, $row);
+
+            // make sure all hours have a value
+            for ($i = 1; $i <= 24; $i++)
+            {
+                if (!isset($multi_ia[$i]))
+                    $multi_ia[$i] = new ItemAggregate(0, 0, 0, 0, 0);
+            }
+        }
+
+        // sort
+        ksort($multi_ia);
+
+        error_log(print_r($multi_ia, true));
 
         return $multi_ia;
     }
