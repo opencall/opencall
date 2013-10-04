@@ -11,7 +11,6 @@
 <script type="text/javascript">
 jQuery(document).ready(function() {
     Index.init();
-    // Index.initDashboardDaterange();
 
     var date_from = new Date("{{ agg_filter.getDateFromFormatted }}");
     var date_to = new Date("{{ agg_filter.getDateToFormatted }}");
@@ -38,12 +37,6 @@ jQuery(document).ready(function() {
         separator: ' to ',
         startDate: date_from,
         endDate: date_to,
-        /*
-        startDate: Date.today().add({
-            days: -29
-        }),
-        endDate: Date.today(),
-        */
         minDate: '01/01/2013',
         maxDate: '12/31/2017',
         locale: {
@@ -66,6 +59,10 @@ jQuery(document).ready(function() {
             App.scrollTo();
         }, 1000);
         $('#aggregate_range span').html(start.toString('MMMM d, yyyy') + ' - ' + end.toString('MMMM d, yyyy'));
+        // redirect with params
+        var query_string = '?date_from=' + start.toString('yyyy-MM-dd') + '&date_to=' + end.toString('yyyy-MM-dd');
+        var url = location.protocol + '//' + location.host + location.pathname + query_string;
+        window.location = url;
 
     });
 
