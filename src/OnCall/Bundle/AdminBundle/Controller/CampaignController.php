@@ -33,6 +33,37 @@ class CampaignController extends Controller
         if ($client == null)
             throw new AccessDeniedException();
 
+        // campaigns
+        $campaigns = $client->getCampaigns();
+        $camp_ids = array();
+        foreach ($campaigns as $camp)
+            $camp_ids[] = $camp->getID();
+
+        // make sure the user is the account holder
+        if ($user->getID() != $client->getUser()->getID())
+            throw new AccessDeniedException();
+
+        // aggregates
+        $agg = $this->processAggregates($cid, $camp_ids);
+
+        return $this->render(
+            'OnCallAdminBundle:Campaign:index.html.twig',
+            array(
+                'user' => $user,
+                'sidebar_menu' => MenuHandler::getMenu($role_hash, 'campaigns'),
+                'parent' => $client,
+                'agg_client' => $agg['client'],
+                'agg_table' => $agg['table'],
+                'agg_filter' => new AggregateFilter(AggregateFilter::TYPE_CLIENT, $cid),
+                'daily' => $agg['daily'],
+                'hourly' => $agg['hourly'],
+                'children' => $campaigns,
+            )
+        );
+    }
+
+    protected function processAggregates($cid, $camp_ids)
+    {
         // counter repo
         $count_repo = $this->getDoctrine()
             ->getRepository('OnCallAdminBundle:Counter');
@@ -62,12 +93,6 @@ class CampaignController extends Controller
             $hfilter->setDateTo(new DateTime($date_to));
         }
 
-        // campaigns
-        $campaigns = $client->getCampaigns();
-        $camp_ids = array();
-        foreach ($campaigns as $camp)
-            $camp_ids[] = $camp->getID();
-
         // get aggregate data for client
         $agg_client = $count_repo->findItemAggregate($filter);
         $agg_table = $count_repo->findItemAggregate($tfilter, $camp_ids);
@@ -78,23 +103,11 @@ class CampaignController extends Controller
         $daily = $this->separateChartData($agg_daily);
         $hourly = $this->separateChartData($agg_hourly);
 
-        // make sure the user is the account holder
-        if ($user->getID() != $client->getUser()->getID())
-            throw new AccessDeniedException();
-
-        return $this->render(
-            'OnCallAdminBundle:Campaign:index.html.twig',
-            array(
-                'user' => $user,
-                'sidebar_menu' => MenuHandler::getMenu($role_hash, 'campaigns'),
-                'client' => $client,
-                'agg_client' => $agg_client,
-                'agg_table' => $agg_table,
-                'agg_filter' => $filter,
-                'daily' => $daily,
-                'hourly' => $hourly,
-                'campaigns' => $campaigns,
-            )
+        return array(
+            'client' => $agg_client,
+            'table' => $agg_table,
+            'daily' => $daily,
+            'hourly' => $hourly
         );
     }
 

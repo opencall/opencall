@@ -163,8 +163,6 @@ class Counter extends EntityRepository
         // sort
         ksort($multi_ia);
 
-        error_log(print_r($multi_ia, true));
-
         return $multi_ia;
     }
 }

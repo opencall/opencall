@@ -253,7 +253,7 @@ jQuery(document).ready(function() {
             </h3>
             <ul class="breadcrumb">
                 <li>
-                    {{ client.getName }}
+                    {{ parent.getName }}
                     <i class="icon-angle-right"></i>
                 </li>
                 <li>
@@ -387,7 +387,7 @@ jQuery(document).ready(function() {
                             </tr>
                         </thead>
                         <tbody>
-                        {% for camp in campaigns %}
+                        {% for camp in children %}
                             <tr>
                                 <td data-title="Status" style="text-align: center;"><i class="{{ camp.isActive ? 'icon-ok-sign' : 'icon-remove-sign' }}"></i></td>  
                                 <td data-title="Campaign Name"><a href="/campaign/{{ camp.getID }}/adgroups">{{ camp.getName }}</a></td>  
@@ -446,7 +446,7 @@ jQuery(document).ready(function() {
                             <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
                             <h3>Add Campaign</h3>
                         </div>
-                        <form method="post" action="/client/{{ client.getID }}/campaigns">
+                        <form method="post" action="/client/{{ parent.getID }}/campaigns">
                         <div class="modal-body">
                             <div class="row-fluid">
                                 <div class="span6">
