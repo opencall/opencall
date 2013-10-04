@@ -4,7 +4,7 @@ namespace OnCall\Bundle\AdminBundle\Repositories;
 
 use DateTime;
 use Doctrine\ORM\EntityRepository;
-use OnCall\Bundle\AdminBundle\Entity\ItemAggregate;
+use OnCall\Bundle\AdminBundle\Model\ItemAggregate;
 use OnCall\Bundle\AdminBundle\Model\AggregateFilter;
 
 class Counter extends EntityRepository

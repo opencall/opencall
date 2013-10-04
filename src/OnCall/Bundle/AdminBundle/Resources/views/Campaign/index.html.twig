@@ -10,8 +10,8 @@
 {% block javascript %}
 <script type="text/javascript">
 jQuery(document).ready(function() {
-    Index.init();
-
+    // date range settings
+    // START DATE RANGE
     var date_from = new Date("{{ agg_filter.getDateFromFormatted }}");
     var date_to = new Date("{{ agg_filter.getDateToFormatted }}");
 
@@ -67,11 +67,10 @@ jQuery(document).ready(function() {
     });
 
     $('#aggregate_range').show();
-});
-</script>
+    // END DATE RANGE
 
-<script type="text/javascript">
-$(function() {
+    // daily chart
+    // START DAILY CHART
     $('#containerDaily').highcharts({
         chart: {
             zoomType: 'x',
@@ -151,6 +150,7 @@ $(function() {
             enabled: false
         }
     });
+    // END DAILY CHART
 });
 </script>
 

@@ -1,6 +1,6 @@
 <?php
 
-namespace OnCall\Bundle\AdminBundle\Entity;
+namespace OnCall\Bundle\AdminBundle\Model;
 
 class ItemAggregate
 {
