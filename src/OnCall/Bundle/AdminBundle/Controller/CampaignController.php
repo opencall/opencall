@@ -10,6 +10,7 @@ use OnCall\Bundle\AdminBundle\Model\MenuHandler;
 use OnCall\Bundle\AdminBundle\Entity\Client;
 use OnCall\Bundle\AdminBundle\Entity\Campaign;
 use OnCall\Bundle\AdminBundle\Model\ItemStatus;
+use DateTime;
 
 class CampaignController extends Controller
 {
@@ -31,6 +32,21 @@ class CampaignController extends Controller
         if ($client == null)
             throw new AccessDeniedException();
 
+        // counter repo
+        $count_repo = $this->getDoctrine()
+            ->getRepository('OnCallAdminBundle:Counter');
+
+        // process dates
+        // TODO: use date parameters, fallback to default 7 days if not specified
+        $date_now = new DateTime();
+        $date_now_text = $date_now->format('Y-m-d H') . ':00:00';
+        $date_to = DateTime::createFromFormat('Y-m-d H:i:s', $date_now_text);
+        $date_from = DateTime::createFromFormat('Y-m-d H:i:s', $date_now_text);
+        $date_from->modify('-7 day');
+
+        // get aggregate data for client
+        $agg_client = $count_repo->findAggregateSingle('client', $cid, $date_from, $date_to);
+
         // make sure the user is the account holder
         if ($user->getID() != $client->getUser()->getID())
             throw new AccessDeniedException();
@@ -44,6 +60,7 @@ class CampaignController extends Controller
                 'user' => $user,
                 'sidebar_menu' => MenuHandler::getMenu($role_hash, 'campaigns'),
                 'client' => $client,
+                'agg_client' => $agg_client,
                 'campaigns' => $campaigns,
             )
         );

@@ -6,9 +6,9 @@ use Doctrine\ORM\Mapping as ORM;
 use DateTime;
 
 /**
- * @ORM\MappedSuperclass
+ * @ORM\Entity(repositoryClass="OnCall\Bundle\AdminBundle\Repositories\Counter")
  */
-abstract class Item
+abstract class Counter
 {
     /**
      * @ORM\Id
@@ -44,7 +44,17 @@ abstract class Item
     /**
      * @ORM\Column(type="integer")
      */
-    protected $counter;
+    protected $count_total;
+
+    /**
+     * @ORM\Column(type="integer")
+     */
+    protected $count_failed;
+
+    /**
+     * @ORM\Column(type="integer")
+     */
+    protected $count_plead;
 
     /**
      * @ORM\Column(type="integer")
@@ -55,7 +65,9 @@ abstract class Item
     {
         $this->date_in = new DateTime();
 
-        $this->counter = 0;
+        $this->count_total = 0;
+        $this->count_plead = 0;
+        $this->count_failed = 0;
         $this->duration_secs = 0;
     }
 
@@ -74,9 +86,19 @@ abstract class Item
     }
 
     // counters
-    public function getCounter()
+    public function getCountTotal()
     {
-        return $this->counter;
+        return $this->count_total;
+    }
+
+    public function getCountPLead()
+    {
+        return $this->count_plead;
+    }
+
+    public function getCountFailed()
+    {
+        return $this->count_failed;
     }
 
     public function getDurationSeconds()
@@ -109,7 +131,9 @@ abstract class Item
     {
         $data = array(
             'date_in' => $this->getDateInFormatted(),
-            'counter' => $this->getCounter(),
+            'count_total' => $this->getCountTotal(),
+            'count_plead' => $this->getCountPLead(),
+            'count_failed' => $this->getCountFailed(),
             'duration_secs' => $this->getDurationSeconds(),
             'duration_formatted' => $this->getDurationFormatted()
         );
