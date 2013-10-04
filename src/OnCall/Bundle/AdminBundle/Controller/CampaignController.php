@@ -41,24 +41,37 @@ class CampaignController extends Controller
         $filter = new AggregateFilter(AggregateFilter::TYPE_CLIENT);
         $filter->setItemID($cid);
 
+        $tfilter = new AggregateFilter(AggregateFilter::TYPE_CLIENT_CHILDREN);
+        $tfilter->setItemID($cid);
+
         // check for specified dates
         $query = $this->getRequest()->query;
         $date_from = $query->get('date_from');
         $date_to = $query->get('date_to');
         if ($date_from != null)
+        {
             $filter->setDateFrom(new DateTime($date_from));
+            $tfilter->setDateFrom(new DateTime($date_from));
+        }
         if ($date_to != null)
+        {
             $filter->setDateTo(new DateTime($date_to));
+            $tfilter->setDateTo(new DateTime($date_to));
+        }
+
+        // campaigns
+        $campaigns = $client->getCampaigns();
+        $camp_ids = array();
+        foreach ($campaigns as $camp)
+            $camp_ids[] = $camp->getID();
 
         // get aggregate data for client
         $agg_client = $count_repo->findAggregate($filter);
+        $agg_table = $count_repo->findAggregate($tfilter, $camp_ids);
 
         // make sure the user is the account holder
         if ($user->getID() != $client->getUser()->getID())
             throw new AccessDeniedException();
-
-        // campaigns
-        $campaigns = $client->getCampaigns();
 
         return $this->render(
             'OnCallAdminBundle:Campaign:index.html.twig',
@@ -67,6 +80,7 @@ class CampaignController extends Controller
                 'sidebar_menu' => MenuHandler::getMenu($role_hash, 'campaigns'),
                 'client' => $client,
                 'agg_client' => $agg_client,
+                'agg_table' => $agg_table,
                 'agg_filter' => $filter,
                 'campaigns' => $campaigns,
             )

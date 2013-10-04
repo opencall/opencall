@@ -130,4 +130,17 @@ class AggregateFilter
     {
         return $this->date_to->format('F j, Y');
     }
+
+    public function needsChildren()
+    {
+        switch ($this->filter_type)
+        {
+            case self::TYPE_CLIENT_CHILDREN:
+            case self::TYPE_CAMPAIGN_CHILDREN:
+            case self::TYPE_ADGROUP_CHILDREN:
+                return true;
+        }
+
+        return false;
+    }
 }
