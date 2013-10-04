@@ -9,15 +9,26 @@ use OnCall\Bundle\AdminBundle\Model\AggregateFilter;
 
 class Counter extends EntityRepository
 {
-    protected function getSumDQLPrefix($item_type)
+    protected function getSumDQLPrefix($item_type, $child_type)
     {
-        return 'select c.' . $item_type . '_id as item_id, sum(c.count_total) as a_total, sum(c.count_plead) as a_plead, sum(c.count_failed) as a_failed, sum(c.duration_secs) as a_duration from OnCallAdminBundle:Counter c where c.date_in >= :date_from and c.date_in <= :date_to  and c.' . $item_type . '_id = :id';
+        return 'select c.' . $item_type . '_id as item_id, c.' . $child_type . '_id as child_id, sum(c.count_total) as a_total, sum(c.count_plead) as a_plead, sum(c.count_failed) as a_failed, sum(c.duration_secs) as a_duration from OnCallAdminBundle:Counter c where c.date_in >= :date_from and c.date_in <= :date_to  and c.' . $item_type . '_id = :id';
+    }
+
+    protected function createItemAggregate($id, $row)
+    {
+        return new ItemAggregate(
+            $id,
+            $row['a_total'],
+            $row['a_plead'],
+            $row['a_failed'],
+            $row['a_duration']
+        );
     }
 
     public function findAggregate(AggregateFilter $filter, $child_ids = array())
     {
         // retrieve aggregates based on date range and item_id
-        $dql = $this->getSumDQLPrefix($filter->getItemType());
+        $dql = $this->getSumDQLPrefix($filter->getItemType(), $filter->getChildrenType());
 
         // check if we need children
         if ($filter->needsChildren())
@@ -30,34 +41,16 @@ class Counter extends EntityRepository
             ->setParameter('id', $filter->getItemID());
 
         $res = $query->getScalarResult();
+        error_log(print_r($res, true));
 
         // return single result if no children
         if (!$filter->needsChildren())
-        {
-            $ia = new ItemAggregate(
-                $filter->getItemID(),
-                $res[0]['a_total'],
-                $res[0]['a_plead'],
-                $res[0]['a_failed'],
-                $res[0]['a_duration']
-            );
-
-            return $ia;
-        }
+            return $this->createItemAggregate($filter->getItemID(), $res[0]);
 
         // for those that need the children
         $multi_ia = array();
         foreach ($res as $row)
-        {
-            $ia = new ItemAggregate(
-                $row['item_id'],
-                $row['a_total'],
-                $row['a_plead'],
-                $row['a_failed'],
-                $row['a_duration']
-            );
-            $multi_ia[$row['item_id']] = $ia;
-        }
+            $multi_ia[$row['child_id']] = $this->createItemAggregate($row['child_id'], $row);
 
         // check child ids and create blank aggregate if needed
         foreach ($child_ids as $chid)
@@ -65,8 +58,7 @@ class Counter extends EntityRepository
             if (isset($multi_ia[$chid]))
                 continue;
 
-            $ia = new ItemAggregate($chid, 0, 0, 0, 0);
-            $multi_ia[$chid] = $ia;
+            $multi_ia[$chid] = new ItemAggregate($chid, 0, 0, 0, 0);
         }
 
         return $multi_ia;

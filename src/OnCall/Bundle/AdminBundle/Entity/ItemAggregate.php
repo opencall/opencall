@@ -102,7 +102,7 @@ class ItemAggregate
         if ($this->total == 0)
             return 0;
 
-        return $this->unqiue / $this->total;
+        return $this->unique / $this->total;
     }
 
     public function getUniquePercentFormatted()
