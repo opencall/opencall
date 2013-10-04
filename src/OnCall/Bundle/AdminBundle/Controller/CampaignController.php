@@ -38,9 +38,17 @@ class CampaignController extends Controller
             ->getRepository('OnCallAdminBundle:Counter');
 
         // process dates
-        // TODO: use date parameters, fallback to default 7 days if not specified
         $filter = new AggregateFilter(AggregateFilter::TYPE_CLIENT);
         $filter->setItemID($cid);
+
+        // check for specified dates
+        $query = $this->getRequest()->query;
+        $date_from = $query->get('date_from');
+        $date_to = $query->get('date_to');
+        if ($date_from != null)
+            $filter->setDateFrom(new DateTime($date_from));
+        if ($date_to != null)
+            $filter->setDateTo(new DateTime($date_to));
 
         // get aggregate data for client
         $agg_client = $count_repo->findAggregate($filter);

@@ -31,8 +31,8 @@ class AggregateFilter
 
     protected function cleanDate(DateTime $date)
     {
-        // strip off hours and minutes
-        return DateTime::createFromFormat('Y-m-d H:i:s', $date->format('Y-m-d H') . ':00:00');
+        // strip off time
+        return DateTime::createFromFormat('Y-m-d H:i:s', $date->format('Y-m-d') . '00:00:00');
     }
 
     // setters
