@@ -9,6 +9,7 @@ class ItemAggregate
     protected $plead;
     protected $failed;
     protected $duration;
+    protected $unique;
 
 
     public function __construct($item_id, $total, $plead, $failed, $duration)
@@ -18,6 +19,15 @@ class ItemAggregate
         $this->plead = $plead + 0;
         $this->failed = $failed + 0;
         $this->duration = $duration + 0;
+
+        $this->unique = 0;
+    }
+
+    // setters
+    public function setUnique($unique)
+    {
+        $this->unique = $unique;
+        return $this;
     }
 
     // getters
@@ -39,6 +49,65 @@ class ItemAggregate
     public function getFailed()
     {
         return $this->failed;
+    }
+
+    public function getTotalFormatted()
+    {
+        return number_format($this->total);
+    }
+
+    public function getPLeadFormatted()
+    {
+        return number_format($this->plead);
+    }
+
+    public function getFailedFormatted()
+    {
+        return number_format($this->failed);
+    }
+
+    public function getUniqueFormatted()
+    {
+        return number_format($this->unique);
+    }
+
+    public function getFailedPercent()
+    {
+        if ($this->total == 0)
+            return 0;
+
+        return $this->failed / $this->total;
+    }
+
+    public function getFailedPercentFormatted()
+    {
+        return number_format($this->getFailedPercent(), 1);
+    }
+
+    public function getPLeadPercent()
+    {
+        if ($this->total == 0)
+            return 0;
+
+        return $this->plead / $this->total;
+    }
+
+    public function getPLeadPercentFormatted()
+    {
+        return number_format($this->getPLeadPercent(), 1);
+    }
+
+    public function getUniquePercent()
+    {
+        if ($this->total == 0)
+            return 0;
+
+        return $this->unqiue / $this->total;
+    }
+
+    public function getUniquePercentFormatted()
+    {
+        return number_format($this->getUniquePercent(), 1);
     }
 
     public function getDuration()

@@ -230,7 +230,7 @@ $('#containerHourly').highcharts({
                         <i class="icon-group"></i>
                     </div>
                     <div class="details">
-                        <div class="number">0</div>
+                        <div class="number">{{ agg_client.getTotalFormatted }}</div>
                         <div class="desc">Total Calls</div>
                     </div>
                     <a class="more" href="#">
@@ -244,8 +244,8 @@ $('#containerHourly').highcharts({
                         <i class="icon-user"></i>
                     </div>
                     <div class="details">
-                        <div class="number">0</div>
-                        <div class="desc">Unique Calls (0.0%)</div>
+                        <div class="number">{{ agg_client.getUniqueFormatted }}</div>
+                        <div class="desc">Unique Calls ({{ agg_client.getUniquePercentFormatted }}%)</div>
                     </div>
                     <a class="more" href="#">
                     View calls <i class="m-icon-swapright m-icon-white"></i>
@@ -258,8 +258,8 @@ $('#containerHourly').highcharts({
                         <i class="icon-star"></i>
                     </div>
                     <div class="details">
-                        <div class="number">0</div>
-                        <div class="desc">P. Leads (0.0%)</div>
+                        <div class="number">{{ agg_client.getPLeadFormatted }}</div>
+                        <div class="desc">P. Leads ({{ agg_client.getPLeadPercentFormatted }}%)</div>
                     </div>                
                     <a class="more" href="#">
                     View calls <i class="m-icon-swapright m-icon-white"></i>
@@ -272,8 +272,8 @@ $('#containerHourly').highcharts({
                         <i class="icon-remove-sign"></i>
                     </div>
                     <div class="details">
-                        <div class="number">0</div>
-                        <div class="desc">Failed Calls (0.0%)</div>
+                        <div class="number">{{ agg_client.getFailedFormatted }}</div>
+                        <div class="desc">Failed Calls ({{ agg_client.getFailedPercentFormatted }}%)</div>
                     </div>
                     <a class="more" href="#">
                     View calls <i class="m-icon-swapright m-icon-white"></i>
