@@ -5,7 +5,7 @@ namespace OnCall\Bundle\AdminBundle\Controller;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
-use OnCall\Bundle\AdminBundle\Model\Controller;
+use OnCall\Bundle\AdminBundle\Model\ItemController;
 use OnCall\Bundle\AdminBundle\Model\MenuHandler;
 use OnCall\Bundle\AdminBundle\Entity\Client;
 use OnCall\Bundle\AdminBundle\Entity\Campaign;
@@ -14,7 +14,7 @@ use OnCall\Bundle\AdminBundle\Model\AggregateFilter;
 use Symfony\Component\Security\Core\SecurityContextInterface;
 use DateTime;
 
-class CampaignController extends Controller
+class CampaignController extends ItemController
 {
     protected $name;
     protected $top_color;
@@ -29,35 +29,6 @@ class CampaignController extends Controller
             'table' => AggregateFilter::TYPE_CLIENT_CHILDREN,
             'daily' => AggregateFilter::TYPE_DAILY_CLIENT,
             'hourly' => AggregateFilter::TYPE_HOURLY_CLIENT
-        );
-    }
-
-    public function indexAction($id)
-    {
-        $user = $this->getUser();
-        $role_hash = $user->getRoleHash();
-
-        // fetch needed data
-        $fetch_res = $this->fetchAll($id);
-
-        // aggregates
-        $agg = $this->processAggregates($id, $fetch_res['child_ids']);
-
-        return $this->render(
-            'OnCallAdminBundle:Campaign:index.html.twig',
-            array(
-                'user' => $user,
-                'sidebar_menu' => MenuHandler::getMenu($role_hash, 'campaigns'),
-                'parent' => $fetch_res['parent'],
-                'agg_parent' => $agg['parent'],
-                'agg_table' => $agg['table'],
-                'agg_filter' => new AggregateFilter($this->agg_type['parent'], $id),
-                'daily' => $agg['daily'],
-                'hourly' => $agg['hourly'],
-                'children' => $fetch_res['children'],
-                'top_color' => $this->top_color,
-                'name' => $this->name,
-            )
         );
     }
 
@@ -89,70 +60,6 @@ class CampaignController extends Controller
             'children' => $campaigns,
             'child_ids' => $camp_ids
         );
-    }
-
-    protected function processAggregates($pid, $child_ids)
-    {
-        // counter repo
-        $count_repo = $this->getDoctrine()
-            ->getRepository('OnCallAdminBundle:Counter');
-
-        // aggregate top level, table, daily, and hourly
-        $filter = new AggregateFilter($this->agg_type['parent'], $pid);
-        $tfilter = new AggregateFilter($this->agg_type['table'], $pid);
-        $dfilter = new AggregateFilter($this->agg_type['daily'], $pid);
-        $hfilter = new AggregateFilter($this->agg_type['hourly'], $pid);
-
-        // check for specified dates
-        $query = $this->getRequest()->query;
-        $date_from = $query->get('date_from');
-        $date_to = $query->get('date_to');
-        if ($date_from != null)
-        {
-            $filter->setDateFrom(new DateTime($date_from));
-            $tfilter->setDateFrom(new DateTime($date_from));
-            $dfilter->setDateFrom(new DateTime($date_from));
-            $hfilter->setDateFrom(new DateTime($date_from));
-        }
-        if ($date_to != null)
-        {
-            $filter->setDateTo(new DateTime($date_to));
-            $tfilter->setDateTo(new DateTime($date_to));
-            $dfilter->setDateTo(new DateTime($date_to));
-            $hfilter->setDateTo(new DateTime($date_to));
-        }
-
-        // get aggregate data for parent 
-        $agg_parent = $count_repo->findItemAggregate($filter);
-        $agg_table = $count_repo->findItemAggregate($tfilter, $child_ids);
-        $agg_daily = $count_repo->findChartAggregate($dfilter);
-        $agg_hourly = $count_repo->findChartAggregate($hfilter);
-
-        // separate daily and monthly data
-        $daily = $this->separateChartData($agg_daily);
-        $hourly = $this->separateChartData($agg_hourly);
-
-        return array(
-            'parent' => $agg_parent,
-            'table' => $agg_table,
-            'daily' => $daily,
-            'hourly' => $hourly
-        );
-    }
-
-    protected function separateChartData($agg)
-    {
-        $chart['total'] = array();
-        $chart['failed'] = array();
-        $chart['plead'] = array();
-        foreach ($agg as $adata)
-        {
-            $chart['total'][] = $adata->getTotal();
-            $chart['failed'][] = $adata->getFailed();
-            $chart['plead'][] = $adata->getPLead();
-        }
-
-        return $chart;
     }
 
     protected function update(Campaign $campaign, $data)
