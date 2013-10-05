@@ -98,7 +98,7 @@ oncall_admin_client_delete:
 
 #campaign routes
 oncall_admin_campaigns:
-    pattern: /client/{cid}/campaigns
+    pattern: /client/{id}/campaigns
     defaults: { _controller: OnCallAdminBundle:Campaign:index }
     methods: [GET]
 

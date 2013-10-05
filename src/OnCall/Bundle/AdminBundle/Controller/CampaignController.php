@@ -11,23 +11,64 @@ use OnCall\Bundle\AdminBundle\Entity\Client;
 use OnCall\Bundle\AdminBundle\Entity\Campaign;
 use OnCall\Bundle\AdminBundle\Model\ItemStatus;
 use OnCall\Bundle\AdminBundle\Model\AggregateFilter;
+use Symfony\Component\Security\Core\SecurityContextInterface;
 use DateTime;
 
 class CampaignController extends Controller
 {
-    public function indexAction($cid)
-    {
-        $em = $this->getDoctrine()->getManager();
-        $req = $this->getRequest();
-        $user = $this->getUser();
+    protected $name;
+    protected $top_color;
+    protected $agg_type;
 
-        // get role hash for menu
+    public function __construct()
+    {
+        $this->name = 'Campaign';
+        $this->top_color = 'blue';
+        $this->agg_type = array(
+            'parent' => AggregateFilter::TYPE_CLIENT,
+            'table' => AggregateFilter::TYPE_CLIENT_CHILDREN,
+            'daily' => AggregateFilter::TYPE_DAILY_CLIENT,
+            'hourly' => AggregateFilter::TYPE_HOURLY_CLIENT
+        );
+    }
+
+    public function indexAction($id)
+    {
+        $user = $this->getUser();
         $role_hash = $user->getRoleHash();
+
+        // fetch needed data
+        $fetch_res = $this->fetchAll($id);
+
+        // aggregates
+        $agg = $this->processAggregates($id, $fetch_res['child_ids']);
+
+        return $this->render(
+            'OnCallAdminBundle:Campaign:index.html.twig',
+            array(
+                'user' => $user,
+                'sidebar_menu' => MenuHandler::getMenu($role_hash, 'campaigns'),
+                'parent' => $fetch_res['parent'],
+                'agg_parent' => $agg['parent'],
+                'agg_table' => $agg['table'],
+                'agg_filter' => new AggregateFilter($this->agg_type['parent'], $id),
+                'daily' => $agg['daily'],
+                'hourly' => $agg['hourly'],
+                'children' => $fetch_res['children'],
+                'top_color' => $this->top_color,
+                'name' => $this->name,
+            )
+        );
+    }
+
+    protected function fetchAll($item_id)
+    {
+        $user = $this->getUser();
 
         // get client
         $client = $this->getDoctrine()
             ->getRepository('OnCallAdminBundle:Client')
-            ->find($cid);
+            ->find($item_id);
 
         // not found
         if ($client == null)
@@ -43,38 +84,24 @@ class CampaignController extends Controller
         if ($user->getID() != $client->getUser()->getID())
             throw new AccessDeniedException();
 
-        // aggregates
-        $agg = $this->processAggregates($cid, $camp_ids);
-
-        return $this->render(
-            'OnCallAdminBundle:Campaign:index.html.twig',
-            array(
-                'user' => $user,
-                'sidebar_menu' => MenuHandler::getMenu($role_hash, 'campaigns'),
-                'parent' => $client,
-                'agg_parent' => $agg['client'],
-                'agg_table' => $agg['table'],
-                'agg_filter' => new AggregateFilter(AggregateFilter::TYPE_CLIENT, $cid),
-                'daily' => $agg['daily'],
-                'hourly' => $agg['hourly'],
-                'children' => $campaigns,
-                'top_color' => 'blue',
-                'name' => 'Campaign',
-            )
+        return array(
+            'parent' => $client,
+            'children' => $campaigns,
+            'child_ids' => $camp_ids
         );
     }
 
-    protected function processAggregates($cid, $camp_ids)
+    protected function processAggregates($pid, $child_ids)
     {
         // counter repo
         $count_repo = $this->getDoctrine()
             ->getRepository('OnCallAdminBundle:Counter');
 
         // aggregate top level, table, daily, and hourly
-        $filter = new AggregateFilter(AggregateFilter::TYPE_CLIENT, $cid);
-        $tfilter = new AggregateFilter(AggregateFilter::TYPE_CLIENT_CHILDREN, $cid);
-        $dfilter = new AggregateFilter(AggregateFilter::TYPE_DAILY_CLIENT, $cid);
-        $hfilter = new AggregateFilter(AggregateFilter::TYPE_HOURLY_CLIENT, $cid);
+        $filter = new AggregateFilter($this->agg_type['parent'], $pid);
+        $tfilter = new AggregateFilter($this->agg_type['table'], $pid);
+        $dfilter = new AggregateFilter($this->agg_type['daily'], $pid);
+        $hfilter = new AggregateFilter($this->agg_type['hourly'], $pid);
 
         // check for specified dates
         $query = $this->getRequest()->query;
@@ -95,9 +122,9 @@ class CampaignController extends Controller
             $hfilter->setDateTo(new DateTime($date_to));
         }
 
-        // get aggregate data for client
-        $agg_client = $count_repo->findItemAggregate($filter);
-        $agg_table = $count_repo->findItemAggregate($tfilter, $camp_ids);
+        // get aggregate data for parent 
+        $agg_parent = $count_repo->findItemAggregate($filter);
+        $agg_table = $count_repo->findItemAggregate($tfilter, $child_ids);
         $agg_daily = $count_repo->findChartAggregate($dfilter);
         $agg_hourly = $count_repo->findChartAggregate($hfilter);
 
@@ -106,7 +133,7 @@ class CampaignController extends Controller
         $hourly = $this->separateChartData($agg_hourly);
 
         return array(
-            'client' => $agg_client,
+            'parent' => $agg_parent,
             'table' => $agg_table,
             'daily' => $daily,
             'hourly' => $hourly
