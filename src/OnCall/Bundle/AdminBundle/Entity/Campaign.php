@@ -20,6 +20,11 @@ class Campaign extends Item
      */
     protected $client_id;
 
+    /**
+     * @ORM\OneToMany(targetEntity="AdGroup", mappedBy="campaign")
+     */
+    protected $adgroups;
+
     // begin setters
     public function setClient(Client $client)
     {
@@ -33,6 +38,16 @@ class Campaign extends Item
     public function getClient()
     {
         return $this->client;
+    }
+
+    public function getAdGroups()
+    {
+        return $this->adgroups;
+    }
+
+    public function getUser()
+    {
+        return $this->getClient()->getUser();
     }
     // end getters
 }

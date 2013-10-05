@@ -123,3 +123,29 @@ oncall_admin_camp_delete:
     methods: [POST]
 
 #ad group routes
+oncall_admin_adgroups:
+    pattern: /campaign/{id}/adgroups
+    defaults: { _controller: OnCallAdminBundle:AdGroup:index }
+    methods: [GET]
+
+oncall_admin_adgroup_create:
+    pattern: /campaign/{cid}/adgroups
+    defaults: { _controller: OnCallAdminBundle:AdGroup:create }
+    methods: [POST]
+
+oncall_admin_adgroup_get:
+    pattern: /adgroup/{id}
+    defaults: { _controller: OnCallAdminBundle:AdGroup:get }
+    methods: [GET]
+
+oncall_admin_adgroup_update:
+    pattern: /adgroup/{id}
+    defaults: { _controller: OnCallAdminBundle:AdGroup:update }
+    methods: [POST]
+
+oncall_admin_adgroup_delete:
+    pattern: /adgroup/{id}/delete
+    defaults: { _controller: OnCallAdminBundle:AdGroup:delete }
+    methods: [POST]
+
+#advert routes

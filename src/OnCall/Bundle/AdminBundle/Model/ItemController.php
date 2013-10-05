@@ -2,6 +2,7 @@
 
 namespace OnCall\Bundle\AdminBundle\Model;
 
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use OnCall\Bundle\AdminBundle\Model\ItemStatus;
 use OnCall\Bundle\AdminBundle\Model\AggregateFilter;
 use DateTime;
@@ -11,6 +12,8 @@ abstract class ItemController extends Controller
     protected $name;
     protected $top_color;
     protected $agg_type;
+    protected $parent_repo;
+    protected $child_fetch_method;
 
     public function __construct()
     {
@@ -48,7 +51,36 @@ abstract class ItemController extends Controller
         );
     }
 
-    abstract protected function fetchAll($item_id);
+    protected function fetchAll($item_id)
+    {
+        $user = $this->getUser();
+
+        // get parent
+        $parent = $this->getDoctrine()
+            ->getRepository($this->parent_repo)
+            ->find($item_id);
+
+        // not found
+        if ($parent == null)
+            throw new AccessDeniedException();
+
+        // children
+        $method = $this->child_fetch_method;
+        $children = $parent->$method();
+        $child_ids = array();
+        foreach ($children as $child)
+            $child_ids[] = $child->getID();
+
+        // make sure the user is the account holder
+        if ($user->getID() != $parent->getUser()->getID())
+            throw new AccessDeniedException();
+
+        return array(
+            'parent' => $parent,
+            'children' => $children,
+            'child_ids' => $child_ids
+        );
+    }
 
     protected function processAggregates($pid, $child_ids)
     {
