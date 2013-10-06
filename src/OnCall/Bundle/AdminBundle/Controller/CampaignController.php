@@ -25,40 +25,11 @@ class CampaignController extends ItemController
         );
 
         $this->parent_repo = 'OnCallAdminBundle:Client';
+        $this->child_repo = 'OnCallAdminBundle:Campaign';
         $this->child_fetch_method = 'getCampaigns';
+
         $this->url_child = 'oncall_admin_adgroups';
         $this->url_parent = 'oncall_admin_campaigns';
-    }
-
-    public function getAction($id)
-    {
-        $repo = $this->getDoctrine()->getRepository('OnCallAdminBundle:Client');
-        $client = $repo->find($id);
-        if ($client == null)
-            return new Response('');
-
-        return new Response($client->jsonify());
-    }
-
-    public function updateAction($id)
-    {
-        $data = $this->getRequest()->request->all();
-        $em = $this->getDoctrine()->getManager();
-
-        // find
-        $repo = $this->getDoctrine()->getRepository('OnCallAdminBundle:Client');
-        $client = $repo->find($id);
-        if ($client == null)
-        {
-            // TODO: error message?
-            return $this->redirect($this->generateUrl('oncall_admin_clients'));
-        }
-
-        // update
-        $this->updateClient($client, $data);
-        $em->flush();
-
-        return $this->redirect($this->generateUrl('oncall_admin_clients'));
     }
 
     public function deleteAction($id)

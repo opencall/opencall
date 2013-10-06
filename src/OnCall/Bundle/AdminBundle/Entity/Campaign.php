@@ -54,5 +54,10 @@ class Campaign extends Item
     {
         return $this->getClient()->getUser();
     }
+
+    public function getParent()
+    {
+        return $this->getClient();
+    }
     // end getters
 }

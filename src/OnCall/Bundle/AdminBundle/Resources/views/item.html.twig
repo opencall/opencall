@@ -10,8 +10,8 @@
 {% block javascript %}
 <script type="text/javascript">
 jQuery(document).ready(function() {
-    // date range settings
     // START DATE RANGE
+    // date range settings
     var date_from = new Date("{{ agg_filter.getDateFromFormatted }}");
     var date_to = new Date("{{ agg_filter.getDateToFormatted }}");
 
@@ -236,6 +236,19 @@ jQuery(document).ready(function() {
         }
     });
     // END HOURLY CHART
+
+    // START MODAL AJAX
+    $('.edit_button').click(function() {
+        var id = $(this).data('id');
+        var url = '/{{ name | lower }}/' + id;
+        $('#edit_form').attr('action', url);
+        $.get(url, function(data) {
+            $('.item_name').val(data.name);
+            $('.item_name_text').html(data.name);
+            $('.item_status').val(data.status);
+        }, 'json');
+    });
+    // END MODAL AJAX
 });
 </script>
 
@@ -253,6 +266,7 @@ jQuery(document).ready(function() {
             Title
             {% endblock %}
             </h3>
+            {{ flash.display_flash_messages }}
             {% block breadcrumb %}
             {% endblock %}
 
@@ -441,17 +455,18 @@ jQuery(document).ready(function() {
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
                         <h3>Edit {{ name }}</h3>
                     </div>
+                    <form id="edit_form" method="post">
                     <div class="modal-body">
                         <div class="row-fluid">
                             <div class="span6">
                                 <h4>{{ name }} Name</h4>
-                                <p><input type="text" class="span12 m-wrap"></p>
+                                <p><input type="text" name="name" class="item_name span12 m-wrap"></p>
                             </div>
                             {% if is_granted('ROLE_PREVIOUS_ADMIN') %}
                             <div class="span6">
                                 <h4>{{ name }} Status</h4>
                                 <p>
-                                    <select name="status" class="small m-wrap" tabindex="1">
+                                    <select name="status" class="item_status small m-wrap" tabindex="1">
                                         <option value="1">Active</option>
                                         <option value="0">Inactive</option>
                                     </select>
@@ -462,8 +477,9 @@ jQuery(document).ready(function() {
                     </div>
                     <div class="modal-footer">
                         <button type="button" data-dismiss="modal" class="btn">Cancel</button>
-                        <button type="button" class="btn green">Save changes</button>
+                        <input type="submit" class="btn green" value="Save changes" />
                     </div>
+                    </form>
                 </div>
                 <!-- End EDIT MODAL -->
                 {% endblock %}

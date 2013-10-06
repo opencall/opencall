@@ -2,6 +2,7 @@
 
 namespace OnCall\Bundle\AdminBundle\Model;
 
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use OnCall\Bundle\AdminBundle\Entity\Item;
 use DateTime;
@@ -11,8 +12,11 @@ abstract class ItemController extends Controller
     protected $name;
     protected $top_color;
     protected $agg_type;
+
     protected $parent_repo;
+    protected $child_repo;
     protected $child_fetch_method;
+
     protected $url_child;
     protected $url_parent;
 
@@ -58,22 +62,52 @@ abstract class ItemController extends Controller
         $data = $this->getRequest()->request->all();
         $em = $this->getDoctrine()->getManager();
 
+        // find
         $parent = $this->findParent($id);
 
+        // create
         $item_class = '\OnCall\Bundle\AdminBundle\Entity\\' . $this->name;
         $item = new $item_class();
         $data['parent'] = $parent;
         $data['status'] = ItemStatus::ACTIVE;
         $this->update($item, $data);
-
         $em->persist($item);
         $em->flush();
+
+        // success
+        $this->addFlash('success', $this->name . ' ' . $item->getName() . ' has been added.');
 
         return $this->redirect($this->generateUrl($this->url_parent, array('id' => $id)));
     }
 
+    public function getAction($id)
+    {
+        $child = $this->findChild($id);
+
+        return new Response($child->jsonify());
+    }
+
+    public function updateAction($id)
+    {
+        $data = $this->getRequest()->request->all();
+        $em = $this->getDoctrine()->getManager();
+
+        // find
+        $child = $this->findChild($id);
+
+        // update
+        $this->update($child, $data);
+        $em->flush();
+
+        // success
+        $this->addFlash('success', $this->name . ' ' . $child->getName() . ' has been updated.');
+
+        return $this->redirect($this->generateUrl($this->url_parent, array('id' => $child->getParent()->getID())));
+    }
+
     protected function update(Item $item, $data)
     {
+        // TODO: check required fields
         $name = trim($data['name']);
 
         $item->setName($name);
@@ -84,6 +118,19 @@ abstract class ItemController extends Controller
         if (isset($data['parent']))
             $item->setParent($data['parent']);
     }
+    
+    protected function findChild($item_id)
+    {
+        $child = $this->getDoctrine()
+            ->getRepository($this->child_repo)
+            ->find($item_id);
+
+        // TODO: throw another kind of exception (404)
+        if ($child == null)
+            throw new AccessDeniedException();
+
+        return $child;
+    }
 
     protected function findParent($item_id)
     {
@@ -92,7 +139,7 @@ abstract class ItemController extends Controller
             ->getRepository($this->parent_repo)
             ->find($item_id);
 
-        // not found
+        // TODO: throw another kind of exception (404)
         if ($parent == null)
             throw new AccessDeniedException();
 
