@@ -20,6 +20,11 @@ class AdGroup extends Item
      */
     protected $campaign_id;
 
+    /**
+     * @ORM\OneToMany(targetEntity="Advert", mappedBy="adgroup")
+     */
+    protected $adverts;
+
     // begin setters
     public function setCampaign(Campaign $camp)
     {
@@ -38,6 +43,16 @@ class AdGroup extends Item
     public function getCampaign()
     {
         return $this->campaign;
+    }
+
+    public function getAdverts()
+    {
+        return $this->adverts;
+    }
+
+    public function getUser()
+    {
+        return $this->getCampaign()->getUser();
     }
 
     public function getParent()

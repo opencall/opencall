@@ -13,14 +13,18 @@ class AggregateFilter
     const TYPE_CAMPAIGN_CHILDREN        = 4;
     const TYPE_ADGROUP                  = 5;
     const TYPE_ADGROUP_CHILDREN         = 6;
+    const TYPE_ADVERT                   = 7;
+    const TYPE_ADVERT_CHILDREN          = 8;
 
     // chart aggregates
-    const TYPE_DAILY_CLIENT             = 7;
-    const TYPE_DAILY_CAMPAIGN           = 8;
-    const TYPE_DAILY_ADGROUP            = 9;
-    const TYPE_HOURLY_CLIENT            = 10;
-    const TYPE_HOURLY_CAMPAIGN          = 11;
-    const TYPE_HOURLY_ADGROUP           = 12;
+    const TYPE_DAILY_CLIENT             = 9;
+    const TYPE_DAILY_CAMPAIGN           = 10;
+    const TYPE_DAILY_ADGROUP            = 11;
+    const TYPE_DAILY_ADVERT             = 12;
+    const TYPE_HOURLY_CLIENT            = 13;
+    const TYPE_HOURLY_CAMPAIGN          = 14;
+    const TYPE_HOURLY_ADGROUP           = 15;
+    const TYPE_HOURLY_ADVERT            = 16;
 
     protected $date_from;
     protected $date_to;
@@ -111,6 +115,11 @@ class AggregateFilter
             case self::TYPE_DAILY_ADGROUP:
             case self::TYPE_HOURLY_ADGROUP:
                 return 'adgroup';
+            case self::TYPE_ADVERT:
+            case self::TYPE_ADVERT_CHILDREN:
+            case self::TYPE_DAILY_ADVERT:
+            case self::TYPE_HOURLY_ADVERT:
+                return 'advert';
         }
 
         // TODO: error?
@@ -137,6 +146,7 @@ class AggregateFilter
             case self::TYPE_DAILY_ADGROUP:
             case self::TYPE_HOURLY_ADGROUP:
                 return 'advert';
+            // advert doesn't have children... yet
         }
 
         // TODO: error?
@@ -160,6 +170,7 @@ class AggregateFilter
             case self::TYPE_DAILY_CLIENT:
             case self::TYPE_DAILY_CAMPAIGN:
             case self::TYPE_DAILY_ADGROUP:
+            case self::TYPE_DAILY_ADVERT:
                 return true;
         }
 
@@ -173,6 +184,7 @@ class AggregateFilter
             case self::TYPE_CLIENT_CHILDREN:
             case self::TYPE_CAMPAIGN_CHILDREN:
             case self::TYPE_ADGROUP_CHILDREN:
+            case self::TYPE_ADVERT_CHILDREN:
                 return true;
         }
 
