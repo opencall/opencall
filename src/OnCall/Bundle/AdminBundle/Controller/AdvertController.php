@@ -27,4 +27,11 @@ class AdvertController extends ItemController
         $this->url_child = '';
         $this->url_parent = 'oncall_admin_adverts';
     }
+
+    public function indexAction($id)
+    {
+        $data = $this->fetchMainData($id);
+
+        return  $this->render($this->template, $data);
+    }
 }

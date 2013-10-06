@@ -20,6 +20,12 @@ class Advert extends Item
      */
     protected $adgroup_id;
 
+    /**
+     * @ORM\OneToOne(targetEntity="Number", inversedBy="advert")
+     * @ORM\JoinColumn(name="number_id", referencedColumnName="id")
+     */
+    protected $number;
+
     // begin setters
     public function setAdGroup(AdGroup $adg)
     {
@@ -31,6 +37,12 @@ class Advert extends Item
     public function setParent(AdGroup $adg)
     {
         return $this->setAdGroup($adg);
+    }
+
+    public function setNumber(Number $number)
+    {
+        $this->number = $number;
+        return $this;
     }
     // end setters
 
@@ -44,5 +56,18 @@ class Advert extends Item
     {
         return $this->getAdGroup();
     }
+
+    public function getNumber()
+    {
+        return $this->number;
+    }
     // end getters
+
+    public function getData()
+    {
+        $data = parent::getData();
+        $data['number_id'] = $this->getNumber->getID();
+
+        return $data;
+    }
 }

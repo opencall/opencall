@@ -58,6 +58,11 @@ class Number
      */
     protected $date_lastcall;
 
+    /**
+     * @ORM\OneToOne(targetEntity="Advert", mappedBy="number")
+     */
+    protected $advert;
+
     public function __construct($id)
     {
         $this->id = $id;
@@ -211,6 +216,11 @@ class Number
         if ($this->date_lastcall == null)
             return '-';
         return $this->date_lastcall->format('m/d/y H:i');
+    }
+
+    public function getAdvert()
+    {
+        return $this->advert;
     }
     // end getters
 

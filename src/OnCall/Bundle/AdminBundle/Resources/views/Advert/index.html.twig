@@ -25,3 +25,44 @@
     Adverts
 </li>
 {% endblock %}
+
+{% block modal_add %}
+<div id="addModal" class="modal hide fade" tabindex="-1" data-width="760">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+        <h3>Add Advert</h3>
+    </div>
+    <div class="modal-body">
+        <div class="row-fluid">
+            <div class="span12">
+                <h4>Advert Name</h4>
+                <p><input type="text" class="span6 m-wrap"></p>
+                <h4>Advert Number</h4>
+                <p>                                                 
+                    <select class="m-wrap" tabindex="1">
+                            <option value="85200000002">+852 0000 0002</option>
+                            <option value="85200000002">+852 0000 0003</option>
+                        </select>
+                    <br />Need more numbers? Open <a href="">Number Management</a>
+                </p>
+                <h4>Advert Destination</h4>
+                <ul>
+                        <li>Do not enter spaces or + </li>
+                        <li>Include the country code</li>
+                        <li>e.g. 85266821490</li>
+                    </ul>
+                <p><input type="text" class="span6 m-wrap"></p>
+                <!-- Kendrick: Advanced Rules (and override) should only be shown to an admin -->
+                <h4>Advanced Rules (admin only)</h4>
+                <p><textarea class="span12 m-wrap"></textarea></p>
+                <p><input type="checkbox" class="checkboxes" value="1" /> Override Desitnation</p>
+            </div>
+
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" data-dismiss="modal" class="btn">Cancel</button>
+        <button type="button" class="btn green">Add Advert</button>
+    </div>
+</div>
+{% endblock %}

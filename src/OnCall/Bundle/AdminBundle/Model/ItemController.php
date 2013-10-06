@@ -29,32 +29,7 @@ abstract class ItemController extends Controller
 
     public function indexAction($id)
     {
-        $user = $this->getUser();
-        $role_hash = $user->getRoleHash();
-
-        // fetch needed data
-        $fetch_res = $this->fetchAll($id);
-
-        // aggregates
-        $agg = $this->processAggregates($id, $fetch_res['child_ids']);
-
-        return $this->render(
-            $this->template,
-            array(
-                'user' => $user,
-                'sidebar_menu' => MenuHandler::getMenu($role_hash, 'campaigns'),
-                'parent' => $fetch_res['parent'],
-                'agg_parent' => $agg['parent'],
-                'agg_table' => $agg['table'],
-                'agg_filter' => new AggregateFilter($this->agg_type['parent'], $id),
-                'daily' => $agg['daily'],
-                'hourly' => $agg['hourly'],
-                'children' => $fetch_res['children'],
-                'top_color' => $this->top_color,
-                'name' => $this->name,
-                'url_child' => $this->url_child
-            )
-        );
+        return $this->render($this->template, $this->fetchMainData($id));
     }
 
     public function createAction($id)
@@ -121,6 +96,33 @@ abstract class ItemController extends Controller
     }
 
     // utility methods
+    protected function fetchMainData($id)
+    {
+        $user = $this->getUser();
+        $role_hash = $user->getRoleHash();
+
+        // fetch needed data
+        $fetch_res = $this->fetchAll($id);
+
+        // aggregates
+        $agg = $this->processAggregates($id, $fetch_res['child_ids']);
+
+        return array(
+            'user' => $user,
+            'sidebar_menu' => MenuHandler::getMenu($role_hash, 'campaigns'),
+            'parent' => $fetch_res['parent'],
+            'agg_parent' => $agg['parent'],
+            'agg_table' => $agg['table'],
+            'agg_filter' => new AggregateFilter($this->agg_type['parent'], $id),
+            'daily' => $agg['daily'],
+            'hourly' => $agg['hourly'],
+            'children' => $fetch_res['children'],
+            'top_color' => $this->top_color,
+            'name' => $this->name,
+            'url_child' => $this->url_child
+        );
+    }
+
     protected function update(Item $item, $data)
     {
         // TODO: check required fields
