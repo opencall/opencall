@@ -392,6 +392,7 @@ jQuery(document).ready(function() {
                                 {% if name == 'Advert' %}
                                 <th>Ad Number</th>
                                 <th>Ad Destination</th>
+                                <th>Rules<br /><small>(Use?)</small></th>
                                 {% endif %}
                                 <th>Total Calls</th> 
                                 <th>Unique Calls</th>
@@ -413,6 +414,7 @@ jQuery(document).ready(function() {
                                 {% if name == 'Advert' %}
                                 <td></td>
                                 <td></td>
+                                <td><i class="icon-ok-sign"></i></td>
                                 {% endif %}
                                 <td data-title="Total Calls">{{ agg_table[camp.getID].getTotalFormatted }}<a href=""></a></td>
                                 <td data-title="Unique Calls">{{ agg_table[camp.getID].getUniqueFormatted }}<a href=""></a></td>
@@ -435,7 +437,7 @@ jQuery(document).ready(function() {
                         <tfoot>
                             <tr>
                                 <td></td>
-                                <td {% if name == 'Advert' %}colspan="3"{% endif %}><strong>Totals</strong></td>
+                                <td {% if name == 'Advert' %}colspan="4"{% endif %}><strong>Totals</strong></td>
                                 <td>{{ agg_parent.getTotalFormatted }}</td>
                                 <td>{{ agg_parent.getUniqueFormatted }}</td>
                                 <td>{{ agg_parent.getFailedFormatted }}</td>
