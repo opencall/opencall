@@ -3,8 +3,7 @@
 namespace OnCall\Bundle\AdminBundle\Model;
 
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
-use OnCall\Bundle\AdminBundle\Model\ItemStatus;
-use OnCall\Bundle\AdminBundle\Model\AggregateFilter;
+use OnCall\Bundle\AdminBundle\Entity\Item;
 use DateTime;
 
 abstract class ItemController extends Controller
@@ -14,6 +13,8 @@ abstract class ItemController extends Controller
     protected $agg_type;
     protected $parent_repo;
     protected $child_fetch_method;
+    protected $url_child;
+    protected $url_parent;
 
     public function __construct()
     {
@@ -47,14 +48,45 @@ abstract class ItemController extends Controller
                 'children' => $fetch_res['children'],
                 'top_color' => $this->top_color,
                 'name' => $this->name,
+                'url_child' => $this->url_child
             )
         );
     }
 
-    protected function fetchAll($item_id)
+    public function createAction($id)
     {
-        $user = $this->getUser();
+        $data = $this->getRequest()->request->all();
+        $em = $this->getDoctrine()->getManager();
 
+        $parent = $this->findParent($id);
+
+        $item_class = '\OnCall\Bundle\AdminBundle\Entity\\' . $this->name;
+        $item = new $item_class();
+        $data['parent'] = $parent;
+        $data['status'] = ItemStatus::ACTIVE;
+        $this->update($item, $data);
+
+        $em->persist($item);
+        $em->flush();
+
+        return $this->redirect($this->generateUrl($this->url_parent, array('id' => $id)));
+    }
+
+    protected function update(Item $item, $data)
+    {
+        $name = trim($data['name']);
+
+        $item->setName($name);
+
+        if (isset($data['status']))
+            $item->setStatus($data['status']);
+
+        if (isset($data['parent']))
+            $item->setParent($data['parent']);
+    }
+
+    protected function findParent($item_id)
+    {
         // get parent
         $parent = $this->getDoctrine()
             ->getRepository($this->parent_repo)
@@ -63,6 +95,14 @@ abstract class ItemController extends Controller
         // not found
         if ($parent == null)
             throw new AccessDeniedException();
+
+        return $parent;
+    }
+
+    protected function fetchAll($item_id)
+    {
+        $user = $this->getUser();
+        $parent = $this->findParent($item_id);
 
         // children
         $method = $this->child_fetch_method;

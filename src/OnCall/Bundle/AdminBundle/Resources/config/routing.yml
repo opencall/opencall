@@ -103,7 +103,7 @@ oncall_admin_campaigns:
     methods: [GET]
 
 oncall_admin_camp_add:
-    pattern: /client/{cid}/campaigns
+    pattern: /client/{id}/campaigns
     defaults: { _controller: OnCallAdminBundle:Campaign:create }
     methods: [POST]
 
@@ -129,7 +129,7 @@ oncall_admin_adgroups:
     methods: [GET]
 
 oncall_admin_adgroup_create:
-    pattern: /campaign/{cid}/adgroups
+    pattern: /campaign/{id}/adgroups
     defaults: { _controller: OnCallAdminBundle:AdGroup:create }
     methods: [POST]
 
@@ -149,3 +149,28 @@ oncall_admin_adgroup_delete:
     methods: [POST]
 
 #advert routes
+oncall_admin_adverts:
+    pattern: /campaign/{id}/adverts
+    defaults: { _controller: OnCallAdminBundle:Advert:index }
+    methods: [GET]
+
+oncall_admin_advert_create:
+    pattern: /campaign/{id}/adverts
+    defaults: { _controller: OnCallAdminBundle:Advert:create }
+    methods: [POST]
+
+oncall_admin_advert_get:
+    pattern: /advert/{id}
+    defaults: { _controller: OnCallAdminBundle:Advert:get }
+    methods: [GET]
+
+oncall_admin_advert_update:
+    pattern: /advert/{id}
+    defaults: { _controller: OnCallAdminBundle:Advert:update }
+    methods: [POST]
+
+oncall_admin_advert_delete:
+    pattern: /advert/{id}/delete
+    defaults: { _controller: OnCallAdminBundle:Advert:delete }
+    methods: [POST]
+

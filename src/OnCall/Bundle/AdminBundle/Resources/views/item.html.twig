@@ -348,7 +348,7 @@ jQuery(document).ready(function() {
                     </div>
                 </div>
                 <!-- END PORTLET-->
-                <button class="btn green" style="margin-bottom: 4px;"  data-toggle="modal" href="#addCampaign"><i class="icon-plus"></i> Add New {{ name }}</button>
+                <button class="btn green" style="margin-bottom: 4px;"  data-toggle="modal" href="#addModal"><i class="icon-plus"></i> Add New {{ name }}</button>
                  
                 <div class="portlet-body no-more-tables">
                     <table class="table-bordered table-striped table-condensed cf">
@@ -372,7 +372,7 @@ jQuery(document).ready(function() {
                         {% for camp in children %}
                             <tr>
                                 <td data-title="Status" style="text-align: center;"><i class="{{ camp.isActive ? 'icon-ok-sign' : 'icon-remove-sign' }}"></i></td>  
-                                <td data-title="{{ name }} Name"><a href="/campaign/{{ camp.getID }}/adgroups">{{ camp.getName }}</a></td>  
+                                <td data-title="{{ name }} Name"><a href="{{ path(url_child, {'id': camp.getID }) }}">{{ camp.getName }}</a></td>  
                                 <td data-title="Total Calls">{{ agg_table[camp.getID].getTotalFormatted }}<a href=""></a></td>
                                 <td data-title="Unique Calls">{{ agg_table[camp.getID].getUniqueFormatted }}<a href=""></a></td>
                                 <td data-title="Failed Calls">{{ agg_table[camp.getID].getFailedFormatted }}<a href=""></a></td>
@@ -383,8 +383,8 @@ jQuery(document).ready(function() {
                                 <td data-title="Total Duration">{{ agg_table[camp.getID].getDurationFormatted }}</td>
                                 <td data-title="Avg Duration">{{ agg_table[camp.getID].getDurationAverageFormatted }}</td>
                                 <td data-title="Action">
-                                    <button href="#editCampaign" data-id="{{ camp.getID }}" data-toggle="modal" role="button" class="edit_button btn mini" ><i class="icon-edit"></i> edit</button>
-                                    <button href="#deleteCampaign" data-id="{{ camp.getID }}" data-toggle="modal" role="button" class="delete_button btn mini" ><i class="icon-trash"></i> delete</button>
+                                    <button href="#editModal" data-id="{{ camp.getID }}" data-toggle="modal" role="button" class="edit_button btn mini" ><i class="icon-edit"></i> edit</button>
+                                    <button href="#deleteModal" data-id="{{ camp.getID }}" data-toggle="modal" role="button" class="delete_button btn mini" ><i class="icon-trash"></i> delete</button>
                                 </td>   
                             </tr>  
                         {% endfor %}
@@ -407,8 +407,85 @@ jQuery(document).ready(function() {
                         </tfoot>
                     </table>
                 </div>
-                {% block modals %}
+
+                {% block modal_add %}
+                <!-- Add MODAL -->
+                <div id="addModal" class="modal hide fade" tabindex="-1" data-width="760">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                        <h3>Add {{ name }}</h3>
+                    </div>
+                    <form method="post">
+                    <div class="modal-body">
+                        <div class="row-fluid">
+                            <div class="span6">
+                                <h4>{{ name }} Name</h4>
+                                <p><input name="name" type="text" class="span12 m-wrap"></p>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" data-dismiss="modal" class="btn">Cancel</button>
+                        <input type="submit" class="btn green" value="Add {{ name }}" />
+                    </div>
+                    </form>
+                </div>
+                <!-- End Add MODAL -->
                 {% endblock %}
+
+                {% block modal_edit %}
+                <!-- EDIT MODAL -->
+                <div id="editModal" class="modal hide fade" tabindex="-1" data-width="760">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                        <h3>Edit {{ name }}</h3>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row-fluid">
+                            <div class="span6">
+                                <h4>{{ name }} Name</h4>
+                                <p><input type="text" class="span12 m-wrap"></p>
+                            </div>
+                            {% if is_granted('ROLE_PREVIOUS_ADMIN') %}
+                            <div class="span6">
+                                <h4>{{ name }} Status</h4>
+                                <p>
+                                    <select name="status" class="small m-wrap" tabindex="1">
+                                        <option value="1">Active</option>
+                                        <option value="0">Inactive</option>
+                                    </select>
+                                </p>
+                            </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" data-dismiss="modal" class="btn">Cancel</button>
+                        <button type="button" class="btn green">Save changes</button>
+                    </div>
+                </div>
+                <!-- End EDIT MODAL -->
+                {% endblock %}
+
+                {% block modal_delete %}
+                <!-- DELETE MODAL -->
+                <div id="deleteModal" class="modal hide fade" tabindex="-1" role="dialog" aria-hidden="true">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                        <h3 id="myModalLabel3">Delete "MTR" {{ name }}</h3>
+                    </div>
+                    <div class="modal-body">
+                        <p>Deleting a Campaign will permanently delete all Ad Groups and Adverts contained within it. All tracking data tied to this Campaign will also be deleted. Phone numbers will be released and made available to use in other Campaigns (meaning that if anyone tries to call these numbers they will not be able to connect). Press "Delete All Data" to proceed.</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn pull-left green" data-dismiss="modal" aria-hidden="true">Cancel</button>
+                        <button data-dismiss="modal" class="btn red">Delete All Data for: MTR</button>
+                    </div>
+                </div>
+                <!-- END DELETE MODAL -->
+                {% endblock %}
+
                 </div>
             <!-- END SAMPLE TABLE PORTLET-->
         </div>

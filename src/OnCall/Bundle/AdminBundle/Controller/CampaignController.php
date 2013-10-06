@@ -26,51 +26,8 @@ class CampaignController extends ItemController
 
         $this->parent_repo = 'OnCallAdminBundle:Client';
         $this->child_fetch_method = 'getCampaigns';
-    }
-
-    protected function update(Campaign $campaign, $data)
-    {
-        // TODO: cleanup parameters / default value
-        $name = trim($data['name']);
-
-        $campaign->setName($name);
-
-        if (isset($data['status']))
-        {
-            $status = $data['status'];
-            $campaign->setStatus($status);
-        }
-
-        if (isset($data['client']))
-            $campaign->setClient($data['client']);
-    }
-
-    public function createAction($cid)
-    {
-        $data = $this->getRequest()->request->all();
-        $em = $this->getDoctrine()->getManager();
-
-        // find client
-        $client = $this->getDoctrine()
-            ->getRepository('OnCallAdminBundle:Client')
-            ->find($cid);
-
-        // not found
-        if ($client == null)
-        {
-            $this->addFlash('error', 'Could not find client.');
-            return $this->redirect($this->generateUrl('/'));
-        }
-
-        $camp = new Campaign();
-        $data['client'] = $client;
-        $data['status'] = ItemStatus::ACTIVE;
-        $this->update($camp, $data);
-
-        $em->persist($camp);
-        $em->flush();
-
-        return $this->redirect($this->generateUrl('oncall_admin_campaigns', array('cid' => $cid)));
+        $this->url_child = 'oncall_admin_adgroups';
+        $this->url_parent = 'oncall_admin_campaigns';
     }
 
     public function getAction($id)

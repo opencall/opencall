@@ -32,6 +32,11 @@ class Campaign extends Item
         $this->client_id = $client->getID();
         return $this;
     }
+
+    public function setParent(Client $client)
+    {
+        return $this->setClient($client);
+    }
     // end setters
 
     // begin getters

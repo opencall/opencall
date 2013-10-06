@@ -27,6 +27,11 @@ class AdGroup extends Item
         $this->campaign_id = $camp->getID();
         return $this;
     }
+
+    public function setParent(Campaign $camp)
+    {
+        return $this->setCampaign($camp);
+    }
     // end setters
 
     // begin getters
