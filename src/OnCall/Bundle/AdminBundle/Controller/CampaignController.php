@@ -3,12 +3,7 @@
 namespace OnCall\Bundle\AdminBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Response;
-
 use OnCall\Bundle\AdminBundle\Model\ItemController;
-use OnCall\Bundle\AdminBundle\Model\MenuHandler;
-use OnCall\Bundle\AdminBundle\Entity\Client;
-use OnCall\Bundle\AdminBundle\Entity\Campaign;
-use OnCall\Bundle\AdminBundle\Model\ItemStatus;
 use OnCall\Bundle\AdminBundle\Model\AggregateFilter;
 
 class CampaignController extends ItemController
@@ -17,6 +12,7 @@ class CampaignController extends ItemController
     {
         $this->name = 'Campaign';
         $this->top_color = 'blue';
+        $this->template = 'OnCallAdminBundle:Campaign:index.html.twig';
         $this->agg_type = array(
             'parent' => AggregateFilter::TYPE_CLIENT,
             'table' => AggregateFilter::TYPE_CLIENT_CHILDREN,

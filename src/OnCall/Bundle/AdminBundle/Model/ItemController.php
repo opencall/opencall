@@ -39,7 +39,7 @@ abstract class ItemController extends Controller
         $agg = $this->processAggregates($id, $fetch_res['child_ids']);
 
         return $this->render(
-            'OnCallAdminBundle:Campaign:index.html.twig',
+            $this->template,
             array(
                 'user' => $user,
                 'sidebar_menu' => MenuHandler::getMenu($role_hash, 'campaigns'),

@@ -51,6 +51,13 @@ abstract class Item
         $this->status = $status;
         return $this;
     }
+
+    public function setInactive()
+    {
+        // TODO: set children inactive as well
+        $this->setStatus(ItemStatus::INACTIVE);
+        return $this;
+    }
     // end setters
 
     // begin getters

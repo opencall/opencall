@@ -12,14 +12,18 @@ class AdGroupController extends ItemController
     {
         $this->name = 'AdGroup';
         $this->top_color = 'purple';
+        $this->template = 'OnCallAdminBundle:AdGroup:index.html.twig';
         $this->agg_type = array(
             'parent' => AggregateFilter::TYPE_ADGROUP,
             'table' => AggregateFilter::TYPE_ADGROUP_CHILDREN,
             'daily' => AggregateFilter::TYPE_DAILY_ADGROUP,
             'hourly' => AggregateFilter::TYPE_HOURLY_ADGROUP
         );
+
         $this->parent_repo = 'OnCallAdminBundle:Campaign';
+        $this->child_repo = 'OnCallAdminBundle:AdGroup';
         $this->child_fetch_method = 'getAdGroups';
+
         $this->url_child = 'oncall_admin_adverts';
         $this->url_parent = 'oncall_admin_adgroups';
     }
