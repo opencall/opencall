@@ -36,14 +36,14 @@
         <div class="row-fluid">
             <div class="span12">
                 <h4>Advert Name</h4>
-                <p><input type="text" class="span6 m-wrap"></p>
+                <p><input type="text" name="name" class="span6 m-wrap"></p>
                 <h4>Advert Number</h4>
                 <p>                                                 
-                    <select class="m-wrap" tabindex="1">
+                    <select name="number" class="m-wrap" tabindex="1">
                             <option value="85200000002">+852 0000 0002</option>
                             <option value="85200000002">+852 0000 0003</option>
                         </select>
-                    <br />Need more numbers? Open <a href="">Number Management</a>
+                    <br />Need more numbers? Open <a href="/numbers">Number Management</a>
                 </p>
                 <h4>Advert Destination</h4>
                 <ul>
@@ -51,11 +51,13 @@
                         <li>Include the country code</li>
                         <li>e.g. 85266821490</li>
                     </ul>
-                <p><input type="text" class="span6 m-wrap"></p>
+                <p><input name="destination" type="text" class="span6 m-wrap"></p>
                 <!-- Kendrick: Advanced Rules (and override) should only be shown to an admin -->
+                <!--
                 <h4>Advanced Rules (admin only)</h4>
                 <p><textarea class="span12 m-wrap"></textarea></p>
                 <p><input type="checkbox" class="checkboxes" value="1" /> Override Desitnation</p>
+                -->
             </div>
 
         </div>

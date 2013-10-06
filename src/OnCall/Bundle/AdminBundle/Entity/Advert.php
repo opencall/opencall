@@ -26,6 +26,11 @@ class Advert extends Item
      */
     protected $number;
 
+    /**
+     * @ORM\Column(type="integer")
+     */
+    protected $destination;
+
     // begin setters
     public function setAdGroup(AdGroup $adg)
     {
@@ -39,9 +44,15 @@ class Advert extends Item
         return $this->setAdGroup($adg);
     }
 
-    public function setNumber(Number $number)
+    public function setNumber(Number $number = null)
     {
         $this->number = $number;
+        return $this;
+    }
+
+    public function setDestination($dest)
+    {
+        $this->destination = $dest;
         return $this;
     }
     // end setters
@@ -60,6 +71,11 @@ class Advert extends Item
     public function getNumber()
     {
         return $this->number;
+    }
+
+    public function getDestination()
+    {
+        return $this->destination;
     }
     // end getters
 
