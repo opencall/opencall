@@ -31,6 +31,16 @@ class Advert extends Item
      */
     protected $destination;
 
+    /**
+     * @ORM\Column(type="text")
+     */
+    protected $xml_replace;
+
+    /**
+     * @ORM\Column(type="smallint")
+     */
+    protected $xml_override;
+
     // begin setters
     public function setAdGroup(AdGroup $adg)
     {
@@ -55,6 +65,18 @@ class Advert extends Item
         $this->destination = $dest;
         return $this;
     }
+
+    public function setXMLReplace($xml)
+    {
+        $this->xml_replace = $xml;
+        return $this;
+    }
+
+    public function setXMLOverride($override = true)
+    {
+        $this->xml_override = $override;
+        return true;
+    }
     // end setters
 
     // begin getters
@@ -77,12 +99,25 @@ class Advert extends Item
     {
         return $this->destination;
     }
+
+    public function getXMLReplace()
+    {
+        return $this->xml_replace;
+    }
+
+    public function shouldXMLOverride()
+    {
+        return $this->xml_override;
+    }
     // end getters
 
     public function getData()
     {
         $data = parent::getData();
         $data['number_id'] = $this->getNumber->getID();
+        $data['destination'] = $this->getDestination;
+        $data['xml_replace'] = $this->getXMLReplace();
+        $data['xml_override'] = $this->shouldXMLOverride();
 
         return $data;
     }
