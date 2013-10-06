@@ -89,15 +89,15 @@ abstract class ItemController extends Controller
 
     public function updateAction($id)
     {
-        $data = $this->getRequest()->request->all();
-        $em = $this->getDoctrine()->getManager();
-
         // find
         $child = $this->findChild($id);
 
         // update
+        $data = $this->getRequest()->request->all();
         $this->update($child, $data);
-        $em->flush();
+        $this->getDoctrine()
+            ->getManager()
+            ->flush();
 
         // success
         $this->addFlash('success', $this->name . ' ' . $child->getName() . ' has been updated.');
@@ -105,6 +105,22 @@ abstract class ItemController extends Controller
         return $this->redirect($this->generateUrl($this->url_parent, array('id' => $child->getParent()->getID())));
     }
 
+    public function deleteAction($id)
+    {
+        // find and set inactive
+        $child = $this->findChild($id);
+
+        $child->setInactive();
+        $this->getDoctrine()
+            ->getManager()
+            ->flush();
+
+        // success
+        $this->addFlash('success', $this->name . ' ' . $child->getName() . ' has been deleted.');
+        return $this->redirect($this->generateUrl($this->url_parent, array('id' => $child->getParent()->getID())));
+    }
+
+    // utility methods
     protected function update(Item $item, $data)
     {
         // TODO: check required fields
@@ -118,7 +134,7 @@ abstract class ItemController extends Controller
         if (isset($data['parent']))
             $item->setParent($data['parent']);
     }
-    
+
     protected function findChild($item_id)
     {
         $child = $this->getDoctrine()

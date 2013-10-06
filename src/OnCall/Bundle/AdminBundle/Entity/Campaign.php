@@ -3,6 +3,7 @@
 namespace OnCall\Bundle\AdminBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use OnCall\Bundle\AdminBundle\Model\ItemStatus;
 
 /**
  * @ORM\Entity
@@ -36,6 +37,13 @@ class Campaign extends Item
     public function setParent(Client $client)
     {
         return $this->setClient($client);
+    }
+
+    public function setInactive()
+    {
+        // TODO: set children inactive as well
+        $this->setStatus(ItemStatus::INACTIVE);
+        return $this;
     }
     // end setters
 

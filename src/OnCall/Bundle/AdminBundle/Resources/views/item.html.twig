@@ -238,15 +238,25 @@ jQuery(document).ready(function() {
     // END HOURLY CHART
 
     // START MODAL AJAX
+    function update_item(data)
+    {
+        $('.item_name').val(data.name);
+        $('.item_name_text').html(data.name);
+        $('.item_delete_button').val('Delete All Data for: ' + data.name);
+        $('.item_status').val(data.status);
+    }
+
     $('.edit_button').click(function() {
-        var id = $(this).data('id');
-        var url = '/{{ name | lower }}/' + id;
+        var url = '/{{ name | lower }}/' + $(this).data('id');
         $('#edit_form').attr('action', url);
-        $.get(url, function(data) {
-            $('.item_name').val(data.name);
-            $('.item_name_text').html(data.name);
-            $('.item_status').val(data.status);
-        }, 'json');
+        $.get(url, update_item, 'json');
+    });
+
+    $('.delete_button').click(function() {
+        var delete_url = '/{{ name | lower }}/' + $(this).data('id') + '/delete';
+        var edit_url = '/{{ name | lower }}/' + $(this).data('id');
+        $('#delete_form').attr('action', delete_url);
+        $.get(edit_url, update_item, 'json');
     });
     // END MODAL AJAX
 });
@@ -398,7 +408,9 @@ jQuery(document).ready(function() {
                                 <td data-title="Avg Duration">{{ agg_table[camp.getID].getDurationAverageFormatted }}</td>
                                 <td data-title="Action">
                                     <button href="#editModal" data-id="{{ camp.getID }}" data-toggle="modal" role="button" class="edit_button btn mini" ><i class="icon-edit"></i> edit</button>
+                                    {% if camp.isActive %}
                                     <button href="#deleteModal" data-id="{{ camp.getID }}" data-toggle="modal" role="button" class="delete_button btn mini" ><i class="icon-trash"></i> delete</button>
+                                    {% endif %}
                                 </td>   
                             </tr>  
                         {% endfor %}
@@ -489,15 +501,18 @@ jQuery(document).ready(function() {
                 <div id="deleteModal" class="modal hide fade" tabindex="-1" role="dialog" aria-hidden="true">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
-                        <h3 id="myModalLabel3">Delete "MTR" {{ name }}</h3>
+                        <h3 id="myModalLabel3">Delete "<span class="item_name_text"></span>" {{ name }}</h3>
                     </div>
                     <div class="modal-body">
-                        <p>Deleting a Campaign will permanently delete all Ad Groups and Adverts contained within it. All tracking data tied to this Campaign will also be deleted. Phone numbers will be released and made available to use in other Campaigns (meaning that if anyone tries to call these numbers they will not be able to connect). Press "Delete All Data" to proceed.</p>
+                    {% block delete_text %}
+                    {% endblock %}
                     </div>
+                    <form id="delete_form" method="post">
                     <div class="modal-footer">
                         <button class="btn pull-left green" data-dismiss="modal" aria-hidden="true">Cancel</button>
-                        <button data-dismiss="modal" class="btn red">Delete All Data for: MTR</button>
+                        <input type="submit" class="btn red item_delete_button" value="Delete All Data for: MTR" />
                     </div>
+                    </form>
                 </div>
                 <!-- END DELETE MODAL -->
                 {% endblock %}

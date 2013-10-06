@@ -31,25 +31,4 @@ class CampaignController extends ItemController
         $this->url_child = 'oncall_admin_adgroups';
         $this->url_parent = 'oncall_admin_campaigns';
     }
-
-    public function deleteAction($id)
-    {
-        $em = $this->getDoctrine()->getManager();
-
-        // find
-        $client = $this->getDoctrine()
-            ->getRepository('OnCallAdminBundle:Client')
-            ->find($id);
-        if ($client == null)
-        {
-            // TODO: error message?
-            return $this->redirect($this->generateUrl('oncall_admin_clients'));
-        }
-
-        // set inactive
-        $client->setStatus(ClientStatus::INACTIVE);
-        $em->flush();
-
-        return $this->redirect($this->generateUrl('oncall_admin_clients'));
-    }
 }
