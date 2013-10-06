@@ -5,32 +5,23 @@
 {% endblock %}
 
 {% block delete_text %}
-<p>Deleting an AdGroup will permanently delete all Adverts contained within it. All tracking data tied to this AdGroup will also be deleted. Phone numbers will be released and made available to use in other Campaigns (meaning that if anyone tries to call these numbers they will not be able to connect). Press "Delete All Data" to proceed.</p>
+<p>Deleting an Advert will permanently delete all tracking data tied to it. Phone numbers will be released and made available to use in other Campaigns (meaning that if anyone tries to call these numbers they will not be able to connect). Press "Delete All Data" to proceed.</p>
 {% endblock %}
 
 {% block breadcrumb %}
-<ul class="breadcrumb">
-    <li>
-        <a href="/client/{{ parent.getParent.getParent.getID }}/campaigns">{{ parent.getParent.getParent.getName }}</a>
-        <i class="icon-angle-right"></i>
-    </li>
-    <li>
-        <a href="/campaign/{{ parent.getParent.getID }}/adgroups">{{ parent.getParent.getName }}</a>
-        <i class="icon-angle-right"></i>
-    </li>
-    <li>
-        {{ parent.getName }}
-        <i class="icon-angle-right"></i>
-    </li>
-    <li>
-        AdGroups
-    </li>
-    <li class="pull-right no-text-shadow">
-        <div id="aggregate_range" class="dashboard-date-range tooltips no-tooltip-on-touch-device responsive" data-tablet="" data-desktop="tooltips" data-placement="top" data-original-title="Change dashboard date range">
-            <i class="icon-calendar"></i>
-            <span>{{ agg_filter.getDateFromFormatted }} - {{ agg_filter.getDateToFormatted }}</span>
-            <i class="icon-angle-down"></i>
-        </div>
-    </li>
-</ul>
+<li>
+    <a href="/client/{{ parent.getParent.getParent.getID }}/campaigns">{{ parent.getParent.getParent.getName }}</a>
+    <i class="icon-angle-right"></i>
+</li>
+<li>
+    <a href="/campaign/{{ parent.getParent.getID }}/adgroups">{{ parent.getParent.getName }}</a>
+    <i class="icon-angle-right"></i>
+</li>
+<li>
+    {{ parent.getName }}
+    <i class="icon-angle-right"></i>
+</li>
+<li>
+    Adverts
+</li>
 {% endblock %}

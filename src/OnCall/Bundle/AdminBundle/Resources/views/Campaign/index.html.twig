@@ -9,20 +9,11 @@ All Campaigns
 {% endblock %}
 
 {% block breadcrumb %}
-<ul class="breadcrumb">
-    <li>
-        {{ parent.getName }}
-        <i class="icon-angle-right"></i>
-    </li>
-    <li>
-        Campaigns
-    </li>
-    <li class="pull-right no-text-shadow">
-        <div id="aggregate_range" class="dashboard-date-range tooltips no-tooltip-on-touch-device responsive" data-tablet="" data-desktop="tooltips" data-placement="top" data-original-title="Change dashboard date range">
-            <i class="icon-calendar"></i>
-            <span>{{ agg_filter.getDateFromFormatted }} - {{ agg_filter.getDateToFormatted }}</span>
-            <i class="icon-angle-down"></i>
-        </div>
-    </li>
-</ul>
+<li>
+    {{ parent.getName }}
+    <i class="icon-angle-right"></i>
+</li>
+<li>
+    Campaigns
+</li>
 {% endblock %}
