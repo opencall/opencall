@@ -29,7 +29,7 @@ CREATE TABLE `AdGroup` (
   `status` smallint(2) unsigned NOT NULL,
   `date_create` date NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -38,7 +38,7 @@ CREATE TABLE `AdGroup` (
 
 LOCK TABLES `AdGroup` WRITE;
 /*!40000 ALTER TABLE `AdGroup` DISABLE KEYS */;
-INSERT INTO `AdGroup` VALUES (1,4,'Blah Blah Blah!',1,'2013-10-06'),(2,4,'Test AdGroup',1,'2013-10-06'),(3,1,'Edited AdGroup',1,'2013-10-06');
+INSERT INTO `AdGroup` VALUES (1,4,'Blah Blah Blah!',1,'2013-10-06'),(2,4,'Test AdGroup',1,'2013-10-06'),(3,1,'Edited AdGroup',1,'2013-10-06'),(4,7,'Test AdGroup',1,'2013-10-07');
 /*!40000 ALTER TABLE `AdGroup` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -53,6 +53,10 @@ CREATE TABLE `Advert` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `adgroup_id` int(11) unsigned NOT NULL,
   `name` varchar(50) NOT NULL,
+  `number_id` int(15) unsigned DEFAULT NULL,
+  `destination` int(15) unsigned DEFAULT NULL,
+  `xml_replace` text,
+  `xml_override` smallint(1) unsigned NOT NULL DEFAULT '0',
   `status` smallint(2) unsigned NOT NULL,
   `date_create` date NOT NULL,
   PRIMARY KEY (`id`)
@@ -82,7 +86,7 @@ CREATE TABLE `Campaign` (
   `status` smallint(2) unsigned NOT NULL DEFAULT '1',
   `date_create` date NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -91,7 +95,7 @@ CREATE TABLE `Campaign` (
 
 LOCK TABLES `Campaign` WRITE;
 /*!40000 ALTER TABLE `Campaign` DISABLE KEYS */;
-INSERT INTO `Campaign` VALUES (1,7,'Edited Again',0,'2013-09-30'),(2,7,'Test',1,'2013-09-30'),(3,7,'Test',1,'2013-09-30'),(4,7,'Blah',1,'2013-10-06'),(5,7,'Blah',1,'2013-10-06'),(6,7,'Test Generic Campaign',1,'2013-10-06');
+INSERT INTO `Campaign` VALUES (1,7,'Edited Again',0,'2013-09-30'),(2,7,'Test',1,'2013-09-30'),(3,7,'Test',1,'2013-09-30'),(4,7,'Blah',1,'2013-10-06'),(5,7,'Blah',1,'2013-10-06'),(6,7,'Test Generic Campaign',1,'2013-10-06'),(7,1,'Test Campaign',1,'2013-10-07');
 /*!40000 ALTER TABLE `Campaign` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -312,4 +316,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2013-10-07  4:53:37
+-- Dump completed on 2013-10-07  7:52:32
