@@ -11,7 +11,11 @@
 {% block breadcrumb %}
 <ul class="breadcrumb">
     <li>
-        <a href="/campaign/{{ parent.getCampaign.getID }}/adgroups">{{ parent.getCampaign.getName }}</a>
+        <a href="/client/{{ parent.getParent.getParent.getID }}/campaigns">{{ parent.getParent.getParent.getName }}</a>
+        <i class="icon-angle-right"></i>
+    </li>
+    <li>
+        <a href="/campaign/{{ parent.getParent.getID }}/adgroups">{{ parent.getParent.getName }}</a>
         <i class="icon-angle-right"></i>
     </li>
     <li>

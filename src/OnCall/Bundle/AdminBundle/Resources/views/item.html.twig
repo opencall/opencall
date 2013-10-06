@@ -380,6 +380,10 @@ jQuery(document).ready(function() {
                             <tr>
                                 <th></th>
                                 <th>{{ name }} Name</th>
+                                {% if name == 'Advert' %}
+                                <th>Ad Number</th>
+                                <th>Ad Destination</th>
+                                {% endif %}
                                 <th>Total Calls</th> 
                                 <th>Unique Calls</th>
                                 <th>Failed Calls</th>
@@ -397,6 +401,10 @@ jQuery(document).ready(function() {
                             <tr>
                                 <td data-title="Status" style="text-align: center;"><i class="{{ camp.isActive ? 'icon-ok-sign' : 'icon-remove-sign' }}"></i></td>  
                                 <td data-title="{{ name }} Name"><a href="{{ path(url_child, {'id': camp.getID }) }}">{{ camp.getName }}</a></td>  
+                                {% if name == 'Advert' %}
+                                <td></td>
+                                <td></td>
+                                {% endif %}
                                 <td data-title="Total Calls">{{ agg_table[camp.getID].getTotalFormatted }}<a href=""></a></td>
                                 <td data-title="Unique Calls">{{ agg_table[camp.getID].getUniqueFormatted }}<a href=""></a></td>
                                 <td data-title="Failed Calls">{{ agg_table[camp.getID].getFailedFormatted }}<a href=""></a></td>
@@ -418,7 +426,7 @@ jQuery(document).ready(function() {
                         <tfoot>
                             <tr>
                                 <td></td>
-                                <td><strong>Totals</strong></td>
+                                <td {% if name == 'Advert' %}colspan="3"{% endif %}><strong>Totals</strong></td>
                                 <td>{{ agg_parent.getTotalFormatted }}</td>
                                 <td>{{ agg_parent.getUniqueFormatted }}</td>
                                 <td>{{ agg_parent.getFailedFormatted }}</td>
