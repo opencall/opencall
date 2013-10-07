@@ -92,7 +92,8 @@ abstract class ItemController extends Controller
 
         // success
         $this->addFlash('success', $this->name . ' ' . $child->getName() . ' has been deleted.');
-        return $this->redirect($this->generateUrl($this->url_parent, array('id' => $child->getParent()->getID())));
+
+        return new Response('');
     }
 
     // utility methods

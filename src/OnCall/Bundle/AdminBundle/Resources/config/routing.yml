@@ -150,12 +150,12 @@ oncall_admin_adgroup_delete:
 
 #advert routes
 oncall_admin_adverts:
-    pattern: /campaign/{id}/adverts
+    pattern: /adgroup/{id}/adverts
     defaults: { _controller: OnCallAdminBundle:Advert:index }
     methods: [GET]
 
 oncall_admin_advert_create:
-    pattern: /campaign/{id}/adverts
+    pattern: /adgroup/{id}/adverts
     defaults: { _controller: OnCallAdminBundle:Advert:create }
     methods: [POST]
 

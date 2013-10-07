@@ -4,6 +4,7 @@
 {{ parent.getName }} <small>AdGroup</small>
 {% endblock %}
 
+
 {% block delete_text %}
 <p>Deleting an Advert will permanently delete all tracking data tied to it. Phone numbers will be released and made available to use in other Campaigns (meaning that if anyone tries to call these numbers they will not be able to connect). Press "Delete All Data" to proceed.</p>
 {% endblock %}
@@ -70,4 +71,66 @@
     </div>
     </form>
 </div>
+{% endblock %}
+
+{% block modal_edit %}
+<div id="editModal" class="modal hide fade" tabindex="-1" data-width="760">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+        <h3>Edit Advert</h3>
+    </div>
+    <form id="edit_form" method="post">
+    <div class="modal-body">
+        <div class="row-fluid">
+            <div class="span12">
+                <h4>Advert Number: <span class="item_number_id"></span></h4>
+                <br />
+                <h4>Advert Name</h4>
+                <p><input name="name" type="text" class="item_name span6 m-wrap"></p>
+
+                <h4>Advert Destination</h4>
+                <ul>
+                        <li>Do not enter spaces or + </li>
+                        <li>Include the country code</li>
+                        <li>e.g. 85266821490</li>
+                    </ul>
+                <p><input name="destination" type="text" class="item_destination span6 m-wrap"></p>
+                {% if is_granted('ROLE_PREVIOUS_ADMIN') %}
+                <!-- Kendrick: Advanced Rules (and override) should only be shown to an admin -->
+                <h4>Advanced Rules (admin only)</h4>
+                <p><textarea name="xml_replace" class="item_xml_replace span12 m-wrap"></textarea></p>
+                <p><input name="xml_override" type="checkbox" class="item_xml_override checkboxes" value="1" /> Override Desitnation</p>
+                {% endif %}
+                <!-- Kendrick: This should only show to an admin if the Advert status is "deleted" -->
+                <h4>Advert Status</h4>
+                <p><select name="status" class="item_status small m-wrap" tabindex="1">
+                    <option value="1">Active</option>
+                    <option value="0">Inactive</option>
+                </select></p>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" data-dismiss="modal" class="btn">Cancel</button>
+        <input type="submit" class="btn green" value="Save changes" />
+    </div>
+</div>      
+{% endblock %}
+
+{% block ajax_update_item %}
+<script>
+function update_item(data)
+{
+    $('.item_name').val(data.name);
+    $('.item_name_text').html(data.name);
+    $('.item_delete_button').val('Delete All Data for: ' + data.name);
+    $('.item_status').val(data.status);
+
+    $('.item_number_id').html(data.number_id);
+    $('.item_destination').val(data.destination);
+    $('.item_xml_replace').val(data.xml_replace);
+    $('.item_xml_override').prop('checked', data.xml_override);
+    $.uniform.update();
+}
+</script>
 {% endblock %}

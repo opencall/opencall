@@ -54,7 +54,7 @@ abstract class Item
 
     public function setInactive()
     {
-        // TODO: set children inactive as well
+        // do not set children inactive
         $this->setStatus(ItemStatus::INACTIVE);
         return $this;
     }
