@@ -60,6 +60,8 @@ class AdvertController extends ItemController
     {
         parent::update($advert, $data);
 
+        // TODO: check required number and destination
+
         if (isset($data['number']))
         {
             // find number
@@ -74,10 +76,16 @@ class AdvertController extends ItemController
         if (isset($data['destination']))
             $advert->setDestination($data['destination']);
 
-        if (isset($data['xml_replace']))
-            $advert->setXMLReplace($data['xml_replace']);
+        // check xml stuff only if admin
+        if ($this->get('security.context')->isGranted('ROLE_PREVIOUS_ADMIN'))
+        {
+            if (isset($data['xml_replace']))
+                $advert->setXMLReplace($data['xml_replace']);
 
-        if (isset($data['xml_override']))
-            $advert->setXMLOverride($data['xml_override']);
+            if (isset($data['xml_override']))
+                $advert->setXMLOverride(1);
+            else
+                $advert->setXMLOverride(0);
+        }
     }
 }
