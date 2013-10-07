@@ -30,8 +30,28 @@ class AdvertController extends ItemController
 
     public function indexAction($id)
     {
+        // get main data
         $data = $this->fetchMainData($id);
 
+        // get client id
+        $cid = $data['parent']->getCampaign()->getClient()->getID();
+
+        // get the numbers
+        $dql = 'select n from OnCallAdminBundle:Number n left outer join n.advert a where n.client_id = :client_id and a is null';
+        $query = $this->getDoctrine()
+            ->getManager()
+            ->createQuery($dql)
+            ->setParameter('client_id', $cid);
+        $numbers = $query->getResult();
+
+        // fill new parameters
+        $data['numbers'] = $numbers;
+
         return  $this->render($this->template, $data);
+    }
+
+    protected function getAvailableNumbers($client_id)
+    {
+
     }
 }

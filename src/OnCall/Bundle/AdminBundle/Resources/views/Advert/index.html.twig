@@ -40,9 +40,10 @@
                 <h4>Advert Number</h4>
                 <p>                                                 
                     <select name="number" class="m-wrap" tabindex="1">
-                            <option value="85200000002">+852 0000 0002</option>
-                            <option value="85200000002">+852 0000 0003</option>
-                        </select>
+                    {% for num in numbers %}
+                        <option value="{{ num.getID }}">{{ num.getID }}</option>
+                    {% endfor %}
+                    </select>
                     <br />Need more numbers? Open <a href="/numbers">Number Management</a>
                 </p>
                 <h4>Advert Destination</h4>
@@ -53,9 +54,11 @@
                     </ul>
                 <p><input name="destination" type="text" class="span6 m-wrap"></p>
                 <!-- Kendrick: Advanced Rules (and override) should only be shown to an admin -->
+                {% if is_granted('ROLE_PREVIOUS_ADMIN') %}
                 <h4>Advanced Rules (admin only)</h4>
                 <p><textarea name="xml_replace" class="span12 m-wrap"></textarea></p>
                 <p><input name="xml_override" type="checkbox" class="checkboxes" value="1" /> Override Desitnation</p>
+                {% endif %}
             </div>
 
         </div>

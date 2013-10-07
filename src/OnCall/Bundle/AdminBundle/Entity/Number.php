@@ -36,6 +36,11 @@ class Number
     /**
      * @ORM\Column(type="integer")
      */
+    protected $client_id;
+
+    /**
+     * @ORM\Column(type="integer")
+     */
     protected $price_buy;
 
     /**
@@ -85,6 +90,7 @@ class Number
     public function setClient(Client $client)
     {
         $this->client = $client;
+        $this->client_id = $client->getID();
         return $this;
     }
 
