@@ -5,6 +5,8 @@ namespace OnCall\Bundle\AdminBundle\Controller;
 use Symfony\Component\HttpFoundation\Response;
 use OnCall\Bundle\AdminBundle\Model\ItemController;
 use OnCall\Bundle\AdminBundle\Model\AggregateFilter;
+use OnCall\Bundle\AdminBundle\Entity\Item;
+use OnCall\Bundle\AdminBundle\Entity\Number;
 
 class AdvertController extends ItemController
 {
@@ -36,22 +38,46 @@ class AdvertController extends ItemController
         // get client id
         $cid = $data['parent']->getCampaign()->getClient()->getID();
 
-        // get the numbers
-        $dql = 'select n from OnCallAdminBundle:Number n left outer join n.advert a where n.client_id = :client_id and a is null';
-        $query = $this->getDoctrine()
-            ->getManager()
-            ->createQuery($dql)
-            ->setParameter('client_id', $cid);
-        $numbers = $query->getResult();
-
         // fill new parameters
-        $data['numbers'] = $numbers;
+        $data['numbers'] = $this->getAvailableNumbers($cid);
 
         return  $this->render($this->template, $data);
     }
 
     protected function getAvailableNumbers($client_id)
     {
+        // get the numbers
+        $dql = 'select n from OnCallAdminBundle:Number n left outer join n.advert a where n.client_id = :client_id and a is null';
+        $query = $this->getDoctrine()
+            ->getManager()
+            ->createQuery($dql)
+            ->setParameter('client_id', $client_id);
 
+        return $query->getResult();
+    }
+
+    protected function update(Item $advert, $data)
+    {
+        parent::update($advert, $data);
+
+        if (isset($data['number']))
+        {
+            // find number
+            $num = $this->getDoctrine()
+                ->getRepository('OnCallAdminBundle:Number')
+                ->find(trim($data['number']));
+
+            // TODO: check if num is null
+            $advert->setNumber($num);
+        }
+
+        if (isset($data['destination']))
+            $advert->setDestination($data['destination']);
+
+        if (isset($data['xml_replace']))
+            $advert->setXMLReplace($data['xml_replace']);
+
+        if (isset($data['xml_override']))
+            $advert->setXMLOverride($data['xml_override']);
     }
 }

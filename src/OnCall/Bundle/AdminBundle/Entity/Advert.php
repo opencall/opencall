@@ -41,6 +41,12 @@ class Advert extends Item
      */
     protected $xml_override;
 
+    public function __construct()
+    {
+        parent::__construct();
+        $this->xml_override = 0;
+    }
+
     // begin setters
     public function setAdGroup(AdGroup $adg)
     {
@@ -114,8 +120,8 @@ class Advert extends Item
     public function getData()
     {
         $data = parent::getData();
-        $data['number_id'] = $this->getNumber->getID();
-        $data['destination'] = $this->getDestination;
+        $data['number_id'] = $this->getNumber()->getID();
+        $data['destination'] = $this->getDestination();
         $data['xml_replace'] = $this->getXMLReplace();
         $data['xml_override'] = $this->shouldXMLOverride();
 

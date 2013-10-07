@@ -407,28 +407,30 @@ jQuery(document).ready(function() {
                             </tr>
                         </thead>
                         <tbody>
-                        {% for camp in children %}
+                        {% for child in children %}
                             <tr>
-                                <td data-title="Status" style="text-align: center;"><i class="{{ camp.isActive ? 'icon-ok-sign' : 'icon-remove-sign' }}"></i></td>  
-                                <td data-title="{{ name }} Name"><a href="{{ path(url_child, {'id': camp.getID }) }}">{{ camp.getName }}</a></td>  
+                                <td data-title="Status" style="text-align: center;"><i class="{{ child.isActive ? 'icon-ok-sign' : 'icon-remove-sign' }}"></i></td>  
                                 {% if name == 'Advert' %}
-                                <td></td>
-                                <td></td>
-                                <td><i class="icon-ok-sign"></i></td>
+                                <td data-title="{{ name }} Name">{{ child.getName }}</td>  
+                                <td>{{ child.getNumber.getID }}</td>
+                                <td>{{ child.getDestination }}</td>
+                                <td><i class="{{ child.shouldXMLOverride ? 'icon-ok-sign' : 'icon-remove-sign' }}"></i></td>
+                                {% else %}
+                                <td data-title="{{ name }} Name"><a href="{{ path(url_child, {'id': child.getID }) }}">{{ child.getName }}</a></td>  
                                 {% endif %}
-                                <td data-title="Total Calls">{{ agg_table[camp.getID].getTotalFormatted }}<a href=""></a></td>
-                                <td data-title="Unique Calls">{{ agg_table[camp.getID].getUniqueFormatted }}<a href=""></a></td>
-                                <td data-title="Failed Calls">{{ agg_table[camp.getID].getFailedFormatted }}<a href=""></a></td>
-                                <td data-title="Potential Leads">{{ agg_table[camp.getID].getPLeadFormatted }}<a href=""></a></td>
-                                <td data-title="% Unique">{{ agg_table[camp.getID].getUniquePercentFormatted }}%</td>
-                                <td data-title="% Failed">{{ agg_table[camp.getID].getFailedPercentFormatted }}%</td>
-                                <td data-title="% Potential Leads">{{ agg_table[camp.getID].getPLeadPercentFormatted }}%</td>
-                                <td data-title="Total Duration">{{ agg_table[camp.getID].getDurationFormatted }}</td>
-                                <td data-title="Avg Duration">{{ agg_table[camp.getID].getDurationAverageFormatted }}</td>
+                                <td data-title="Total Calls">{{ agg_table[child.getID].getTotalFormatted }}<a href=""></a></td>
+                                <td data-title="Unique Calls">{{ agg_table[child.getID].getUniqueFormatted }}<a href=""></a></td>
+                                <td data-title="Failed Calls">{{ agg_table[child.getID].getFailedFormatted }}<a href=""></a></td>
+                                <td data-title="Potential Leads">{{ agg_table[child.getID].getPLeadFormatted }}<a href=""></a></td>
+                                <td data-title="% Unique">{{ agg_table[child.getID].getUniquePercentFormatted }}%</td>
+                                <td data-title="% Failed">{{ agg_table[child.getID].getFailedPercentFormatted }}%</td>
+                                <td data-title="% Potential Leads">{{ agg_table[child.getID].getPLeadPercentFormatted }}%</td>
+                                <td data-title="Total Duration">{{ agg_table[child.getID].getDurationFormatted }}</td>
+                                <td data-title="Avg Duration">{{ agg_table[child.getID].getDurationAverageFormatted }}</td>
                                 <td data-title="Action">
-                                    <button href="#editModal" data-id="{{ camp.getID }}" data-toggle="modal" role="button" class="edit_button btn mini" ><i class="icon-edit"></i> edit</button>
-                                    {% if camp.isActive %}
-                                    <button href="#deleteModal" data-id="{{ camp.getID }}" data-toggle="modal" role="button" class="delete_button btn mini" ><i class="icon-trash"></i> delete</button>
+                                    <button href="#editModal" data-id="{{ child.getID }}" data-toggle="modal" role="button" class="edit_button btn mini" ><i class="icon-edit"></i> edit</button>
+                                    {% if child.isActive %}
+                                    <button href="#deleteModal" data-id="{{ child.getID }}" data-toggle="modal" role="button" class="delete_button btn mini" ><i class="icon-trash"></i> delete</button>
                                     {% endif %}
                                 </td>   
                             </tr>  
