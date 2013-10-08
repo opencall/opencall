@@ -17,15 +17,15 @@ class NumberController extends Controller
         $em = $this->getDoctrine()->getManager();
         $req = $this->getRequest();
 
-        // TODO: create method in custom repo
-        // get clients, eager load users
-        $dql = 'select c,u from OnCall\Bundle\AdminBundle\Entity\Client c join c.user u order by u.business_name asc, c.name asc';
-        $cl_query = $em->createQuery($dql);
-        $clients = $cl_query->getResult();
+        // get clients
+        $clients = $this->getDoctrine()
+            ->getRepository('OnCallAdminBundle:Client')
+            ->findAllWithUsers();
 
-        // get numbers
-        $repo = $this->getDoctrine()->getRepository('OnCallAdminBundle:Number');
-        $num_query = $repo->createQueryBuilder('n');
+        // form number query
+        $num_query = $this->getDoctrine()
+            ->getRepository('OnCallAdminBundle:Number')
+            ->createQueryBuilder('n');
         
         $type = $req->get('type');
         $usage = $req->get('usage');

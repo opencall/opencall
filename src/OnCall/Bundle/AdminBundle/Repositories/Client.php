@@ -23,4 +23,20 @@ class Client extends EntityRepository
             return null;
         }
     }
+
+    public function findAllWithUsers()
+    {
+        try
+        {
+            // get clients, eager load users
+            $dql = 'select c,u from OnCallAdminBundle:Client c join c.user u order by u.business_name asc, c.name asc';
+            $query = $this->getEntityManager()
+                ->createQuery($dql);
+            return $query->getResult();
+        }
+        catch (NoResultException $e)
+        {
+            return array();
+        }
+    }
 }
