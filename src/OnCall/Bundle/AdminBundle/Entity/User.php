@@ -73,6 +73,11 @@ class User extends BaseUser
      */
     protected $date_create;
 
+    /**
+     * @ORM\OneToMany(targetEntity="Client", mappedBy="user")
+     */
+    protected $clients;
+
 
     public function __construct()
     {
@@ -212,6 +217,11 @@ class User extends BaseUser
         if ($this->date_create == null)
             return '';
         return $this->date_create->format('d M Y');
+    }
+
+    public function getClients()
+    {
+        return $this->clients;
     }
     // end getters
 

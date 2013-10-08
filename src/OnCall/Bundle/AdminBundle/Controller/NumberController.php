@@ -14,42 +14,19 @@ class NumberController extends Controller
 {
     public function indexAction()
     {
-        // check if admin or client
-        if ($this->get('security.context')->isGranted('ROLE_ADMIN'))
-            return $this->indexAdmin();
+        // get role hash for menu
+        $user = $this->getUser();
+        $role_hash = $user->getRoleHash();
 
-        return $this->indexClient();
-    }
-
-    protected function indexClient()
-    {
-    }
-
-    protected function indexAdmin()
-    {
+        // get request params
         $req = $this->getRequest();
-
-        // get clients
-        $clients = $this->getDoctrine()
-            ->getRepository('OnCallAdminBundle:Client')
-            ->findAllWithUsers();
+        $type = $req->get('type');
+        $usage = $req->get('usage');
 
         // form number query
         $num_query = $this->getDoctrine()
             ->getRepository('OnCallAdminBundle:Number')
             ->createQueryBuilder('n');
-        
-        $type = $req->get('type');
-        $usage = $req->get('usage');
-        
-        // get types
-        $types = NumberType::getAll();
-
-        // usage filter
-        if ($usage === '1')
-            $num_query->where('n.client is not null');
-        else if ($usage === '0')
-            $num_query->where('n.client is null');
 
         // type filter
         if ($type != null && $type !== '')
@@ -58,19 +35,55 @@ class NumberController extends Controller
                 ->setParameter('type', $type);
         }
 
+        // check if admin or client
+        if ($this->get('security.context')->isGranted('ROLE_ADMIN'))
+        {
+            $template = 'OnCallAdminBundle:Number:index.admin.html.twig';
+
+            // get clients
+            $clients = $this->getDoctrine()
+                ->getRepository('OnCallAdminBundle:Client')
+                ->findAllWithUsers();
+
+            // usage filter
+            if ($usage === '1')
+                $num_query->where('n.client is not null');
+            else if ($usage === '0')
+                $num_query->where('n.client is null');
+        }
+        else
+        {
+            $template = 'OnCallAdminBundle:Number:index.client.html.twig';
+
+            // get clients
+            $clients = $user->getClients();
+            $client_ids = array();
+            foreach ($clients as $cli)
+                $client_ids[] = $cli->getID();
+
+            // limit numbers to clients we have
+            $num_query->add('where', $num_query->expr()->in('n.client_id', $client_ids));
+
+            // usage filter
+            if ($usage === '1')
+                $num_query->where('n.advert is not null');
+            else if ($usage === '0')
+                $num_query->where('n.advert is null');
+        }
+
+        // get types
+        $types = NumberType::getAll();
+
         // sort by
         $num_query->orderBy('n.id', 'asc');
 
         // actual query
         $numbers = $num_query->getQuery()->getResult();
 
-        // get role hash for menu
-        $user = $this->getUser();
-        $role_hash = $user->getRoleHash();
-
         return $this->render(
-            'OnCallAdminBundle:Number:index.admin.html.twig',
+            $template,
             array(
+                'user' => $user,
                 'sidebar_menu' => MenuHandler::getMenu($role_hash, 'number'),
                 'clients' => $clients,
                 'numbers' => $numbers,

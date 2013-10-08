@@ -40,7 +40,7 @@ class MenuHandler
                 'icon-phone'
             ));
             $menu_group->addItem(new MenuItem(
-                'number_client',
+                'number',
                 'Number Management',
                 '/numbers',
                 'icon-th'

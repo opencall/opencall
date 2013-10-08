@@ -228,6 +228,35 @@ class Number
     {
         return $this->advert;
     }
+
+    public function isAssigned()
+    {
+        if ($this->advert == null)
+            return false;
+
+        return true;
+    }
+
+    public function getAdvertFormatted()
+    {
+        if ($this->getAdvert() == null)
+            return '-';
+        return $this->getAdvert()->getName();
+    }
+
+    public function getAdGroupFormatted()
+    {
+        if ($this->getAdvert() == null)
+            return '-';
+        return $this->getAdvert()->getAdGroup()->getName();
+    }
+
+    public function getCampaignFormatted()
+    {
+        if ($this->getAdvert() == null)
+            return '-';
+        return $this->getAdvert()->getAdGroup()->getCampaign()->getName();
+    }
     // end getters
 
     public function jsonify()
