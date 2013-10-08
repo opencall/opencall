@@ -83,10 +83,20 @@
     <div class="modal-body">
         <div class="row-fluid">
             <div class="span12">
-                <h4>Advert Number: <span class="item_number_id"></span></h4>
+                <h4>
+                    Advert Number: 
+                    <span id="item_name_static" class="item_number_id"></span>
+                    <select id="item_name_dropdown" name="number" class="m-wrap" tabindex="1">
+                    {% for num in numbers %}
+                        <option value="{{ num.getID }}">{{ num.getID }}</option>
+                    {% endfor %}
+                    </select>
+                </h4>
                 <br />
                 <h4>Advert Name</h4>
-                <p><input name="name" type="text" class="item_name span6 m-wrap"></p>
+                <p>
+                    <input name="name" type="text" class="item_name span6 m-wrap">
+                </p>
 
                 <h4>Advert Destination</h4>
                 <ul>
@@ -121,6 +131,18 @@
 <script>
 function update_item(data)
 {
+    if (!data.number_id)
+    {
+        $('#item_name_static').addClass('hidden');
+        $('#item_name_dropdown').removeClass('hidden');
+    }
+    else
+    {
+        $('#item_name_static').removeClass('hidden');
+        $('#item_name_dropdown').addClass('hidden');
+        $('#item_name_dropdown').val(data.number_id);
+    }
+
     $('.item_name').val(data.name);
     $('.item_name_text').html(data.name);
     $('.item_delete_button').val('Delete All Data for: ' + data.name);

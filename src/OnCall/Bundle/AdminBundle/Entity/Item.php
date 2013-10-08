@@ -56,6 +56,19 @@ abstract class Item
     {
         // do not set children inactive
         $this->setStatus(ItemStatus::INACTIVE);
+
+        // set unassign number
+        $this->unassignNumber();
+
+        return $this;
+    }
+
+    public function unassignNumber()
+    {
+        $children = $this->getChildren();
+        foreach ($children as $child)
+            $child->unassignNumber();
+
         return $this;
     }
     // end setters

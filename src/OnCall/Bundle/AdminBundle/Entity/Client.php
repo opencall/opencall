@@ -80,6 +80,11 @@ class Client extends Item
     {
         return count($this->campaigns);
     }
+
+    public function getChildren()
+    {
+        return $this->getCampaigns();
+    }
     // end getters
 
     public function getData()

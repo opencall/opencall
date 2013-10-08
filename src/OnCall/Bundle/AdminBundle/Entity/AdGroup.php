@@ -59,5 +59,10 @@ class AdGroup extends Item
     {
         return $this->getCampaign();
     }
+
+    public function getChildren()
+    {
+        return $this->getAdverts();
+    }
     // end getters
 }

@@ -14,7 +14,19 @@ class NumberController extends Controller
 {
     public function indexAction()
     {
-        $em = $this->getDoctrine()->getManager();
+        // check if admin or client
+        if ($this->get('security.context')->isGranted('ROLE_ADMIN'))
+            return $this->indexAdmin();
+
+        return $this->indexClient();
+    }
+
+    protected function indexClient()
+    {
+    }
+
+    protected function indexAdmin()
+    {
         $req = $this->getRequest();
 
         // get clients
@@ -57,7 +69,7 @@ class NumberController extends Controller
         $role_hash = $user->getRoleHash();
 
         return $this->render(
-            'OnCallAdminBundle:Number:index.html.twig',
+            'OnCallAdminBundle:Number:index.admin.html.twig',
             array(
                 'sidebar_menu' => MenuHandler::getMenu($role_hash, 'number'),
                 'clients' => $clients,

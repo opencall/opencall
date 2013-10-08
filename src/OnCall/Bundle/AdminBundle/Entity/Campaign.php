@@ -59,5 +59,10 @@ class Campaign extends Item
     {
         return $this->getClient();
     }
+
+    public function getChildren()
+    {
+        return $this->getAdGroups();
+    }
     // end getters
 }

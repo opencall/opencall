@@ -425,7 +425,7 @@ jQuery(document).ready(function() {
                                 <td data-title="Status" style="text-align: center;"><i class="{{ child.isActive ? 'icon-ok-sign' : 'icon-remove-sign' }}"></i></td>  
                                 {% if name == 'Advert' %}
                                 <td data-title="{{ name }} Name">{{ child.getName }}</td>  
-                                <td>{{ child.getNumber.getID }}</td>
+                                <td>{{ child.getNumberFormatted }}</td>
                                 <td>{{ child.getDestination }}</td>
                                 <td><i class="{{ child.shouldXMLOverride ? 'icon-ok-sign' : 'icon-remove-sign' }}"></i></td>
                                 {% else %}
