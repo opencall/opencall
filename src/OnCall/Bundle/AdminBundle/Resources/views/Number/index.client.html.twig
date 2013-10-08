@@ -41,16 +41,77 @@ $(document).ready(function() {
 {% endblock %}
 
 {% block body %}
-<!-- BEGIN PAGE CONTAINER-->
 <div class="container-fluid">
     <!-- BEGIN PAGE HEADER-->
     <div class="row-fluid">
         <div class="span12">    
-    
             <h3 class="page-title">
                 Number Management 
             </h3>
             {{ flash.display_flash_messages }}
+            <button class="btn green" style="margin-bottom: 4px;"  data-toggle="modal" href="#requestNumbers"><i class="icon-plus"></i> Request More Numbers</button> 
+            <br /><br /><br />
+
+            Filter By Usage:
+            <select id="filter_usage" class="small m-wrap" tabindex="1">
+                <option value="" {{ (usage is sameas('')) ? 'selected="selected"' : '' }}>-</option>
+                <option value="1" {{ (usage is sameas('1')) ? 'selected="selected"' : '' }}>In Use</option>
+                <option value="0" {{ (usage is sameas('0')) ? 'selected="selected"' : '' }}>Not In Use</option>
+            </select>
+
+            Filter By Type:
+            <select id="filter_type" class="small m-wrap" tabindex="1">
+                <option value="">-</option>
+                {% for value,text in types %}
+                    <option value="{{ value }}" {{ (type == value) ? 'selected="selected"' : '' }}>{{ text }}</option>
+                {% endfor %}
+            </select>
+            <br />
+
+            <!-- Add Number MODAL -->
+            <div id="requestNumbers" class="modal hide fade" tabindex="-1" data-width="760">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                    <h3>Request Numbers</h3>
+                    <ul>
+                        <li>Numbers will be provisioned within 24 hours (Mon-Fri)</li>
+                        <li>Numbers will be charged at HKD 29/month (pro rata)</li>
+                    </ul>
+
+                </div>
+                <div class="modal-body">
+                    <div class="row-fluid">
+                        <div class="span12">
+                            <h4>Number Details</h4>
+                            <p>How many phone numbers do you require?*<br /><input type="text" class="span12 m-wrap"></p>
+                            <p>Do you have any special requirements for the numbers?*<br /><textarea class="span12 m-wrap"></textarea></p>
+                        </div>
+                    </div>
+                </div>
+        
+                <div class="modal-footer">
+                    <button type="button" data-dismiss="modal" class="btn">Cancel</button>
+                    <button type="button" class="btn green">Request numbers</button>
+                </div>
+            </div> 
+            <!-- End Add Number MODAL -->
+            
+            <!-- DELETE Number MODAL -->
+            <div id="deleteNumber" class="modal hide fade" tabindex="-1" role="dialog" aria-hidden="true">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                    <h3 id="myModalLabel3">Delete 85266821490?</h3>
+                </div>
+                <div class="modal-body">
+                    <p>Relinquishing a number will permanently remove it from this client account and it will be re-entered into the pool for all CallTracking customers to use. Please note, you will be billed for the remainder of the month for this phone number. Press "Delete Number" to proceed.</p>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn pull-left green" data-dismiss="modal" aria-hidden="true">Cancel</button>
+                    <button data-dismiss="modal" class="btn red">Delete Number</button>
+                </div>
+            </div>
+            <!-- END Number MODAL -->
+
             <form id="assign_form" method="post" action="/account/0/numbers">
             <table class="table-bordered table-striped table-condensed cf">
                 <thead>

@@ -28,13 +28,6 @@ class NumberController extends Controller
             ->getRepository('OnCallAdminBundle:Number')
             ->createQueryBuilder('n');
 
-        // type filter
-        if ($type != null && $type !== '')
-        {
-            $num_query->andWhere('n.type = :type')
-                ->setParameter('type', $type);
-        }
-
         // check if admin or client
         if ($this->get('security.context')->isGranted('ROLE_ADMIN'))
         {
@@ -61,18 +54,29 @@ class NumberController extends Controller
             foreach ($clients as $cli)
                 $client_ids[] = $cli->getID();
 
+            // join
+            $num_query->leftJoin('n.advert', 'a');
+
             // limit numbers to clients we have
-            $num_query->add('where', $num_query->expr()->in('n.client_id', $client_ids));
+            // $num_query->add('where', $num_query->expr()->in('n.client_id', $client_ids));
+            $num_query->where($num_query->expr()->in('n.client_id', $client_ids));
 
             // usage filter
             if ($usage === '1')
-                $num_query->where('n.advert is not null');
+                $num_query->where('a is not null');
             else if ($usage === '0')
-                $num_query->where('n.advert is null');
+                $num_query->where('a is null');
         }
 
         // get types
         $types = NumberType::getAll();
+
+        // type filter
+        if ($type != null && $type !== '')
+        {
+            $num_query->andWhere('n.type = :type')
+                ->setParameter('type', $type);
+        }
 
         // sort by
         $num_query->orderBy('n.id', 'asc');
