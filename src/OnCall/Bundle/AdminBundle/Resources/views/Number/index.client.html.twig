@@ -14,27 +14,10 @@ $(document).ready(function() {
     $('#filter_usage').change(filter_redirect);
     $('#filter_type').change(filter_redirect);
 
-    $('.edit_num').click(function() {
-        var num_id = $(this).data('id');
-        $('#edit_form').attr('action', '/number/' + num_id);
-        $.get('/number/' + num_id, function(num_data) {
-            $('#num_id').html(num_data.id);
-            $('#num_provider').val(num_data.provider);
-            $('#num_type').val(num_data.type);
-            $('#num_price_buy').val(num_data.price_buy_formatted);
-            $('#num_price_resale').val(num_data.price_resale_formatted);
-        }, 'json');
-    });
-
-    $('.delete_num').click(function() {
+    $('#delete_num').click(function() {
         var num_id = $(this).data('id');
         $('#dnum_id').html(num_id);
-        $('#dnum_form').attr('action', '/number/' + num_id + '/delete');
-    });
-
-    $('#assign_submit').click(function() {
-        var acc_id = $('#assign_acc_id').val();
-        $('#assign_form').attr('action', '/account/' + acc_id + '/numbers').submit();
+        $('#dnum_form').attr('action', '/number/' + num_id + '/unassign');
     });
 });
 </script>
@@ -100,15 +83,17 @@ $(document).ready(function() {
             <div id="deleteNumber" class="modal hide fade" tabindex="-1" role="dialog" aria-hidden="true">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
-                    <h3 id="myModalLabel3">Delete 85266821490?</h3>
+                    <h3 id="myModalLabel3">Delete <span id="dnum_id">85266821490</span>?</h3>
                 </div>
                 <div class="modal-body">
                     <p>Relinquishing a number will permanently remove it from this client account and it will be re-entered into the pool for all CallTracking customers to use. Please note, you will be billed for the remainder of the month for this phone number. Press "Delete Number" to proceed.</p>
                 </div>
+                <form id="dnum_form" method="post">
                 <div class="modal-footer">
                     <button class="btn pull-left green" data-dismiss="modal" aria-hidden="true">Cancel</button>
-                    <button data-dismiss="modal" class="btn red">Delete Number</button>
+                    <input type="submit" class="btn red" value="Delete Number" />
                 </div>
+                </form>
             </div>
             <!-- END Number MODAL -->
 
@@ -143,9 +128,8 @@ $(document).ready(function() {
                         <td>{{ num.getDateAssignFormatted }}</td>
                         <td>{{ num.getDateLastCallFormatted }}</td>
                         <td>
-                            <button href="#editNumber" data-toggle="modal" data-id="{{ num.getID }}" role="button" class="btn mini edit_num" ><i class="icon-edit"></i> edit</button>
-                            {% if (not num.isInUse) %}
-                            <button href="#deleteNumber" data-toggle="modal" data-id="{{ num.getID }}" role="button" class="btn mini delete_num"><i class="icon-trash"></i> delete</button>
+                            {% if (not num.isAssigned) %}
+                            <button id="delete_num" href="#deleteNumber" data-toggle="modal" data-id="{{ num.getID }}" role="button" class="btn mini">relinquish</button>
                             {% endif %}
                         </td>
                     </tr>

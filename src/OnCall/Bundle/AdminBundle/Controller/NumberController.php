@@ -270,4 +270,33 @@ class NumberController extends Controller
 
         return $this->redirect($this->generateUrl('oncall_admin_numbers'));
     }
+
+    public function unassignAction($id)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        // find
+        $num = $this->getDoctrine()
+            ->getRepository('OnCallAdminBundle:Number')
+            ->find($id);
+        if ($num == null)
+        {
+            $this->addFlash('error', 'Number could not be found');
+            return $this->redirect($this->generateUrl('oncall_admin_numbers'));
+        }
+
+        // check if we can unassign
+        if ($num->isAssigned())
+        {
+            $this->addFlash('error', 'Cannot relinquish number ' . $num->getID() . '.');
+            return $this->redirect($this->generateUrl('oncall_admin_numbers'));
+        }
+
+        // relinquish
+        $num->unassign();
+        $em->flush();
+        $this->addFlash('success', 'Number ' . $num->getID() . ' has been relinquished.');
+
+        return $this->redirect($this->generateUrl('oncall_admin_numbers'));
+    }
 }

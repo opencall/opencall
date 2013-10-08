@@ -70,6 +70,11 @@ oncall_admin_number_delete:
     defaults: { _controller: OnCallAdminBundle:Number:delete }
     methods: [POST]
 
+oncall_admin_number_unassign:
+    pattern: /number/{id}/unassign
+    defaults: { _controller: OnCallAdminBundle:Number:unassign }
+    methods: [POST]
+
 #client routes
 oncall_admin_clients:
     pattern: /clients

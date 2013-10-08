@@ -119,6 +119,15 @@ class Number
         $this->date_lastcall = $datetime;
         return $this;
     }
+
+    public function unassign()
+    {
+        $this->client = null;
+        $this->client_id = null;
+        $this->date_assign = null;
+
+        return $this;
+    }
     // end setters
 
     // begin getters
