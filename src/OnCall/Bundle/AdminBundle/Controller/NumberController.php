@@ -9,6 +9,7 @@ use OnCall\Bundle\AdminBundle\Entity\Number;
 use OnCall\Bundle\AdminBundle\Entity\Client;
 use OnCall\Bundle\AdminBundle\Model\NumberType;
 use Doctrine\DBAL\DBALException;
+use DateTime;
 
 class NumberController extends Controller
 {
@@ -220,12 +221,18 @@ class NumberController extends Controller
                 continue;
             }
 
-            // TODO: check if we can assign
+            // check if we can assign
+            if (!$num_object->canAssign())
+            {
+                $this->addFlash('error', 'Could not assign ' . $num_object->getID() . '. Number has already been assigned to an advert.');
+                continue;
+            }
 
             // TODO: log number assignment
 
             // assign
             $num_object->setClient($client);
+            $num_object->setDateAssign(new DateTime());
         }
 
         // flush db

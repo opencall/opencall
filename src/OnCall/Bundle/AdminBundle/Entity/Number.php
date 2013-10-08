@@ -257,6 +257,14 @@ class Number
             return '-';
         return $this->getAdvert()->getAdGroup()->getCampaign()->getName();
     }
+
+    public function canAssign()
+    {
+        if ($this->getAdvert() == null)
+            return true;
+
+        return false;
+    }
     // end getters
 
     public function jsonify()
