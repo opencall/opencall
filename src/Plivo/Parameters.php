@@ -17,26 +17,30 @@ class Parameters
     protected $leg_unique_id;
     protected $leg_req_unique_id;
 
-    public static function parse($post)
+    public function __construct($post)
     {
-        // parse from post parameters
-        $params = new self();
-
         // TODO: figure out which ones are required and not
-        $this->to = $_POST['To'];
-        $this->from = $_POST['From'];
-        $this->unique_id = $_POST['CallUUID'];
-        $this->status = $_POST['CallStatus'];
-        $this->direction = $_POST['Direction'];
-        $this->forward_form = $_POST['ForwardedFrom'];
-        $this->bill_rate = $_POST['BillRate'];
-        $this->event = $_POST['Event'];
-        $this->hangup_id = $_POST['ScheduledHangupId'];
-        $this->hangup_cause = $_POST['HangupCause'];
-        $this->leg_unique_id = $_POST['ALegUUID'];
-        $this->leg_req_unique_id = $_POST['ALegRequestUUID'];
+        $this->set('to', $post, 'To')
+            ->set('from', $post, 'From')
+            ->set('unique_id', $post, 'CallUUID')
+            ->set('status', $post, 'CallStatus')
+            ->set('direction', $post, 'Direction')
+            ->set('forward_from', $post, 'ForwardedFrom')
+            ->set('bill_rate', $post, 'BillRate')
+            ->set('event', $post, 'Event')
+            ->set('hangup_id', $post, 'ScheduledHangupId')
+            ->set('hangup_cause', $post, 'HangupCause')
+            ->set('leg_unique_id', $post, 'ALegUUID')
+            ->set('leg_req_unique_id', $post, 'ALegRequestUUID');
+    }
 
-        return $params;
+    protected function set($prop, $var, $name)
+    {
+        // error_log("set - $prop - $name");
+        // error_log(print_r($var, true));
+        if (isset($var[$name]))
+            $this->$prop = $var[$name];
+        return $this;
     }
 
     public function getTo()

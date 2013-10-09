@@ -17,6 +17,8 @@ class Action
     const TYPE_WAIT             = 11;
     const TYPE_PRE_ANSWER       = 12;
 
+    const TYPE_CUSTOM_XML       = 30;
+
     protected $type;
     protected $params;
 
@@ -36,9 +38,21 @@ class Action
         return $this->params;
     }
 
+    protected function escapeXML($string)
+    {
+        return htmlspecialchars($string);
+    }
+
     public function renderXML()
     {
-        // TODO: render the xml
+        switch ($this->type)
+        {
+            case self::TYPE_CUSTOM_XML:
+                return $this->params['xml'];
+            case self::TYPE_DIAL:
+                return '<Dial><Number>' . $this->escapeXML($this->params['number']) . '</Number><Dial>';
+        }
+
         return '';
     }
 }

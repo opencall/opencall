@@ -18,8 +18,14 @@ class Response
 
     public function renderXML()
     {
-        // TODO: render the xml of the plivo response
-        $xml = '';
+        // xml header
+        $xml = '<?xml version="1.0" encoding="UTF-8" ?>' . "\n";
+
+        // response
+        $xml .= '<Response>';
+        foreach ($this->actions as $act)
+            $xml .= $act->renderXML();
+        $xml .= '</Response>';
 
         return $xml;
     }
