@@ -50,7 +50,21 @@ class Action
             case self::TYPE_CUSTOM_XML:
                 return $this->params['xml'];
             case self::TYPE_DIAL:
-                return '<Dial><Number>' . $this->escapeXML($this->params['number']) . '</Number><Dial>';
+                $xml = '<Dial><Number';
+                if (isset($this->params['caller_id']))
+                    $xml .= ' callerId="' . $this->params['caller_id'] . '"';
+                $xml .= '>';
+                $xml .= $this->escapeXML($this->params['number']);
+                $xml .= '</Number><Dial>';
+                return $xml;
+            case self::TYPE_SPEAK:
+                $xml = '<Speak';
+                if (isset($this->params['language']))
+                    $xml .= ' language="' . $this->params['language'] . '"';
+                $xml .= '>';
+                $xml .= $this->escapeXML($this->params['text']);
+                $xml .= '</Speak>';
+                return $xml;
         }
 
         return '';
