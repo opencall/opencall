@@ -1,10 +1,10 @@
 <?php
 
-namespace OnCall\Entity;
+namespace Plivo\Queue;
 
 use Predis\Client;
 
-class QueueHandler
+class Handler
 {
     protected $redis;
     protected $list_id;
@@ -15,7 +15,7 @@ class QueueHandler
         $this->list_id = $list_id;
     }
 
-    protected function push(QueueMessage $data)
+    protected function push(Message $data)
     {
         $serial = serialize($data);
         $ret = $this->redis->rpush($this->list_id, $serial);
@@ -29,7 +29,7 @@ class QueueHandler
         return $this->redis->lpop($this->list_id);
     }
 
-    public function send(QueueMessage $data)
+    public function send(Message $data)
     {
         return $this->push($data);
     }

@@ -1,35 +1,25 @@
 <?php
 
-namespace OnCall\Entity;
+namespace Plivo\Queue;
 
 use DateTime;
+use Plivo\Parameters;
 
 // The incoming / outgoing message we use to interface with Plivo
-class QueueMessage
+class Message
 {
     protected $params;
     protected $timestamp;
 
     public function __construct()
     {
-        $this->params = array();
+        $this->params = null;
         $this->timestamp = new DateTime();
     }
 
-    public function setParams($params)
+    public function setParameters(Parameters $params)
     {
         $this->params = $params;
-    }
-
-    public function setParam($name, $value)
-    {
-        $this->params[$name] = $value;
-        return $this;
-    }
-
-    public function getParam($name)
-    {
-        return $this->params[$name];
     }
 
     public function getTimestamp()

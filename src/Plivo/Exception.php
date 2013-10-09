@@ -1,6 +1,6 @@
 <?php
 
-namespace OnCall\Entity;
+namespace Plivo;
 
 class Exception extends \Exception
 {
