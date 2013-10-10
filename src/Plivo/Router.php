@@ -7,16 +7,19 @@ use OnCall\Bundle\AdminBundle\Model\ItemStatus;
 class Router
 {
     protected $pdo;
+    protected $num_data;
 
     public function __construct($pdo)
     {
         $this->pdo = $pdo;
+        $this->num_data = null;
     }
 
     public function resolve(Parameters $params)
     {
         $num = $params->getTo();
         $res = $this->checkNumber($num);
+        $this->num_data = $res;
 
         // create resposne
         $resp = new Response();
@@ -41,6 +44,11 @@ class Router
         }
 
         return $resp;
+    }
+
+    public function getNumberData()
+    {
+        return $this->num_data;
     }
 
     protected function checkNumber($num)

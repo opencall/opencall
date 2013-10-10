@@ -3,6 +3,7 @@
 require_once(__DIR__ . '/../../app/autoload.php');
 
 use Predis\Client as PredisClient;
+use Plivo\Queue\Message as QMessage;
 use Plivo\Parameters;
 use Plivo\Response;
 use Plivo\Router;
@@ -42,10 +43,17 @@ try
     // get response based on params
     $router = new Router($pdo_main);
     $response = $router->resolve($params);
+    $num_data = $router->getNumberData();
+
+    // setup queue message
+    $qmsg = new QMessage();
+    $qmsg->setAnswerParams($params);
+    $qmsg->setNumberData($num_data);
+    $serial_qmsg = serialize($qmsg);
 
     // add as ongoing call to redis
     $key = $prefix . $params->getUniqueID();
-    $this->redis->set($key, serialize($params));
+    $redis->set($key, $serial_qmsg);
 
     // output XML
     echo $response->renderXML();

@@ -19,7 +19,7 @@ class Handler
     {
         $serial = serialize($data);
         $ret = $this->redis->rpush($this->list_id, $serial);
-        error_log($ret);
+        // error_log($ret);
 
         return $this;
     }
