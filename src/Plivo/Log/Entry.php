@@ -41,7 +41,8 @@ class Entry
         $entry->setClientID($num_data['client_id'])
             ->setCampaignID($num_data['campaign_id'])
             ->setAdGroupID($num_data['adgroup_id'])
-            ->setAdvertID($num_data['advert_id']);
+            // TODO: fix later
+            ->setAdvertID(2);
 
         // hangup data
         $entry->setCallID($hangup_data->getUniqueID())
@@ -51,9 +52,9 @@ class Entry
             ->setBillDuration($hangup_data->getBillDuration())
             ->setBillRate($hangup_data->getBillRate())
             ->setStatus($hangup_data->getStatus())
-            ->setDateStart($hangup_date->getAnswerTime())
-            ->setDateEnd($hangup_date->getEndTime())
-            ->setHangupCause($hangup_date->getHangupCause());
+            ->setDateStart($hangup_data->getAnswerTime())
+            ->setDateEnd($hangup_data->getEndTime())
+            ->setHangupCause($hangup_data->getHangupCause());
 
         // TODO: destination number if it exists
 
