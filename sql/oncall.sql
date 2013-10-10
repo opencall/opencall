@@ -29,7 +29,7 @@ CREATE TABLE `AdGroup` (
   `status` smallint(2) unsigned NOT NULL,
   `date_create` date NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -38,7 +38,7 @@ CREATE TABLE `AdGroup` (
 
 LOCK TABLES `AdGroup` WRITE;
 /*!40000 ALTER TABLE `AdGroup` DISABLE KEYS */;
-INSERT INTO `AdGroup` VALUES (1,4,'Blah Blah Blah!',1,'2013-10-06'),(2,4,'Test AdGroup',1,'2013-10-06'),(3,1,'Edited AdGroup',1,'2013-10-06'),(4,7,'Test AdGroup',1,'2013-10-07'),(5,8,'Adidas Ad Group',1,'2013-10-07');
+INSERT INTO `AdGroup` VALUES (1,4,'Blah Blah Blah!',1,'2013-10-06'),(2,4,'Test AdGroup',1,'2013-10-06'),(3,1,'Edited AdGroup',1,'2013-10-06'),(4,7,'Test AdGroup',1,'2013-10-07'),(5,8,'Adidas Ad Group',1,'2013-10-07'),(6,9,'Ad Group',1,'2013-10-10');
 /*!40000 ALTER TABLE `AdGroup` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -60,7 +60,7 @@ CREATE TABLE `Advert` (
   `status` smallint(2) unsigned NOT NULL,
   `date_create` date NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -69,7 +69,7 @@ CREATE TABLE `Advert` (
 
 LOCK TABLES `Advert` WRITE;
 /*!40000 ALTER TABLE `Advert` DISABLE KEYS */;
-INSERT INTO `Advert` VALUES (1,5,'Adidas Ad Edit',4294967295,2394829348,'<test>\r\n</test>',0,1,'2013-10-07');
+INSERT INTO `Advert` VALUES (1,5,'Adidas Ad Edit',4294967295,2394829348,'<test>\r\n</test>',0,1,'2013-10-07'),(2,6,'Lego Ad Test',85235009085,1111111111,'<Speak language=\"en-GB\">This is a test to see if the Plivo answer script works.</Speak>',1,1,'2013-10-10');
 /*!40000 ALTER TABLE `Advert` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -87,7 +87,7 @@ CREATE TABLE `Campaign` (
   `status` smallint(2) unsigned NOT NULL DEFAULT '1',
   `date_create` date NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -96,7 +96,7 @@ CREATE TABLE `Campaign` (
 
 LOCK TABLES `Campaign` WRITE;
 /*!40000 ALTER TABLE `Campaign` DISABLE KEYS */;
-INSERT INTO `Campaign` VALUES (1,7,'Edited Again',0,'2013-09-30'),(2,7,'Test',1,'2013-09-30'),(3,7,'Test',1,'2013-09-30'),(4,7,'Blah',1,'2013-10-06'),(5,7,'Blah',1,'2013-10-06'),(6,7,'Test Generic Campaign',1,'2013-10-06'),(7,1,'Test Campaign',1,'2013-10-07'),(8,2,'Adidas',1,'2013-10-07');
+INSERT INTO `Campaign` VALUES (1,7,'Edited Again',0,'2013-09-30'),(2,7,'Test',1,'2013-09-30'),(3,7,'Test',1,'2013-09-30'),(4,7,'Blah',1,'2013-10-06'),(5,7,'Blah',1,'2013-10-06'),(6,7,'Test Generic Campaign',1,'2013-10-06'),(7,1,'Test Campaign',1,'2013-10-07'),(8,2,'Adidas',1,'2013-10-07'),(9,4,'Test Lego Campaign',1,'2013-10-10');
 /*!40000 ALTER TABLE `Campaign` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -318,4 +318,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2013-10-10 23:31:42
+-- Dump completed on 2013-10-10 23:53:53

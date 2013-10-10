@@ -4,6 +4,8 @@ require_once(__DIR__ . '/../../app/autoload.php');
 
 use Predis\Client as PredisClient;
 use Plivo\Queue\Handler as QHandler;
+use Plivo\Log\Entry as LogEntry;
+use Plivo\Log\Repository as LogRepository;
 
 try
 {
@@ -28,13 +30,15 @@ try
 
     $qh = new QHandler($redis, $queue_id);
 
+    // log repository
+    $log_repo = new LogRepository($pdo_main);
+
     while ($raw_data = $qh->recv())
     {
         $data = unserialize($raw_data);
 
-        echo "-------------------------------\n";
-        print_r($data);
-        echo "-------------------------------\n";
+        $log = LogEntry::createFromMessage($data);
+        $log_repo->persist($log);
     }
 }
 catch (\Predis\Connection\ConnectionException $e)
