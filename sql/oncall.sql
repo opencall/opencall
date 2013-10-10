@@ -74,6 +74,44 @@ INSERT INTO `Advert` VALUES (1,5,'Adidas Ad Edit',4294967295,2394829348,'<test>\
 UNLOCK TABLES;
 
 --
+-- Table structure for table `CallLog`
+--
+
+DROP TABLE IF EXISTS `CallLog`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `CallLog` (
+  `id` bigint(14) unsigned NOT NULL AUTO_INCREMENT,
+  `date_in` datetime NOT NULL,
+  `call_id` varchar(40) NOT NULL,
+  `origin_number` bigint(15) NOT NULL,
+  `dialled_number` bigint(15) NOT NULL,
+  `destination_number` bigint(15) DEFAULT NULL,
+  `date_start` datetime NOT NULL,
+  `date_end` datetime NOT NULL,
+  `duration` int(5) NOT NULL DEFAULT '0',
+  `bill_duration` int(5) NOT NULL DEFAULT '0',
+  `bill_rate` decimal(8,5) NOT NULL DEFAULT '0.00000',
+  `status` varchar(20) NOT NULL DEFAULT 'completed',
+  `hangup_cause` varchar(100) DEFAULT NULL,
+  `advert_id` int(9) unsigned NOT NULL,
+  `adgroup_id` int(9) unsigned NOT NULL,
+  `campaign_id` int(9) unsigned NOT NULL,
+  `client_id` int(9) unsigned NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `CallLog`
+--
+
+LOCK TABLES `CallLog` WRITE;
+/*!40000 ALTER TABLE `CallLog` DISABLE KEYS */;
+/*!40000 ALTER TABLE `CallLog` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `Campaign`
 --
 
@@ -318,4 +356,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2013-10-10 23:53:53
+-- Dump completed on 2013-10-11  3:38:08
