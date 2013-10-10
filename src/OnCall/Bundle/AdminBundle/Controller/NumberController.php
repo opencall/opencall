@@ -64,9 +64,9 @@ class NumberController extends Controller
 
             // usage filter
             if ($usage === '1')
-                $num_query->where('a is not null');
+                $num_query->andWhere('a is not null');
             else if ($usage === '0')
-                $num_query->where('a is null');
+                $num_query->andWhere('a is null');
         }
 
         // get types
