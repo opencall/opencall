@@ -52,8 +52,8 @@ class Entry
             ->setBillDuration($hangup_data->getBillDuration())
             ->setBillRate($hangup_data->getBillRate())
             ->setStatus($hangup_data->getStatus())
-            ->setDateStart($hangup_data->getAnswerTime())
-            ->setDateEnd($hangup_data->getEndTime())
+            ->setDateStart(new DateTime($hangup_data->getAnswerTime()))
+            ->setDateEnd(new DateTime($hangup_data->getEndTime()))
             ->setHangupCause($hangup_data->getHangupCause());
 
         // TODO: destination number if it exists
