@@ -246,6 +246,13 @@ class Number
         return true;
     }
 
+    public function getClientFormatted()
+    {
+        if ($this->getClient() == null)
+            return '-';
+        return $this->getClient()->getName();
+    }
+
     public function getAdvertFormatted()
     {
         if ($this->getAdvert() == null)

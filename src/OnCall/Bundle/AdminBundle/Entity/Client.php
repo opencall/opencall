@@ -10,7 +10,7 @@ use Doctrine\ORM\Mapping as ORM;
 class Client extends Item
 {
     /**
-     * @ORM\ManyToOne(targetEntity="User")
+     * @ORM\ManyToOne(targetEntity="User", inversedBy="clients")
      * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
      */
     protected $user;
