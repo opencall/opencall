@@ -50,11 +50,11 @@ DROP TABLE IF EXISTS `Advert`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `Advert` (
-  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `adgroup_id` int(11) unsigned NOT NULL,
+  `id` int(9) unsigned NOT NULL AUTO_INCREMENT,
+  `adgroup_id` int(9) unsigned NOT NULL,
   `name` varchar(50) NOT NULL,
-  `number_id` int(15) unsigned DEFAULT NULL,
-  `destination` int(15) unsigned DEFAULT NULL,
+  `number_id` bigint(15) unsigned DEFAULT NULL,
+  `destination` bigint(15) unsigned DEFAULT NULL,
   `xml_replace` text,
   `xml_override` smallint(1) unsigned NOT NULL DEFAULT '0',
   `status` smallint(2) unsigned NOT NULL,
@@ -81,8 +81,8 @@ DROP TABLE IF EXISTS `Campaign`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `Campaign` (
-  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `client_id` int(11) NOT NULL,
+  `id` int(9) unsigned NOT NULL AUTO_INCREMENT,
+  `client_id` int(9) NOT NULL,
   `name` varchar(50) NOT NULL,
   `status` smallint(2) unsigned NOT NULL DEFAULT '1',
   `date_create` date NOT NULL,
@@ -108,8 +108,8 @@ DROP TABLE IF EXISTS `Client`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `Client` (
-  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `user_id` int(11) unsigned NOT NULL,
+  `id` int(9) unsigned NOT NULL AUTO_INCREMENT,
+  `user_id` int(9) unsigned NOT NULL,
   `name` varchar(50) NOT NULL,
   `timezone` decimal(5,1) NOT NULL DEFAULT '8.0',
   `status` smallint(2) unsigned NOT NULL DEFAULT '1',
@@ -137,15 +137,15 @@ DROP TABLE IF EXISTS `Counter`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `Counter` (
   `date_in` datetime NOT NULL,
-  `client_id` int(11) unsigned NOT NULL,
-  `campaign_id` int(11) unsigned NOT NULL,
-  `adgroup_id` int(11) unsigned NOT NULL,
-  `advert_id` int(11) unsigned NOT NULL,
-  `number_id` int(15) unsigned NOT NULL,
-  `count_total` int(12) unsigned NOT NULL DEFAULT '0',
-  `count_plead` int(12) unsigned NOT NULL DEFAULT '0',
-  `count_failed` int(12) unsigned NOT NULL DEFAULT '0',
-  `duration_secs` int(15) unsigned NOT NULL,
+  `client_id` int(9) unsigned NOT NULL,
+  `campaign_id` int(9) unsigned NOT NULL,
+  `adgroup_id` int(9) unsigned NOT NULL,
+  `advert_id` int(9) unsigned NOT NULL,
+  `number_id` bigint(15) unsigned NOT NULL,
+  `count_total` bigint(12) unsigned NOT NULL DEFAULT '0',
+  `count_plead` bigint(12) unsigned NOT NULL DEFAULT '0',
+  `count_failed` bigint(12) unsigned NOT NULL DEFAULT '0',
+  `duration_secs` bigint(15) unsigned NOT NULL,
   PRIMARY KEY (`date_in`,`client_id`,`campaign_id`,`adgroup_id`,`advert_id`,`number_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8
 /*!50100 PARTITION BY RANGE (TO_DAYS(date_in))
@@ -236,7 +236,7 @@ CREATE TABLE `Number` (
   `id` bigint(15) unsigned NOT NULL,
   `type` int(2) NOT NULL,
   `provider` varchar(50) NOT NULL,
-  `client_id` int(11) unsigned DEFAULT NULL,
+  `client_id` int(9) unsigned DEFAULT NULL,
   `price_buy` int(8) unsigned NOT NULL DEFAULT '0',
   `price_resale` int(8) unsigned NOT NULL DEFAULT '0',
   `date_create` date NOT NULL,
@@ -253,7 +253,7 @@ CREATE TABLE `Number` (
 
 LOCK TABLES `Number` WRITE;
 /*!40000 ALTER TABLE `Number` DISABLE KEYS */;
-INSERT INTO `Number` VALUES (85235009085,1,'Citic',NULL,40,50,'2013-10-10',NULL,NULL),(85235009087,1,'Citic',NULL,40,50,'2013-10-10',NULL,NULL),(85235009088,1,'Citic',NULL,40,50,'2013-10-10',NULL,NULL),(85235009089,1,'Citic',NULL,40,50,'2013-10-10',NULL,NULL),(85235009090,1,'Citic',NULL,40,50,'2013-10-10',NULL,NULL),(85235009091,1,'Citic',NULL,40,50,'2013-10-10',NULL,NULL),(85235009092,1,'Citic',NULL,40,50,'2013-10-10',NULL,NULL),(85235009093,1,'Citic',NULL,40,50,'2013-10-10',NULL,NULL),(85235009095,1,'Citic',NULL,40,50,'2013-10-10',NULL,NULL),(85235009096,1,'Citic',NULL,40,50,'2013-10-10',NULL,NULL);
+INSERT INTO `Number` VALUES (85235009085,1,'Citic',4,40,50,'2013-10-10','2013-10-10',NULL),(85235009087,1,'Citic',4,40,50,'2013-10-10','2013-10-10',NULL),(85235009088,1,'Citic',4,40,50,'2013-10-10','2013-10-10',NULL),(85235009089,1,'Citic',4,40,50,'2013-10-10','2013-10-10',NULL),(85235009090,1,'Citic',4,40,50,'2013-10-10','2013-10-10',NULL),(85235009091,1,'Citic',NULL,40,50,'2013-10-10',NULL,NULL),(85235009092,1,'Citic',NULL,40,50,'2013-10-10',NULL,NULL),(85235009093,1,'Citic',NULL,40,50,'2013-10-10',NULL,NULL),(85235009095,1,'Citic',NULL,40,50,'2013-10-10',NULL,NULL),(85235009096,1,'Citic',NULL,40,50,'2013-10-10',NULL,NULL);
 /*!40000 ALTER TABLE `Number` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -265,7 +265,7 @@ DROP TABLE IF EXISTS `User`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `User` (
-  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `id` int(9) unsigned NOT NULL AUTO_INCREMENT,
   `username` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `username_canonical` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `email` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
@@ -318,4 +318,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2013-10-10 23:01:36
+-- Dump completed on 2013-10-10 23:31:42
