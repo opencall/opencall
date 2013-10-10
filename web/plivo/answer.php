@@ -21,8 +21,11 @@ try
         'port' => 6379
     );
     $redis = new PredisClient($rconf);
-    // local redis
+
+    /*
+    // NOTE: local redis
     $redis = new PredisClient();
+    */
 
     // setup mysql
     $dsn = 'mysql:host=db.oncall;dbname=oncall';
@@ -33,11 +36,6 @@ try
     // TODO: fallback mysql setup
 
     // parse parameters
-    $_POST = array(
-        'To' => '4294967295',
-        'From' => '203948',
-        'CallUUID' => 'sd902349023'
-    );
     $params = new Parameters($_POST);
 
     // get response based on params

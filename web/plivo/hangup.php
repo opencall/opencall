@@ -23,8 +23,11 @@ try
         'port' => 6379
     );
     $redis = new PredisClient($rconf);
-    // local redis
+
+    /*
+    // NOTE: local redis
     $redis = new PredisClient();
+    */
 
     // setup mysql
     $dsn = 'mysql:host=db.oncall;dbname=oncall';
@@ -35,18 +38,22 @@ try
     // TODO: fallback mysql setup
 
     // parse parameters
-    $_POST = array(
-        'To' => '4294967295',
-        'From' => '203948',
-        'CallUUID' => 'sd902349023'
-    );
     $params = new Parameters($_POST);
 
     // get ongoing call data from redis
     $key = $prefix . $params->getUniqueID();
     $raw_qmsg = $redis->get($key);
+    if ($raw_qmsg == null)
+    {
+        // TODO: what to do when there's no matching answer param
+        error_log('no previous answer parameters');
+        exit();
+    }
     $qmsg = unserialize($raw_qmsg);
     $qmsg->setHangupParams($params);
+
+    // delete key
+    $redis->del($key);
 
     // enqueue for logging and aggregates
     $qh = new QHandler($redis, $queue_id);
