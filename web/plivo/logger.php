@@ -38,6 +38,7 @@ try
         $data = unserialize($raw_data);
 
         $log = LogEntry::createFromMessage($data);
+        print_r($log);
         $log_repo->persist($log);
     }
 }
