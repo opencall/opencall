@@ -2,8 +2,6 @@
 
 require_once(__DIR__ . '/../../app/autoload.php');
 
-use Plivo\Queue\Handler as QueueHandler;
-use Plivo\Queue\Message as QueueMessage;
 use Predis\Client as PredisClient;
 use Plivo\Parameters;
 use Plivo\Response;
@@ -12,7 +10,9 @@ use Plivo\Action;
 
 try
 {
-    // dev server
+    // redis prefix
+    $prefix = 'plivo:ongoing:';
+
     // setup redis
     $rconf = array(
         'scheme' => 'tcp',
@@ -20,10 +20,8 @@ try
         'port' => 6379
     );
     $redis = new PredisClient($rconf);
-    /*
-    // local
+    // local redis
     $redis = new PredisClient();
-    */
 
     // setup mysql
     $dsn = 'mysql:host=db.oncall;dbname=oncall';
@@ -34,47 +32,49 @@ try
     // TODO: fallback mysql setup
 
     // parse parameters
-    /*
-    $post = array(
-        'To' => '4294967295'
+    $_POST = array(
+        'To' => '4294967295',
+        'From' => '203948',
+        'CallUUID' => 'sd902349023'
     );
-    */
     $params = new Parameters($_POST);
-    // $params = new Parameters($post);
 
     // get response based on params
     $router = new Router($pdo_main);
     $response = $router->resolve($params);
 
-    // send to redis queue
-    $msg = new QueueMessage();
-    $msg->setParameters($params);
-
-    $sender = new QueueHandler($redis, 'plivo_in');
-    $sender->send($msg);
+    // add as ongoing call to redis
+    $key = $prefix . $params->getUniqueID();
+    $this->redis->set($key, serialize($params));
 
     // output XML
     echo $response->renderXML();
 }
 catch (\Predis\Connection\ConnectionException $e)
 {
+    // catch redis error
+    error_log('redis exception');
     $act_params = array(
         'language' => 'en-GB',
         'text' => 'There was a problem connecting your call. This error has been logged and we will rectify the problem as soon as possible.'
     );
     $response = new Response();
     $action = new Action(Action::TYPE_SPEAK, $act_params);
+    $response->addAction($action);
 
     echo $response->renderXML();
 }
 catch (PDOException $e)
 {
+    // catch pdo / db error
+    error_log('pdo exception');
     $act_params = array(
         'language' => 'en-GB',
         'text' => 'There was a problem connecting your call. This error has been logged and we will rectify the problem as soon as possible.'
     );
     $response = new Response();
     $action = new Action(Action::TYPE_SPEAK, $act_params);
+    $response->addAction($action);
 
     echo $response->renderXML();
 }
