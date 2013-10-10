@@ -233,7 +233,7 @@ DROP TABLE IF EXISTS `Number`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `Number` (
-  `id` int(15) unsigned NOT NULL,
+  `id` bigint(15) unsigned NOT NULL,
   `type` int(2) NOT NULL,
   `provider` varchar(50) NOT NULL,
   `client_id` int(11) unsigned DEFAULT NULL,
@@ -242,7 +242,8 @@ CREATE TABLE `Number` (
   `date_create` date NOT NULL,
   `date_assign` date DEFAULT NULL,
   `date_lastcall` datetime DEFAULT NULL,
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `id` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -252,7 +253,7 @@ CREATE TABLE `Number` (
 
 LOCK TABLES `Number` WRITE;
 /*!40000 ALTER TABLE `Number` DISABLE KEYS */;
-INSERT INTO `Number` VALUES (30958340,3,'TestEdit',3,125,185,'2013-09-23','2013-10-09',NULL),(234234234,1,'Test',3,150,320,'2013-09-22','2013-10-09',NULL),(4294967295,2,'CiticTelecom',2,100,210,'2013-09-23',NULL,NULL);
+INSERT INTO `Number` VALUES (85235009085,1,'Citic',NULL,40,50,'2013-10-10',NULL,NULL),(85235009087,1,'Citic',NULL,40,50,'2013-10-10',NULL,NULL),(85235009088,1,'Citic',NULL,40,50,'2013-10-10',NULL,NULL),(85235009089,1,'Citic',NULL,40,50,'2013-10-10',NULL,NULL),(85235009090,1,'Citic',NULL,40,50,'2013-10-10',NULL,NULL),(85235009091,1,'Citic',NULL,40,50,'2013-10-10',NULL,NULL),(85235009092,1,'Citic',NULL,40,50,'2013-10-10',NULL,NULL),(85235009093,1,'Citic',NULL,40,50,'2013-10-10',NULL,NULL),(85235009095,1,'Citic',NULL,40,50,'2013-10-10',NULL,NULL),(85235009096,1,'Citic',NULL,40,50,'2013-10-10',NULL,NULL);
 /*!40000 ALTER TABLE `Number` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -317,4 +318,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2013-10-10 22:20:48
+-- Dump completed on 2013-10-10 23:01:36
