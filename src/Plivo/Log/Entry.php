@@ -24,6 +24,7 @@ class Entry
     protected $adgroup_id;
     protected $campaign_id;
     protected $client_id;
+    protected $response_xml;
 
     public function __construct()
     {
@@ -41,8 +42,8 @@ class Entry
         $entry->setClientID($num_data['client_id'])
             ->setCampaignID($num_data['campaign_id'])
             ->setAdGroupID($num_data['adgroup_id'])
-            // TODO: fix later
-            ->setAdvertID(2);
+            ->setAdvertID($num_data['advert_id']
+            ->setDestinationNumber($num_data['destination']);
 
         // hangup data
         $entry->setCallID($hangup_data->getUniqueID())
@@ -52,11 +53,12 @@ class Entry
             ->setBillDuration($hangup_data->getBillDuration())
             ->setBillRate($hangup_data->getBillRate())
             ->setStatus($hangup_data->getStatus())
-            ->setDateStart(new DateTime($hangup_data->getAnswerTime()))
+            ->setDateStart(new DateTime($hangup_data->getStartTime()))
             ->setDateEnd(new DateTime($hangup_data->getEndTime()))
             ->setHangupCause($hangup_data->getHangupCause());
 
-        // TODO: destination number if it exists
+        // response xml
+        $entry->setResponseXML($msg->getResponseXML());
 
         return $entry;
     }

@@ -37,11 +37,10 @@ class Router
         {
             $dest = $res['destination'];
             $act_params['number'] = $dest;
-            /*
+            // set caller as caller_id to redirected call
             if ($params->getFrom() != null)
                 $act_params['caller_id'] = $params->getFrom();
-            */
-            $act_params['caller_id'] = $params->getTo();
+            // $act_params['caller_id'] = $params->getTo();
             $action = new Action(Action::TYPE_DIAL, $act_params);
             $resp->addAction($action);
         }
@@ -57,7 +56,7 @@ class Router
     protected function checkNumber($num)
     {
         $status = ItemStatus::ACTIVE;
-        $sql = 'select * from Number,Advert,AdGroup,Campaign,Client
+        $sql = 'select *,Advert.id as advert_id from Number,Advert,AdGroup,Campaign,Client
             where Number.id = :num_id
             and Advert.number_id = Number.id
             and Advert.adgroup_id = AdGroup.id
