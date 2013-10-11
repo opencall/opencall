@@ -21,7 +21,7 @@ class Entry
     protected $plead = false;
     protected $duration = 0;
 
-    public static function createFromMessasge(Message $msg)
+    public static function createFromMessage(Message $msg)
     {
         $num_data = $msg->getNumberData();
         $hangup_data = $msg->getHangupParams();
