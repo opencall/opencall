@@ -6,7 +6,7 @@ use Doctrine\ORM\EntityRepository;
 
 class CallLog extends EntityRepository
 {
-    public function findLatest($filter = array(), $limit = 20, $offset = 0)
+    public function findLatest($filter = array(), $limit = 100, $offset = 0)
     {
         return $this->findBy(
             $filter,
