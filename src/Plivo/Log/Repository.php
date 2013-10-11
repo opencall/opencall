@@ -16,7 +16,6 @@ class Repository
     public function persist(Entry $log)
     {
         // persist log entry into database
-
         $sql = 'insert into CallLog (date_in, call_id, origin_number, dialled_number, destination_number, date_start, date_end, duration, bill_duration, bill_rate, status, hangup_cause, advert_id, adgroup_id, campaign_id, client_id) values (now(), :call_id, :origin, :dialled, :destination, :date_start, :date_end, :duration, :bill_duration, :bill_rate, :status, :hangup_cause, :advert_id, :adgroup_id, :campaign_id, :client_id)';
         $stmt = $this->pdo->prepare($sql);
         $stmt->bindParam(':call_id', $log->getCallID());

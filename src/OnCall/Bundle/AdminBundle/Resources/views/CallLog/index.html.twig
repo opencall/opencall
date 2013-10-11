@@ -271,10 +271,10 @@ jQuery(document).ready(function() {
                                     <td data-title="Dialled Number" style="width: 100px;">{{ log.getDialledNumber }}</td>  
                                     <td data-title="Destination Number" style="width: 100px;">{{ log.getDestinationNumber }}</td>
                                     <td data-title="Call Start Time" style="width: 100px;">
-                                    {{ log.getDateStart.format('H:m:s') }}<br /><small>{{ log.getDateStart.format('M d Y') }}</small>
+                                    {{ log.getDateStart.format('H:i:s') }}<br /><small>{{ log.getDateStart.format('M d Y') }}</small>
                                     </td>  
                                     <td data-title="Call End Time" style="width: 100px;">
-                                    {{ log.getDateEnd.format('H:m:s') }}<br /><small>{{ log.getDateEnd.format('M d Y') }}</small>
+                                    {{ log.getDateEnd.format('H:i:s') }}<br /><small>{{ log.getDateEnd.format('M d Y') }}</small>
                                     </td>
                                     <td data-title="Duration">{{ log.getDuration }}s</td>
                                     <td data-title="Cost">{{ log.getBillRate }}</td>
