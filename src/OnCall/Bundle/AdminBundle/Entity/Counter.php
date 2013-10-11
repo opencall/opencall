@@ -42,6 +42,11 @@ abstract class Counter
     protected $number_id;
 
     /**
+     * @ORM\Column(type="string", length=20)
+     */
+    protected $caller_id;
+
+    /**
      * @ORM\Column(type="integer")
      */
     protected $count_total;

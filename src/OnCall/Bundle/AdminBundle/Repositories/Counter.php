@@ -28,7 +28,7 @@ class Counter extends EntityRepository
 
     protected function getDQLUnique($item_type, $child_type)
     {
-        return $this->getDQLPrefix($item_type, $child_type) . ', count(distinct c.number_id) as a_unique' . $this->getDQLSuffix($item_type);
+        return $this->getDQLPrefix($item_type, $child_type) . ', count(distinct c.caller_id) as a_unique' . $this->getDQLSuffix($item_type);
     }
 
     protected function getDQLChartPrefix($item_type, $child_type)

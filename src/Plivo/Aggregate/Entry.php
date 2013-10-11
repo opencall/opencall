@@ -16,6 +16,7 @@ class Entry
     protected $adgroup_id;
     protected $advert_id;
     protected $number_id;
+    protected $caller_id;
 
     protected $failed = false;
     protected $plead = false;
@@ -25,6 +26,7 @@ class Entry
     {
         $num_data = $msg->getNumberData();
         $hangup_data = $msg->getHangupParams();
+        $answer_data = $msg->getAnswerParams();
 
         $entry = new self();
 
@@ -35,8 +37,10 @@ class Entry
         $entry->advert_id = $num_data['advert_id'];
         $entry->number_id = $num_data['number_id'];
 
-        // hangup data
+        // answer data
+        $entry->caller_id = $answer_data->getFrom();
 
+        // hangup data
         // duration
         $entry->duration = $hangup_data->getDuration();
 
@@ -85,6 +89,11 @@ class Entry
     public function getNumberID()
     {
         return $this->number_id;
+    }
+
+    public function getCallerID()
+    {
+        return $this->caller_id;
     }
 
     public function isFailed()
