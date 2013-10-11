@@ -24,8 +24,8 @@
 jQuery(document).ready(function() {
     // START DATE RANGE
     // date range settings
-    var date_from = new Date("{{ agg_filter.getDateFromFormatted }}");
-    var date_to = new Date("{{ agg_filter.getDateToFormatted }}");
+    var date_from = new Date({{ agg_filter.getDateFromUTC }});
+    var date_to = new Date({{ agg_filter.getDateToUTC }});
 
     $('#aggregate_range').daterangepicker({
         ranges: {
@@ -170,29 +170,28 @@ jQuery(document).ready(function() {
             zoomType: 'x',
             spacingRight: 0,
             spacingLeft: 0,
-                            width: $('#tab_campaign_daily').width() // Kendrick - hack to make the chart render in the second tab, name needs to change if the 1st tab name changes
-            
+            width: $('#tab_campaign_daily').width() // Kendrick - hack to make the chart render in the second tab, name needs to change if the 1st tab name changes
         },
         title: {
-                        text: ''
+            text: ''
         },
         xAxis: {
-                type: 'datetime',
-                dateTimeLabelFormats: {
-                    hour: '%H:%M'
-                },
-            //min: 0.5, 
+            type: 'datetime',
+            dateTimeLabelFormats: {
+                hour: '%H:%M'
+            },
+            // min: 0.5, 
             // Kendrick: the value below must be the number of data points -1.5
             // In this example there are 5 categories (above) so the max should be 5 - 1.5 =3.5
             // this is so that the graph is to the edge
-            //max: 5.5,
+            // max: 5.5,
             labels: {                
                 rotation: -45, 
-              style: {
+                style: {
                   color: '#888'
-              },
-                            },
-                            tickInterval: 3600 * 1000, // one day
+                },
+            },
+            tickInterval: 3600 * 1000, // one day
         },
         yAxis: [{ // Calls
             labels: {
@@ -215,8 +214,8 @@ jQuery(document).ready(function() {
         series: [{
 
             type: 'column',
-                    pointPadding: 0,
-                    groupPadding: 0,
+                pointPadding: 0,
+                groupPadding: 0,
             name: 'Total Calls',
             data: {{ hourly.total | json_encode() }},
                 // Kendrick - even though we're totalling the data for multiple days, we need to specify
@@ -226,8 +225,8 @@ jQuery(document).ready(function() {
             fillOpacity: 0.2
         }, {
             type: 'column',
-                    pointPadding: 0,
-                    groupPadding: 0,
+                pointPadding: 0,
+                groupPadding: 0,
             name: 'Failed Calls',
             data: {{ hourly.failed | json_encode() }},
                 pointStart: Date.UTC(2013, 18, 12),
