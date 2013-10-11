@@ -37,8 +37,10 @@ class Router
         {
             $dest = $res['destination'];
             $act_params['number'] = $dest;
+            /*
             if ($params->getFrom() != null)
                 $act_params['caller_id'] = $params->getFrom();
+            */
             $action = new Action(Action::TYPE_DIAL, $act_params);
             $resp->addAction($action);
         }
