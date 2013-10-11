@@ -38,27 +38,33 @@ class AggregateFilter
 
         // default date is -7 days to today
         $date_now = new DateTime();
-        $this->date_to = $this->cleanDate($date_now);
-        $this->date_from = $this->cleanDate($date_now);
+        $this->date_to = $this->cleanDateTo($date_now);
+        $this->date_from = $this->cleanDateFrom($date_now);
         $this->date_from->modify('-7 day');
     }
 
-    protected function cleanDate(DateTime $date)
+    protected function cleanDateFrom(DateTime $date)
     {
         // strip off time
         return DateTime::createFromFormat('Y-m-d H:i:s', $date->format('Y-m-d') . '00:00:00');
     }
 
+    protected function cleanDateTo(DateTime $date)
+    {
+        // strip off time
+        return DateTime::createFromFormat('Y-m-d H:i:s', $date->format('Y-m-d') . '23:59:59');
+    }
+
     // setters
     public function setDateFrom(DateTime $date)
     {
-        $this->date_from = $this->cleanDate($date);
+        $this->date_from = $this->cleanDateFrom($date);
         return $this;
     }
 
     public function setDateTo(DateTime $date)
     {
-        $this->date_to = $this->cleanDate($date);
+        $this->date_to = $this->cleanDateTo($date);
         return $this;
     }
 

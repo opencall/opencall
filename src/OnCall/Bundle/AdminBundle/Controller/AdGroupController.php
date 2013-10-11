@@ -14,10 +14,10 @@ class AdGroupController extends ItemController
         $this->top_color = 'purple';
         $this->template = 'OnCallAdminBundle:AdGroup:index.html.twig';
         $this->agg_type = array(
-            'parent' => AggregateFilter::TYPE_ADGROUP,
-            'table' => AggregateFilter::TYPE_ADGROUP_CHILDREN,
-            'daily' => AggregateFilter::TYPE_DAILY_ADGROUP,
-            'hourly' => AggregateFilter::TYPE_HOURLY_ADGROUP
+            'parent' => AggregateFilter::TYPE_CAMPAIGN,
+            'table' => AggregateFilter::TYPE_CAMPAIGN_CHILDREN,
+            'daily' => AggregateFilter::TYPE_DAILY_CAMPAIGN,
+            'hourly' => AggregateFilter::TYPE_HOURLY_CAMPAIGN
         );
 
         $this->parent_repo = 'OnCallAdminBundle:Campaign';

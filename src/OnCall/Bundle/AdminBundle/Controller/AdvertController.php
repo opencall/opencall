@@ -16,10 +16,10 @@ class AdvertController extends ItemController
         $this->top_color = 'yellow';
         $this->template = 'OnCallAdminBundle:Advert:index.html.twig';
         $this->agg_type = array(
-            'parent' => AggregateFilter::TYPE_ADVERT,
-            'table' => AggregateFilter::TYPE_ADVERT_CHILDREN,
-            'daily' => AggregateFilter::TYPE_DAILY_ADVERT,
-            'hourly' => AggregateFilter::TYPE_HOURLY_ADVERT
+            'parent' => AggregateFilter::TYPE_ADGROUP,
+            'table' => AggregateFilter::TYPE_ADGROUP_CHILDREN,
+            'daily' => AggregateFilter::TYPE_DAILY_ADGROUP,
+            'hourly' => AggregateFilter::TYPE_HOURLY_ADGROUP
         );
 
         $this->parent_repo = 'OnCallAdminBundle:AdGroup';

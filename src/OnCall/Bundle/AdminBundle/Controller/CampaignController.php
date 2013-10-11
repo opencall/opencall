@@ -17,7 +17,7 @@ class CampaignController extends ItemController
             'parent' => AggregateFilter::TYPE_CLIENT,
             'table' => AggregateFilter::TYPE_CLIENT_CHILDREN,
             'daily' => AggregateFilter::TYPE_DAILY_CLIENT,
-            'hourly' => AggregateFilter::TYPE_HOURLY_CLIENT
+            'hourly' => AggregateFilter::TYPE_HOURLY_CLIENT,
         );
 
         $this->parent_repo = 'OnCallAdminBundle:Client';
