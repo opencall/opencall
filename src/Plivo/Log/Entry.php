@@ -42,7 +42,7 @@ class Entry
         $entry->setClientID($num_data['client_id'])
             ->setCampaignID($num_data['campaign_id'])
             ->setAdGroupID($num_data['adgroup_id'])
-            ->setAdvertID($num_data['advert_id']
+            ->setAdvertID($num_data['advert_id'])
             ->setDestinationNumber($num_data['destination']);
 
         // hangup data
