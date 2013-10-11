@@ -7,7 +7,7 @@ function filter_redirect()
     var ftype = $('#filter_type').val();
     var fusage = $('#filter_usage').val();
 
-    window.location.replace('/numbers?usage=' + fusage + '&type=' + ftype);
+    window.location.replace('/client/{{ client_id }}/numbers?usage=' + fusage + '&type=' + ftype);
 }
 
 $(document).ready(function() {
@@ -31,6 +31,16 @@ $(document).ready(function() {
             <h3 class="page-title">
                 Number Management 
             </h3>
+            <ul class="breadcrumb">
+                <li>
+                    {{ client.getName }}
+                    <i class="icon-angle-right"></i>
+                </li>
+                <li>
+                    Number Management
+                </li>
+            </ul>
+
             {{ flash.display_flash_messages }}
             <button class="btn green" style="margin-bottom: 4px;"  data-toggle="modal" href="#requestNumbers"><i class="icon-plus"></i> Request More Numbers</button> 
             <br /><br /><br />
@@ -106,7 +116,6 @@ $(document).ready(function() {
                         <th>Advert</th>
                         <th>AdGroup</th>
                         <th>Campaign</th>
-                        <th>Client</th>
                         <th>Type</th>
                         <th>Cost/Month (HKD)</th>
                         <th style="width:90px;">Date Added to Client</th>
@@ -122,7 +131,6 @@ $(document).ready(function() {
                         <td>{{ num.getAdvertFormatted }}</td>
                         <td>{{ num.getAdGroupFormatted }}</td>
                         <td>{{ num.getCampaignFormatted }}</td>
-                        <td>{{ num.getClientFormatted }}</td>
                         <td>{{ num.getTypeText }}</td>
                         <td>{{ num.getPriceResaleFormatted }}</td>
                         <td>{{ num.getDateAssignFormatted }}</td>

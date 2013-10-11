@@ -13,7 +13,7 @@ use DateTime;
 
 class NumberController extends Controller
 {
-    public function indexAction()
+    protected function genericIndex($client_id = null)
     {
         // get role hash for menu
         $user = $this->getUser();
@@ -49,18 +49,28 @@ class NumberController extends Controller
         {
             $template = 'OnCallAdminBundle:Number:index.client.html.twig';
 
+            // join
+            $num_query->leftJoin('n.advert', 'a');
+
             // get clients
             $clients = $user->getClients();
             $client_ids = array();
             foreach ($clients as $cli)
                 $client_ids[] = $cli->getID();
 
-            // join
-            $num_query->leftJoin('n.advert', 'a');
+            // multiple clients or single
+            if ($client_id == null)
+            {
+                // NOTE: currently not used
+                // limit numbers to clients we have
 
-            // limit numbers to clients we have
-            // $num_query->add('where', $num_query->expr()->in('n.client_id', $client_ids));
-            $num_query->where($num_query->expr()->in('n.client_id', $client_ids));
+                $num_query->where($num_query->expr()->in('n.client_id', $client_ids));
+            }
+            else
+            {
+                $num_query->where('n.client_id = :client_id')
+                    ->setParameter('client_id', $client_id);
+            }
 
             // usage filter
             if ($usage === '1')
@@ -89,14 +99,26 @@ class NumberController extends Controller
             $template,
             array(
                 'user' => $user,
-                'sidebar_menu' => MenuHandler::getMenu($role_hash, 'number'),
+                'sidebar_menu' => MenuHandler::getMenu($role_hash, 'number', $client_id),
                 'clients' => $clients,
                 'numbers' => $numbers,
                 'types' => $types,
                 'type' => $type,
-                'usage' => $usage
+                'usage' => $usage,
+                'client' => $this->getClient(),
+                'client_id' => $client_id
             )
         );
+    }
+
+    public function indexAction()
+    {
+        return $this->genericIndex();
+    }
+
+    public function clientIndexAction()
+    {
+        return $this->genericIndex($this->getClientID());
     }
 
     protected function updateNumber(Number $num, $data)

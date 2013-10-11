@@ -39,7 +39,7 @@ oncall_admin_password_submit:
     defaults: { _controller: OnCallAdminBundle:Account:passwordSubmit }
     methods: [POST]
 
-# number routes
+# admin number routes
 oncall_admin_numbers:
     pattern: /numbers
     defaults: { _controller: OnCallAdminBundle:Number:index }
@@ -74,6 +74,12 @@ oncall_admin_number_unassign:
     pattern: /number/{id}/unassign
     defaults: { _controller: OnCallAdminBundle:Number:unassign }
     methods: [POST]
+
+# client number routes
+oncall_admin_client_numbers:
+    pattern: /client/{id}/numbers
+    defaults: { _controller: OnCallAdminBundle:Number:clientIndex }
+    methods: [GET]
 
 #client routes
 oncall_admin_clients:

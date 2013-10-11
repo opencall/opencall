@@ -101,6 +101,7 @@ abstract class ItemController extends Controller
     {
         $user = $this->getUser();
         $role_hash = $user->getRoleHash();
+        $client_id = $this->getClientID();
 
         // fetch needed data
         $fetch_res = $this->fetchAll($id);
@@ -110,7 +111,7 @@ abstract class ItemController extends Controller
 
         return array(
             'user' => $user,
-            'sidebar_menu' => MenuHandler::getMenu($role_hash, 'campaigns'),
+            'sidebar_menu' => MenuHandler::getMenu($role_hash, 'campaigns', $client_id),
             'parent' => $fetch_res['parent'],
             'agg_parent' => $agg['parent'],
             'agg_table' => $agg['table'],

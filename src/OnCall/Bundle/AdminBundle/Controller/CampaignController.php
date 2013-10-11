@@ -10,6 +10,7 @@ class CampaignController extends ItemController
 {
     public function __construct()
     {
+        // standard item controller settings
         $this->name = 'Campaign';
         $this->top_color = 'blue';
         $this->template = 'OnCallAdminBundle:Campaign:index.html.twig';
@@ -26,5 +27,14 @@ class CampaignController extends ItemController
 
         $this->url_child = 'oncall_admin_adgroups';
         $this->url_parent = 'oncall_admin_campaigns';
+    }
+
+    public function indexAction($id)
+    {
+        // set client_id in session
+        $sess = $this->getRequest()->getSession();
+        $sess->set('client_id', $id);
+
+        return parent::indexAction($id);
     }
 }
