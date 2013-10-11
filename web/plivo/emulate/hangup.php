@@ -29,16 +29,15 @@ try
         'CallUUID' => 'test-230948029348902',
         'From' => '0000000000',
         'To' => '85235009085',
-        'CallStatus' => 'completed',
+        'CallStatus' => 'cancel',
         'Direction' => 'inbound',
-        'HangupCause' => 'NORMAL_CLEARING',
-        'Duration' => 27,
-        'BillDuration' => 60,
+        'HangupCause' => 'ORIGINATOR_CANCEL',
+        'Duration' => 0,
+        'BillDuration' => 0,
         'BillRate' => '0.00400',
         'Event' => 'Hangup',
-        'StartTime' => '2013-10-11 17:28:29',
-        'AnswerTime' => '2013-10-11 17:28:48',
-        'EndTime' => '2013-10-11 17:29:15',
+        'StartTime' => '2013-10-08 09:28:00',
+        'EndTime' => '2013-10-08 09:28:45',
     );
 
     // parse parameters

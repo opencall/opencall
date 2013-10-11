@@ -11,6 +11,7 @@ class Status
     const FAILED        = 5;
     const TIMEOUT       = 6;
     const NO_ANSWER     = 7;
+    const CANCEL        = 8;
 
     protected $num_status;
     protected $text_status;
@@ -42,6 +43,9 @@ class Status
             case 'no-answer':
                 $this->num_status = self::NO_ANSWER;
                 break;
+            case 'cancel':
+                $this->num_status = self::CANCEL;
+                break;
         }
     }
 
@@ -63,6 +67,7 @@ class Status
             case self::FAILED:
             case self::TIMEOUT:
             case self::NO_ANSWER:
+            case self::CANCEL:
                     return true;
         }
 
