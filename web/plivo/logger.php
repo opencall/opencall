@@ -6,6 +6,8 @@ use Predis\Client as PredisClient;
 use Plivo\Queue\Handler as QHandler;
 use Plivo\Log\Entry as LogEntry;
 use Plivo\Log\Repository as LogRepository;
+use Plivo\Aggregate\Entry as AggEntry;
+use Plivo\Aggregate\Repository as AggRepository;
 
 try
 {
@@ -30,17 +32,28 @@ try
 
     $qh = new QHandler($redis, $queue_id);
 
-    // log repository
+    // log repo
     $log_repo = new LogRepository($pdo_main);
+
+    // aggregate repo
+    $agg_repo = new AggRepository($pdo_main);
 
     while ($raw_data = $qh->recv())
     {
         $data = unserialize($raw_data);
+
+        // debug queue message
         print_r($data);
 
+        // log
         $log = LogEntry::createFromMessage($data);
         print_r($log);
         $log_repo->persist($log);
+
+        // aggregate
+        $agg = AggEntry::createFromMessage($data);
+        print_r($agg);
+        $agg_repo->persist($agg);
     }
 }
 catch (\Predis\Connection\ConnectionException $e)

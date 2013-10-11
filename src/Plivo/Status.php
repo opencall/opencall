@@ -54,4 +54,18 @@ class Status
     {
         return $this->text_status;
     }
+
+    public function isFailed()
+    {
+        switch ($this->num_status)
+        {
+            case self::BUSY:
+            case self::FAILED:
+            case self::TIMEOUT:
+            case self::NO_ANSWER:
+                    return true;
+        }
+
+        return false;
+    }
 }
