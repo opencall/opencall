@@ -13,7 +13,7 @@ class CallLogController extends Controller
         $user = $this->getUser();
         $role_hash = $user->getRoleHash();
 
-        // get chart data
+        // get chart data (aggregates)
         $daily_filter = $this->getFilter(AggregateFilter::TYPE_DAILY_CLIENT, $id);
         $hourly_filter = $this->getFilter(AggregateFilter::TYPE_HOURLY_CLIENT, $id);
         $count_repo = $this->getDoctrine()
@@ -25,6 +25,14 @@ class CallLogController extends Controller
         $daily = $this->separateChartData($agg_daily);
         $hourly = $this->separateChartData($agg_hourly);
 
+        // get logs
+        $filter = array(
+            'client_id' => $id
+        );
+        $logs = $this->getDoctrine()
+            ->getRepository('OnCallAdminBundle:CallLog')
+            ->findLatest($filter);
+
         return $this->render(
             'OnCallAdminBundle:CallLog:index.html.twig',
             array(
@@ -34,6 +42,7 @@ class CallLogController extends Controller
                 'agg_filter' => $daily_filter,
                 'daily' => $daily,
                 'hourly' => $hourly,
+                'logs' => $logs
             )
         );
     }

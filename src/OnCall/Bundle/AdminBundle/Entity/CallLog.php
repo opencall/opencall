@@ -6,19 +6,19 @@ use Doctrine\ORM\Mapping as ORM;
 use DateTime;
 
 /**
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="OnCall\Bundle\AdminBundle\Repositories\CallLog")
  */
-abstract class CallLog
+class CallLog
 {
     /**
      * @ORM\Id
-     * @ORM\Colunn(type="integer")
+     * @ORM\Column(type="integer")
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     protected $id;
 
     /*
-     * @ORM\Column(type="date")
+     * @ORM\Column(type="datetime")
      */
     protected $date_in;
 
@@ -43,12 +43,12 @@ abstract class CallLog
     protected $destination_number;
 
     /**
-     * @ORM\Column(type="date")
+     * @ORM\Column(type="datetime")
      */
     protected $date_start;
 
     /**
-     * @ORM\Column(type="date")
+     * @ORM\Column(type="datetime")
      */
     protected $date_end;
 
@@ -96,6 +96,30 @@ abstract class CallLog
      * @ORM\Column(type="integer")
      */
     protected $client_id;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Advert")
+     * @ORM\JoinColumn(name="advert_id", referencedColumnName="id")
+     */
+    protected $advert;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="AdGroup")
+     * @ORM\JoinColumn(name="adgroup_id", referencedColumnName="id")
+     */
+    protected $adgroup;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Campaign")
+     * @ORM\JoinColumn(name="campaign_id", referencedColumnName="id")
+     */
+    protected $campaign;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Client")
+     * @ORM\JoinColumn(name="client_id", referencedColumnName="id")
+     */
+    protected $client;
 
     public function __construct()
     {
@@ -174,6 +198,41 @@ abstract class CallLog
     public function getHangupCause()
     {
         return $this->hangup_cause;
+    }
+
+    public function getAdvertID()
+    {
+        return $this->advert_id;
+    }
+
+    public function getAdGroupID()
+    {
+        return $this->adgroup_id;
+    }
+
+    public function getCampaignID()
+    {
+        return $this->campaign_id;
+    }
+
+    public function getAdvert()
+    {
+        return $this->advert;
+    }
+
+    public function getAdGroup()
+    {
+        return $this->adgroup;
+    }
+
+    public function getCampaign()
+    {
+        return $this->campaign;
+    }
+
+    public function getClient()
+    {
+        return $this->client;
     }
 
     // end getters

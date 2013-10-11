@@ -223,6 +223,7 @@ jQuery(document).ready(function() {
         <div class="span12">
             <!-- BEGIN SAMPLE TABLE PORTLET-->
                 <!-- BEGIN PORTLET-->
+                <!--
                 <div class="portlet-body solid bordered">
                     <div class="portlet-body">
                         <div class="tabbable tabbable-custom">
@@ -241,63 +242,52 @@ jQuery(document).ready(function() {
                         </div>
                     </div>
                 </div>
+                -->
                 <!-- END PORTLET-->
-                                        <div class="controls">
-                                        <!-- Kendrick: Live updates should respect any filters that are set -->
-                                            <h4>Live Updates</h4><div class="basic-toggle-button toggle-button" style="width: 100px; height: 25px;">
-                                                <div style="left: 0px; width: 150px;"><input type="checkbox" class="toggle" checked="checked"><span class="labelLeft" style="width: 50px; height: 25px; line-height: 25px;">ON</span><label style="width: 50px; height: 25px;"></label><span class="labelRight" style="width: 50px; height: 25px; line-height: 25px;">OFF </span></div>
-                                            </div>
-                                        </div>
-                            <div class="portlet-body no-more-tables">
-                                <table class="table-bordered table-striped table-condensed cf">
-                                    <thead class="cf">
-                                        <tr>
-                                        <th>Caller Number</th> 
-                                          <th>Dialled Number</th>
-                                        <th>Destination Number</th>
-                                          <th>Call Start Time</th>
-                                          <th>Call End Time</th>
-                                        <th>Duration</th>
-                                        <th>Cost (HKD)</th>
-                                        <th>Hangup Cause</th>
-                                        <th>Advert</th>
-                                        <th>AdGroup</th>
-                                        <th>Campaign</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td data-title="Caller Number" style="width: 100px;">+852 6682 1490</td>  
-                                            <td data-title="Dialled Number" style="width: 100px;">+852 0000 1111</td>  
-                                            <td data-title="Destination Number" style="width: 100px;">+852 6555 231</td>
-                                            <td data-title="Call Start Time" style="width: 100px;">17:00:07<br /><small>Sep 10 2013</small></td>  
-                                            <td data-title="Call End Time" style="width: 100px;">17:01:15<br /><small>Sep 10 2013</small></td>  
-                                            <td data-title="Duration">67s</td>
-                                            <td data-title="Cost">0.001</td>
-                                            <td data-title="Hangup Cause">Normal Clearing</td>
-                                            <td data-title="Advert"><a href="">Platform 24</a></td>
-                                            <td data-title="AdGroup"><a href="">Central Station</a></td>
-                                            <td data-title="Campaign"><a href="">MTR</a></td>
-                                        </tr>  
-                                        <tr>
-                                            <td data-title="Caller Number" style="width: 100px;">+852 6682 1490</td>  
-                                            <td data-title="Dialled Number" style="width: 100px;">+852 0000 1111</td>  
-                                            <td data-title="Destination Number" style="width: 100px;">+852 6555 231</td>
-                                            <td data-title="Call Start Time" style="width: 100px;">17:00:07<br /><small>Sep 10 2013</small></td>  
-                                            <td data-title="Call End Time" style="width: 100px;">17:01:15<br /><small>Sep 10 2013</small></td>  
-                                            <td data-title="Duration">67s</td>
-                                            <td data-title="Cost">0.001</td>
-                                            <td data-title="Hangup Cause">Normal Clearing</td>
-                                            <td data-title="Advert"><a href="">Platform 24</a></td>
-                                            <td data-title="AdGroup"><a href="">Central Station</a></td>
-                                            <td data-title="Campaign"><a href="">MTR</a></td>  
-                                        </tr>
+                <div class="controls">
+                    <!-- Kendrick: Live updates should respect any filters that are set -->
+                    <h4>Live Updates</h4>
+                    <div class="portlet-body no-more-tables">
+                        <table class="table-bordered table-striped table-condensed cf">
+                            <thead class="cf">
+                                <tr>
+                                    <th>Caller Number</th> 
+                                    <th>Dialled Number</th>
+                                    <th>Destination Number</th>
+                                    <th>Call Start Time</th>
+                                    <th>Call End Time</th>
+                                    <th>Duration</th>
+                                    <th>Cost (HKD)</th>
+                                    <th>Hangup Cause</th>
+                                    <th>Advert</th>
+                                    <th>AdGroup</th>
+                                    <th>Campaign</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            {% for log in logs %}
+                                <tr>
+                                    <td data-title="Caller Number" style="width: 100px;">{{ log.getOriginNumber }}</td>  
+                                    <td data-title="Dialled Number" style="width: 100px;">{{ log.getDialledNumber }}</td>  
+                                    <td data-title="Destination Number" style="width: 100px;">{{ log.getDestinationNumber }}</td>
+                                    <td data-title="Call Start Time" style="width: 100px;">
+                                    {{ log.getDateStart.format('H:m:s') }}<br /><small>{{ log.getDateStart.format('M d Y') }}</small>
+                                    </td>  
+                                    <td data-title="Call End Time" style="width: 100px;">
+                                    {{ log.getDateEnd.format('H:m:s') }}<br /><small>{{ log.getDateEnd.format('M d Y') }}</small>
+                                    </td>
+                                    <td data-title="Duration">{{ log.getDuration }}s</td>
+                                    <td data-title="Cost">{{ log.getBillRate }}</td>
+                                    <td data-title="Hangup Cause">{{ log.getHangupCause }}</td>
+                                    <td data-title="Advert"><a href="">{{ log.getAdvert.getName }}</a></td>
+                                    <td data-title="AdGroup"><a href="">{{ log.getAdGroup.getName }}</a></td>
+                                    <td data-title="Campaign"><a href="">{{ log.getCampaign.getName }}</a></td>
+                                </tr>  
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
 
-                                    </tbody>
-                                </table>
-                            </div>
-
-                 
                 </div>
             <!-- END SAMPLE TABLE PORTLET-->
         </div>
