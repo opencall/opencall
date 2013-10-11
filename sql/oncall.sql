@@ -99,7 +99,7 @@ CREATE TABLE `CallLog` (
   `campaign_id` int(9) unsigned NOT NULL,
   `client_id` int(9) unsigned NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -108,7 +108,7 @@ CREATE TABLE `CallLog` (
 
 LOCK TABLES `CallLog` WRITE;
 /*!40000 ALTER TABLE `CallLog` DISABLE KEYS */;
-INSERT INTO `CallLog` VALUES (1,'2013-10-11 18:39:50','test-230948029348902',0,85235009085,1111111111,'2013-10-11 17:28:29','2013-10-11 17:29:15',27,60,0.00400,'completed','NORMAL_CLEARING',2,6,9,4),(2,'2013-10-11 19:25:14','test-230948029348902',0,85235009085,1111111111,'2013-10-11 17:28:29','2013-10-11 17:29:15',27,60,0.00400,'completed','NORMAL_CLEARING',2,6,9,4),(3,'2013-10-11 19:25:49','test-230948029348902',0,85235009085,1111111111,'2013-10-11 17:28:29','2013-10-11 17:29:15',27,60,0.00400,'completed','NORMAL_CLEARING',2,6,9,4),(4,'2013-10-11 19:26:13','test-230948029348902',1,85235009085,1111111111,'2013-10-11 17:28:29','2013-10-11 17:29:15',27,60,0.00400,'completed','NORMAL_CLEARING',2,6,9,4);
+INSERT INTO `CallLog` VALUES (1,'2013-10-11 18:39:50','test-230948029348902',0,85235009085,1111111111,'2013-10-11 17:28:29','2013-10-11 17:29:15',27,60,0.00400,'completed','NORMAL_CLEARING',2,6,9,4),(2,'2013-10-11 19:25:14','test-230948029348902',0,85235009085,1111111111,'2013-10-11 17:28:29','2013-10-11 17:29:15',27,60,0.00400,'completed','NORMAL_CLEARING',2,6,9,4),(3,'2013-10-11 19:25:49','test-230948029348902',0,85235009085,1111111111,'2013-10-11 17:28:29','2013-10-11 17:29:15',27,60,0.00400,'completed','NORMAL_CLEARING',2,6,9,4),(4,'2013-10-11 19:26:13','test-230948029348902',1,85235009085,1111111111,'2013-10-11 17:28:29','2013-10-11 17:29:15',27,60,0.00400,'completed','NORMAL_CLEARING',2,6,9,4),(5,'2013-10-11 19:47:55','test-230948029348902',1,85235009085,1111111111,'2013-10-11 17:28:29','2013-10-11 17:29:15',27,60,0.00400,'completed','NORMAL_CLEARING',2,6,9,4),(6,'2013-10-11 19:49:44','test-230948029348902',1,85235009085,1111111111,'2013-10-11 17:28:29','2013-10-11 17:29:15',27,60,0.00400,'completed','NORMAL_CLEARING',2,6,9,4),(7,'2013-10-11 19:49:58','test-230948029348902',1,85235009085,1111111111,'2013-10-11 17:28:29','2013-10-11 17:29:15',27,60,0.00400,'completed','NORMAL_CLEARING',2,6,9,4),(8,'2013-10-11 19:50:27','test-230948029348902',0,85235009085,1111111111,'2013-10-11 17:28:29','2013-10-11 17:29:15',27,60,0.00400,'completed','NORMAL_CLEARING',2,6,9,4),(9,'2013-10-12 02:10:56','test-230948029348902',0,85235009085,1111111111,'2013-10-10 08:28:00','2013-10-10 08:30:45',150,180,0.00400,'completed','NORMAL_CLEARING',2,6,9,4),(10,'2013-10-12 02:22:51','test-230948029348902',0,85235009085,1111111111,'2013-10-08 09:28:00','2013-10-08 09:28:45',0,0,0.00400,'cancel','ORIGINATOR_CANCEL',2,6,9,4);
 /*!40000 ALTER TABLE `CallLog` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -261,6 +261,7 @@ CREATE TABLE `Counter` (
 
 LOCK TABLES `Counter` WRITE;
 /*!40000 ALTER TABLE `Counter` DISABLE KEYS */;
+INSERT INTO `Counter` VALUES ('2013-10-08 09:00:00',4,9,6,2,85235009085,'0000000000',1,0,1,0),('2013-10-10 08:00:00',4,9,6,2,85235009085,'0000000000',1,1,0,150),('2013-10-11 17:00:00',4,9,6,2,85235009085,'0000000000',1,0,0,27),('2013-10-11 17:00:00',4,9,6,2,85235009085,'0000000001',2,0,0,54);
 /*!40000 ALTER TABLE `Counter` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -344,7 +345,7 @@ CREATE TABLE `User` (
 
 LOCK TABLES `User` WRITE;
 /*!40000 ALTER TABLE `User` DISABLE KEYS */;
-INSERT INTO `User` VALUES (1,'admin','admin','kc@jankstudio.com','kc@jankstudio.com',1,'88mx3wkmehwk08wwoo00kwg04wgk8cc','IcAuzWLxVy9m9Rn1BBL9TGn3t75mHaq2j9s/ASwQdMqJrcsu8koByMYlv9oygfjA6HR1uy0+9ODBfIqRoaCCUA==','2013-10-11 12:23:27',0,0,NULL,NULL,NULL,'a:1:{i:0;s:10:\"ROLE_ADMIN\";}',0,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(7,'sample','sample','contact.guy@yahoo.com','contact.guy@yahoo.com',1,'4i19bumhhv28swww0gwss8cwkkk848c','3GIRXTHKroyV8grwhpIlC/kVVQkRQ3n8uzpthQrHGWCig0ZEzsOJNJkDs9nAzyReRvSMaXcicGZM4Qxu6XNbgQ==','2013-10-07 16:21:49',0,0,NULL,NULL,NULL,'a:0:{}',0,NULL,1,'Contact Guy','Sample Company','0923840209','Somewhere out there','Sample Company','Contact Guy','contact.guy@sample.company.com','0982349092','Somewhere out there part 2','2013-09-21 02:20:33'),(8,'multi','multi','multi@jankstudio.com','multi@jankstudio.com',1,'gyv7hgc6m6g4008cgsw8gsww8ggc840','tdwcSMvfmLo+AI3YxsK8M/PPw1w+toftMSsy/KRluhJx2eKlbU1PE1rDxDWYHgDtkZUITM+FlzPNSqhSs9xleQ==','2013-09-30 23:23:37',0,0,NULL,NULL,NULL,'a:0:{}',0,NULL,1,'Multi Test','Multi Test','230948234','Somewhere','','','','','','2013-09-30 05:52:52'),(12,'new','new','new@jankstudio.com','new@jankstudio.com',1,'66ymmethpxgkokc8k0wg40k8w4s44kw','eeBd48cSiAmTgMNgj/9brWvCASFGTK/QbvaJAs6lPf4vpqpaX2HaYAHgQ64sCxhlMnQlLkE0uPSW+zqEgGPynA==','2013-09-30 22:15:34',0,0,NULL,NULL,NULL,'a:0:{}',0,NULL,0,'New Single Client','New Single Client','29392834','Test','','','','','','2013-09-30 20:28:15'),(13,'Test','test','test2@test.com','test2@test.com',1,'bic215yadn480co0c8os0kko0g040gw','4+g+fISkmBH9uiZOTRmVFQedw2VALxB//f+1V+/uW+DUhufbZ3PxwSGCRKmcJQzmz3OdXy2CJjfekiDpYuP3+Q==',NULL,0,0,NULL,NULL,NULL,'a:0:{}',0,NULL,0,'Test','Test','234234234','','','','','','','2013-09-30 22:36:00');
+INSERT INTO `User` VALUES (1,'admin','admin','kc@jankstudio.com','kc@jankstudio.com',1,'88mx3wkmehwk08wwoo00kwg04wgk8cc','IcAuzWLxVy9m9Rn1BBL9TGn3t75mHaq2j9s/ASwQdMqJrcsu8koByMYlv9oygfjA6HR1uy0+9ODBfIqRoaCCUA==','2013-10-11 23:57:19',0,0,NULL,NULL,NULL,'a:1:{i:0;s:10:\"ROLE_ADMIN\";}',0,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(7,'sample','sample','contact.guy@yahoo.com','contact.guy@yahoo.com',1,'4i19bumhhv28swww0gwss8cwkkk848c','3GIRXTHKroyV8grwhpIlC/kVVQkRQ3n8uzpthQrHGWCig0ZEzsOJNJkDs9nAzyReRvSMaXcicGZM4Qxu6XNbgQ==','2013-10-07 16:21:49',0,0,NULL,NULL,NULL,'a:0:{}',0,NULL,1,'Contact Guy','Sample Company','0923840209','Somewhere out there','Sample Company','Contact Guy','contact.guy@sample.company.com','0982349092','Somewhere out there part 2','2013-09-21 02:20:33'),(8,'multi','multi','multi@jankstudio.com','multi@jankstudio.com',1,'gyv7hgc6m6g4008cgsw8gsww8ggc840','tdwcSMvfmLo+AI3YxsK8M/PPw1w+toftMSsy/KRluhJx2eKlbU1PE1rDxDWYHgDtkZUITM+FlzPNSqhSs9xleQ==','2013-09-30 23:23:37',0,0,NULL,NULL,NULL,'a:0:{}',0,NULL,1,'Multi Test','Multi Test','230948234','Somewhere','','','','','','2013-09-30 05:52:52'),(12,'new','new','new@jankstudio.com','new@jankstudio.com',1,'66ymmethpxgkokc8k0wg40k8w4s44kw','eeBd48cSiAmTgMNgj/9brWvCASFGTK/QbvaJAs6lPf4vpqpaX2HaYAHgQ64sCxhlMnQlLkE0uPSW+zqEgGPynA==','2013-09-30 22:15:34',0,0,NULL,NULL,NULL,'a:0:{}',0,NULL,0,'New Single Client','New Single Client','29392834','Test','','','','','','2013-09-30 20:28:15'),(13,'Test','test','test2@test.com','test2@test.com',1,'bic215yadn480co0c8os0kko0g040gw','4+g+fISkmBH9uiZOTRmVFQedw2VALxB//f+1V+/uW+DUhufbZ3PxwSGCRKmcJQzmz3OdXy2CJjfekiDpYuP3+Q==',NULL,0,0,NULL,NULL,NULL,'a:0:{}',0,NULL,0,'Test','Test','234234234','','','','','','','2013-09-30 22:36:00');
 /*!40000 ALTER TABLE `User` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -357,4 +358,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2013-10-11 19:29:37
+-- Dump completed on 2013-10-12  6:56:38
