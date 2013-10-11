@@ -55,7 +55,7 @@ class Action
                     $xml .= ' callerId="' . $this->params['caller_id'] . '"';
                 $xml .= '>';
                 $xml .= $this->escapeXML($this->params['number']);
-                $xml .= '</Number><Dial>';
+                $xml .= '</Number></Dial>';
                 return $xml;
             case self::TYPE_SPEAK:
                 $xml = '<Speak';
