@@ -115,7 +115,7 @@ abstract class ItemController extends Controller
             'parent' => $fetch_res['parent'],
             'agg_parent' => $agg['parent'],
             'agg_table' => $agg['table'],
-            'agg_filter' => new AggregateFilter($this->agg_type['parent'], $id),
+            'agg_filter' => $this->getFilter($this->agg_type['parent'], $id),
             'daily' => $agg['daily'],
             'hourly' => $agg['hourly'],
             'children' => $fetch_res['children'],
@@ -189,6 +189,22 @@ abstract class ItemController extends Controller
         );
     }
 
+    protected function getFilter($type, $pid)
+    {
+        $filter = new AggregateFilter($type, $pid);
+
+        // check dates
+        $query = $this->getRequest()->query;
+        $date_from = $query->get('date_from');
+        $date_to = $query->get('date_to');
+        if ($date_from != null)
+            $filter->setDateFrom(new DateTime($date_from));
+        if ($date_to != null)
+            $filter->setDateTo(new DateTime($date_to));
+
+        return $filter;
+    }
+
     protected function processAggregates($pid, $child_ids)
     {
         // counter repo
@@ -196,6 +212,12 @@ abstract class ItemController extends Controller
             ->getRepository('OnCallAdminBundle:Counter');
 
         // aggregate top level, table, daily, and hourly
+        $filter = $this->getFilter($this->agg_type['parent'], $pid);
+        $tfilter = $this->getFilter($this->agg_type['table'], $pid);
+        $dfilter = $this->getFilter($this->agg_type['daily'], $pid);
+        $hfilter = $this->getFilter($this->agg_type['hourly'], $pid);
+
+        /*
         $filter = new AggregateFilter($this->agg_type['parent'], $pid);
         $tfilter = new AggregateFilter($this->agg_type['table'], $pid);
         $dfilter = new AggregateFilter($this->agg_type['daily'], $pid);
@@ -219,6 +241,7 @@ abstract class ItemController extends Controller
             $dfilter->setDateTo(new DateTime($date_to));
             $hfilter->setDateTo(new DateTime($date_to));
         }
+        */
 
         // get aggregate data for parent 
         $agg_parent = $count_repo->findItemAggregate($filter);

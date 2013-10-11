@@ -169,9 +169,9 @@ class AggregateFilter
 
     public function getDateToUTC()
     {
-        $date = $this->date_from->format('Y') . ',';
-        $date .= ($this->date_from->format('n') - 1) . ',';
-        $date .= ($this->date_from->format('j') + 1);
+        $date = $this->date_to->format('Y') . ',';
+        $date .= ($this->date_to->format('n') - 1) . ',';
+        $date .= ($this->date_to->format('j') + 1);
         return 'Date.UTC(' . $date . ')';
     }
 
