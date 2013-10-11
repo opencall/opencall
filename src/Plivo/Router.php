@@ -41,6 +41,7 @@ class Router
             if ($params->getFrom() != null)
                 $act_params['caller_id'] = $params->getFrom();
             */
+            $act_params['caller_id'] = $params->getTo();
             $action = new Action(Action::TYPE_DIAL, $act_params);
             $resp->addAction($action);
         }
