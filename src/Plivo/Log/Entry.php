@@ -154,6 +154,11 @@ class Entry
         return $this;
     }
 
+    public function setResponseXML($xml)
+    {
+        $this->response_xml = $xml;
+    }
+
     // getters
     public function getID()
     {
@@ -238,5 +243,10 @@ class Entry
     public function getClientID()
     {
         return $this->client_id;
+    }
+
+    public function getResponseXML()
+    {
+        return $this->response_xml;
     }
 }
