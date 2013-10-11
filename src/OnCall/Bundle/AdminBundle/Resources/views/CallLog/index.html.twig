@@ -1,0 +1,307 @@
+{% extends '::base.html.twig' %}
+
+{% block plugins %}
+<script src="assets/plugins/bootstrap-daterangepicker/date.js" type="text/javascript"></script>
+<script src="assets/plugins/bootstrap-daterangepicker/daterangepicker.js" type="text/javascript"></script> 
+<script src="assets/plugins/highcharts/highcharts.js" type="text/javascript"></script>
+<script src="assets/plugins/highcharts/modules/exporting.js" type="text/javascript"></script>
+{% endblock %}
+
+{% block javascript %}
+{% block ajax_update_item %}
+<script type="text/javascript">
+    function update_item(data)
+    {
+        $('.item_name').val(data.name);
+        $('.item_name_text').html(data.name);
+        $('.item_delete_button').html('Delete All Data for: ' + data.name);
+        $('.item_status').val(data.status);
+    }
+</script>
+{% endblock %}
+
+<script type="text/javascript">
+jQuery(document).ready(function() {
+    // date range settings
+    var date_from = new Date();
+    var date_to = new Date();
+
+    // daily chart
+    // START DAILY CHART
+    $('#containerDaily').highcharts({
+        chart: {
+            zoomType: 'x',
+            spacingRight: 0,
+            spacingLeft: 0,
+        },
+        title: {
+            text: ''
+        },
+        xAxis: {
+            type: 'datetime',
+            dateTimeLabelFormats: {
+                day: '%e of %b'
+            },
+            //min: 0.5, 
+            // Kendrick: the value below must be the number of data points -1.5
+            // In this example there are 5 categories (above) so the max should be 5 - 1.5 =3.5
+            // this is so that the graph is to the edge
+            //max: 5.5,
+            labels: {                
+                rotation: -45, 
+                style: {
+                  color: '#888'
+                },
+            },
+            tickInterval: 24 * 3600 * 1000, // one day
+        },
+        yAxis: [{ // Calls
+            labels: {
+                format: '{value}',
+                style: {
+                    color: '#888'
+                },
+            },
+            title: {
+                text: 'Calls',
+                style: {
+                    color: '#888'
+                }
+            },
+            min: 0,
+        }],
+        tooltip: {
+            shared: true
+        },
+        series: [{
+            type: 'areaspline',
+                pointPadding: 0,
+                groupPadding: 0,
+            name: 'Total Calls',
+            data: {{ daily.total | json_encode() }},
+                // Kendrick - this date needs to be set in all the series to match what is selected
+                // in the calendar. It automatically counts up the date depending on the "data" above
+                pointStart: date_from.getTime(),
+                pointInterval: 24 * 3600 * 1000, // one day
+            fillOpacity: 0.2
+        }, {
+            type: 'areaspline',
+                pointPadding: 0,
+                groupPadding: 0,
+            name: 'Failed Calls',
+            data: {{ daily.failed | json_encode() }},
+                pointStart: date_from.getTime(),
+                pointInterval: 24 * 3600 * 1000, // one day
+            fillOpacity: 0.2
+        }, {
+            type: 'areaspline',
+                    pointPadding: 0,
+                    groupPadding: 0,
+            name: 'Potential Leads',
+            data: {{ daily.plead | json_encode() }},
+                pointStart: date_from.getTime(),
+                pointInterval: 24 * 3600 * 1000, // one day
+            fillOpacity: 0.2
+        }],
+        credits: {
+            enabled: false
+        }
+    });
+    // END DAILY CHART
+
+    // START HOURLY CHART
+    $('#containerHourly').highcharts({
+        chart: {
+            zoomType: 'x',
+            spacingRight: 0,
+            spacingLeft: 0,
+            width: $('#tab_campaign_daily').width() // Kendrick - hack to make the chart render in the second tab, name needs to change if the 1st tab name changes
+        },
+        title: {
+            text: ''
+        },
+        xAxis: {
+            type: 'datetime',
+            dateTimeLabelFormats: {
+                hour: '%H:%M'
+            },
+            // min: 0.5, 
+            // Kendrick: the value below must be the number of data points -1.5
+            // In this example there are 5 categories (above) so the max should be 5 - 1.5 =3.5
+            // this is so that the graph is to the edge
+            // max: 5.5,
+            labels: {                
+                rotation: -45, 
+                style: {
+                  color: '#888'
+                },
+            },
+            tickInterval: 3600 * 1000, // one day
+        },
+        yAxis: [{ // Calls
+            labels: {
+                format: '{value}',
+                style: {
+                    color: '#888'
+                },
+            },
+            title: {
+                text: 'Calls',
+                style: {
+                    color: '#888'
+                }
+            },
+            min: 0,
+        }],
+        tooltip: {
+            shared: true
+        },
+        series: [{
+
+            type: 'column',
+                pointPadding: 0,
+                groupPadding: 0,
+            name: 'Total Calls',
+            data: {{ hourly.total | json_encode() }},
+                // Kendrick - even though we're totalling the data for multiple days, we need to specify
+                // a specific date, so ignore the date in "pointStart" here UNLESS we're looking at a single day
+                pointStart: Date.UTC(2013, 18, 12),
+                pointInterval: 3600 * 1000, // one day
+            fillOpacity: 0.2
+        }, {
+            type: 'column',
+                pointPadding: 0,
+                groupPadding: 0,
+            name: 'Failed Calls',
+            data: {{ hourly.failed | json_encode() }},
+                pointStart: Date.UTC(2013, 18, 12),
+                pointInterval: 3600 * 1000, // one day
+            fillOpacity: 0.2
+        }, {
+            type: 'column',
+                    pointPadding: 0,
+                    groupPadding: 0,
+            name: 'Potential Leads',
+            data: {{ hourly.plead | json_encode() }},
+                pointStart: Date.UTC(2013, 18, 12),
+                pointInterval: 3600 * 1000, // one day
+            fillOpacity: 0.2
+        }],
+        credits: {
+            enabled: false
+        }
+    });
+    // END HOURLY CHART
+});
+</script>
+{% endblock %}
+
+{% block body %}
+<div class="container-fluid">
+<!-- START CAMPAIGNS -->
+    <div class="row-fluid">
+        <div class="span12">
+            <!-- BEGIN PAGE TITLE & BREADCRUMB-->
+            <h3 class="page-title">Call Log</h3>
+            {{ flash.display_flash_messages }}
+            <ul class="breadcrumb">
+                <li>
+                    {{ client.getName }}
+                    <i class="icon-angle-right"></i>
+                </li>
+                <li>
+                    Call Log
+                </li>
+            </ul>
+
+            <!-- END PAGE TITLE & BREADCRUMB-->
+        </div>
+    </div>
+    <!-- END PAGE HEADER-->
+    <!-- BEGIN PAGE CONTENT-->
+    <div class="row-fluid">
+        <div class="span12">
+            <!-- BEGIN SAMPLE TABLE PORTLET-->
+                <!-- BEGIN PORTLET-->
+                <div class="portlet-body solid bordered">
+                    <div class="portlet-body">
+                        <div class="tabbable tabbable-custom">
+                            <ul class="nav nav-tabs">
+                                <li class="active"><a href="#tab_campaign_daily" data-toggle="tab">Daily</a></li>
+                                <li class=""><a href="#tab_campaign_hourly" data-toggle="tab">Hourly</a></li>
+                            </ul>
+                            <div class="tab-content">
+                                <div class="tab-pane active" id="tab_campaign_daily">
+                                    <div id="containerDaily" style="min-width: 310px; height: 200px; margin: 0 auto"></div>
+                                </div>
+                                <div class="tab-pane" id="tab_campaign_hourly">
+                                    <div id="containerHourly" style="width: auto; min-width: 310px; height: 200px; margin: 0 auto"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- END PORTLET-->
+                                        <div class="controls">
+                                        <!-- Kendrick: Live updates should respect any filters that are set -->
+                                            <h4>Live Updates</h4><div class="basic-toggle-button toggle-button" style="width: 100px; height: 25px;">
+                                                <div style="left: 0px; width: 150px;"><input type="checkbox" class="toggle" checked="checked"><span class="labelLeft" style="width: 50px; height: 25px; line-height: 25px;">ON</span><label style="width: 50px; height: 25px;"></label><span class="labelRight" style="width: 50px; height: 25px; line-height: 25px;">OFF </span></div>
+                                            </div>
+                                        </div>
+                            <div class="portlet-body no-more-tables">
+                                <table class="table-bordered table-striped table-condensed cf">
+                                    <thead class="cf">
+                                        <tr>
+                                        <th>Caller Number</th> 
+                                          <th>Dialled Number</th>
+                                        <th>Destination Number</th>
+                                          <th>Call Start Time</th>
+                                          <th>Call End Time</th>
+                                        <th>Duration</th>
+                                        <th>Cost (HKD)</th>
+                                        <th>Hangup Cause</th>
+                                        <th>Advert</th>
+                                        <th>AdGroup</th>
+                                        <th>Campaign</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td data-title="Caller Number" style="width: 100px;">+852 6682 1490</td>  
+                                            <td data-title="Dialled Number" style="width: 100px;">+852 0000 1111</td>  
+                                            <td data-title="Destination Number" style="width: 100px;">+852 6555 231</td>
+                                            <td data-title="Call Start Time" style="width: 100px;">17:00:07<br /><small>Sep 10 2013</small></td>  
+                                            <td data-title="Call End Time" style="width: 100px;">17:01:15<br /><small>Sep 10 2013</small></td>  
+                                            <td data-title="Duration">67s</td>
+                                            <td data-title="Cost">0.001</td>
+                                            <td data-title="Hangup Cause">Normal Clearing</td>
+                                            <td data-title="Advert"><a href="">Platform 24</a></td>
+                                            <td data-title="AdGroup"><a href="">Central Station</a></td>
+                                            <td data-title="Campaign"><a href="">MTR</a></td>
+                                        </tr>  
+                                        <tr>
+                                            <td data-title="Caller Number" style="width: 100px;">+852 6682 1490</td>  
+                                            <td data-title="Dialled Number" style="width: 100px;">+852 0000 1111</td>  
+                                            <td data-title="Destination Number" style="width: 100px;">+852 6555 231</td>
+                                            <td data-title="Call Start Time" style="width: 100px;">17:00:07<br /><small>Sep 10 2013</small></td>  
+                                            <td data-title="Call End Time" style="width: 100px;">17:01:15<br /><small>Sep 10 2013</small></td>  
+                                            <td data-title="Duration">67s</td>
+                                            <td data-title="Cost">0.001</td>
+                                            <td data-title="Hangup Cause">Normal Clearing</td>
+                                            <td data-title="Advert"><a href="">Platform 24</a></td>
+                                            <td data-title="AdGroup"><a href="">Central Station</a></td>
+                                            <td data-title="Campaign"><a href="">MTR</a></td>  
+                                        </tr>
+
+                                    </tbody>
+                                </table>
+                            </div>
+
+                 
+                </div>
+            <!-- END SAMPLE TABLE PORTLET-->
+        </div>
+    </div>
+    <!-- END CAMPAIGNS -->
+</div>
+{% endblock %}

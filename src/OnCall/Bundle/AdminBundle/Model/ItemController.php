@@ -189,22 +189,6 @@ abstract class ItemController extends Controller
         );
     }
 
-    protected function getFilter($type, $pid)
-    {
-        $filter = new AggregateFilter($type, $pid);
-
-        // check dates
-        $query = $this->getRequest()->query;
-        $date_from = $query->get('date_from');
-        $date_to = $query->get('date_to');
-        if ($date_from != null)
-            $filter->setDateFrom(new DateTime($date_from));
-        if ($date_to != null)
-            $filter->setDateTo(new DateTime($date_to));
-
-        return $filter;
-    }
-
     protected function processAggregates($pid, $child_ids)
     {
         // counter repo
@@ -216,32 +200,6 @@ abstract class ItemController extends Controller
         $tfilter = $this->getFilter($this->agg_type['table'], $pid);
         $dfilter = $this->getFilter($this->agg_type['daily'], $pid);
         $hfilter = $this->getFilter($this->agg_type['hourly'], $pid);
-
-        /*
-        $filter = new AggregateFilter($this->agg_type['parent'], $pid);
-        $tfilter = new AggregateFilter($this->agg_type['table'], $pid);
-        $dfilter = new AggregateFilter($this->agg_type['daily'], $pid);
-        $hfilter = new AggregateFilter($this->agg_type['hourly'], $pid);
-
-        // check for specified dates
-        $query = $this->getRequest()->query;
-        $date_from = $query->get('date_from');
-        $date_to = $query->get('date_to');
-        if ($date_from != null)
-        {
-            $filter->setDateFrom(new DateTime($date_from));
-            $tfilter->setDateFrom(new DateTime($date_from));
-            $dfilter->setDateFrom(new DateTime($date_from));
-            $hfilter->setDateFrom(new DateTime($date_from));
-        }
-        if ($date_to != null)
-        {
-            $filter->setDateTo(new DateTime($date_to));
-            $tfilter->setDateTo(new DateTime($date_to));
-            $dfilter->setDateTo(new DateTime($date_to));
-            $hfilter->setDateTo(new DateTime($date_to));
-        }
-        */
 
         // get aggregate data for parent 
         $agg_parent = $count_repo->findItemAggregate($filter);
@@ -259,20 +217,5 @@ abstract class ItemController extends Controller
             'daily' => $daily,
             'hourly' => $hourly
         );
-    }
-
-    protected function separateChartData($agg)
-    {
-        $chart['total'] = array();
-        $chart['failed'] = array();
-        $chart['plead'] = array();
-        foreach ($agg as $adata)
-        {
-            $chart['total'][] = $adata->getTotal();
-            $chart['failed'][] = $adata->getFailed();
-            $chart['plead'][] = $adata->getPLead();
-        }
-
-        return $chart;
     }
 }

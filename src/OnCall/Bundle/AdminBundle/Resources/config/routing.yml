@@ -185,3 +185,8 @@ oncall_admin_advert_delete:
     defaults: { _controller: OnCallAdminBundle:Advert:delete }
     methods: [POST]
 
+#call log
+oncall_admin_call_log:
+    pattern: /client/{id}/call_log
+    defaults: { _controller: OnCallAdminBundle:CallLog:index }
+    methods: [GET]

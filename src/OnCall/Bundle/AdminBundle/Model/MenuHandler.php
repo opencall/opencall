@@ -38,7 +38,7 @@ class MenuHandler
                 $menu_group->addItem(new MenuItem(
                     'call_log',
                     'Call Log',
-                    '/call_log',
+                    '/client/' . $client_id . '/call_log',
                     'icon-phone'
                 ));
                 $menu_group->addItem(new MenuItem(
@@ -50,7 +50,7 @@ class MenuHandler
                 $menu_group->addItem(new MenuItem(
                     'quotas',
                     'Billing & Usage',
-                    '/quotas',
+                    '/client/' . $client_id . '/billing',
                     'icon-tasks'
                 ));
             }
