@@ -36,6 +36,7 @@ try
     while ($raw_data = $qh->recv())
     {
         $data = unserialize($raw_data);
+        print_r($data);
 
         $log = LogEntry::createFromMessage($data);
         print_r($log);

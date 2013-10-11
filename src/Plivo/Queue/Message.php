@@ -11,6 +11,7 @@ class Message
     protected $ans_params;
     protected $hangup_params;
     protected $num_data;
+    protected $xml;
 
     protected $timestamp;
 
@@ -19,6 +20,7 @@ class Message
         $this->ans_params = null;
         $this->hangup_params = null;
         $this->num_data = null;
+        $this->xml = '';
         $this->timestamp = new DateTime();
     }
 
@@ -41,6 +43,12 @@ class Message
         return $this;
     }
 
+    public function setResponseXML($xml)
+    {
+        $this->xml = $xml;
+        return $this;
+    }
+
     // getters
     public function getAnswerParams()
     {
@@ -55,6 +63,11 @@ class Message
     public function getNumberData()
     {
         return $this->num_data;
+    }
+
+    public function getResponseXML()
+    {
+        return $this->xml;
     }
 
     public function getTimestamp()

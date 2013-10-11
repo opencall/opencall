@@ -43,10 +43,14 @@ try
     $response = $router->resolve($params);
     $num_data = $router->getNumberData();
 
+    // store response xml
+    $xml = $response->renderXML();
+
     // setup queue message
     $qmsg = new QMessage();
     $qmsg->setAnswerParams($params);
     $qmsg->setNumberData($num_data);
+    $qmsg->setResponseXML($xml);
     $serial_qmsg = serialize($qmsg);
 
     // add as ongoing call to redis
@@ -54,7 +58,7 @@ try
     $redis->set($key, $serial_qmsg);
 
     // output XML
-    echo $response->renderXML();
+    echo $xml;
 }
 catch (\Predis\Connection\ConnectionException $e)
 {
