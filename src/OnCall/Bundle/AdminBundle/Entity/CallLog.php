@@ -215,6 +215,11 @@ class CallLog
         return $this->campaign_id;
     }
 
+    public function getClientID()
+    {
+        return $this->client_id;
+    }
+
     public function getAdvert()
     {
         return $this->advert;
