@@ -289,7 +289,7 @@ var Index = function () {
             $('#dashboard-report-range').show();
 
             $('#dashboard-report-range span').html(Date.today().add({
-                days: -6
+                days: -29
             }).toString('MMMM d, yyyy') + ' - ' + Date.today().toString('MMMM d, yyyy'));
         }
 

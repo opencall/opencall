@@ -10,16 +10,15 @@ Login page
 .login .logo {
   width: 247px;
   margin: 0 auto;   
-  margin-top:60px;
-  padding: 15px;
+  padding: 0px 0px 15px 0px;
   text-align: center;
 }  
 
 
 .login .content {
-  background: url(../../img/bg-white-lock.png) repeat;
+  background-color: #bbe000;
   width: 291px;
-  margin: 0 auto; 
+  margin: 60px auto; 
   margin-bottom: 0px;
   padding: 30px;  
   padding-top: 20px;  
@@ -27,10 +26,10 @@ Login page
 }
 
 .login .content h3 {
-  color: #eee;
+  color: #fff;
 }
 .login .content h4  {
-  color: #eee;
+  color: #fff;
 }
 
 .login .content p,
@@ -103,7 +102,7 @@ Login page
 }
 
 .login .content .forget-password {
-  margin-top: 25px;
+  margin-top: -34px;
 }
 
 .login .content .create-account {

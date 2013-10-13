@@ -17,6 +17,7 @@ Pricing table
 
 .pricing-table h3 a, .pricing-table h3 a:visited {
  color: #000!important; 
+ font-family: 'Cabin', sans-serif;
 }
 
 .pricing-table h3 {

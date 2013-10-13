@@ -37,7 +37,7 @@ Reset and overrides
 /* general body settings */
 body { 
   color: #000; 
-  font-family: 'Open Sans';
+  font-family: 'Lato', sans-serif;
   padding: 0px !important;
   margin: 0px !important;
   font-size:13px; 
@@ -52,7 +52,8 @@ h3 small, h4 small, h5 small {
 }
 
 h1, h2, h3, h4, h5, h6 {
-  font-weight: 300;
+  font-weight: bold;
+  font-family: 'Cabin' sans-serif;
 }
 
 h1.block, h2.block, h3.block, h4.block, h5.block, h6.block {
@@ -61,7 +62,7 @@ h1.block, h2.block, h3.block, h4.block, h5.block, h6.block {
 
 a {
   text-shadow: none !important;
-  color: #0d638f;
+  color: #003B47;
 }
 
 /***
@@ -911,12 +912,11 @@ Page title
 .page-title {
   padding: 0px;
   font-size: 30px;
-  letter-spacing: -1px;
   display: block;
-  color: #666;
+  color: #000;
   margin: 20px 0px 15px 0px;
-  font-weight: 300;
-  font-family: 'Open Sans';
+  font-weight: bold;
+  font-family: 'Cabin', sans-serif;
 }
 
 .page-title small {

@@ -6,7 +6,7 @@ light theme
 Reset and overrides  
 ***/
 body {
-  background-color: #fafafa !important;
+  background-color: #EEEEEE!important;
 }
 /***
 Page header
@@ -14,7 +14,7 @@ Page header
 .header .navbar-inner {
   filter: none !important;
   background-image: none !important;
-  background-color: #434343 !important;
+  background-color: #000 !important;
 }
 .header .btn-navbar {
   background-color: #434343 !important;
@@ -25,6 +25,129 @@ Page header
 }
 .header .nav li.dropdown .dropdown-toggle i {
   color: #808080 !important;
+}
+
+.navbar-inverse .nav>li>a, .navbar-inverse .nav>li>a:visited {
+	color: #fff;
+}
+
+.navbar-inverse .nav>li>a:hover {
+	color: #bbe000;
+}
+
+
+/***
+Body
+***/
+.btn.green {
+color: white;
+text-shadow: none;
+background-color: #bbe000;
+}
+
+.pricing-table h3 a {
+	font-weight: bold;
+	text-decoration: none;
+}
+
+.pricing-table {
+	border-radius: 10px!important;
+	-moz-border-radius: 10px!important;
+	-webkit-border-radius: 10px!important;
+	background-color: #EEEEEE!important;
+}
+
+.pricing-table ul li i {
+	color: #000!important;	
+}
+
+.dashboard-stat .visual {
+	height: 40px;
+	width: 28px;
+}
+.dashboard-stat .visual i {
+font-size: 30px;
+
+}
+
+.dashboard-stat .details .number {
+	font-size: 22px;
+	padding-top: 14px;
+}
+
+.dashboard-stat .details .number small {
+	font-size: 12px;
+}
+.dashboard-stat a, .dashboard-stat:visited {
+text-decoration: none;
+color: #fff!important;
+}
+.dashboard-stat a:hover {
+text-decoration: underline;
+color: #fff!important;
+}
+.tabbable-custom > .tab-content {
+	border: 0px;
+	padding: 0px;	
+}
+
+.nav-tabs>.active>a, .nav-tabs>.active>a:hover, .nav-tabs>.active>a:focus {
+	font-weight: strong;
+}
+
+.page-content .breadcrumb { 
+	background-color: #EEEEEE!important;
+	border-radius: 10px!important;
+	-moz-border-radius: 10px!important;
+	-webkit-border-radius: 10px!important;
+}
+.page-content .breadcrumb .dashboard-date-range {
+	background-color: #2a2217!important;
+	border-radius: 0px 10px 10px 0px!important;
+	-moz-border-radius: 0px 10px 10px 0px!important;
+	-webkit-border-radius: 0px 10px 10px 0px!important;
+}
+
+.daterangepicker .ranges li {
+	background-color: #F7F7F7!important;
+	color: #000!important;
+}
+
+.daterangepicker .ranges li.active, .daterangepicker .ranges li:hover {
+	border: 1px solid #D6D6D6!important;
+}
+
+.daterangepicker td.active {
+	background-color: #000!important;
+}
+
+.blue {
+	background-color: #00bbe0!important;	
+}
+
+.dashboard-stat.blue .more {
+	background-color: #208dbe!important;
+	color: #fff!important;
+	border-radius: 0px 0px 10px 10px!important;
+	-moz-border-radius: 0px 0px 10px 10px!important;
+	-webkit-border-radius: 0px 0px 10px 10px!important;
+}
+
+.dashboard-stat .more {
+	border-radius: 0px 0px 10px 10px!important;
+	-moz-border-radius: 0px 0px 10px 10px!important;
+	-webkit-border-radius: 0px 0px 10px 10px!important;
+}
+
+.dashboard-stat {
+	border-radius: 10px!important;
+	-moz-border-radius: 10px!important;
+	-webkit-border-radius: 10px!important;
+
+}
+
+.dashboard-stat .more {
+	
 }
 /***
 Page sidebar
@@ -81,7 +204,7 @@ ul.page-sidebar-menu > li.active i {
   display: none;
 }
 ul.page-sidebar-menu > li.active > a{
-  background: #28b779 !important;
+  background: #bbe000 !important;
   border-top-color: transparent !important;
   color:#fff !important;
 }  
