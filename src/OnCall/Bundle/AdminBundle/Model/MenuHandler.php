@@ -47,12 +47,14 @@ class MenuHandler
                     '/client/' . $client_id . '/numbers',
                     'icon-th'
                 ));
+                /*
                 $menu_group->addItem(new MenuItem(
                     'quotas',
                     'Usage & Billing',
                     '/client/' . $client_id . '/billing',
                     'icon-tasks'
                 ));
+                */
             }
         }
 
