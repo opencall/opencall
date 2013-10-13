@@ -173,7 +173,22 @@ abstract class ItemController extends Controller
 
         // children
         $method = $this->child_fetch_method;
-        $children = $parent->$method();
+        $children_prefilter = $parent->$method();
+
+        // filter out inactive if not admin
+        if ($this->get('security.context')->isGranted('ROLE_PREVIOUS_ADMIN'))
+            $children = $children_prefilter;
+        else
+        {
+            $children = array();
+            foreach ($children as $child)
+            {
+                if ($child->isActive())
+                    $children[] = $child;
+            }
+        }
+
+        // get children ids
         $child_ids = array();
         foreach ($children as $child)
             $child_ids[] = $child->getID();
