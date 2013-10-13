@@ -316,12 +316,12 @@ jQuery(document).ready(function() {
                         <i class="icon-group"></i>
                     </div>
                     <div class="details">
-                        <div class="number">{{ agg_parent.getTotalFormatted }}</div>
-                        <div class="desc">Total Calls</div>
+                        <div class="number">
+                            <a href="">
+                            {{ agg_parent.getTotalFormatted }} Calls
+                            </a>
+                        </div>
                     </div>
-                    <a class="more" href="#">
-                    View calls <i class="m-icon-swapright m-icon-white"></i>
-                    </a> 
                 </div>
             </div>
             <div class="span3 responsive" data-tablet="span6" data-desktop="span3">
@@ -330,12 +330,12 @@ jQuery(document).ready(function() {
                         <i class="icon-user"></i>
                     </div>
                     <div class="details">
-                        <div class="number">{{ agg_parent.getUniqueFormatted }}</div>
-                        <div class="desc">Unique Calls ({{ agg_parent.getUniquePercentFormatted }}%)</div>
+                        <div class="number">
+                            <a href="">
+                            {{ agg_parent.getUniqueFormatted }} Unique <small>({{ agg_parent.getUniquePercentFormatted }}%)</small>
+                            </a>
+                        </div>
                     </div>
-                    <a class="more" href="#">
-                    View calls <i class="m-icon-swapright m-icon-white"></i>
-                    </a> 
                 </div>
             </div>
             <div class="span3 responsive" data-tablet="span6" data-desktop="span3">
@@ -344,12 +344,12 @@ jQuery(document).ready(function() {
                         <i class="icon-star"></i>
                     </div>
                     <div class="details">
-                        <div class="number">{{ agg_parent.getPLeadFormatted }}</div>
-                        <div class="desc">P. Leads ({{ agg_parent.getPLeadPercentFormatted }}%)</div>
+                        <div class="number">
+                            <a href="">
+                            {{ agg_parent.getPLeadFormatted }} Leads <small>({{ agg_parent.getPLeadPercentFormatted }}%)</small>
+                            </a>
+                        </div>
                     </div>                
-                    <a class="more" href="#">
-                    View calls <i class="m-icon-swapright m-icon-white"></i>
-                    </a> 
                 </div>
             </div>
             <div class="span3 responsive" data-tablet="span6  fix-offset" data-desktop="span3">
@@ -358,12 +358,12 @@ jQuery(document).ready(function() {
                         <i class="icon-remove-sign"></i>
                     </div>
                     <div class="details">
-                        <div class="number">{{ agg_parent.getFailedFormatted }}</div>
-                        <div class="desc">Failed Calls ({{ agg_parent.getFailedPercentFormatted }}%)</div>
+                        <div class="number">
+                            <a href="">
+                            {{ agg_parent.getFailedFormatted }} Failed Calls <small>({{ agg_parent.getFailedPercentFormatted }}%)</small>
+                            </a>
+                        </div>
                     </div>
-                    <a class="more" href="#">
-                    View calls <i class="m-icon-swapright m-icon-white"></i>
-                    </a>  
                 </div>
             </div>
 
