@@ -61,12 +61,12 @@ $(document).ready(function() {
                 <br />
                 <!-- BEGIN INLINE NOTIFICATIONS PORTLET-->
                 <!-- EDIT CLIENT MODAL -->
+                <form id="edit_form" method="post" action="/client/0">
                 <div id="editClient" class="modal hide fade" tabindex="-1" data-width="760">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
                         <h3>Edit Client</h3>
                     </div>
-                    <form id="edit_form" method="post" action="/client/0">
                     <div class="modal-body">
                         <div class="row-fluid">
                             <div class="span6 control-group">
@@ -75,13 +75,11 @@ $(document).ready(function() {
                             </div>
                             <div class="span6">
                                 <h4>Client Timezone</h4>
-                                <p>
-                                    <select class="cl_timezone" name="timezone">
+                                <p><select class="cl_timezone" name="timezone">
                                     {% for tz_key,tz_name in timezones %}
                                         <option value="{{ tz_key }}">{{ tz_name }}</option>
                                     {% endfor %}
-                                    </select>
-                                </p>
+                                    </select></p>
                             </div>
                             <div class="clearfix"></div>
                             {% if is_granted('ROLE_PREVIOUS_ADMIN') %}
@@ -101,8 +99,8 @@ $(document).ready(function() {
                         <button type="button" data-dismiss="modal" class="btn">Cancel</button>
                         <input type="submit" class="btn green" value="Save changes" />
                     </div>
-                    </form>
                 </div>
+                </form>
                 <!-- End EDIT MODAL -->
                 <!-- DELETE Client MODAL -->
                 <form id="delete_form" method="post" action="/client/0/delete">
@@ -122,12 +120,12 @@ $(document).ready(function() {
                 </form>
                 <!-- END DELETE MODAL -->
                 <!-- ADD CLIENT MODAL -->
+                <form id="add_form" method="post">
                 <div id="addClient" class="modal hide fade" tabindex="-1" data-width="760">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
                         <h3>Add Client</h3>
                     </div>
-                    <form id="add_form" method="post">
                     <div class="modal-body">
                         <div class="row-fluid">
                             <div class="span6 control-group">
@@ -154,8 +152,8 @@ $(document).ready(function() {
                         <button type="button" data-dismiss="modal" class="btn">Cancel</button>
                         <input type="submit" class="btn green" value="Add Client" />
                     </div>
-                    </form>
                 </div>
+                </form>
                 <!-- End ADD CLIENT MODAL -->
                         
                 <div class="row-fluid">
@@ -183,31 +181,6 @@ $(document).ready(function() {
                         </div>
                     </div>
                     {% endfor %}
-                    <!-- add a client box -->
-                    <!--
-                    <div class="span3">
-                        <div class="pricing-table selected">
-                            <h3>Add a Client</h3>
-                            <div class="desc" style="margin-bottom: 0px; border-bottom: 0px;">
-                                Add as many clients as you want without charge - billing only starts when you add an active number. <a href="">Learn more about how we charge</a>
-                            </div>
-
-                            <div class="rate" style="margin-top: 0px; padding-top: 13px;">
-                                <div class="price">
-                                    <div class="currency " style="width: 56px;">
-                                    from HKD/mth
-                                </div>
-                                    <div class="amount ">
-                                        $XXX
-                                    </div>
-                                </div>
-                                <button data-toggle="modal" href="#addClient" class="btn green" style="border: 1px solid #fff;">
-                                Add <i class="m-icon-swapright m-icon-white"></i>
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                    -->
                     <!-- end add a client box -->
                     <div class="spance10 visible-phone"></div>
                 </div>
