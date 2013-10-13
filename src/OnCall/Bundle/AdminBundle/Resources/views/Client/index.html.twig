@@ -7,7 +7,7 @@ function update_client(client_id)
     $.get('/client/' + client_id, function(client) {
         $('.cl_name').val(client.name);
         $('.cl_name_text').text(client.name);
-        $('.cl_delete_text').val('Delete All Data for ' + client.name);
+        $('.cl_delete_text').val('Delete ' + client.name);
         $('.cl_timezone').val(client.timezone);
         $('.cl_status').val(client.status);
     }, 'json');
@@ -105,21 +105,21 @@ $(document).ready(function() {
                 </div>
                 <!-- End EDIT MODAL -->
                 <!-- DELETE Client MODAL -->
+                <form id="delete_form" method="post" action="/client/0/delete">
                 <div id="deleteClient" class="modal hide fade" tabindex="-1" role="dialog" aria-hidden="true">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
                         <h3 id="myModalLabel3">Delete <span class="cl_name_text"></span></h3>
                     </div>
-                    <form id="delete_form" method="post" action="/client/0/delete">
                     <div class="modal-body">
-                        <p>Deleting a client will permanently delete all Campaigns, Ad Groups and Adverts contained within it. All tracking data tied to these campaigns will also be deleted and any phone numbers will be relinquished (meaning that if anyone tries to call these numbers they will not be able to connect). Press "Delete All Data" to proceed.</p>
+                        <p>Deleting a client will remove all phone numbers from your adverts and relinquish them, making them available to all CallTracking customers to use. Please note, you will be billed for the remainder of the month for these phone numbers. Press "Delete" to proceed.</p>
                     </div>
                     <div class="modal-footer">
                         <button class="btn pull-left green" data-dismiss="modal" aria-hidden="true">Cancel</button>
                         <input type="submit" class="btn red cl_delete_text" value="Delete All Data for McDonalds" />
                     </div>
-                    </form>
                 </div>
+                </form>
                 <!-- END DELETE MODAL -->
                 <!-- ADD CLIENT MODAL -->
                 <div id="addClient" class="modal hide fade" tabindex="-1" data-width="760">
