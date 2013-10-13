@@ -47,19 +47,19 @@ var Login = function () {
 	                error.addClass('help-small no-left-padding').insertAfter(element.closest('.input-icon'));
 	            },
 
-	            submitHandler: function (form) {
-	                window.location.href = "index.html";
-	            }
+	            // submitHandler: function (form) {
+	            //     window.location.href = "index.html";
+	            // }
 	        });
 
-	        $('.login-form input').keypress(function (e) {
-	            if (e.which == 13) {
-	                if ($('.login-form').validate().form()) {
-	                    window.location.href = "index.html";
-	                }
-	                return false;
-	            }
-	        });
+	        //$('.login-form input').keypress(function (e) {
+	        //    if (e.which == 13) {
+	        //        if ($('.login-form').validate().form()) {
+	        //            window.location.href = "index.html";
+	        //        }
+	        //        return false;
+	        //    }
+	        //});
 
 	        $('.forget-form').validate({
 	            errorElement: 'label', //default input error message container
@@ -97,19 +97,19 @@ var Login = function () {
 	                error.addClass('help-small no-left-padding').insertAfter(element.closest('.input-icon'));
 	            },
 
-	            submitHandler: function (form) {
-	                window.location.href = "index.html";
-	            }
+	            //submitHandler: function (form) {
+	            //    window.location.href = "index.html";
+	            //}
 	        });
 
-	        $('.forget-form input').keypress(function (e) {
-	            if (e.which == 13) {
-	                if ($('.forget-form').validate().form()) {
-	                    window.location.href = "index.html";
-	                }
-	                return false;
-	            }
-	        });
+	        //$('.forget-form input').keypress(function (e) {
+	        //    if (e.which == 13) {
+	        //        if ($('.forget-form').validate().form()) {
+	        //            window.location.href = "index.html";
+	        //        }
+	        //        return false;
+	        //    }
+	        //});
 
 	        jQuery('#forget-password').click(function () {
 	            jQuery('.login-form').hide();
@@ -173,9 +173,9 @@ var Login = function () {
 	                }
 	            },
 
-	            submitHandler: function (form) {
-	                window.location.href = "index.html";
-	            }
+	            //submitHandler: function (form) {
+	            //    window.location.href = "index.html";
+	            //}
 	        });
 
 	        jQuery('#register-btn').click(function () {
