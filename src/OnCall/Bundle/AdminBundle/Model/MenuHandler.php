@@ -49,7 +49,7 @@ class MenuHandler
                 ));
                 $menu_group->addItem(new MenuItem(
                     'quotas',
-                    'Billing & Usage',
+                    'Usage & Billing',
                     '/client/' . $client_id . '/billing',
                     'icon-tasks'
                 ));
