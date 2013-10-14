@@ -8,6 +8,7 @@ use OnCall\Bundle\AdminBundle\Entity\User;
 use OnCall\Bundle\AdminBundle\Entity\Client;
 use OnCall\Bundle\AdminBundle\Model\Controller;
 use Doctrine\DBAL\DBALException;
+use Doctrine\ORM\ORMException;
 
 
 class AccountController extends Controller
@@ -55,6 +56,7 @@ class AccountController extends Controller
             $this->addFlash('error', 'Could not create account, username probably exists.');
         }
 
+        // add client
         try
         {
             $em = $this->getDoctrine()->getManager();

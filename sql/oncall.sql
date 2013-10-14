@@ -99,7 +99,7 @@ CREATE TABLE `CallLog` (
   `campaign_id` int(9) unsigned NOT NULL,
   `client_id` int(9) unsigned NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -108,7 +108,7 @@ CREATE TABLE `CallLog` (
 
 LOCK TABLES `CallLog` WRITE;
 /*!40000 ALTER TABLE `CallLog` DISABLE KEYS */;
-INSERT INTO `CallLog` VALUES (1,'2013-10-11 18:39:50','test-230948029348902',0,85235009085,1111111111,'2013-10-11 17:28:29','2013-10-11 17:29:15',27,60,0.00400,'completed','NORMAL_CLEARING',2,6,9,4),(2,'2013-10-11 19:25:14','test-230948029348902',0,85235009085,1111111111,'2013-10-11 17:28:29','2013-10-11 17:29:15',27,60,0.00400,'completed','NORMAL_CLEARING',2,6,9,4),(3,'2013-10-11 19:25:49','test-230948029348902',0,85235009085,1111111111,'2013-10-11 17:28:29','2013-10-11 17:29:15',27,60,0.00400,'completed','NORMAL_CLEARING',2,6,9,4),(4,'2013-10-11 19:26:13','test-230948029348902',1,85235009085,1111111111,'2013-10-11 17:28:29','2013-10-11 17:29:15',27,60,0.00400,'completed','NORMAL_CLEARING',2,6,9,4),(5,'2013-10-11 19:47:55','test-230948029348902',1,85235009085,1111111111,'2013-10-11 17:28:29','2013-10-11 17:29:15',27,60,0.00400,'completed','NORMAL_CLEARING',2,6,9,4),(6,'2013-10-11 19:49:44','test-230948029348902',1,85235009085,1111111111,'2013-10-11 17:28:29','2013-10-11 17:29:15',27,60,0.00400,'completed','NORMAL_CLEARING',2,6,9,4),(7,'2013-10-11 19:49:58','test-230948029348902',1,85235009085,1111111111,'2013-10-11 17:28:29','2013-10-11 17:29:15',27,60,0.00400,'completed','NORMAL_CLEARING',2,6,9,4),(8,'2013-10-11 19:50:27','test-230948029348902',0,85235009085,1111111111,'2013-10-11 17:28:29','2013-10-11 17:29:15',27,60,0.00400,'completed','NORMAL_CLEARING',2,6,9,4),(9,'2013-10-12 02:10:56','test-230948029348902',0,85235009085,1111111111,'2013-10-10 08:28:00','2013-10-10 08:30:45',150,180,0.00400,'completed','NORMAL_CLEARING',2,6,9,4),(10,'2013-10-12 02:22:51','test-230948029348902',0,85235009085,1111111111,'2013-10-08 09:28:00','2013-10-08 09:28:45',0,0,0.00400,'cancel','ORIGINATOR_CANCEL',2,6,9,4);
+INSERT INTO `CallLog` VALUES (1,'2013-10-11 18:39:50','test-230948029348902',0,85235009085,1111111111,'2013-10-11 17:28:29','2013-10-11 17:29:15',27,60,0.00400,'completed','NORMAL_CLEARING',2,6,9,4),(2,'2013-10-11 19:25:14','test-230948029348902',0,85235009085,1111111111,'2013-10-11 17:28:29','2013-10-11 17:29:15',27,60,0.00400,'completed','NORMAL_CLEARING',2,6,9,4),(3,'2013-10-11 19:25:49','test-230948029348902',0,85235009085,1111111111,'2013-10-11 17:28:29','2013-10-11 17:29:15',27,60,0.00400,'completed','NORMAL_CLEARING',2,6,9,4),(4,'2013-10-11 19:26:13','test-230948029348902',1,85235009085,1111111111,'2013-10-11 17:28:29','2013-10-11 17:29:15',27,60,0.00400,'completed','NORMAL_CLEARING',2,6,9,4),(5,'2013-10-11 19:47:55','test-230948029348902',1,85235009085,1111111111,'2013-10-11 17:28:29','2013-10-11 17:29:15',27,60,0.00400,'completed','NORMAL_CLEARING',2,6,9,4),(6,'2013-10-11 19:49:44','test-230948029348902',1,85235009085,1111111111,'2013-10-11 17:28:29','2013-10-11 17:29:15',27,60,0.00400,'completed','NORMAL_CLEARING',2,6,9,4),(7,'2013-10-11 19:49:58','test-230948029348902',1,85235009085,1111111111,'2013-10-11 17:28:29','2013-10-11 17:29:15',27,60,0.00400,'completed','NORMAL_CLEARING',2,6,9,4),(8,'2013-10-11 19:50:27','test-230948029348902',0,85235009085,1111111111,'2013-10-11 17:28:29','2013-10-11 17:29:15',27,60,0.00400,'completed','NORMAL_CLEARING',2,6,9,4),(9,'2013-10-12 02:10:56','test-230948029348902',0,85235009085,1111111111,'2013-10-10 08:28:00','2013-10-10 08:30:45',150,180,0.00400,'completed','NORMAL_CLEARING',2,6,9,4),(10,'2013-10-12 02:22:51','test-230948029348902',0,85235009085,1111111111,'2013-10-08 09:28:00','2013-10-08 09:28:45',0,0,0.00400,'cancel','ORIGINATOR_CANCEL',2,6,9,4),(11,'2013-10-12 07:35:25','test-230948029348902',0,85235009085,1111111111,'2013-10-08 09:28:00','2013-10-08 09:28:45',0,0,0.00400,'cancel','ORIGINATOR_CANCEL',2,6,9,4);
 /*!40000 ALTER TABLE `CallLog` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -135,7 +135,7 @@ CREATE TABLE `Campaign` (
 
 LOCK TABLES `Campaign` WRITE;
 /*!40000 ALTER TABLE `Campaign` DISABLE KEYS */;
-INSERT INTO `Campaign` VALUES (1,7,'Edited Again',0,'2013-09-30'),(2,7,'Test',1,'2013-09-30'),(3,7,'Test',1,'2013-09-30'),(4,7,'Blah',1,'2013-10-06'),(5,7,'Blah',1,'2013-10-06'),(6,7,'Test Generic Campaign',1,'2013-10-06'),(7,1,'Test Campaign',1,'2013-10-07'),(8,2,'Adidas',1,'2013-10-07'),(9,4,'Test Lego Campaign',1,'2013-10-10');
+INSERT INTO `Campaign` VALUES (1,7,'Edited Again',0,'2013-09-30'),(2,7,'Test',1,'2013-09-30'),(3,7,'Test',1,'2013-09-30'),(4,7,'Blah',1,'2013-10-06'),(5,7,'Blah',1,'2013-10-06'),(6,7,'Test Generic Campaign',1,'2013-10-06'),(7,1,'Test Campaign',1,'2013-10-07'),(8,2,'Adidas',0,'2013-10-07'),(9,4,'Test Lego Campaign',1,'2013-10-10');
 /*!40000 ALTER TABLE `Campaign` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -154,7 +154,7 @@ CREATE TABLE `Client` (
   `status` smallint(2) unsigned NOT NULL DEFAULT '1',
   `date_create` date NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -163,7 +163,7 @@ CREATE TABLE `Client` (
 
 LOCK TABLES `Client` WRITE;
 /*!40000 ALTER TABLE `Client` DISABLE KEYS */;
-INSERT INTO `Client` VALUES (1,7,'Test',8.0,1,'2013-09-27'),(2,7,'Adidas Edit',-5.0,1,'2013-09-27'),(3,7,'Nike',8.0,1,'2013-09-27'),(4,7,'Lego',8.0,1,'2013-09-30'),(5,12,'New Single Client',8.0,1,'2013-09-30'),(6,13,'Test',8.0,1,'2013-09-30'),(7,8,'Kendrick Test Edit',8.0,1,'2013-09-30'),(8,8,'Test 2',8.0,1,'2013-09-30');
+INSERT INTO `Client` VALUES (1,7,'Test',8.0,0,'2013-09-27'),(2,7,'Adidas Edit',-5.0,1,'2013-09-27'),(3,7,'Nike',8.0,1,'2013-09-27'),(4,7,'Lego',8.0,1,'2013-09-30'),(5,12,'New Single Client',8.0,1,'2013-09-30'),(6,13,'Test',8.0,1,'2013-09-30'),(7,8,'Kendrick Test Edit',8.0,1,'2013-09-30'),(8,8,'Test 2',8.0,1,'2013-09-30'),(9,14,'Blah',8.0,1,'2013-10-14'),(10,22,'Blah',8.0,1,'2013-10-14');
 /*!40000 ALTER TABLE `Client` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -261,7 +261,7 @@ CREATE TABLE `Counter` (
 
 LOCK TABLES `Counter` WRITE;
 /*!40000 ALTER TABLE `Counter` DISABLE KEYS */;
-INSERT INTO `Counter` VALUES ('2013-10-08 09:00:00',4,9,6,2,85235009085,'0000000000',1,0,1,0),('2013-10-10 08:00:00',4,9,6,2,85235009085,'0000000000',1,1,0,150),('2013-10-11 17:00:00',4,9,6,2,85235009085,'0000000000',1,0,0,27),('2013-10-11 17:00:00',4,9,6,2,85235009085,'0000000001',2,0,0,54);
+INSERT INTO `Counter` VALUES ('2013-10-08 09:00:00',4,9,6,2,85235009085,'0000000000',2,0,2,0),('2013-10-10 08:00:00',4,9,6,2,85235009085,'0000000000',1,1,0,150),('2013-10-11 17:00:00',4,9,6,2,85235009085,'0000000000',1,0,0,27),('2013-10-11 17:00:00',4,9,6,2,85235009085,'0000000001',2,0,0,54);
 /*!40000 ALTER TABLE `Counter` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -334,9 +334,8 @@ CREATE TABLE `User` (
   `bill_address` varchar(120) COLLATE utf8_unicode_ci DEFAULT NULL,
   `date_create` datetime DEFAULT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `UNIQ_2DA1797792FC23A8` (`username_canonical`),
-  UNIQUE KEY `UNIQ_2DA17977A0D96FBF` (`email_canonical`)
-) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+  UNIQUE KEY `UNIQ_2DA1797792FC23A8` (`username_canonical`)
+) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -345,7 +344,7 @@ CREATE TABLE `User` (
 
 LOCK TABLES `User` WRITE;
 /*!40000 ALTER TABLE `User` DISABLE KEYS */;
-INSERT INTO `User` VALUES (1,'admin','admin','kc@jankstudio.com','kc@jankstudio.com',1,'88mx3wkmehwk08wwoo00kwg04wgk8cc','IcAuzWLxVy9m9Rn1BBL9TGn3t75mHaq2j9s/ASwQdMqJrcsu8koByMYlv9oygfjA6HR1uy0+9ODBfIqRoaCCUA==','2013-10-11 23:57:19',0,0,NULL,NULL,NULL,'a:1:{i:0;s:10:\"ROLE_ADMIN\";}',0,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(7,'sample','sample','contact.guy@yahoo.com','contact.guy@yahoo.com',1,'4i19bumhhv28swww0gwss8cwkkk848c','3GIRXTHKroyV8grwhpIlC/kVVQkRQ3n8uzpthQrHGWCig0ZEzsOJNJkDs9nAzyReRvSMaXcicGZM4Qxu6XNbgQ==','2013-10-07 16:21:49',0,0,NULL,NULL,NULL,'a:0:{}',0,NULL,1,'Contact Guy','Sample Company','0923840209','Somewhere out there','Sample Company','Contact Guy','contact.guy@sample.company.com','0982349092','Somewhere out there part 2','2013-09-21 02:20:33'),(8,'multi','multi','multi@jankstudio.com','multi@jankstudio.com',1,'gyv7hgc6m6g4008cgsw8gsww8ggc840','tdwcSMvfmLo+AI3YxsK8M/PPw1w+toftMSsy/KRluhJx2eKlbU1PE1rDxDWYHgDtkZUITM+FlzPNSqhSs9xleQ==','2013-09-30 23:23:37',0,0,NULL,NULL,NULL,'a:0:{}',0,NULL,1,'Multi Test','Multi Test','230948234','Somewhere','','','','','','2013-09-30 05:52:52'),(12,'new','new','new@jankstudio.com','new@jankstudio.com',1,'66ymmethpxgkokc8k0wg40k8w4s44kw','eeBd48cSiAmTgMNgj/9brWvCASFGTK/QbvaJAs6lPf4vpqpaX2HaYAHgQ64sCxhlMnQlLkE0uPSW+zqEgGPynA==','2013-09-30 22:15:34',0,0,NULL,NULL,NULL,'a:0:{}',0,NULL,0,'New Single Client','New Single Client','29392834','Test','','','','','','2013-09-30 20:28:15'),(13,'Test','test','test2@test.com','test2@test.com',1,'bic215yadn480co0c8os0kko0g040gw','4+g+fISkmBH9uiZOTRmVFQedw2VALxB//f+1V+/uW+DUhufbZ3PxwSGCRKmcJQzmz3OdXy2CJjfekiDpYuP3+Q==',NULL,0,0,NULL,NULL,NULL,'a:0:{}',0,NULL,0,'Test','Test','234234234','','','','','','','2013-09-30 22:36:00');
+INSERT INTO `User` VALUES (1,'admin','admin','kc@jankstudio.com','kc@jankstudio.com',1,'88mx3wkmehwk08wwoo00kwg04wgk8cc','IcAuzWLxVy9m9Rn1BBL9TGn3t75mHaq2j9s/ASwQdMqJrcsu8koByMYlv9oygfjA6HR1uy0+9ODBfIqRoaCCUA==','2013-10-14 07:47:13',0,0,NULL,NULL,NULL,'a:1:{i:0;s:10:\"ROLE_ADMIN\";}',0,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(7,'sample','sample','contact.guy@yahoo.com','contact.guy@yahoo.com',1,'4i19bumhhv28swww0gwss8cwkkk848c','3GIRXTHKroyV8grwhpIlC/kVVQkRQ3n8uzpthQrHGWCig0ZEzsOJNJkDs9nAzyReRvSMaXcicGZM4Qxu6XNbgQ==','2013-10-14 07:46:45',0,0,NULL,NULL,NULL,'a:0:{}',0,NULL,1,'Contact Guy','Sample Company','0923840209','Somewhere out there','Sample Company','Contact Guy','contact.guy@sample.company.com','0982349092','Somewhere out there part 2','2013-09-21 02:20:33'),(8,'multi','multi','multi@jankstudio.com','multi@jankstudio.com',1,'gyv7hgc6m6g4008cgsw8gsww8ggc840','tdwcSMvfmLo+AI3YxsK8M/PPw1w+toftMSsy/KRluhJx2eKlbU1PE1rDxDWYHgDtkZUITM+FlzPNSqhSs9xleQ==','2013-09-30 23:23:37',0,0,NULL,NULL,NULL,'a:0:{}',0,NULL,1,'Multi Test','Multi Test','230948234','Somewhere','','','','','','2013-09-30 05:52:52'),(12,'new','new','new@jankstudio.com','new@jankstudio.com',1,'66ymmethpxgkokc8k0wg40k8w4s44kw','eeBd48cSiAmTgMNgj/9brWvCASFGTK/QbvaJAs6lPf4vpqpaX2HaYAHgQ64sCxhlMnQlLkE0uPSW+zqEgGPynA==','2013-09-30 22:15:34',0,0,NULL,NULL,NULL,'a:0:{}',0,NULL,0,'New Single Client','New Single Client','29392834','Test','','','','','','2013-09-30 20:28:15'),(13,'Test','test','test2@test.com','test2@test.com',1,'bic215yadn480co0c8os0kko0g040gw','4+g+fISkmBH9uiZOTRmVFQedw2VALxB//f+1V+/uW+DUhufbZ3PxwSGCRKmcJQzmz3OdXy2CJjfekiDpYuP3+Q==',NULL,0,0,NULL,NULL,NULL,'a:0:{}',0,NULL,0,'Test','Test','234234234','','','','','','','2013-09-30 22:36:00'),(14,'blah','blah','blah2@blah.com','blah2@blah.com',1,'o4c6wnl397kkc04w40woww80s8kgc8','hk5eHYRk4vHua+2PicO3Fat2XOKxt49xT0d4cvXIKOSeWAgfCwfrGpu5DPdFgqi6sANykoQAjUB4IetAAHWViQ==',NULL,0,0,NULL,NULL,NULL,'a:0:{}',0,NULL,0,'Blah','Blah','23049802','','','','','','','2013-10-14 07:58:59'),(22,'blah2','blah2','blah2@blah.com','blah2@blah.com',1,'7xb9lm9hwmkogsg8w8cg8gc8cwgwscc','djmqNOlBpJihY2tqX5eRnAA2MG6tMMj9KwUqWHHE9RS/Vqna+HVOuduHsI/rugvSGZfKmGWPSjrUnINVd6mAcA==',NULL,0,0,NULL,NULL,NULL,'a:0:{}',0,NULL,0,'Blah','Blah','2934892344','','','','','','','2013-10-14 08:12:09');
 /*!40000 ALTER TABLE `User` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -358,4 +357,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2013-10-12  6:56:38
+-- Dump completed on 2013-10-14  8:13:34
