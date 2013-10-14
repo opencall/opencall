@@ -127,6 +127,7 @@ class Counter extends EntityRepository
         $res = $query->getScalarResult();
 
         $multi_ia = array();
+        // daily
         if ($filter->isDaily())
         {
             // cycle through results
@@ -146,6 +147,7 @@ class Counter extends EntityRepository
                     $multi_ia[$day_index] = new ItemAggregate(0, 0, 0, 0, 0);
             }
         }
+        // hourly
         else
         {
             // cycle through results
@@ -164,5 +166,44 @@ class Counter extends EntityRepository
         ksort($multi_ia);
 
         return $multi_ia;
+    }
+
+    public function findClientSummaries($client_ids)
+    {
+        $result = array();
+
+        $day_from = new DateTime();
+        $day_from->modify('-1 day');
+        $result['day'] = $this->findSummary($client_ids, $day_from);
+
+        $month_from = new DateTime();
+        $month_from->modify('-1 month');
+        $result['month'] = $this->findSummary($client_ids, $month_from);
+
+        return $result;
+    }
+
+    protected function findSummary($client_ids, DateTime $date_from)
+    {
+        // within the past 24 hours
+        $date_to = new DateTime();
+        $dql = 'select sum(c.count_total) as a_total, c.client_id as a_id from OnCallAdminBundle:Counter c where c.date_in >= :date_from and c.date_in <= :date_to and c.client_id in (:client_ids) group by c.client_id';
+        $query = $this->getEntityManager()
+            ->createQuery($dql)
+            ->setParameter('date_from', $date_from)
+            ->setParameter('date_to', $date_to)
+            ->setParameter('client_ids', $client_ids);
+        $res = $query->getScalarResult();
+
+        // initialize summary
+        $summary = array();
+        foreach ($client_ids as $cid)
+            $summary[$cid] = 0;
+
+        // set from result
+        foreach ($res as $row)
+            $summary[$row['a_id']] = $row['a_total'];
+
+        return $summary;
     }
 }

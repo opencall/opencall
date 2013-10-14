@@ -21,7 +21,8 @@ class ClientController extends Controller
         $role_hash = $user->getRoleHash();
 
         // get clients
-        $repo = $this->getDoctrine()->getRepository('OnCallAdminBundle:Client');
+        $repo = $this->getDoctrine()
+            ->getRepository('OnCallAdminBundle:Client');
 
         // for admin switched user
         if ($this->get('security.context')->isGranted('ROLE_PREVIOUS_ADMIN'))
@@ -39,6 +40,16 @@ class ClientController extends Controller
             ));
         }
 
+        // get client ids
+        $client_ids = array();
+        foreach ($clients as $cli)
+            $client_ids[] = $cli->getID();
+
+        // get counter summaries
+        $summaries = $this->getDoctrine()
+            ->getRepository('OnCallAdminBundle:Counter')
+            ->findClientSummaries($client_ids);
+
 
         return $this->render(
             'OnCallAdminBundle:Client:index.html.twig',
@@ -48,6 +59,8 @@ class ClientController extends Controller
                 'clients' => $clients,
                 'timezones' => Timezone::getAll(),
                 'tz_selected' => '8.0',
+                'summ_day' => $summaries['day'],
+                'summ_month' => $summaries['month'],
             )
         );
     }

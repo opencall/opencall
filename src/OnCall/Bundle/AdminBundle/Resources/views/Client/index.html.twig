@@ -168,8 +168,8 @@ $(document).ready(function() {
                             </h3>
                             <ul>
                                 <li><i class="icon-angle-right"></i> {{ cli.getNumberCount }} numbers assigned</li>
-                                <li><i class="icon-angle-right"></i> 0 calls in the past 24 hours</li>
-                                <li><i class="icon-angle-right"></i> 0 calls this month</li>
+                                <li><i class="icon-angle-right"></i> {{ summ_day[cli.getID] }} calls in the past 24 hours</li>
+                                <li><i class="icon-angle-right"></i> {{ summ_month[cli.getID] }} calls this month</li>
                                 <!-- To be added in later versions -->
                                 <!--<li><i class="icon-angle-right"></i> 2,260 inclusive calls remaining</li>-->
                                 <!--<li><i class="icon-angle-right"></i> $XXX/month + $0 overage in Aug</li>-->
