@@ -182,7 +182,7 @@ abstract class ItemController extends Controller
         else
         {
             $children = array();
-            foreach ($children as $child)
+            foreach ($children_prefilter as $child)
             {
                 if ($child->isActive())
                     $children[] = $child;
