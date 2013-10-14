@@ -400,12 +400,16 @@ jQuery(document).ready(function() {
                     <table class="table-bordered table-striped table-condensed cf">
                         <thead class="cf">
                             <tr>
+                                {% if is_granted('ROLE_PREVIOUS_ADMIN') %}
                                 <th></th>
+                                {% endif %}
                                 <th>{{ name }} Name</th>
                                 {% if name == 'Advert' %}
-                                <th>Ad Number</th>
-                                <th>Ad Destination</th>
-                                <th>Rules<br /><small>(Use?)</small></th>
+                                    <th>Ad Number</th>
+                                    <th>Ad Destination</th>
+                                    {% if is_granted('ROLE_PREVIOUS_ADMIN') %}
+                                    <th>Rules<br /><small>(Use?)</small></th>
+                                    {% endif %}
                                 {% endif %}
                                 <th>Total Calls</th> 
                                 <th>Unique Calls</th>
@@ -422,14 +426,18 @@ jQuery(document).ready(function() {
                         <tbody>
                         {% for child in children %}
                             <tr>
+                                {% if is_granted('ROLE_PREVIOUS_ADMIN') %}
                                 <td data-title="Status" style="text-align: center;"><i class="{{ child.isActive ? 'icon-ok-sign' : 'icon-remove-sign' }}"></i></td>  
+                                {% endif %}
                                 {% if name == 'Advert' %}
-                                <td data-title="{{ name }} Name">{{ child.getName }}</td>  
-                                <td>{{ child.getNumberFormatted }}</td>
-                                <td>{{ child.getDestination }}</td>
-                                <td><i class="{{ child.shouldXMLOverride ? 'icon-ok-sign' : 'icon-remove-sign' }}"></i></td>
+                                    <td data-title="{{ name }} Name">{{ child.getName }}</td>  
+                                    <td>{{ child.getNumberFormatted }}</td>
+                                    <td>{{ child.getDestination }}</td>
+                                    {% if is_granted('ROLE_PREVIOUS_ADMIN') %}
+                                    <td><i class="{{ child.shouldXMLOverride ? 'icon-ok-sign' : 'icon-remove-sign' }}"></i></td>
+                                    {% endif %}
                                 {% else %}
-                                <td data-title="{{ name }} Name"><a href="{{ path(url_child, {'id': child.getID }) }}">{{ child.getName }}</a></td>  
+                                    <td data-title="{{ name }} Name"><a href="{{ path(url_child, {'id': child.getID }) }}">{{ child.getName }}</a></td>  
                                 {% endif %}
                                 <td data-title="Total Calls">{{ agg_table[child.getID].getTotalFormatted }}<a href=""></a></td>
                                 <td data-title="Unique Calls">{{ agg_table[child.getID].getUniqueFormatted }}<a href=""></a></td>
@@ -451,8 +459,12 @@ jQuery(document).ready(function() {
                         </tbody>
                         <tfoot>
                             <tr>
+                                {% if is_granted('ROLE_PREVIOUS_ADMIN') %}
                                 <td></td>
                                 <td {% if name == 'Advert' %}colspan="4"{% endif %}><strong>Totals</strong></td>
+                                {% else %}
+                                <td {% if name == 'Advert' %}colspan="3"{% endif %}><strong>Totals</strong></td>
+                                {% endif %}
                                 <td>{{ agg_parent.getTotalFormatted }}</td>
                                 <td>{{ agg_parent.getUniqueFormatted }}</td>
                                 <td>{{ agg_parent.getFailedFormatted }}</td>
