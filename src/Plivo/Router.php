@@ -19,11 +19,23 @@ class Router
     {
         $num = $params->getTo();
         $res = $this->checkNumber($num);
-        $this->num_data = $res;
 
         // create resposne
         $resp = new Response();
         $act_params = array();
+
+        // check if any numbers reflected correctly
+        if (!$res)
+        {
+            $act_params['language'] = 'en-GB';
+            $act_params['text'] = 'This number does not have a valid destination. Please contact CallTracking for more information.';
+
+            $resp->addAction(new Action(Action::TYPE_SPEAK, $act_params));
+
+            return $resp;
+        }
+
+        $this->num_data = $res;
 
         // check if it has custom xml
         if ($res['xml_override'])
@@ -32,18 +44,18 @@ class Router
             $act_params['xml'] = $xml;
             $action = new Action(Action::TYPE_CUSTOM_XML, $act_params);
             $resp->addAction($action);
+
+            return $resp;
         }
-        else
-        {
-            $dest = $res['destination'];
-            $act_params['number'] = $dest;
-            // set caller as caller_id to redirected call
-            if ($params->getFrom() != null)
-                $act_params['caller_id'] = $params->getFrom();
-            // $act_params['caller_id'] = $params->getTo();
-            $action = new Action(Action::TYPE_DIAL, $act_params);
-            $resp->addAction($action);
-        }
+
+        $dest = $res['destination'];
+        $act_params['number'] = $dest;
+        // set caller as caller_id to redirected call
+        if ($params->getFrom() != null)
+            $act_params['caller_id'] = $params->getFrom();
+        // $act_params['caller_id'] = $params->getTo();
+        $action = new Action(Action::TYPE_DIAL, $act_params);
+        $resp->addAction($action);
 
         return $resp;
     }
@@ -70,7 +82,8 @@ class Router
         $stmt->bindParam(':num_id', $num);
         $stmt->bindParam(':status', $status);
         if (!$stmt->execute())
-            throw new Exception('Database problem encountered.');
+            return false;
+            // throw new Exception('Database problem encountered.');
 
         $row = $stmt->fetch();
         if (!$row)
