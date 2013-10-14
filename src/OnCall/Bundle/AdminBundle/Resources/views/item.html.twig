@@ -27,6 +27,9 @@ jQuery(document).ready(function() {
     var date_from = new Date({{ agg_filter.getDateFromUTC }});
     var date_to = new Date({{ agg_filter.getDateToUTC }});
 
+    var daily_from = new Date({{ filters['daily'].getDateFromUTC }});
+    var daily_to = new Date({{ filters['daily'].getDateToUTC }});
+
     $('#aggregate_range').daterangepicker({
         ranges: {
             'Today': ['today', 'today'],
@@ -98,17 +101,18 @@ jQuery(document).ready(function() {
             dateTimeLabelFormats: {
                 day: '%e of %b'
             },
-            //min: 0.5, 
+            // min: 0.5, 
             // Kendrick: the value below must be the number of data points -1.5
             // In this example there are 5 categories (above) so the max should be 5 - 1.5 =3.5
             // this is so that the graph is to the edge
             //max: 5.5,
-            labels: {                
+            labels: {
                 rotation: -45, 
                 style: {
                   color: '#888'
                 },
             },
+            // tickInterval: 1
             tickInterval: 24 * 3600 * 1000, // one day
         },
         yAxis: [{ // Calls
@@ -137,7 +141,7 @@ jQuery(document).ready(function() {
             data: {{ daily.total | json_encode() }},
                 // Kendrick - this date needs to be set in all the series to match what is selected
                 // in the calendar. It automatically counts up the date depending on the "data" above
-                pointStart: date_from.getTime(),
+                pointStart: daily_from.getTime(),
                 pointInterval: 24 * 3600 * 1000, // one day
             fillOpacity: 0.2
         }, {
@@ -147,7 +151,7 @@ jQuery(document).ready(function() {
             name: 'Failed Calls',
             color: '#e7191b',
             data: {{ daily.failed | json_encode() }},
-                pointStart: date_from.getTime(),
+                pointStart: daily_from.getTime(),
                 pointInterval: 24 * 3600 * 1000, // one day
             fillOpacity: 0.2
         }, {
@@ -157,7 +161,7 @@ jQuery(document).ready(function() {
             name: 'Potential Leads',
             color: '#bbe000',
             data: {{ daily.plead | json_encode() }},
-                pointStart: date_from.getTime(),
+                pointStart: daily_from.getTime(),
                 pointInterval: 24 * 3600 * 1000, // one day
             fillOpacity: 0.2
         }],

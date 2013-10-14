@@ -123,6 +123,7 @@ abstract class ItemController extends Controller
             'name' => $this->name,
             'url_child' => $this->url_child,
             'client_id' => $this->getClientID(),
+            'filters' => $agg['filters'],
         );
     }
 
@@ -231,7 +232,13 @@ abstract class ItemController extends Controller
             'parent' => $agg_parent,
             'table' => $agg_table,
             'daily' => $daily,
-            'hourly' => $hourly
+            'hourly' => $hourly,
+            'filters' => array(
+                'parent' => $filter,
+                'table' => $tfilter,
+                'daily' => $dfilter,
+                'hourly' => $hfilter
+            )
         );
     }
 }

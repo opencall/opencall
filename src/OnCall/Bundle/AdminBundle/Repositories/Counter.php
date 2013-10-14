@@ -119,10 +119,28 @@ class Counter extends EntityRepository
         else
             $dql .= ' group by hourly';
 
+        $date_from = $filter->getDateFrom();
+        $date_to = $filter->getDateTo();
+
+        // if daily, check if date is a single date... 
+        // if so, set date_from to date - 1 day
+        //        and date_to to date + 1 day
+        // for highcharts to display properly
+        if ($filter->isDaily())
+        {
+            if ($date_from->format('Y-m-d') == $date_to->format('Y-m-d'))
+            {
+                $date_from->modify('-1 day');
+                $date_to->modify('+1 day');
+                $filter->setDateFrom($date_from);
+                $filter->setDateTo($date_to);
+            }
+        }
+
         $query = $this->getEntityManager()
             ->createQuery($dql)
-            ->setParameter('date_from', $filter->getDateFrom())
-            ->setParameter('date_to', $filter->getDateTo())
+            ->setParameter('date_from', $date_from)
+            ->setParameter('date_to', $date_to)
             ->setParameter('id', $filter->getItemID());
         $res = $query->getScalarResult();
 
@@ -136,9 +154,9 @@ class Counter extends EntityRepository
 
             // make sure all days have a value
             $period = new DatePeriod(
-                $filter->getDateFrom(),
+                $date_from,
                 new DateInterval('P1D'), 
-                $filter->getDateTo()
+                $date_to
             );
             foreach ($period as $day)
             {
