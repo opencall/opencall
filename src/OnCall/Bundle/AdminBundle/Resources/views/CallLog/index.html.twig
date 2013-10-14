@@ -251,29 +251,29 @@ jQuery(document).ready(function() {
                         <table class="table-bordered table-striped table-condensed cf">
                             <thead class="cf">
                                 <tr>
-                                    <th>Caller Number</th> 
-                                    <th>Dialled Number</th>
-                                    <th>Destination Number</th>
-                                    <th>Call Start Time</th>
-                                    <th>Call End Time</th>
+                                    <th style="width: 114px;">Caller Number</th> 
+                                    <th style="width: 114px;">Dialled Number</th>
+                                    <th style="width: 114px;">Destination</th>
+                                    <th style="width: 73px;">Start Time</th>
+                                    <th style="width: 114px;">End Time</th>
                                     <th>Duration</th>
                                     <th>Cost (HKD)</th>
-                                    <th>Hangup Cause</th>
-                                    <th>Advert</th>
-                                    <th>AdGroup</th>
-                                    <th>Campaign</th>
+                                    <th style="width: 114px;">Hangup Cause</th>
+                                    <th style="width: 114px;">Advert</th>
+                                    <th style="width: 114px;">AdGroup</th>
+                                    <th style="width: 114px;">Campaign</th>
                                 </tr>
                             </thead>
                             <tbody>
                             {% for log in logs %}
                                 <tr>
-                                    <td data-title="Caller Number" style="width: 100px;">{{ log.getOriginNumber }}</td>  
-                                    <td data-title="Dialled Number" style="width: 100px;">{{ log.getDialledNumber }}</td>  
-                                    <td data-title="Destination Number" style="width: 100px;">{{ log.getDestinationNumber }}</td>
-                                    <td data-title="Call Start Time" style="width: 100px;">
+                                    <td data-title="Caller Number">{{ log.getOriginNumber }}</td>  
+                                    <td data-title="Dialled Number">{{ log.getDialledNumber }}</td>  
+                                    <td data-title="Destination Number">{{ log.getDestinationNumber }}</td>
+                                    <td data-title="Call Start Time">
                                     {{ log.getDateStart.format('H:i:s') }}<br /><small>{{ log.getDateStart.format('M d Y') }}</small>
                                     </td>  
-                                    <td data-title="Call End Time" style="width: 100px;">
+                                    <td data-title="Call End Time">
                                     {{ log.getDateEnd.format('H:i:s') }}<br /><small>{{ log.getDateEnd.format('M d Y') }}</small>
                                     </td>
                                     <td data-title="Duration">{{ log.getDuration }}s</td>
