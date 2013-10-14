@@ -28,12 +28,12 @@
 {% endblock %}
 
 {% block modal_add %}
+<form method="post">
 <div id="addModal" class="modal hide fade" tabindex="-1" data-width="760">
     <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
         <h3>Add Advert</h3>
     </div>
-    <form method="post">
     <div class="modal-body">
         <div class="row-fluid">
             <div class="span12">
@@ -69,30 +69,31 @@
         <button type="button" data-dismiss="modal" class="btn">Cancel</button>
         <input type="submit" class="btn green" value="Add Advert" />
     </div>
-    </form>
 </div>
+</form>
 {% endblock %}
 
 {% block modal_edit %}
+<form id="edit_form" method="post">
 <div id="editModal" class="modal hide fade" tabindex="-1" data-width="760">
     <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
         <h3>Edit Advert</h3>
     </div>
-    <form id="edit_form" method="post">
     <div class="modal-body">
         <div class="row-fluid">
             <div class="span12">
                 <h4>
-                    Advert Number: 
-                    <span id="item_name_static" class="item_number_id"></span>
-                    <select id="item_name_dropdown" name="number" class="m-wrap" tabindex="1">
-                    {% for num in numbers %}
-                        <option value="{{ num.getID }}">{{ num.getID }}</option>
-                    {% endfor %}
-                    </select>
+                    Advert Number
                 </h4>
-                <br />
+                <p>
+                    <select id="item_name_dropdown" name="number" class="m-wrap" tabindex="1">
+                        <option id="item_number" name="number_id" selected="selected"></option>
+                        {% for num in numbers %}
+                        <option value="{{ num.getID }}">{{ num.getID }}</option>
+                        {% endfor %}
+                    </select>
+                </p>
                 <h4>Advert Name</h4>
                 <p>
                     <input name="name" type="text" class="item_name span6 m-wrap">
@@ -110,13 +111,13 @@
                 <h4>Advanced Rules (admin only)</h4>
                 <p><textarea name="xml_replace" class="item_xml_replace span12 m-wrap"></textarea></p>
                 <p><input name="xml_override" type="checkbox" class="item_xml_override checkboxes" value="1" /> Override Desitnation</p>
-                {% endif %}
                 <!-- Kendrick: This should only show to an admin if the Advert status is "deleted" -->
                 <h4>Advert Status</h4>
                 <p><select name="status" class="item_status small m-wrap" tabindex="1">
                     <option value="1">Active</option>
                     <option value="0">Inactive</option>
                 </select></p>
+                {% endif %}
             </div>
         </div>
     </div>
@@ -125,6 +126,7 @@
         <input type="submit" class="btn green" value="Save changes" />
     </div>
 </div>      
+</form>
 {% endblock %}
 
 {% block ajax_update_item %}
@@ -133,13 +135,15 @@ function update_item(data)
 {
     if (!data.number_id)
     {
-        $('#item_name_static').addClass('hidden');
-        $('#item_name_dropdown').removeClass('hidden');
+        // $('#item_name_static').addClass('hidden');
+        // $('#item_name_dropdown').removeClass('hidden');
     }
     else
     {
-        $('#item_name_static').removeClass('hidden');
-        $('#item_name_dropdown').addClass('hidden');
+        // $('#item_name_static').removeClass('hidden');
+        // $('#item_name_dropdown').addClass('hidden');
+        $('#item_number').val(data.number_id);
+        $('#item_number').html(data.number_id);
         $('#item_name_dropdown').val(data.number_id);
     }
 
