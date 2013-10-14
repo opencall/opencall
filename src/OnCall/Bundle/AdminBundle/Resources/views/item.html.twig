@@ -14,7 +14,7 @@
     {
         $('.item_name').val(data.name);
         $('.item_name_text').html(data.name);
-        $('.item_delete_button').html('Delete All Data for: ' + data.name);
+        $('.item_delete_button').html('Delete: ' + data.name);
         $('.item_status').val(data.status);
     }
 </script>
@@ -145,6 +145,7 @@ jQuery(document).ready(function() {
                     pointPadding: 0,
                     groupPadding: 0,
             name: 'Failed Calls',
+            color: '#e7191b',
             data: {{ daily.failed | json_encode() }},
                 pointStart: date_from.getTime(),
                 pointInterval: 24 * 3600 * 1000, // one day
@@ -154,6 +155,7 @@ jQuery(document).ready(function() {
                     pointPadding: 0,
                     groupPadding: 0,
             name: 'Potential Leads',
+            color: '#bbe000',
             data: {{ daily.plead | json_encode() }},
                 pointStart: date_from.getTime(),
                 pointInterval: 24 * 3600 * 1000, // one day
@@ -403,10 +405,10 @@ jQuery(document).ready(function() {
                                 {% if is_granted('ROLE_PREVIOUS_ADMIN') %}
                                 <th></th>
                                 {% endif %}
-                                <th>{{ name }} Name</th>
+                                <th style="width: 140px;">{{ name }} Name</th>
                                 {% if name == 'Advert' %}
-                                    <th>Ad Number</th>
-                                    <th>Ad Destination</th>
+                                    <th style="width: 114px;">Ad Number</th>
+                                    <th style="width: 114px;">Ad Destination</th>
                                     {% if is_granted('ROLE_PREVIOUS_ADMIN') %}
                                     <th>Rules<br /><small>(Use?)</small></th>
                                     {% endif %}
@@ -414,7 +416,7 @@ jQuery(document).ready(function() {
                                 <th>Total Calls</th> 
                                 <th>Unique Calls</th>
                                 <th>Failed Calls</th>
-                                <th>Potential Leads<br /><small>calls &gt; 2 mins</small></th>
+                                <th titla="calls > 2 mins" alt="calls > 2 mins">Potential Leads</small></th>
                                 <th>% Unique</th>
                                 <th>% Failed</th>
                                 <th>% Potential</th>
@@ -556,7 +558,7 @@ jQuery(document).ready(function() {
                     <form id="delete_form" method="post">
                     <div class="modal-footer">
                         <button class="btn pull-left green" data-dismiss="modal" aria-hidden="true">Cancel</button>
-                        <button class="btn red item_delete_button" data-id="0">Delete All Data for: MTR</button>
+                        <button class="btn red item_delete_button" data-id="0">Delete: MTR</button>
                     </div>
                     </form>
                 </div>
