@@ -128,9 +128,21 @@ $(document).ready(function() {
                     <tr>
                         <td>{{ num.getIDFormatted }}</td>
                         <td>{{ num.isAssigned ? 'Yes' : 'No' }}</td>
-                        <td>{{ num.getAdvertFormatted }}</td>
-                        <td>{{ num.getAdGroupFormatted }}</td>
-                        <td>{{ num.getCampaignFormatted }}</td>
+                        {% if num.getAdvert %}
+                            <td><a href="/adgroup/{{ num.getAdGroup.getID }}/adverts">{{ num.getAdvertFormatted }}</a></td>
+                        {% else %}
+                            <td>{{ num.getAdvertFormatted }}</td>
+                        {% endif %}
+                        {% if num.getAdGroup %}
+                            <td><a href="/adgroup/{{ num.getAdGroup.getID }}/adverts">{{ num.getAdGroupFormatted }}</a></td>
+                        {% else %}
+                            <td>{{ num.getAdGroupFormatted }}</td>
+                        {% endif %}
+                        {% if num.getCampaign %}
+                            <td><a href="/campaign/{{ num.getCampaign.getID }}/adgroups">{{ num.getCampaignFormatted }}</a></td>
+                        {% else %}
+                            <td>{{ num.getCampaignFormatted }}</td>
+                        {% endif %}
                         <td>{{ num.getTypeText }}</td>
                         <td>{{ num.getPriceResaleFormatted }}</td>
                         <td>{{ num.getDateAssignFormatted }}</td>

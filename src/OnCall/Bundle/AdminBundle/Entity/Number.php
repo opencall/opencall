@@ -281,6 +281,20 @@ class Number
 
         return false;
     }
+
+    public function getAdGroup()
+    {
+        if ($this->getAdvert() == null)
+            return null;
+        return $this->getAdvert()->getAdGroup();
+    }
+
+    public function getCampaign()
+    {
+        if ($this->getAdvert() == null)
+            return null;
+        return $this->getAdvert()->getAdGroup()->getCampaign();
+    }
     // end getters
 
     public function jsonify()
