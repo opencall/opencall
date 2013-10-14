@@ -60,21 +60,32 @@ class AdvertController extends ItemController
     {
         parent::update($advert, $data);
 
-        // TODO: check required number and destination
-
+        // check number
         if (isset($data['number']))
         {
-            // find number
-            $num = $this->getDoctrine()
-                ->getRepository('OnCallAdminBundle:Number')
-                ->find(trim($data['number']));
+            // if blank number
+            if ($data['number'] == 0)
+                $num = null;
+            else
+            {
+                // find number
+                $num = $this->getDoctrine()
+                    ->getRepository('OnCallAdminBundle:Number')
+                    ->find(trim($data['number']));
+            }
 
-            // TODO: check if num is null
             $advert->setNumber($num);
         }
 
         if (isset($data['destination']))
-            $advert->setDestination($data['destination']);
+        {
+            if ($data['destination'] == 0)
+                $advert->setDestination(null);
+            else
+                $advert->setDestination($data['destination']);
+        }
+        else
+            $advert->setDestination(null);
 
         // check xml stuff only if admin
         if ($this->get('security.context')->isGranted('ROLE_PREVIOUS_ADMIN'))

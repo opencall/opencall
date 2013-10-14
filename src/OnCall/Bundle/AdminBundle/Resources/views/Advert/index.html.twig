@@ -47,7 +47,7 @@
                         <option value="{{ num.getID }}">{{ num.getID }}</option>
                         {% endfor %}
                     </select>
-                    <br />Need more numbers? Open <a href="/numbers">Number Management</a>
+                    <br />Need more numbers? Open <a href="/client/{{ client_id }}/numbers">Number Management</a>
                 </p>
                 <h4>Advert Destination</h4>
                 <ul>
@@ -84,22 +84,19 @@
     <div class="modal-body">
         <div class="row-fluid">
             <div class="span12">
+                <h4>Advert Name</h4>
+                <p><input name="name" type="text" class="item_name span6 m-wrap"></p>
                 <h4>
                     Advert Number
                 </h4>
                 <p>
-                    <select id="item_name_dropdown" name="number" class="m-wrap" tabindex="1">
-                        <option id="item_number" name="number_id" selected="selected"></option>
+                    <select id="item_number_dropdown" name="number" class="m-wrap" tabindex="1">
+                        <option id="item_number_blank" value="0"></option>
                         {% for num in numbers %}
                         <option value="{{ num.getID }}">{{ num.getID }}</option>
                         {% endfor %}
                     </select>
                 </p>
-                <h4>Advert Name</h4>
-                <p>
-                    <input name="name" type="text" class="item_name span6 m-wrap">
-                </p>
-
                 <h4>Advert Destination</h4>
                 <ul>
                         <li>Do not enter spaces or + </li>
@@ -134,18 +131,16 @@
 <script>
 function update_item(data)
 {
+    // no number id
     if (!data.number_id)
     {
-        // $('#item_name_static').addClass('hidden');
-        // $('#item_name_dropdown').removeClass('hidden');
+        $('.item_number_option').remove();
+        $('#item_number_blank').prop('selected', true);
     }
     else
     {
-        // $('#item_name_static').removeClass('hidden');
-        // $('#item_name_dropdown').addClass('hidden');
-        $('#item_number').val(data.number_id);
-        $('#item_number').html(data.number_id);
-        $('#item_name_dropdown').val(data.number_id);
+        $('.item_number_option').remove();
+        $('#item_number_blank').after('<option class="item_number_option" value="' + data.number_id + '" selected="selected">' + data.number_id + '</option>');
     }
 
     $('.item_name').val(data.name);

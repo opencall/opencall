@@ -121,7 +121,8 @@ abstract class ItemController extends Controller
             'children' => $fetch_res['children'],
             'top_color' => $this->top_color,
             'name' => $this->name,
-            'url_child' => $this->url_child
+            'url_child' => $this->url_child,
+            'client_id' => $this->getClientID(),
         );
     }
 
