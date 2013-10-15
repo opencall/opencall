@@ -1,10 +1,11 @@
 <?php
 
-require_once __DIR__ . '/../vendor/autoload.php';
+require_once __DIR__ . '/../../vendor/autoload.php';
 
 use Ratchet\Server\IoServer;
 use Ratchet\Http\HttpServer;
 use Ratchet\WebSocket\WsServer;
+use LiveLog\Test;
 
 $server = IoServer::factory(
     new HttpServer(

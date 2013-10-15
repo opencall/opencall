@@ -368,15 +368,22 @@ $authorizationHeader = $this->parameters['HTTP_AUTHORIZATION'];
 } elseif (isset($this->parameters['REDIRECT_HTTP_AUTHORIZATION'])) {
 $authorizationHeader = $this->parameters['REDIRECT_HTTP_AUTHORIZATION'];
 }
-if ((null !== $authorizationHeader) && (0 === stripos($authorizationHeader,'basic'))) {
+if (null !== $authorizationHeader) {
+if (0 === stripos($authorizationHeader,'basic')) {
 $exploded = explode(':', base64_decode(substr($authorizationHeader, 6)));
 if (count($exploded) == 2) {
 list($headers['PHP_AUTH_USER'], $headers['PHP_AUTH_PW']) = $exploded;
+}
+} elseif (empty($this->parameters['PHP_AUTH_DIGEST']) && (0 === stripos($authorizationHeader,'digest'))) {
+$headers['PHP_AUTH_DIGEST'] = $authorizationHeader;
+$this->parameters['PHP_AUTH_DIGEST'] = $authorizationHeader;
 }
 }
 }
 if (isset($headers['PHP_AUTH_USER'])) {
 $headers['AUTHORIZATION'] ='Basic '.base64_encode($headers['PHP_AUTH_USER'].':'.$headers['PHP_AUTH_PW']);
+} elseif (isset($headers['PHP_AUTH_DIGEST'])) {
+$headers['AUTHORIZATION'] = $headers['PHP_AUTH_DIGEST'];
 }
 return $headers;
 }
@@ -506,11 +513,19 @@ $request = array();
 $query = $parameters;
 break;
 }
+$queryString ='';
 if (isset($components['query'])) {
 parse_str(html_entity_decode($components['query']), $qs);
+if ($query) {
 $query = array_replace($qs, $query);
-}
 $queryString = http_build_query($query,'','&');
+} else {
+$query = $qs;
+$queryString = $components['query'];
+}
+} elseif ($query) {
+$queryString = http_build_query($query,'','&');
+}
 $server['REQUEST_URI'] = $components['path'].(''!== $queryString ?'?'.$queryString :'');
 $server['QUERY_STRING'] = $queryString;
 return new static($query, $request, array(), $cookies, $files, $server, $content);
@@ -546,8 +561,11 @@ $dup->baseUrl = null;
 $dup->basePath = null;
 $dup->method = null;
 $dup->format = null;
-if (!$dup->get('_format')) {
-$dup->setRequestFormat($this->getRequestFormat());
+if (!$dup->get('_format') && $this->get('_format')) {
+$dup->attributes->set('_format', $this->get('_format'));
+}
+if (!$dup->getRequestFormat(null)) {
+$dup->setRequestFormat($format = $this->getRequestFormat(null));
 }
 return $dup;
 }
@@ -736,6 +754,12 @@ if (self::$trustedHeaders[self::HEADER_CLIENT_PROTO] &&'https'=== $this->headers
 return 443;
 }
 }
+if ($host = $this->headers->get('HOST')) {
+if (false !== $pos = strrpos($host,':')) {
+return intval(substr($host, $pos + 1));
+}
+return'https'=== $this->getScheme() ? 443 : 80;
+}
 return $this->server->get('SERVER_PORT');
 }
 public function getUser()
@@ -794,7 +818,7 @@ return''=== $qs ? null : $qs;
 public function isSecure()
 {
 if (self::$trustedProxies && self::$trustedHeaders[self::HEADER_CLIENT_PROTO] && $proto = $this->headers->get(self::$trustedHeaders[self::HEADER_CLIENT_PROTO])) {
-return in_array(strtolower($proto), array('https','on','1'));
+return in_array(strtolower(current(explode(',', $proto))), array('https','on','ssl','1'));
 }
 return'on'== strtolower($this->server->get('HTTPS')) || 1 == $this->server->get('HTTPS');
 }
@@ -1058,7 +1082,7 @@ do {
 $seg = $segs[$index];
 $baseUrl ='/'.$seg.$baseUrl;
 ++$index;
-} while (($last > $index) && (false !== ($pos = strpos($path, $baseUrl))) && (0 != $pos));
+} while ($last > $index && (false !== $pos = strpos($path, $baseUrl)) && 0 != $pos);
 }
 $requestUri = $this->getRequestUri();
 if ($baseUrl && false !== $prefix = $this->getUrlencodedPrefix($requestUri, $baseUrl)) {
@@ -1068,14 +1092,14 @@ if ($baseUrl && false !== $prefix = $this->getUrlencodedPrefix($requestUri, dirn
 return rtrim($prefix,'/');
 }
 $truncatedRequestUri = $requestUri;
-if (($pos = strpos($requestUri,'?')) !== false) {
+if (false !== $pos = strpos($requestUri,'?')) {
 $truncatedRequestUri = substr($requestUri, 0, $pos);
 }
 $basename = basename($baseUrl);
 if (empty($basename) || !strpos(rawurldecode($truncatedRequestUri), $basename)) {
 return'';
 }
-if ((strlen($requestUri) >= strlen($baseUrl)) && ((false !== ($pos = strpos($requestUri, $baseUrl))) && ($pos !== 0))) {
+if (strlen($requestUri) >= strlen($baseUrl) && (false !== $pos = strpos($requestUri, $baseUrl)) && $pos !== 0) {
 $baseUrl = substr($requestUri, 0, $pos + strlen($baseUrl));
 }
 return rtrim($baseUrl,'/');
@@ -1107,7 +1131,7 @@ $pathInfo ='/';
 if ($pos = strpos($requestUri,'?')) {
 $requestUri = substr($requestUri, 0, $pos);
 }
-if ((null !== $baseUrl) && (false === ($pathInfo = substr($requestUri, strlen($baseUrl))))) {
+if (null !== $baseUrl && false === $pathInfo = substr($requestUri, strlen($baseUrl))) {
 return'/';
 } elseif (null === $baseUrl) {
 return $requestUri;
@@ -1905,19 +1929,24 @@ unset($this->services[$id]);
 public function has($id)
 {
 $id = strtolower($id);
-return array_key_exists($id, $this->services)
-|| array_key_exists($id, $this->aliases)
+return isset($this->services[$id])
+|| array_key_exists($id, $this->services)
+|| isset($this->aliases[$id])
 || method_exists($this,'get'.strtr($id, array('_'=>'','.'=>'_')).'Service')
 ;
 }
 public function get($id, $invalidBehavior = self::EXCEPTION_ON_INVALID_REFERENCE)
 {
+foreach (array(false, true) as $strtolower) {
+if ($strtolower) {
 $id = strtolower($id);
+}
 if (isset($this->aliases[$id])) {
 $id = $this->aliases[$id];
 }
-if (array_key_exists($id, $this->services)) {
+if (isset($this->services[$id]) || array_key_exists($id, $this->services)) {
 return $this->services[$id];
+}
 }
 if (isset($this->loading[$id])) {
 throw new ServiceCircularReferenceException($id, array_keys($this->loading));
@@ -1959,7 +1988,8 @@ return $service;
 }
 public function initialized($id)
 {
-return array_key_exists(strtolower($id), $this->services);
+$id = strtolower($id);
+return isset($this->services[$id]) || array_key_exists($id, $this->services);
 }
 public function getServiceIds()
 {
@@ -2144,12 +2174,11 @@ protected $booted;
 protected $name;
 protected $startTime;
 protected $loadClassCache;
-protected $errorReportingLevel;
-const VERSION ='2.3.4';
-const VERSION_ID ='20304';
+const VERSION ='2.3.6';
+const VERSION_ID ='20306';
 const MAJOR_VERSION ='2';
 const MINOR_VERSION ='3';
-const RELEASE_VERSION ='4';
+const RELEASE_VERSION ='6';
 const EXTRA_VERSION ='';
 public function __construct($environment, $debug)
 {

@@ -9,6 +9,18 @@ Changelog
 * [BC break] Changed Datetime properties of default User entity that were nullable to default to null when no value supplied
 * [BC break] Updated schema.xml for Propel BaseUser class to allow nullable and typehint accordingly
 
+### 1.3.3 (2013-09-23)
+
+This releases prevents a potential DOS attack. You are encouraged to update
+as soon as possible.
+
+* Added a max length validation on the password
+
+### 1.3.2 (2013-05-25)
+
+* Changed the flash message handling to use the non-deprecated api
+* Updated the composer constraint to allow Symfony 2.3
+
 ### 1.3.1 (2012-12-22)
 
 * Replaced the deprecated validation constraints by the new ones
@@ -31,6 +43,14 @@ Changelog
 * Removed the custom password validation in favor of the Symfony 2.1 constraint
 * Refactored the translation of form labels using the translation_domain option of Symfony 2.1
 * Bumped the requirement to Symfony 2.1
+
+### 1.2.5 (2013-09-23)
+
+This releases prevents a potential DOS attack. You are encouraged to update
+as soon as possible.
+
+* Added a max length on the password field
+* Fixed a Yaml parsing error in the Japanese translations
 
 ### 1.2.4 (2012-07-10)
 
