@@ -497,3 +497,39 @@ Landscape phone to portrait tablet
     color: #999999;
   }
 }
+
+
+
+@media (min-width:980px) and (max-width: 1295px) {
+	.row-fluid .span3 {
+		width: 28%;
+	}
+	
+	.row-fluid .span3 {
+		width: 28%;
+	}
+	
+	.row-fluid .span6 {
+	width: 47%!important;
+	}
+	
+	.row-fluid [class*="span"] {
+		margin-left: 0!important;
+		margin-right: 15px!important;
+	}
+}
+
+@media(min-width:768px) and (max-width:979px){
+		.row-fluid .span6 {
+			width: 47.6%!important;
+		}
+		
+		.row-fluid [class*="span"] {
+			margin-right: 2.1%;
+			margin-left: 0!important;
+		}
+		
+		.row-fluid .span3 {
+			width: 25%!important;
+		}
+}
