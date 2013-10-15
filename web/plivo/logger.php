@@ -19,10 +19,6 @@ try
         'port' => 6379
     );
     $redis = new PredisClient($rconf);
-    /*
-    // NOTE: local redis
-    $redis = new PredisClient();
-    */
 
     // setup mysql
     $dsn = 'mysql:host=db.oncall;dbname=oncall';
@@ -43,16 +39,16 @@ try
         $data = unserialize($raw_data);
 
         // debug queue message
-        print_r($data);
+        // print_r($data);
 
         // log
         $log = LogEntry::createFromMessage($data);
-        print_r($log);
+        // print_r($log);
         $log_repo->persist($log);
 
         // aggregate
         $agg = AggEntry::createFromMessage($data);
-        print_r($agg);
+        // print_r($agg);
         $agg_repo->persist($agg);
     }
 }

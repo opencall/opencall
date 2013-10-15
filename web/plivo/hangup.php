@@ -9,6 +9,11 @@ use Plivo\Parameters;
 use Plivo\Response;
 use Plivo\Router;
 use Plivo\Action;
+use Plivo\Log\Entry as LogEntry;
+use Plivo\Log\Repository as LogRepository;
+use Plivo\Aggregate\Entry as AggEntry;
+use Plivo\Aggregate\Repository as AggRepository;
+
 
 try
 {
@@ -23,11 +28,6 @@ try
         'port' => 6379
     );
     $redis = new PredisClient($rconf);
-
-    /*
-    // NOTE: local redis
-    $redis = new PredisClient();
-    */
 
     // setup mysql
     $dsn = 'mysql:host=db.oncall;dbname=oncall';
@@ -55,9 +55,24 @@ try
     // delete key
     $redis->del($key);
 
-    // enqueue for logging and aggregates
-    $qh = new QHandler($redis, $queue_id);
-    $qh->send($qmsg);
+    // start log and aggregate
+    // NOTE: this version is live, no queueing
+
+    // log repo
+    $log_repo = new LogRepository($pdo_main);
+
+    // aggregate repo
+    $agg_repo = new AggRepository($pdo_main);
+
+    // log
+    $log = LogEntry::createFromMessage($qmsg);
+    $log_repo->persist($log);
+
+    // aggregate
+    $agg = AggEntry::createFromMessage($qmsg);
+    $agg_repo->persist($agg);
+
+    // end log and aggregate
 }
 catch (\Predis\Connection\ConnectionException $e)
 {
