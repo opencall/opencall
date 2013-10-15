@@ -76,7 +76,7 @@ class ItemAggregate
         if ($this->total == 0)
             return 0;
 
-        return $this->failed / $this->total;
+        return $this->failed / $this->total * 100;
     }
 
     public function getFailedPercentFormatted()
@@ -89,7 +89,7 @@ class ItemAggregate
         if ($this->total == 0)
             return 0;
 
-        return $this->plead / $this->total;
+        return $this->plead / $this->total * 100;
     }
 
     public function getPLeadPercentFormatted()
@@ -102,7 +102,7 @@ class ItemAggregate
         if ($this->total == 0)
             return 0;
 
-        return $this->unique / $this->total;
+        return $this->unique / $this->total * 100;
     }
 
     public function getUniquePercentFormatted()
