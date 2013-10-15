@@ -22,7 +22,8 @@
         "incenteev/composer-parameter-handler": "~2.0",
         "fusesource/stomp-php" : "2.0",
         "predis/predis" : "v0.8.4",
-        "friendsofsymfony/user-bundle": "~2.0@dev"
+        "friendsofsymfony/user-bundle": "~2.0@dev",
+        "cboden/Ratchet": "0.3.*"
     },
     "scripts": {
         "post-install-cmd": [

@@ -6,9 +6,12 @@ parameters:
     database_name: oncall
     database_user: webuser
     database_password: lks8jw23
+
     mailer_transport: smtp
     mailer_host: 127.0.0.1
     mailer_user: null
     mailer_password: null
+
     locale: en
+
     secret: 001ThisIsMySecretKey1021093
