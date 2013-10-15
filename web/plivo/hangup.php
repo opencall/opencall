@@ -72,6 +72,8 @@ try
     $agg = AggEntry::createFromMessage($qmsg);
     $agg_repo->persist($agg);
 
+    // TODO: send zmq message to publish
+
     // end log and aggregate
 }
 catch (\Predis\Connection\ConnectionException $e)
