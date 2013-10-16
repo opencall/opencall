@@ -173,7 +173,7 @@ class Counter extends EntityRepository
                 $multi_ia[$row['hourly'] + 0] = $this->createItemAggregate(0, $row);
 
             // make sure all hours have a value
-            for ($i = 0; $i < 23; $i++)
+            for ($i = 0; $i < 24; $i++)
             {
                 if (!isset($multi_ia[$i]))
                     $multi_ia[$i] = new ItemAggregate(0, 0, 0, 0, 0);
