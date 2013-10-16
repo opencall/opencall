@@ -5,6 +5,7 @@
 <script src="assets/plugins/bootstrap-daterangepicker/daterangepicker.js" type="text/javascript"></script> 
 <script src="assets/plugins/highcharts/highcharts.js" type="text/javascript"></script>
 <script src="assets/plugins/highcharts/modules/exporting.js" type="text/javascript"></script>
+<script src="/assets/scripts/autobahn.min.js"></script>
 {% endblock %}
 
 {% block javascript %}
@@ -194,6 +195,51 @@ jQuery(document).ready(function() {
     // END HOURLY CHART
 });
 </script>
+
+<script>
+jQuery(document).ready(function() {
+    console.log('connecting to websocket server');
+    var conn = new ab.Session(
+        'ws://oncall:8080',
+        function() { // connect
+            console.log('connected');
+            conn.subscribe('client:4', function(topic, data) {
+                console.log('New article published to category "' + topic + '"');
+
+                var log = data.logentry;
+                console.log(log);
+                var log_id = 'log_' + log.call_id;
+
+                // remove old rows (from answer script)
+                $('#' + log_id).fadeOut('slow', function() {
+                    $(this).remove();
+                });
+
+                var row = '<tr id="' + log_id + '" style="display: none;"><td>' + log.origin_number + '</td>';
+                row += '<td>' + log.dialled_number + '</td>';
+                row += '<td>' + log.destination_number + '</td>';
+                row += '<td>' + log.date_start.time + '<br /><small>' + log.date_start.date + '</small></td>';
+                row += '<td>' + log.date_end.time + '<br /><small>' + log.date_end.date + '</small></td>';
+                row += '<td>' + log.duration + 's</td>';
+                row += '<td>' + log.hangup_cause + '</td>';
+                row += '<td>' + log.advert_name + '</td>';
+                row += '<td>' + log.adgroup_name + '</td>';
+                row += '<td>' + log.campaign_name + '</td>';
+                row += '</tr>';
+
+                // add updated rows (from hangup)
+                $(row).prependTo('#logbody').fadeIn('slow');
+            });
+        },
+        function() { // close
+            console.warn('WebSocket connection closed');
+        },
+        { // extra parameters
+            'skipSubprotocolCheck': true
+        }
+    );
+});
+</script>
 {% endblock %}
 
 {% block body %}
@@ -266,7 +312,7 @@ jQuery(document).ready(function() {
                                     <th style="width: 114px;">Campaign</th>
                                 </tr>
                             </thead>
-                            <tbody>
+                            <tbody id="logbody">
                             {% for log in logs %}
                                 <tr>
                                     <td data-title="Caller Number">{{ log.getOriginNumber }}</td>  
