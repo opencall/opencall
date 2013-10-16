@@ -172,6 +172,7 @@ jQuery(document).ready(function() {
     // END DAILY CHART
 
     // START HOURLY CHART
+    var hourly_x_label = 0;
     $('#containerHourly').highcharts({
         chart: {
             zoomType: 'x',
@@ -187,16 +188,19 @@ jQuery(document).ready(function() {
             dateTimeLabelFormats: {
                 hour: '%H:%M'
             },
-            // min: 0.5, 
             // Kendrick: the value below must be the number of data points -1.5
             // In this example there are 5 categories (above) so the max should be 5 - 1.5 =3.5
             // this is so that the graph is to the edge
-            // max: 5.5,
             labels: {                
                 rotation: -45, 
                 style: {
                   color: '#888'
                 },
+                formatter: function() {
+                    if (this.isFirst)
+                        hourly_x_label = 0;
+                    return hourly_x_label++ + ':00';
+                }
             },
             tickInterval: 3600 * 1000, // one day
         },
@@ -228,7 +232,7 @@ jQuery(document).ready(function() {
                 // Kendrick - even though we're totalling the data for multiple days, we need to specify
                 // a specific date, so ignore the date in "pointStart" here UNLESS we're looking at a single day
                 pointStart: Date.UTC(2013, 18, 12),
-                pointInterval: 3600 * 1000, // one day
+                pointInterval: 3600 * 1000, // one hour
             fillOpacity: 0.2
         }, {
             type: 'column',
@@ -237,7 +241,7 @@ jQuery(document).ready(function() {
             name: 'Failed Calls',
             data: {{ hourly.failed | json_encode() }},
                 pointStart: Date.UTC(2013, 18, 12),
-                pointInterval: 3600 * 1000, // one day
+                pointInterval: 3600 * 1000, // one hour
             fillOpacity: 0.2
         }, {
             type: 'column',
@@ -246,7 +250,7 @@ jQuery(document).ready(function() {
             name: 'Potential Leads',
             data: {{ hourly.plead | json_encode() }},
                 pointStart: Date.UTC(2013, 18, 12),
-                pointInterval: 3600 * 1000, // one day
+                pointInterval: 3600 * 1000, // one hour
             fillOpacity: 0.2
         }],
         credits: {
