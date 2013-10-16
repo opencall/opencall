@@ -31,10 +31,14 @@ class Entry
         $this->date_in = new DateTime();
     }
 
-    public static function createFromMessage(Message $msg)
+    public static function createFromMessage(Message $msg, $use_hangup = true)
     {
         $num_data = $msg->getNumberData();
-        $hangup_data = $msg->getHangupParams();
+
+        if ($use_hangup)
+            $data = $msg->getHangupParams();
+        else
+            $data = $msg->getAnswerParams();
 
         $entry = new self();
 
@@ -45,17 +49,29 @@ class Entry
             ->setAdvertID($num_data['advert_id'])
             ->setDestinationNumber($num_data['destination']);
 
-        // hangup data
-        $entry->setCallID($hangup_data->getUniqueID())
-            ->setOriginNumber($hangup_data->getFrom())
-            ->setDialledNumber($hangup_data->getTo())
-            ->setDuration($hangup_data->getDuration())
-            ->setBillDuration($hangup_data->getBillDuration())
-            ->setBillRate($hangup_data->getBillRate())
-            ->setStatus($hangup_data->getStatus())
-            ->setDateStart(new DateTime($hangup_data->getStartTime()))
-            ->setDateEnd(new DateTime($hangup_data->getEndTime()))
-            ->setHangupCause($hangup_data->getHangupCause());
+        // data
+        $entry->setCallID($data->getUniqueID())
+            ->setOriginNumber($data->getFrom())
+            ->setDialledNumber($data->getTo())
+            ->setDuration($data->getDuration())
+            ->setBillDuration($data->getBillDuration())
+            ->setBillRate($data->getBillRate())
+            ->setStatus($data->getStatus())
+            ->setHangupCause($data->getHangupCause());
+
+        if ($use_hangup)
+        {
+            $entry->setDateStart(new DateTime($data->getStartTime()))
+                ->setDateEnd(new DateTime($data->getEndTime()));
+        }
+        else
+        {
+            // use date in as date start if answer
+            $entry->setDateStart(new DateTime())
+                ->setDuration(0)
+                ->setHangupCause('');
+        }
+
 
         // response xml
         $entry->setResponseXML($msg->getResponseXML());

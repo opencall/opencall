@@ -34,9 +34,17 @@ jQuery(document).ready(function() {
         function() { // connect
             conn.subscribe('client:4', function(topic, data) {
                 console.log('New article published to category "' + topic + '"');
+
                 var log = data.logentry;
                 console.log(log);
-                var row = '<tr style="display: none;"><td>' + log.origin_number + '</td>';
+                var log_id = 'log_' + log.call_id;
+
+                // remove old rows (from answer script)
+                $('#' + log_id).fadeOut('slow', function() {
+                    $(this).remove();
+                });
+
+                var row = '<tr id="' + log_id + '" style="display: none;"><td>' + log.origin_number + '</td>';
                 row += '<td>' + log.dialled_number + '</td>';
                 row += '<td>' + log.destination_number + '</td>';
                 row += '<td>' + log.date_start.time + '<br /><small>' + log.date_start.date + '</small></td>';
@@ -48,6 +56,7 @@ jQuery(document).ready(function() {
                 row += '<td>' + log.campaign_name + '</td>';
                 row += '</tr>';
 
+                // add updated rows (from hangup)
                 $(row).prependTo('#logbody').fadeIn('slow');
             });
         },
