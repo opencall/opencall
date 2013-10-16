@@ -16,6 +16,7 @@ return array(
     'Sensio\\Bundle\\GeneratorBundle' => array($vendorDir . '/sensio/generator-bundle'),
     'Sensio\\Bundle\\FrameworkExtraBundle' => array($vendorDir . '/sensio/framework-extra-bundle'),
     'Sensio\\Bundle\\DistributionBundle' => array($vendorDir . '/sensio/distribution-bundle'),
+    'React\\ZMQ' => array($vendorDir . '/react/zmq/src'),
     'React\\Stream' => array($vendorDir . '/react/stream'),
     'React\\Socket' => array($vendorDir . '/react/socket'),
     'React\\EventLoop' => array($vendorDir . '/react/event-loop'),

@@ -13,13 +13,15 @@ use Plivo\Log\Entry as LogEntry;
 use Plivo\Log\Repository as LogRepository;
 use Plivo\Aggregate\Entry as AggEntry;
 use Plivo\Aggregate\Repository as AggRepository;
+use Plivo\Log\Pusher as LogPusher;
 
 
 try
 {
-    // redis prefix
+    // config stuff
     $prefix = 'plivo:ongoing:';
     $queue_id = 'plivo_log';
+    $zmq_server = 'tcp://localhost:5555';
 
 /*
     // setup redis
@@ -76,21 +78,27 @@ try
     $redis->del($key);
 
     // start log and aggregate
-    // NOTE: this version is live, no queueing
 
-    // log repo
+    // log 
     $log_repo = new LogRepository($pdo_main);
-
-    // aggregate repo
-    $agg_repo = new AggRepository($pdo_main);
-
-    // log
     $log = LogEntry::createFromMessage($qmsg);
     $log_repo->persist($log);
 
+    print_r($log);
+
     // aggregate
+    $agg_repo = new AggRepository($pdo_main);
     $agg = AggEntry::createFromMessage($qmsg);
     $agg_repo->persist($agg);
+
+    // live log
+    echo "sending to zmq...\n";
+    $context = new ZMQContext();
+    $socket = $context->getSocket(ZMQ::SOCKET_PUSH, 'log_pusher');
+    $socket->connect($zmq_server);
+    $log_pusher = new LogPusher($socket);
+    $log_pusher->send($log);
+    echo "sent\n";
 
     // end log and aggregate
 }

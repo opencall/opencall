@@ -36,4 +36,35 @@ class Repository
 
         return $stmt->execute();
     }
+
+    public function fetchNames($advert_id)
+    {
+        $sql = 'select Advert.name as advert_name, AdGroup.name as adgroup_name, Campaign.name as campaign_name from Advert, AdGroup, Campaign where Advert.id = :advert_id and Advert.adgroup_id = AdGroup.id and AdGroup.campaign_id = Campaign.id';
+
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->bindParam(':advert_id', $advert_id);
+
+        // execute
+        if (!$stmt->execute())
+            return array(
+                'advert_name' => '',
+                'adgroup_name' => '',
+                'campaign_name' => ''
+            );
+
+        // fetch row
+        $row = $stmt->fetch();
+        if (!$row)
+            return array(
+                'advert_name' => '',
+                'adgroup_name' => '',
+                'campaign_name' => ''
+            );
+
+        return array(
+            'advert_name' => $row['advert_name'],
+            'adgroup_name' => $row['adgroup_name'],
+            'campaign_name' => $row['campaign_name'] 
+        );
+    }
 }

@@ -485,13 +485,15 @@ function twig_date_converter(Twig_Environment $env, $date = null, $timezone = nu
         $defaultTimezone = $timezone;
     }
 
-    if ($date instanceof DateTime) {
-        $date = clone $date;
+    if ($date instanceof DateTime || $date instanceof DateTimeInterface) {
+        $returningDate = new DateTime($date->format('c'));
         if (false !== $timezone) {
-            $date->setTimezone($defaultTimezone);
+            $returningDate->setTimezone($defaultTimezone);
+        } else {
+            $returningDate->setTimezone($date->getTimezone());
         }
 
-        return $date;
+        return $returningDate;
     }
 
     $asString = (string) $date;
@@ -1319,11 +1321,11 @@ function twig_test_iterable($value)
 /**
  * Renders a template.
  *
- * @param string  $template       The template to render
- * @param array   $variables      The variables to pass to the template
- * @param Boolean $with_context   Whether to pass the current context variables or not
- * @param Boolean $ignore_missing Whether to ignore missing templates or not
- * @param Boolean $sandboxed      Whether to sandbox the template or not
+ * @param string|array $template       The template to render or an array of templates to try consecutively
+ * @param array        $variables      The variables to pass to the template
+ * @param Boolean      $with_context   Whether to pass the current context variables or not
+ * @param Boolean      $ignore_missing Whether to ignore missing templates or not
+ * @param Boolean      $sandboxed      Whether to sandbox the template or not
  *
  * @return string The rendered template
  */

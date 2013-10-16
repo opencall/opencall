@@ -23,7 +23,8 @@
         "fusesource/stomp-php" : "2.0",
         "predis/predis" : "v0.8.4",
         "friendsofsymfony/user-bundle": "~2.0@dev",
-        "cboden/Ratchet": "0.3.*"
+        "cboden/Ratchet": "0.3.*",
+        "react/zmq": "0.2.*"
     },
     "scripts": {
         "post-install-cmd": [

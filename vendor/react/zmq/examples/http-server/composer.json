@@ -1,0 +1,6 @@
+{
+    "require": {
+        "react/http": "0.2.*",
+        "react/zmq": "0.1.*@dev"
+    }
+}

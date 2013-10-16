@@ -1,0 +1,63 @@
+<html>
+<head>
+</head>
+<body>
+<p>Live log testing</p>
+<table>
+<thead>
+<tr>
+    <th>Caller Number</th>
+    <th>Dialled Number</th>
+    <th>Destination</th>
+    <th>Start Time</th>
+    <th>End Time</th>
+    <th>Duration</th>
+    <th>Hangup Cause</th>
+    <th>Advert</th>
+    <th>Ad Group</th>
+    <th>Campaign</th>
+</tr>
+</thead>
+<tbody id="logbody">
+</tbody>
+
+</table>
+
+<!-- scripts -->
+<script src="/assets/plugins/jquery-1.10.1.min.js"></script>
+<script src="/assets/scripts/autobahn.min.js"></script>
+<script>
+jQuery(document).ready(function() {
+    console.log('connecting to websocket server');
+    var conn = new ab.Session(
+        'ws://oncall:8080',
+        function() { // connect
+            conn.subscribe('client:4', function(topic, data) {
+                console.log('New article published to category "' + topic + '"');
+                var log = data.logentry;
+                console.log(log);
+                var row = '<tr style="display: none;"><td>' + log.origin_number + '</td>';
+                row += '<td>' + log.dialled_number + '</td>';
+                row += '<td>' + log.destination_number + '</td>';
+                row += '<td>' + log.date_start.time + '<br /><small>' + log.date_start.date + '</small></td>';
+                row += '<td>' + log.date_end.time + '<br /><small>' + log.date_end.date + '</small></td>';
+                row += '<td>' + log.duration + 's</td>';
+                row += '<td>' + log.hangup_cause + '</td>';
+                row += '<td>' + log.advert_name + '</td>';
+                row += '<td>' + log.adgroup_name + '</td>';
+                row += '<td>' + log.campaign_name + '</td>';
+                row += '</tr>';
+
+                $(row).prependTo('#logbody').fadeIn('slow');
+            });
+        },
+        function() { // close
+            console.warn('WebSocket connection closed');
+        },
+        { // extra parameters       
+            'skipSubprotocolCheck': true
+        }
+    );
+});
+</script>
+</body>

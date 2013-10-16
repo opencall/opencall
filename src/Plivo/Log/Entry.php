@@ -249,4 +249,51 @@ class Entry
     {
         return $this->response_xml;
     }
+
+    public function getData()
+    {
+        $data = array(
+            'id' => $this->id,
+            'date_in' => $this->date_in,
+            'call_id' => $this->call_id,
+            'origin_number' => $this->origin_number,
+            'dialled_number' => $this->dialled_number,
+            'destination_number' => $this->destination_number,
+            'duration' => $this->duration,
+            'bill_duration' => $this->bill_duration,
+            'bill_rate' => $this->bill_rate,
+            'status' => $this->status,
+            'hangup_cause' => $this->hangup_cause,
+            'advert_id' => $this->advert_id,
+            'adgroup_id' => $this->adgroup_id,
+            'campaign_id' => $this->campaign_id,
+            'client_id' => $this->client_id,
+        );
+
+        // date start
+        if ($this->date_start != null)
+            $data['date_start'] = array(
+                'time' => $this->date_start->format('H:i:s'),
+                'date' => $this->date_start->format('M d Y')
+            );
+        else
+            $data['date_start'] = array(
+                'time' => '',
+                'date' => ''
+            );
+
+        // date end
+        if ($this->date_end != null)
+            $data['date_end'] = array(
+                'time' => $this->date_end->format('H:i:s'),
+                'date' => $this->date_end->format('M d Y')
+            );
+        else
+            $data['date_end'] = array(
+                'time' => '',
+                'date' => ''
+            );
+
+        return $data;
+    }
 }
