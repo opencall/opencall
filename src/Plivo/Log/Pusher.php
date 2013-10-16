@@ -21,9 +21,7 @@ class Pusher
         );
 
         $json = json_encode($data);
-        error_log($json);
         $this->socket->send($json);
-        error_log('client:' . $log->getClientID());
 
         return $this;
     }
