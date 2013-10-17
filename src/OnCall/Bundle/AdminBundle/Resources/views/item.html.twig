@@ -287,8 +287,32 @@ jQuery(document).ready(function() {
     // END MODAL AJAX
 });
 </script>
-
 {% endblock %}
+
+{% block js_validation %}
+<script>
+// START VALIDATION
+jQuery(document).ready(function() {
+    // add form
+    validate_init('#add_form', {
+        name: {
+            minlength: 2,
+            required: true
+        }
+    });
+
+    // edit form
+    validate_init('#edit_form', {
+        name: {
+            minlength: 2,
+            required: true
+        }
+    });
+});
+// END VALIDATION
+</script>
+{% endblock %}
+
 
 {% block body %}
 <div class="container-fluid">
@@ -500,12 +524,12 @@ jQuery(document).ready(function() {
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
                         <h3>Add {{ name }}</h3>
                     </div>
-                    <form method="post">
+                    <form id="add_form" method="post">
                     <div class="modal-body">
                         <div class="row-fluid">
                             <div class="span6">
                                 <h4>{{ name }} Name</h4>
-                                <p><input name="name" type="text" class="span12 m-wrap"></p>
+                                <p class="control-group"><input name="name" type="text" class="span12 m-wrap"></p>
                             </div>
 
                         </div>
@@ -531,7 +555,7 @@ jQuery(document).ready(function() {
                         <div class="row-fluid">
                             <div class="span6">
                                 <h4>{{ name }} Name</h4>
-                                <p><input type="text" name="name" class="item_name span12 m-wrap"></p>
+                                <p class="control-group"><input type="text" name="name" class="item_name span12 m-wrap"></p>
                             </div>
                             {% if is_granted('ROLE_PREVIOUS_ADMIN') %}
                             <div class="span6">
