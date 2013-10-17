@@ -25,7 +25,7 @@
 jQuery(document).ready(function() {
     console.log('connecting to websocket server');
     var conn = new ab.Session(
-        'ws://oncall:8080',
+        'ws://{{ app.request.host }}:8080',
         function() { // connect
             console.log('connected');
             conn.subscribe('client:{{ client.getID }}', function(topic, data) {
