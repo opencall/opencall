@@ -30,13 +30,27 @@ class Controller extends BaseController
 
     public function getClient()
     {
+        // no specified client id
         $client_id = $this->getClientID();
         if ($client_id == null)
-            return null;
+            throw $this->createNotFoundException('Client not specified.');
 
-        return $this->getDoctrine()
+        // find client
+        $client =  $this->getDoctrine()
             ->getRepository('OnCallAdminBundle:Client')
             ->find($client_id);
+        if ($client == null)
+            throw $this->createNotFoundException('Client not found.');
+
+        // admin
+        if ($this->get('security.context')->isGranted('ROLE_PREVIOUS_ADMIN'))
+            return $client;
+            
+        // inactive
+        if ($client->isInactive())
+            throw $this->createNotFoundException('Client not found.');
+
+        return $client;
     }
 
     protected function getFilter($type, $pid)

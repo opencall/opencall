@@ -189,10 +189,6 @@ abstract class ItemController extends Controller
             ->getRepository($this->child_repo)
             ->find($item_id);
 
-        // TODO: throw another kind of exception (404)
-        if ($child == null)
-            throw new AccessDeniedException();
-
         return $child;
     }
 
@@ -202,10 +198,6 @@ abstract class ItemController extends Controller
         $parent = $this->getDoctrine()
             ->getRepository($this->parent_repo)
             ->find($item_id);
-
-        // TODO: throw another kind of exception (404)
-        if ($parent == null)
-            throw new AccessDeniedException();
 
         return $parent;
     }
