@@ -28,7 +28,7 @@
 {% endblock %}
 
 {% block modal_add %}
-<form method="post">
+<form id="add_form" method="post">
 <div id="addModal" class="modal hide fade" tabindex="-1" data-width="760">
     <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
@@ -38,7 +38,7 @@
         <div class="row-fluid">
             <div class="span12">
                 <h4>Advert Name</h4>
-                <p><input type="text" name="name" class="span6 m-wrap"></p>
+                <p class="control-group"><input type="text" name="name" class="span6 m-wrap"></p>
                 <h4>Advert Number</h4>
                 <p>                                                 
                     <select name="number" class="m-wrap" tabindex="1">
@@ -51,10 +51,10 @@
                 </p>
                 <h4>Advert Destination</h4>
                 <ul>
-                        <li>Do not enter spaces or + </li>
-                        <li>Include the country code</li>
-                        <li>e.g. 85266821490</li>
-                    </ul>
+                    <li>Do not enter spaces or + </li>
+                    <li>Include the country code</li>
+                    <li>e.g. 85266821490</li>
+                </ul>
                 <p><input name="destination" type="text" class="span6 m-wrap"></p>
                 <!-- Kendrick: Advanced Rules (and override) should only be shown to an admin -->
                 {% if is_granted('ROLE_PREVIOUS_ADMIN') %}
@@ -85,7 +85,7 @@
         <div class="row-fluid">
             <div class="span12">
                 <h4>Advert Name</h4>
-                <p><input name="name" type="text" class="item_name span6 m-wrap"></p>
+                <p class="control-group"><input name="name" type="text" class="item_name span6 m-wrap"></p>
                 <h4>
                     Advert Number
                 </h4>
