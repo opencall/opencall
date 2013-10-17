@@ -62,6 +62,7 @@ $(document).ready(function() {
             <br />
 
             <!-- Add Number MODAL -->
+            <form method="post" action="/client/{{ client_id }}/numbers/request">
             <div id="requestNumbers" class="modal hide fade" tabindex="-1" data-width="760">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
@@ -76,17 +77,24 @@ $(document).ready(function() {
                     <div class="row-fluid">
                         <div class="span12">
                             <h4>Number Details</h4>
-                            <p>How many phone numbers do you require?*<br /><input type="text" class="span12 m-wrap"></p>
-                            <p>Do you have any special requirements for the numbers?*<br /><textarea class="span12 m-wrap"></textarea></p>
+                            <p>
+                                How many phone numbers do you require?*<br />
+                                <input name="numbers" type="text" class="span12 m-wrap">
+                            </p>
+                            <p>
+                                Do you have any special requirements for the numbers?*<br />
+                                <textarea name="requirement" class="span12 m-wrap"></textarea>
+                            </p>
                         </div>
                     </div>
                 </div>
         
                 <div class="modal-footer">
                     <button type="button" data-dismiss="modal" class="btn">Cancel</button>
-                    <button type="button" class="btn green">Request numbers</button>
+                    <input type="submit" class="btn green" value="Request Numbers" />
                 </div>
             </div> 
+            </form>
             <!-- End Add Number MODAL -->
             
             <!-- DELETE Number MODAL -->

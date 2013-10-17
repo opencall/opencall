@@ -321,4 +321,15 @@ class NumberController extends Controller
 
         return $this->redirect($this->generateUrl('oncall_admin_numbers'));
     }
+
+    public function requestAction($id)
+    {
+        // TODO: send email
+
+        // add success flash
+        $this->addFlash('success', 'Request for numbers has been sent.');
+
+        // redirect back to client number
+        return $this->redirect($this->generateUrl('oncall_admin_client_numbers', array('id' => $id)));
+    }
 }

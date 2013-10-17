@@ -81,6 +81,11 @@ oncall_admin_client_numbers:
     defaults: { _controller: OnCallAdminBundle:Number:clientIndex }
     methods: [GET]
 
+oncall_admin_number_request:
+    pattern: /client/{id}/numbers/request
+    defaults: { _controller: OnCallAdminBundle:Number:request }
+    methods: [POST]
+
 #client routes
 oncall_admin_clients:
     pattern: /clients
@@ -190,3 +195,4 @@ oncall_admin_call_log:
     pattern: /client/{id}/call_log
     defaults: { _controller: OnCallAdminBundle:CallLog:index }
     methods: [GET]
+
