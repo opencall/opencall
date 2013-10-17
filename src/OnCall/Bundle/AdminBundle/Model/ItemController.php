@@ -27,6 +27,48 @@ abstract class ItemController extends Controller
         $this->agg_type = array();
     }
 
+    protected function checkParent($id)
+    {
+        // retrieve
+        $parent = $this->findParent($id);
+
+        // not found
+        if ($parent == null)
+            throw $this->createNotFoundException('Item does not exist.');
+
+        // admin
+        if ($this->get('security.context')->isGranted('ROLE_PREVIOUS_ADMIN'))
+            return $parent;
+
+        // inactive
+        if ($parent->isInactive())
+            throw $this->createNotFoundException('Item does not exist.');
+
+        // we're ok
+        return $parent;
+    }
+
+    protected function checkChild($id)
+    {
+        // retrieve
+        $child = $this->findChild($id);
+
+        // not found
+        if ($child == null)
+            throw $this->createNotFoundException('Item does not exist.');
+
+        // check admin
+        if ($this->get('security.context')->isGranted('ROLE_PREVIOUS_ADMIN'))
+            return $child;
+
+        // inactive
+        if ($child->isInactive())
+            throw $this->createNotFoundException('Item does not exist.');
+
+        // we're ok
+        return $child;
+    }
+
     public function indexAction($id)
     {
         return $this->render($this->template, $this->fetchMainData($id));
@@ -38,7 +80,7 @@ abstract class ItemController extends Controller
         $em = $this->getDoctrine()->getManager();
 
         // find
-        $parent = $this->findParent($id);
+        $parent = $this->checkParent($id);
 
         // create
         $item_class = '\OnCall\Bundle\AdminBundle\Entity\\' . $this->name;
@@ -57,7 +99,7 @@ abstract class ItemController extends Controller
 
     public function getAction($id)
     {
-        $child = $this->findChild($id);
+        $child = $this->checkChild($id);
 
         return new Response($child->jsonify());
     }
@@ -65,7 +107,7 @@ abstract class ItemController extends Controller
     public function updateAction($id)
     {
         // find
-        $child = $this->findChild($id);
+        $child = $this->checkChild($id);
 
         // update
         $data = $this->getRequest()->request->all();
@@ -83,7 +125,7 @@ abstract class ItemController extends Controller
     public function deleteAction($id)
     {
         // find and set inactive
-        $child = $this->findChild($id);
+        $child = $this->checkChild($id);
 
         $child->setInactive();
         $this->getDoctrine()
@@ -171,7 +213,7 @@ abstract class ItemController extends Controller
     protected function fetchAll($item_id)
     {
         $user = $this->getUser();
-        $parent = $this->findParent($item_id);
+        $parent = $this->checkParent($item_id);
 
         // children
         $method = $this->child_fetch_method;
