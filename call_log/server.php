@@ -12,29 +12,43 @@ use React\ZMQ\Context;
 use LiveLog\Pusher;
 use Plivo\Log\Repository as LogRepo;
 
-// pdo setup
-$dsn = 'mysql:host=db.oncall;dbname=oncall';
-$user = 'webuser';
-$pass = 'lks8jw23';
-$pdo = new PDO($dsn, $user, $pass);
+$pid = pcntl_fork();
 
-$loop = EventLoopFactory::create();
-$pusher = new Pusher(new LogRepo($pdo));
+if ($pid == -11)
+{
+    return 1;
+}
+else if ($pid)
+{
+}
+else
+{
+    echo "websocket server up and running.\n";
 
-$context = new Context($loop);
-$pull = $context->getSocket(ZMQ::SOCKET_PULL);
-$pull->bind('tcp://127.0.0.1:5555');
-$pull->on('message', array($pusher, 'onLogEntry'));
+    // pdo setup
+    $dsn = 'mysql:host=db.oncall;dbname=oncall';
+    $user = 'webuser';
+    $pass = 'lks8jw23';
+    $pdo = new PDO($dsn, $user, $pass);
 
-$websock = new Server($loop);
-$websock->listen(8080, '0.0.0.0');
-$server = new IoServer(
-    new HttpServer(
-        new WsServer(
-            new WampServer($pusher)
-        )
-    ),
-    $websock
-);
+    $loop = EventLoopFactory::create();
+    $pusher = new Pusher(new LogRepo($pdo));
 
-$loop->run();
+    $context = new Context($loop);
+    $pull = $context->getSocket(ZMQ::SOCKET_PULL);
+    $pull->bind('tcp://127.0.0.1:5555');
+    $pull->on('message', array($pusher, 'onLogEntry'));
+
+    $websock = new Server($loop);
+    $websock->listen(8080, '0.0.0.0');
+    $server = new IoServer(
+        new HttpServer(
+            new WsServer(
+                new WampServer($pusher)
+            )
+        ),
+        $websock
+    );
+
+    $loop->run();
+}
