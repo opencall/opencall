@@ -29,7 +29,7 @@ class NumberHistory
     protected $action;
 
     /**
-     * @ORM\Column("type="datetime")
+     * @ORM\Column(type="datetime")
      */
     protected $date_create;
 
