@@ -68,7 +68,7 @@ class Entry
         else
         {
             // use date in as date start if answer
-            $entry->setDateStart(new DateTime())
+            $entry->setDateStart($entry->getDateIn())
                 ->setDuration(0)
                 ->setHangupCause('');
         }
