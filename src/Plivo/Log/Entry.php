@@ -3,6 +3,7 @@
 namespace Plivo\Log;
 
 use DateTime;
+use DateTimeZone;
 use Plivo\Queue\Message;
 
 class Entry
@@ -28,7 +29,7 @@ class Entry
 
     public function __construct()
     {
-        $this->date_in = new DateTime();
+        $this->date_in = new DateTime('now', new DateTimeZone('Asia/Hong_Kong'));
     }
 
     public static function createFromMessage(Message $msg, $use_hangup = true)
