@@ -35,25 +35,30 @@ jQuery(document).ready(function() {
                 console.log(log);
                 var log_id = 'log_' + log.call_id;
 
-                // remove old rows (from answer script)
-                $('#' + log_id).fadeOut('slow', function() {
-                    $(this).remove();
-                });
+                var cols = '<td>' + log.origin_formatted + '</td>';
+                cols += '<td>' + log.dialled_number + '</td>';
+                cols += '<td>' + log.destination_number + '</td>';
+                cols += '<td>' + log.date_start.time + '<br /><small>' + log.date_start.date + '</small></td>';
+                cols += '<td>' + log.date_end.time + '<br /><small>' + log.date_end.date + '</small></td>';
+                cols += '<td>' + log.duration + 's</td>';
+                cols += '<td>' + log.hangup_cause + '</td>';
+                cols += '<td><a href="adgroup/' + log.adgroup_id + '/adverts">' + log.advert_name + '</a></td>';
+                cols += '<td><a href="campaign/' + log.campaign_id + '/adgroups">' + log.adgroup_name + '</a></td>';
+                cols += '<td><a href="client/' + log.client_id + '/campaigns">' + log.campaign_name + '</a></td>';
 
-                var row = '<tr id="' + log_id + '" style="display: none;"><td>' + log.origin_formatted + '</td>';
-                row += '<td>' + log.dialled_number + '</td>';
-                row += '<td>' + log.destination_number + '</td>';
-                row += '<td>' + log.date_start.time + '<br /><small>' + log.date_start.date + '</small></td>';
-                row += '<td>' + log.date_end.time + '<br /><small>' + log.date_end.date + '</small></td>';
-                row += '<td>' + log.duration + 's</td>';
-                row += '<td>' + log.hangup_cause + '</td>';
-                row += '<td><a href="adgroup/' + log.adgroup_id + '/adverts">' + log.advert_name + '</a></td>';
-                row += '<td><a href="campaign/' + log.campaign_id + '/adgroups">' + log.adgroup_name + '</a></td>';
-                row += '<td><a href="client/' + log.client_id + '/campaigns">' + log.campaign_name + '</a></td>';
-                row += '</tr>';
+                var row = '<tr id="' + log_id + '" style="display: none;">' + cols + '</tr>';
 
-                // add updated rows (from hangup)
-                $(row).prependTo('#logbody').fadeIn('slow');
+
+                // check if row already exists
+                if ($('#' + log_id).length > 0)
+                {
+                    $('#' + log_id).html(cols);
+                }
+                else
+                {
+                    // add updated rows 
+                    $(row).prependTo('#logbody').fadeIn('slow');
+                }
             });
         },
         function() { // close
