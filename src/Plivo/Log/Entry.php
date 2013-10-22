@@ -267,6 +267,14 @@ class Entry
         return $this->response_xml;
     }
 
+    public function getOriginFormatted()
+    {
+        if ($this->origin_number == 0)
+            return 'Anonymous';
+
+        return $this->origin_number;
+    }
+
     public function getData()
     {
         $data = array(
@@ -274,6 +282,7 @@ class Entry
             'date_in' => $this->date_in,
             'call_id' => $this->call_id,
             'origin_number' => $this->origin_number,
+            'origin_formatted' => $this->getOriginFormatted(),
             'dialled_number' => $this->dialled_number,
             'destination_number' => $this->destination_number,
             'duration' => $this->duration,

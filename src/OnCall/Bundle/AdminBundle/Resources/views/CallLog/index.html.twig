@@ -40,16 +40,16 @@ jQuery(document).ready(function() {
                     $(this).remove();
                 });
 
-                var row = '<tr id="' + log_id + '" style="display: none;"><td>' + log.origin_number + '</td>';
+                var row = '<tr id="' + log_id + '" style="display: none;"><td>' + log.origin_formatted + '</td>';
                 row += '<td>' + log.dialled_number + '</td>';
                 row += '<td>' + log.destination_number + '</td>';
                 row += '<td>' + log.date_start.time + '<br /><small>' + log.date_start.date + '</small></td>';
                 row += '<td>' + log.date_end.time + '<br /><small>' + log.date_end.date + '</small></td>';
                 row += '<td>' + log.duration + 's</td>';
                 row += '<td>' + log.hangup_cause + '</td>';
-                row += '<td>' + log.advert_name + '</td>';
-                row += '<td>' + log.adgroup_name + '</td>';
-                row += '<td>' + log.campaign_name + '</td>';
+                row += '<td><a href="adgroup/' + log.adgroup_id + '/adverts">' + log.advert_name + '</a></td>';
+                row += '<td><a href="campaign/' + log.campaign_id + '/adgroups">' + log.adgroup_name + '</a></td>';
+                row += '<td><a href="client/' + log.client_id + '/campaigns">' + log.campaign_name + '</a></td>';
                 row += '</tr>';
 
                 // add updated rows (from hangup)
@@ -120,7 +120,7 @@ jQuery(document).ready(function() {
                             <tbody id="logbody">
                             {% for log in logs %}
                                 <tr>
-                                    <td data-title="Caller Number">{{ log.getOriginNumber }}</td>  
+                                    <td data-title="Caller Number">{{ log.getOriginFormatted }}</td>  
                                     <td data-title="Dialled Number">{{ log.getDialledNumber }}</td>  
                                     <td data-title="Destination Number">{{ log.getDestinationNumber }}</td>
                                     <td data-title="Call Start Time">

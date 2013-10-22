@@ -150,6 +150,14 @@ class CallLog
         return $this->origin_number;
     }
 
+    public function getOriginFormatted()
+    {
+        if ($this->origin_number == 0)
+            return 'Anonymous';
+
+        return $this->origin_number;
+    }
+
     public function getDialledNumber()
     {
         return $this->dialled_number;
