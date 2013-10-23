@@ -144,6 +144,11 @@ oncall_admin_adgroups:
     defaults: { _controller: OnCallAdminBundle:AdGroup:index }
     methods: [GET]
 
+oncall_admin_adgroups_dropdown:
+    pattern: /campaign/{id}/adgroups/dropdown
+    defaults: { _controller: OnCallAdminBundle:AdGroup:dropdown }
+    methods: [GET]
+
 oncall_admin_adgroup_create:
     pattern: /campaign/{id}/adgroups
     defaults: { _controller: OnCallAdminBundle:AdGroup:create }
@@ -168,6 +173,11 @@ oncall_admin_adgroup_delete:
 oncall_admin_adverts:
     pattern: /adgroup/{id}/adverts
     defaults: { _controller: OnCallAdminBundle:Advert:index }
+    methods: [GET]
+
+oncall_admin_adverts_dropdown:
+    pattern: /adgroup/{id}/adverts/dropdown
+    defaults: { _controller: OnCallAdminBundle:Advert:dropdown }
     methods: [GET]
 
 oncall_admin_advert_create:

@@ -26,5 +26,7 @@ class AdGroupController extends ItemController
 
         $this->url_child = 'oncall_admin_adverts';
         $this->url_parent = 'oncall_admin_adgroups';
+
+        $this->child_id_field = 'campaign_id';
     }
 }

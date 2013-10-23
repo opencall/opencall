@@ -5,6 +5,8 @@ namespace OnCall\Bundle\AdminBundle\Controller;
 use OnCall\Bundle\AdminBundle\Model\Controller;
 use OnCall\Bundle\AdminBundle\Model\MenuHandler;
 use OnCall\Bundle\AdminBundle\Model\AggregateFilter;
+use Plivo\HangupCause;
+use Plivo\Log\Filter as LogFilter;
 
 class CallLogController extends Controller
 {
@@ -33,11 +35,25 @@ class CallLogController extends Controller
             ->getRepository('OnCallAdminBundle:CallLog')
             ->findLatest($filter);
 
+        // get request
+        $get = $this->getRequest()->query;
+
+        // filter
+        $log_filter = new LogFilter(
+            $get->get('cid'),
+            $get->get('agid'),
+            $get->get('adid'),
+            $get->get('hcause')
+        );
+
         return $this->render(
             'OnCallAdminBundle:CallLog:index.html.twig',
             array(
+                'hangup_causes' => HangupCause::getAll(),
+                'filter' => $log_filter,
                 'user' => $user,
                 'client' => $this->getClient(),
+                'campaigns' => $this->getClient()->getCampaigns(),
                 'sidebar_menu' => MenuHandler::getMenu($role_hash, 'call_log', $this->getClientID()),
                 'agg_filter' => $daily_filter,
                 'daily' => $daily,

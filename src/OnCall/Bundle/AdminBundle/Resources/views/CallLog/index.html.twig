@@ -22,7 +22,43 @@
 {% endblock %}
 
 <script>
+// functions
+function campaignSet(campaign_id, adgroup_id, advert_id)
+{
+    var url = '/campaign/' + campaign_id + '/adgroups/dropdown';
+    $.get(url, function(data) {
+        var options = '<option value=""></option>';
+        for (var i = 0; i < data.length; i++)
+            options += '<option value="' + data[i].id + '">' + data[i].name + '</option>';
+        $('#filter_adgroup').html(options);
+        $('#container_adgroup').removeClass('hidden');
+        if (adgroup_id != null)
+        {
+            $('#filter_adgroup').val(adgroup_id);
+            adgSet(adgroup_id, advert_id);
+        }
+    }, 'json');
+}
+
+function adgSet(adgroup_id, advert_id)
+{
+    var url = '/adgroup/' + adgroup_id + '/adverts/dropdown';
+    $.get(url, function(data) {
+        var options = '<option value=""></option>';
+        for (var i = 0; i < data.length; i++)
+            options += '<option value="' + data[i].id + '">' + data[i].name + '</option>';
+        $('#filter_advert').html(options);
+        $('#container_advert').removeClass('hidden');
+        if (advert_id != null)
+        {
+            $('#filter_advert').val(advert_id);
+        }
+    }, 'json');
+}
+
+// startup
 jQuery(document).ready(function() {
+    // START websocket connection
     console.log('connecting to websocket server');
     var conn = new ab.Session(
         'ws://{{ app.request.host }}:8080',
@@ -68,6 +104,48 @@ jQuery(document).ready(function() {
             'skipSubprotocolCheck': true
         }
     );
+    // END websocket
+
+    // START filter dropdowns
+    // campaign
+    $('#filter_campaign').change(function() {
+        var campaign_id = $(this).val();
+        if (campaign_id == '')
+        {
+            $('#filter_adgroup').html('<option value=""></option>');
+            $('#container_adgroup').val('');
+            $('#container_adgroup').addClass('hidden');
+
+            $('#filter_advert').html('<option value=""></option>');
+            $('#container_advert').val('');
+            $('#container_advert').addClass('hidden');
+        }
+        else
+        {
+            campaignSet(campaign_id);
+        }
+    });
+
+    // ad group
+    $('#filter_adgroup').change(function() {
+        var adgroup_id = $(this).val();
+        if (adgroup_id == '')
+        {
+            $('#filter_advert').html('<option value=""></option>');
+            $('#container_advert').val('');
+            $('#container_advert').addClass('hidden');
+        }
+        else
+        {
+            adgSet(adgroup_id);
+        }
+    });
+
+    // check existing filters
+    {% if filter.getCID != null %}
+    campaignSet({{ filter.getCID }}, {{ filter.getAGID ? filter.getAGID : 'null'}}, {{ filter.getAdID ? filter.getAdID : 'null' }});
+    {% endif %}
+    // END filter dropdowns
 });
 </script>
 {% endblock %}
@@ -97,60 +175,139 @@ jQuery(document).ready(function() {
     <!-- BEGIN PAGE CONTENT-->
     <div class="row-fluid">
         <div class="span12">
-            <!-- BEGIN SAMPLE TABLE PORTLET-->
-                <div class="controls">
-                    <!-- Kendrick: Live updates should respect any filters that are set -->
-                    <h4>Live Updates</h4>
-                    <div class="portlet-body no-more-tables">
-                        <table class="table-bordered table-striped table-condensed cf">
-                            <thead class="cf">
-                                <tr>
-                                    <th style="width: 114px;">Caller Number</th> 
-                                    <th style="width: 114px;">Dialled Number</th>
-                                    <th style="width: 114px;">Destination</th>
-                                    <th style="width: 73px;">Start Time</th>
-                                    <th style="width: 114px;">End Time</th>
-                                    <th>Duration</th>
-                                    <!--
-                                    {% if is_granted('ROLE_PREVIOUS_ADMIN') %}
-                                        <th>Cost (HKD)</th>
-                                    {% endif %}
-                                    -->
-                                    <th style="width: 114px;">Hangup Cause</th>
-                                    <th style="width: 114px;">Advert</th>
-                                    <th style="width: 114px;">AdGroup</th>
-                                    <th style="width: 114px;">Campaign</th>
-                                </tr>
-                            </thead>
-                            <tbody id="logbody">
-                            {% for log in logs %}
-                                <tr>
-                                    <td data-title="Caller Number">{{ log.getOriginFormatted }}</td>  
-                                    <td data-title="Dialled Number">{{ log.getDialledNumber }}</td>  
-                                    <td data-title="Destination Number">{{ log.getDestinationNumber }}</td>
-                                    <td data-title="Call Start Time">
-                                    {{ log.getDateStart.format('H:i:s') }}<br /><small>{{ log.getDateStart.format('M d Y') }}</small>
-                                    </td>  
-                                    <td data-title="Call End Time">
-                                    {{ log.getDateEnd.format('H:i:s') }}<br /><small>{{ log.getDateEnd.format('M d Y') }}</small>
-                                    </td>
-                                    <td data-title="Duration">{{ log.getDuration }}s</td>
-                                    <!--
-                                    {% if is_granted('ROLE_PREVIOUS_ADMIN') %}
-                                        <td data-title="Cost">{{ log.getBillRate }}</td>
-                                    {% endif %}
-                                    -->
-                                    <td data-title="Hangup Cause">{{ log.getHangupCause }}</td>
-                                    <td data-title="Advert"><a href="/adgroup/{{ log.getAdGroupID() }}/adverts">{{ log.getAdvert.getName }}</a></td>
-                                    <td data-title="AdGroup"><a href="/campaign/{{ log.getCampaignID() }}/adgroups">{{ log.getAdGroup.getName }}</a></td>
-                                    <td data-title="Campaign"><a href="/client/{{ log.getClientID() }}/campaigns">{{ log.getCampaign.getName }}</a></td>
-                                </tr>  
-                            {% endfor %}
-                            </tbody>
-                        </table>
-                    </div>
-
+            <div class="clearfix"></div>
+            <form method="get">
+                <div style="float:left; margin-left: 4px;">
+                by Campaign:<br />
+                <select id="filter_campaign" name="cid" class="small m-wrap" tabindex="1">
+                    <option value=""></option>
+                    {% for camp in campaigns %}
+                        {% if camp.getID == filter.getCID %}
+                        <option value="{{ camp.getID }}" selected="selected">{{ camp.getName }}</option>
+                        {% else %}
+                        <option value="{{ camp.getID }}">{{ camp.getName }}</option>
+                        {% endif %}
+                    {% endfor %}
+                </select>
                 </div>
+                <!-- Kendrick: Adgroup will only appear once a Campaign is chosen -->
+                <div id="container_adgroup" class="hidden" style="float:left; margin-left: 4px;">
+                by AdGroup:<br />
+                    <select id="filter_adgroup" name="agid" class="small m-wrap" tabindex="1">
+                        <option value=""></option>
+                    </select>
+                </div>
+                <!-- Kendrick: Advert will only appear once an Advert is chosen -->
+                <div id="container_advert" class="hidden" style="float:left; margin-left: 4px;">
+                by Advert:<br />
+                    <select id="filter_advert" name="adid" class="small m-wrap" tabindex="1">
+                        <option value=""></option>
+                    </select>
+                </div>
+                <div style="float:left; margin-left: 4px;">
+                by Hangup Cause:<br />
+                    <select name="hcause" class="small m-wrap" tabindex="1">
+                        <option value=""></option>
+                        {% for cause in hangup_causes %}
+                            {% if (cause == filter.getHCause) %}
+                                <option value="{{ cause }}" selected="selected">{{ cause }}</option>
+                            {% else %}
+                                <option value="{{ cause }}">{{ cause }}</option>
+                            {% endif %}
+                        {% endfor %}
+                    </select>
+                </div>
+                <div style="float:left; margin-left: 4px;">
+                by Duration:<br />
+                <div class="control-group">
+                    <div class="controls">
+                        <div class="input-prepend">
+                            <div class="btn-group">
+                                <button class="btn dropdown-toggle" data-toggle="dropdown">
+                                Less Than
+                                <span class="caret"></span></button>
+                                <ul class="dropdown-menu">
+                                    <li><a href="#">Less Than</a></li>
+                                    <li><a href="#">Greater Than</a></li>
+                                    <li><a href="#">Equal To</a></li>
+                                </ul>
+                            </div>
+                            <input class="m-wrap xsmall" type="text" placeholder="seconds">
+                        </div>
+                    </div>
+                </div>
+                </div>
+                <!-- Kendrick: The number search should allow for partial matches (e.g. if I search for 1111 it will match 66821111 and 11110049)
+                        It should search the caller, destination and dialled numbers 
+                 -->
+                <div style="float:left; margin-left: 4px;">
+                by Number:<br />
+                    <input type="text" class="small m-wrap">
+                </div>
+                <div style="float:left; margin: 20px 0px 0px 4px;">
+                <input type="submit" class="btn green" value="Apply Filters" />
+                <!-- Kendrick: "Reset" should only show if a filter has been applied -->
+                {% if (filter.canReset) %}
+                <a href="/client/{{ client.getID }}/call_log" class="btn red">Reset Filters</a>
+                {% endif %}
+                </div>
+            </form>
+
+            <div class="clearfix"></div>
+
+            <!-- BEGIN SAMPLE TABLE PORTLET-->
+            <div class="controls">
+                <!-- Kendrick: Live updates should respect any filters that are set -->
+                <h4>Live Updates</h4>
+                <div class="portlet-body no-more-tables">
+                    <table class="table-bordered table-striped table-condensed cf">
+                        <thead class="cf">
+                            <tr>
+                                <th style="width: 114px;">Caller Number</th> 
+                                <th style="width: 114px;">Dialled Number</th>
+                                <th style="width: 114px;">Destination</th>
+                                <th style="width: 73px;">Start Time</th>
+                                <th style="width: 114px;">End Time</th>
+                                <th>Duration</th>
+                                <!--
+                                {% if is_granted('ROLE_PREVIOUS_ADMIN') %}
+                                    <th>Cost (HKD)</th>
+                                {% endif %}
+                                -->
+                                <th style="width: 114px;">Hangup Cause</th>
+                                <th style="width: 114px;">Advert</th>
+                                <th style="width: 114px;">AdGroup</th>
+                                <th style="width: 114px;">Campaign</th>
+                            </tr>
+                        </thead>
+                        <tbody id="logbody">
+                        {% for log in logs %}
+                            <tr>
+                                <td data-title="Caller Number">{{ log.getOriginFormatted }}</td>  
+                                <td data-title="Dialled Number">{{ log.getDialledNumber }}</td>  
+                                <td data-title="Destination Number">{{ log.getDestinationNumber }}</td>
+                                <td data-title="Call Start Time">
+                                {{ log.getDateStart.format('H:i:s') }}<br /><small>{{ log.getDateStart.format('M d Y') }}</small>
+                                </td>  
+                                <td data-title="Call End Time">
+                                {{ log.getDateEnd.format('H:i:s') }}<br /><small>{{ log.getDateEnd.format('M d Y') }}</small>
+                                </td>
+                                <td data-title="Duration">{{ log.getDuration }}s</td>
+                                <!--
+                                {% if is_granted('ROLE_PREVIOUS_ADMIN') %}
+                                    <td data-title="Cost">{{ log.getBillRate }}</td>
+                                {% endif %}
+                                -->
+                                <td data-title="Hangup Cause">{{ log.getHangupCause }}</td>
+                                <td data-title="Advert"><a href="/adgroup/{{ log.getAdGroupID() }}/adverts">{{ log.getAdvert.getName }}</a></td>
+                                <td data-title="AdGroup"><a href="/campaign/{{ log.getCampaignID() }}/adgroups">{{ log.getAdGroup.getName }}</a></td>
+                                <td data-title="Campaign"><a href="/client/{{ log.getClientID() }}/campaigns">{{ log.getCampaign.getName }}</a></td>
+                            </tr>  
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
             <!-- END SAMPLE TABLE PORTLET-->
         </div>
     </div>

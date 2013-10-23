@@ -20,6 +20,8 @@ abstract class ItemController extends Controller
     protected $url_child;
     protected $url_parent;
 
+    protected $child_id_field;
+
     public function __construct()
     {
         $this->name = 'Item';
@@ -136,6 +138,30 @@ abstract class ItemController extends Controller
         $this->addFlash('success', $this->name . ' ' . $child->getName() . ' has been deleted.');
 
         return new Response('');
+    }
+
+    public function dropdownAction($id)
+    {
+        error_log('dropdown');
+
+        // get id and name of each child
+        $adgroups = $this->getDoctrine()
+            ->getRepository($this->child_repo)
+            ->findBy(
+                array($this->child_id_field => $id),
+                array('name' => 'DESC')
+            );
+
+        $data = array();
+        foreach ($adgroups as $adg)
+        {
+            $data[] = array(
+                'id' => $adg->getID(),
+                'name' => $adg->getName()
+            );
+        }
+
+        return new Response(json_encode($data));
     }
 
     // utility methods
