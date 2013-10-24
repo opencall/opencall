@@ -27,24 +27,19 @@ class CallLogController extends Controller
         $daily = $this->separateChartData($agg_daily);
         $hourly = $this->separateChartData($agg_hourly);
 
-        // get logs
-        $filter = array(
-            'client_id' => $id
-        );
-        $logs = $this->getDoctrine()
-            ->getRepository('OnCallAdminBundle:CallLog')
-            ->findLatest($filter);
-
-        // get request
-        $get = $this->getRequest()->query;
-
         // filter
+        $get = $this->getRequest()->query;
         $log_filter = new LogFilter(
             $get->get('cid'),
             $get->get('agid'),
             $get->get('adid'),
             $get->get('hcause')
         );
+
+        // get logs
+        $logs = $this->getDoctrine()
+            ->getRepository('OnCallAdminBundle:CallLog')
+            ->findLatest($id, $log_filter);
 
         return $this->render(
             'OnCallAdminBundle:CallLog:index.html.twig',

@@ -9,7 +9,7 @@ class Filter
     protected $adid;
     protected $hcause;
 
-    public function __construct($cid, $agid, $adid, $hcause)
+    public function __construct($cid = '', $agid = '', $adid = '', $hcause = '')
     {
         if ($cid == '')
             $this->cid = null;
