@@ -8,8 +8,19 @@ class Filter
     protected $agid;
     protected $adid;
     protected $hcause;
+    protected $dmod;
+    protected $dsec;
+    protected $num;
 
-    public function __construct($cid = '', $agid = '', $adid = '', $hcause = '')
+    public function __construct(
+        $cid = '',
+        $agid = '',
+        $adid = '',
+        $hcause = '',
+        $dmod = '',
+        $dsec = '',
+        $num = ''
+    )
     {
         if ($cid == '')
             $this->cid = null;
@@ -30,6 +41,21 @@ class Filter
             $this->hcause = null;
         else
             $this->hcause = $hcause;
+
+        if ($dmod == '')
+            $this->dmod = null;
+        else
+            $this->dmod = $dmod;
+
+        if ($dsec == '')
+            $this->dsec = null;
+        else
+            $this->dsec = $dsec;
+
+        if ($num == '')
+            $this->num = null;
+        else
+            $this->num = $num;
     }
 
     public function getCID()
@@ -52,6 +78,21 @@ class Filter
         return $this->hcause;
     }
 
+    public function getDMod()
+    {
+        return $this->dmod;
+    }
+
+    public function getDSec()
+    {
+        return $this->dsec;
+    }
+
+    public function getNum()
+    {
+        return $this->num;
+    }
+
     public function canReset()
     {
         if ($this->cid != null)
@@ -64,6 +105,15 @@ class Filter
             return true;
 
         if ($this->hcause != null)
+            return true;
+
+        if ($this->dmod != null)
+            return true;
+
+        if ($this->dsec != null)
+            return true;
+
+        if ($this->num != null)
             return true;
 
         return false;

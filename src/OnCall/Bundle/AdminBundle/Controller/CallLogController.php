@@ -6,6 +6,7 @@ use OnCall\Bundle\AdminBundle\Model\Controller;
 use OnCall\Bundle\AdminBundle\Model\MenuHandler;
 use OnCall\Bundle\AdminBundle\Model\AggregateFilter;
 use Plivo\HangupCause;
+use Plivo\DurationModifier;
 use Plivo\Log\Filter as LogFilter;
 
 class CallLogController extends Controller
@@ -33,7 +34,10 @@ class CallLogController extends Controller
             $get->get('cid'),
             $get->get('agid'),
             $get->get('adid'),
-            $get->get('hcause')
+            $get->get('hcause'),
+            $get->get('dmod'),
+            $get->get('dsec'),
+            $get->get('num')
         );
 
         // get logs
@@ -45,6 +49,7 @@ class CallLogController extends Controller
             'OnCallAdminBundle:CallLog:index.html.twig',
             array(
                 'hangup_causes' => HangupCause::getAll(),
+                'duration_mods' => DurationModifier::getAll(),
                 'filter' => $log_filter,
                 'user' => $user,
                 'client' => $this->getClient(),

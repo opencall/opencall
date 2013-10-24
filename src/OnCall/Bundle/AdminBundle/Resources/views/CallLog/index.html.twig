@@ -222,17 +222,28 @@ jQuery(document).ready(function() {
                 <div class="control-group">
                     <div class="controls">
                         <div class="input-prepend">
+                        <!--
                             <div class="btn-group">
                                 <button class="btn dropdown-toggle" data-toggle="dropdown">
                                 Less Than
                                 <span class="caret"></span></button>
-                                <ul class="dropdown-menu">
-                                    <li><a href="#">Less Than</a></li>
-                                    <li><a href="#">Greater Than</a></li>
-                                    <li><a href="#">Equal To</a></li>
+                                <ul id="drop_durmod" class="dropdown-menu">
+                                    <li><a href="#top" class="filter_durmod" data-id="less">Less Than</a></li>
+                                    <li><a href="#top" class="filter_durmod" data-id="greater">Greater Than</a></li>
+                                    <li><a href="#top" class="filter_durmod" data-id="equal">Equal To</a></li>
                                 </ul>
                             </div>
-                            <input class="m-wrap xsmall" type="text" placeholder="seconds">
+                        -->
+                            <select name="dmod" class="small m-wrap">
+                                {% for val,mod in duration_mods %}
+                                    {% if (val == filter.getDMod) %}
+                                        <option value="{{ val }}" selected="selected">{{ mod }}</option>
+                                    {% else %}
+                                        <option value="{{ val }}">{{ mod }}</option>
+                                    {% endif %}
+                                {% endfor %}
+                            </select>
+                            <input name="dsec" class="m-wrap xsmall" type="text" placeholder="seconds" value="{{ filter.getDSec }}" />
                         </div>
                     </div>
                 </div>
@@ -242,7 +253,7 @@ jQuery(document).ready(function() {
                  -->
                 <div style="float:left; margin-left: 4px;">
                 by Number:<br />
-                    <input type="text" class="small m-wrap">
+                    <input name="num" type="text" class="small m-wrap" value="{{ filter.getNum }}">
                 </div>
                 <div style="float:left; margin: 20px 0px 0px 4px;">
                 <input type="submit" class="btn green" value="Apply Filters" />
