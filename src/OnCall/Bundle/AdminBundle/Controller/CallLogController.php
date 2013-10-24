@@ -51,6 +51,7 @@ class CallLogController extends Controller
                 'hangup_causes' => HangupCause::getAll(),
                 'duration_mods' => DurationModifier::getAll(),
                 'filter' => $log_filter,
+                'filter_json' => json_encode($log_filter->toData()),
                 'user' => $user,
                 'client' => $this->getClient(),
                 'campaigns' => $this->getClient()->getCampaigns(),

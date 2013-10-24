@@ -23,7 +23,7 @@
 
 <script>
 // functions
-function campaignSet(campaign_id, adgroup_id, advert_id)
+function campaign_set(campaign_id, adgroup_id, advert_id)
 {
     var url = '/campaign/' + campaign_id + '/adgroups/dropdown';
     $.get(url, function(data) {
@@ -35,12 +35,12 @@ function campaignSet(campaign_id, adgroup_id, advert_id)
         if (adgroup_id != null)
         {
             $('#filter_adgroup').val(adgroup_id);
-            adgSet(adgroup_id, advert_id);
+            adg_set(adgroup_id, advert_id);
         }
     }, 'json');
 }
 
-function adgSet(adgroup_id, advert_id)
+function adg_set(adgroup_id, advert_id)
 {
     var url = '/adgroup/' + adgroup_id + '/adverts/dropdown';
     $.get(url, function(data) {
@@ -56,6 +56,103 @@ function adgSet(adgroup_id, advert_id)
     }, 'json');
 }
 
+function filter_check(log)
+{
+    var filter = {{ filter_json|raw }};
+
+    // campaign
+    if (filter.campaign_id != null)
+    {
+        if (filter.campaign_id != log.campaign_id)
+            return false;
+
+        // adgroup
+        if (filter.adgroup_id != null)
+        {
+            if (filter.adgroup_id != log.adgroup_id)
+                return false;
+
+            // advert
+            if (filter.advert_id != null)
+            {
+                if (filter.advert_id != log.advert_id)
+                    return false;
+            }
+        }
+    }
+
+    // hangup cause
+    if (filter.hangup_cause != null && filter.hangup_cause != log.hangup_cause)
+        return false;
+
+    // duration
+    if (filter.duration_secs != null)
+    {
+        switch (filter.duration_mod)
+        {
+            case 'less':
+                if (log.duration >= filter.duration_secs)
+                    return false;
+                break;
+            case 'greater':
+                if (log.duration <= filter.duration_secs)
+                    return false;
+                break;
+            case 'equal':
+                if (log.duration != filter.duration_secs)
+                    return false;
+                break;
+            default:
+                return false;
+        }
+    }
+
+    // number
+    if (filter.number != null)
+    {
+        if (log.dialled_number.indexOf(filter.number) == -1)
+            return false;
+    }
+
+    // all clear
+    return true;
+}
+
+function logtable_add(log)
+{
+    if (!filter_check(log))
+    {
+        console.log('failed filter check');
+        return;
+    }
+
+    var log_id = 'log_' + log.call_id;
+
+    var cols = '<td>' + log.origin_formatted + '</td>';
+    cols += '<td>' + log.dialled_number + '</td>';
+    cols += '<td>' + log.destination_number + '</td>';
+    cols += '<td>' + log.date_start.time + '<br /><small>' + log.date_start.date + '</small></td>';
+    cols += '<td>' + log.date_end.time + '<br /><small>' + log.date_end.date + '</small></td>';
+    cols += '<td>' + log.duration + 's</td>';
+    cols += '<td>' + log.hangup_cause + '</td>';
+    cols += '<td><a href="adgroup/' + log.adgroup_id + '/adverts">' + log.advert_name + '</a></td>';
+    cols += '<td><a href="campaign/' + log.campaign_id + '/adgroups">' + log.adgroup_name + '</a></td>';
+    cols += '<td><a href="client/' + log.client_id + '/campaigns">' + log.campaign_name + '</a></td>';
+
+    var row = '<tr id="' + log_id + '" style="display: none;">' + cols + '</tr>';
+
+    // check if row already exists
+    if ($('#' + log_id).length > 0)
+    {
+        $('#' + log_id).html(cols);
+    }
+    else
+    {
+        // add updated rows 
+        $(row).prependTo('#logbody').fadeIn('slow');
+    }
+}
+
 // startup
 jQuery(document).ready(function() {
     // START websocket connection
@@ -65,36 +162,9 @@ jQuery(document).ready(function() {
         function() { // connect
             console.log('connected');
             conn.subscribe('client:{{ client.getID }}', function(topic, data) {
-                console.log('New article published to category "' + topic + '"');
-
                 var log = data.logentry;
                 console.log(log);
-                var log_id = 'log_' + log.call_id;
-
-                var cols = '<td>' + log.origin_formatted + '</td>';
-                cols += '<td>' + log.dialled_number + '</td>';
-                cols += '<td>' + log.destination_number + '</td>';
-                cols += '<td>' + log.date_start.time + '<br /><small>' + log.date_start.date + '</small></td>';
-                cols += '<td>' + log.date_end.time + '<br /><small>' + log.date_end.date + '</small></td>';
-                cols += '<td>' + log.duration + 's</td>';
-                cols += '<td>' + log.hangup_cause + '</td>';
-                cols += '<td><a href="adgroup/' + log.adgroup_id + '/adverts">' + log.advert_name + '</a></td>';
-                cols += '<td><a href="campaign/' + log.campaign_id + '/adgroups">' + log.adgroup_name + '</a></td>';
-                cols += '<td><a href="client/' + log.client_id + '/campaigns">' + log.campaign_name + '</a></td>';
-
-                var row = '<tr id="' + log_id + '" style="display: none;">' + cols + '</tr>';
-
-
-                // check if row already exists
-                if ($('#' + log_id).length > 0)
-                {
-                    $('#' + log_id).html(cols);
-                }
-                else
-                {
-                    // add updated rows 
-                    $(row).prependTo('#logbody').fadeIn('slow');
-                }
+                logtable_add(log);
             });
         },
         function() { // close
@@ -122,7 +192,7 @@ jQuery(document).ready(function() {
         }
         else
         {
-            campaignSet(campaign_id);
+            campaign_set(campaign_id);
         }
     });
 
@@ -137,13 +207,13 @@ jQuery(document).ready(function() {
         }
         else
         {
-            adgSet(adgroup_id);
+            adg_set(adgroup_id);
         }
     });
 
     // check existing filters
     {% if filter.getCID != null %}
-    campaignSet({{ filter.getCID }}, {{ filter.getAGID ? filter.getAGID : 'null'}}, {{ filter.getAdID ? filter.getAdID : 'null' }});
+    campaign_set({{ filter.getCID }}, {{ filter.getAGID ? filter.getAGID : 'null'}}, {{ filter.getAdID ? filter.getAdID : 'null' }});
     {% endif %}
     // END filter dropdowns
 });

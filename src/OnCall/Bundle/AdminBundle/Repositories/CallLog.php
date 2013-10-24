@@ -65,31 +65,15 @@ class CallLog extends EntityRepository
                 ->setParameter('duration', $filter->getDSec());
         }
 
-        // TODO: number
-
-        /*
-        $filter_array = array('client_id' => $client_id);
-
-        // process filter
-        if ($filter->getCID() != null)
-            $filter_array['campaign_id'] = $filter->getCID();
-        if ($filter->getAGID() != null)
-            $filter_array['adgroup_id'] = $filter->getAGID();
-        if ($filter->getAdID() != null)
-            $filter_array['advert_id'] = $filter->getAdID();
-        if ($filter->getHCause() != null)
-            $filter_array['hangup_cause'] = $filter->getHCause();
-
-        return $this->findBy(
-            $filter_array,
-            array('id' => 'DESC'),
-            $limit,
-            $offset
-        );
-        */
+        // number
+        if ($filter->getNum() != null)
+        {
+            $qb->andWhere('cl.dialled_number like :number')
+                ->setParameter('number', '%' . $filter->getNum() . '%');
+        }
 
         // order and limit
-        $qb->orderBy('cl.id', 'ASC')
+        $qb->orderBy('cl.id', 'DESC')
             ->setFirstResult($offset)
             ->setMaxResults($limit);
 

@@ -118,4 +118,17 @@ class Filter
 
         return false;
     }
+
+    public function toData()
+    {
+        return array(
+            'campaign_id' => $this->cid,
+            'adgroup_id' => $this->agid,
+            'advert_id' => $this->adid,
+            'hangup_cause' => $this->hcause,
+            'duration_mod' => $this->dmod,
+            'duration_secs' => $this->dsec,
+            'number' => $this->num
+        );
+    }
 }
