@@ -114,6 +114,18 @@ function filter_check(log)
             return false;
     }
 
+    // failed
+    if (filter.failed)
+    {
+        switch(log.status)
+        {
+            case 'ringing':
+            case 'in-progress':
+            case 'completed':
+                return false;
+        }
+    }
+
     // all clear
     return true;
 }

@@ -37,7 +37,8 @@ class CallLogController extends Controller
             $get->get('hcause'),
             $get->get('dmod'),
             $get->get('dsec'),
-            $get->get('num')
+            $get->get('num'),
+            $get->get('failed')
         );
 
         // get logs

@@ -19,7 +19,8 @@ class Filter
         $hcause = '',
         $dmod = '',
         $dsec = '',
-        $num = ''
+        $num = '',
+        $failed = ''
     )
     {
         if ($cid == '')
@@ -56,6 +57,11 @@ class Filter
             $this->num = null;
         else
             $this->num = $num;
+
+        if ($failed == 1)
+            $this->failed = true;
+        else
+            $this->failed = false;
     }
 
     public function getCID()
@@ -93,6 +99,11 @@ class Filter
         return $this->num;
     }
 
+    public function isFailed()
+    {
+        return $this->failed;
+    }
+
     public function canReset()
     {
         if ($this->cid != null)
@@ -128,7 +139,8 @@ class Filter
             'hangup_cause' => $this->hcause,
             'duration_mod' => $this->dmod,
             'duration_secs' => $this->dsec,
-            'number' => $this->num
+            'number' => $this->num,
+            'failed' => $this->failed
         );
     }
 }

@@ -72,6 +72,13 @@ class CallLog extends EntityRepository
                 ->setParameter('number', '%' . $filter->getNum() . '%');
         }
 
+        // failed
+        if ($filter->isFailed())
+        {
+            $qb->andWhere('cl.status in (:status)')
+                ->setParameter('status', array('busy', 'failed', 'timeout', 'no-answer', 'cancel'));
+        }
+
         // order and limit
         $qb->orderBy('cl.id', 'DESC')
             ->setFirstResult($offset)
