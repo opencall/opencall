@@ -130,6 +130,11 @@ class CallLog
     // end setters
 
     // begin getters
+    public function getID()
+    {
+        return $this->id;
+    }
+
     public function getDateIn()
     {
         return $this->date_in;

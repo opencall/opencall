@@ -151,7 +151,7 @@ function logtable_add(log)
     cols += '<td><a href="campaign/' + log.campaign_id + '/adgroups">' + log.adgroup_name + '</a></td>';
     cols += '<td><a href="client/' + log.client_id + '/campaigns">' + log.campaign_name + '</a></td>';
 
-    var row = '<tr id="' + log_id + '" style="display: none;">' + cols + '</tr>';
+    var row = '<tr class="log_row" data-id="' + log_id + '" id="' + log_id + '" style="display: none;">' + cols + '</tr>';
 
     // check if row already exists
     if ($('#' + log_id).length > 0)
@@ -163,6 +163,12 @@ function logtable_add(log)
         // add updated rows 
         $(row).prependTo('#logbody').fadeIn('slow');
     }
+}
+
+function log_more()
+{
+    var last_id = $('.log_row').last().data('id');
+    console.log(last_id);
 }
 
 // startup
@@ -228,6 +234,10 @@ jQuery(document).ready(function() {
     campaign_set({{ filter.getCID }}, {{ filter.getAGID ? filter.getAGID : 'null'}}, {{ filter.getAdID ? filter.getAdID : 'null' }});
     {% endif %}
     // END filter dropdowns
+
+    // BEGIN more button
+    $('#more_button').click(log_more);
+    // END more button
 });
 </script>
 {% endblock %}
@@ -375,7 +385,7 @@ jQuery(document).ready(function() {
                         </thead>
                         <tbody id="logbody">
                         {% for log in logs %}
-                            <tr>
+                            <tr class="log_row" data-id="{{ log.getID }}">
                                 <td data-title="Caller Number">{{ log.getOriginFormatted }}</td>  
                                 <td data-title="Dialled Number">{{ log.getDialledNumber }}</td>  
                                 <td data-title="Destination Number">{{ log.getDestinationNumber }}</td>
@@ -400,6 +410,9 @@ jQuery(document).ready(function() {
                         </tbody>
                     </table>
                 </div>
+            </div>
+            <div>
+            <button id="more_button" class="btn green">More</button>
             </div>
             <!-- END SAMPLE TABLE PORTLET-->
         </div>
