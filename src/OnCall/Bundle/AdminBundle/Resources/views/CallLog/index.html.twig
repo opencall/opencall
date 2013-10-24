@@ -56,9 +56,14 @@ function adg_set(adgroup_id, advert_id)
     }, 'json');
 }
 
+function filter_get()
+{
+    return {{ filter_json|raw }};
+}
+
 function filter_check(log)
 {
-    var filter = {{ filter_json|raw }};
+    var filter = filter_get();
 
     // campaign
     if (filter.campaign_id != null)
@@ -167,8 +172,49 @@ function logtable_add(log)
 
 function log_more()
 {
+    var filter = filter_get();
     var last_id = $('.log_row').last().data('id');
-    console.log(last_id);
+    var url = '/client/{{ client.getID }}/call_log/more/' + last_id;
+    
+    if (filter.campaign_id == null)
+        url += '?cid=';
+    else
+        url += '?cid=' + filter.campaign_id;
+
+    if (filter.adgroup_id == null)
+        url += '&agid=';
+    else
+        url += '&agid=' + filter.adgroup_id;
+
+    if (filter.advert_id == null)
+        url += '&adid=';
+    else
+        url += '&adid=' + filter.advert_id;
+
+    if (filter.hangup_cause == null)
+        url += '&hcause=';
+    else
+        url += '&hcause=' + filter.hangup_cause;
+
+    url += '&dmod=' + filter.duration_mod;
+
+    if (filter.duration_secs == null)
+        url += '&dsec=';
+    else
+        url += '&dsec=' + filter.duration_secs;
+
+    if (filter.number == null)
+        url += '&num=';
+    else
+        url += '&num=' + filter.number;
+
+    if (filter.failed)
+        url += '&failed=1';
+
+    console.log(url);
+    $.get(url, function(data) {
+        $('#logbody').append(data);
+    });
 }
 
 // startup

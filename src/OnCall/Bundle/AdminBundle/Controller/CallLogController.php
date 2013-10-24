@@ -11,6 +11,24 @@ use Plivo\Log\Filter as LogFilter;
 
 class CallLogController extends Controller
 {
+    protected function getLogFilter()
+    {
+        // filter
+        $get = $this->getRequest()->query;
+        $log_filter = new LogFilter(
+            $get->get('cid'),
+            $get->get('agid'),
+            $get->get('adid'),
+            $get->get('hcause'),
+            $get->get('dmod'),
+            $get->get('dsec'),
+            $get->get('num'),
+            $get->get('failed')
+        );
+
+        return $log_filter;
+    }
+
     public function indexAction($id)
     {
         $user = $this->getUser();
@@ -28,20 +46,8 @@ class CallLogController extends Controller
         $daily = $this->separateChartData($agg_daily);
         $hourly = $this->separateChartData($agg_hourly);
 
-        // filter
-        $get = $this->getRequest()->query;
-        $log_filter = new LogFilter(
-            $get->get('cid'),
-            $get->get('agid'),
-            $get->get('adid'),
-            $get->get('hcause'),
-            $get->get('dmod'),
-            $get->get('dsec'),
-            $get->get('num'),
-            $get->get('failed')
-        );
-
         // get logs
+        $log_filter = $this->getLogFilter();
         $logs = $this->getDoctrine()
             ->getRepository('OnCallAdminBundle:CallLog')
             ->findLatest($id, $log_filter);
@@ -60,6 +66,22 @@ class CallLogController extends Controller
                 'agg_filter' => $daily_filter,
                 'daily' => $daily,
                 'hourly' => $hourly,
+                'logs' => $logs
+            )
+        );
+    }
+
+    public function moreAction($client_id, $last_id)
+    {
+        // get logs
+        $log_filter = $this->getLogFilter();
+        $logs = $this->getDoctrine()
+            ->getRepository('OnCallAdminBundle:CallLog')
+            ->findLatest($client_id, $log_filter, $last_id);
+
+        return $this->render(
+            'OnCallAdminBundle:CallLog:more.html.twig',
+            array(
                 'logs' => $logs
             )
         );

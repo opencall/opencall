@@ -7,12 +7,19 @@ use Plivo\Log\Filter;
 
 class CallLog extends EntityRepository
 {
-    public function findLatest($client_id, Filter $filter, $limit = 100, $offset = 0)
+    public function findLatest($client_id, Filter $filter, $last_id = null, $limit = 10, $offset = 0)
     {
         // create query and set client_id
         $qb = $this->createQueryBuilder('cl')
             ->where('cl.client_id = :client_id')
             ->setParameter('client_id', $client_id);
+
+        // last id
+        if ($last_id != null)
+        {
+            $qb->andWhere('cl.id < :last_id')
+                ->setParameter('last_id', $last_id);
+        }
 
         // filters
         // campaign

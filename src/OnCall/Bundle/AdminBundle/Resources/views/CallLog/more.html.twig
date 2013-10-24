@@ -1,0 +1,24 @@
+{% for log in logs %}
+    <tr class="log_row" data-id="{{ log.getID }}">
+        <td data-title="Caller Number">{{ log.getOriginFormatted }}</td>
+        <td data-title="Dialled Number">{{ log.getDialledNumber }}</td>
+        <td data-title="Destination Number">{{ log.getDestinationNumber }}</td>
+        <td data-title="Call Start Time">
+        {{ log.getDateStart.format('H:i:s') }}<br /><small>{{ log.getDateStart.format('M d Y') }}</small>
+        </td>
+        <td data-title="Call End Time">
+        {{ log.getDateEnd.format('H:i:s') }}<br /><small>{{ log.getDateEnd.format('M d Y') }}</small>
+        </td>
+        <td data-title="Duration">{{ log.getDuration }}s</td>
+        <!--
+        {% if is_granted('ROLE_PREVIOUS_ADMIN') %}
+            <td data-title="Cost">{{ log.getBillRate }}</td>
+        {% endif %}
+        -->
+        <td data-title="Hangup Cause">{{ log.getHangupCause }}</td>
+        <td data-title="Advert"><a href="/adgroup/{{ log.getAdGroupID() }}/adverts">{{ log.getAdvert.getName }}</a></td>
+        <td data-title="AdGroup"><a href="/campaign/{{ log.getCampaignID() }}/adgroups">{{ log.getAdGroup.getName }}</a></td>
+        <td data-title="Campaign"><a href="/client/{{ log.getClientID() }}/campaigns">{{ log.getCampaign.getName }}</a></td>
+    </tr>
+{% endfor %}
+
