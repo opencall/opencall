@@ -37,8 +37,14 @@ class AdvertController extends ItemController
         // get main data
         $data = $this->fetchMainData($id);
 
-        // get client id
-        $cid = $data['parent']->getCampaign()->getClient()->getID();
+        // get client id and campaign id
+        $campaign = $data['parent']->getCampaign();
+        $cid = $campaign->getClient()->getID();
+        $camp_id = $campaign->getID();
+
+        // log url
+        $this->log_url = '/client/' . $cid . '/call_log?cid=' . $camp_id . '&agid=' . $id;
+        $data['log_url'] = $this->log_url;
 
         // fill new parameters
         $data['numbers'] = $this->getAvailableNumbers($cid);

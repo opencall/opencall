@@ -27,6 +27,7 @@ class CampaignController extends ItemController
 
         $this->url_child = 'oncall_admin_adgroups';
         $this->url_parent = 'oncall_admin_campaigns';
+
     }
 
     public function indexAction($id)
@@ -35,6 +36,7 @@ class CampaignController extends ItemController
         $sess = $this->getRequest()->getSession();
         $sess->set('client_id', $id);
 
+        $this->log_url = '/client/' . $id . '/call_log?num=';
         return parent::indexAction($id);
     }
 }

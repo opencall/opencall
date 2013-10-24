@@ -354,7 +354,7 @@ jQuery(document).ready(function() {
                     </div>
                     <div class="details">
                         <div class="number">
-                            <a href="">
+                            <a href="{{ log_url }}">
                             {{ agg_parent.getTotalFormatted }} Calls
                             </a>
                         </div>
@@ -368,7 +368,7 @@ jQuery(document).ready(function() {
                     </div>
                     <div class="details">
                         <div class="number">
-                            <a href="">
+                            <a href="{{ log_url }}">
                             {{ agg_parent.getUniqueFormatted }} Unique <small>({{ agg_parent.getUniquePercentFormatted }}%)</small>
                             </a>
                         </div>
@@ -382,7 +382,7 @@ jQuery(document).ready(function() {
                     </div>
                     <div class="details">
                         <div class="number">
-                            <a href="">
+                            <a href="{{ log_url }}&dmod=greater&dsec=120">
                             {{ agg_parent.getPLeadFormatted }} Leads <small>({{ agg_parent.getPLeadPercentFormatted }}%)</small>
                             </a>
                         </div>
@@ -396,7 +396,7 @@ jQuery(document).ready(function() {
                     </div>
                     <div class="details">
                         <div class="number">
-                            <a href="">
+                            <a href="{{ log_url }}">
                             {{ agg_parent.getFailedFormatted }} Failed Calls <small>({{ agg_parent.getFailedPercentFormatted }}%)</small>
                             </a>
                         </div>

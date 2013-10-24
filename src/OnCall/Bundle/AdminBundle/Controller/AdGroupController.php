@@ -29,4 +29,11 @@ class AdGroupController extends ItemController
 
         $this->child_id_field = 'campaign_id';
     }
+
+    public function indexAction($id)
+    {
+        $this->log_url = '/client/' . $this->getClientID() . '/call_log?cid=' . $id;
+
+        return parent::indexAction($id);
+    }
 }
