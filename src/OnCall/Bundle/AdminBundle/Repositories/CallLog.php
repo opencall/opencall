@@ -75,8 +75,9 @@ class CallLog extends EntityRepository
         // number
         if ($filter->getNum() != null)
         {
-            $qb->andWhere('cl.dialled_number like :number')
-                ->setParameter('number', '%' . $filter->getNum() . '%');
+            $num = preg_replace("/[^0-9,.]/", '', $filter->getNum());
+            $qb->andWhere('cl.dialled_number like :number or cl.origin_number like :number or cl.destination_number like :number')
+                ->setParameter('number', '%' . $num . '%');
         }
 
         // failed
