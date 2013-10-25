@@ -2,6 +2,9 @@
 
 namespace Plivo\Log;
 
+use DateTime;
+use DateTimeZone;
+
 class Filter
 {
     protected $cid;
@@ -11,6 +14,8 @@ class Filter
     protected $dmod;
     protected $dsec;
     protected $num;
+    protected $dts;
+    protected $dte;
 
     public function __construct(
         $cid = '',
@@ -62,6 +67,24 @@ class Filter
             $this->failed = true;
         else
             $this->failed = false;
+
+        // dates
+        $this->dte = new DateTime('now', new DateTimeZone('Asia/Hong_Kong'));
+        $this->cleanDTE();
+
+        $this->dts = new DateTime('now', new DateTimeZone('Asia/Hong_Kong'));
+        $this->dts->modify('-6 day');
+        $this->cleanDTS();
+    }
+
+    protected function cleanDTS()
+    {
+        $this->dts = DateTime::createFromFormat('Y-m-d H:i:s', $this->dts->format('Y-m-d') . ' 00:00:00');
+    }
+
+    protected function cleanDTE()
+    {
+        $this->dte = DateTime::createFromFormat('Y-m-d H:i:s', $this->dte->format('Y-m-d') . ' 23:59:59');
     }
 
     public function getCID()
@@ -130,6 +153,22 @@ class Filter
         return false;
     }
 
+    public function getDTSUTC()
+    {
+        $date = $this->dts->format('Y') . ',';
+        $date .= ($this->dts->format('n') - 1) . ',';
+        $date .= ($this->dts->format('j'));
+        return 'Date.UTC(' . $date . ')';
+    }
+
+    public function getDTEUTC()
+    {
+        $date = $this->dte->format('Y') . ',';
+        $date .= ($this->dte->format('n') - 1) . ',';
+        $date .= ($this->dte->format('j'));
+        return 'Date.UTC(' . $date . ')';
+    }
+
     public function toData()
     {
         return array(
@@ -140,7 +179,9 @@ class Filter
             'duration_mod' => $this->dmod,
             'duration_secs' => $this->dsec,
             'number' => $this->num,
-            'failed' => $this->failed
+            'failed' => $this->failed,
+            'dts_utc' => $this->getDTSUTC(),
+            'dte_utc' => $this->getDTEUTC()
         );
     }
 }

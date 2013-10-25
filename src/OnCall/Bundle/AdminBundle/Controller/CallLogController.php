@@ -23,7 +23,9 @@ class CallLogController extends Controller
             $get->get('dmod'),
             $get->get('dsec'),
             $get->get('num'),
-            $get->get('failed')
+            $get->get('failed'),
+            $get->get('dts'),
+            $get->get('dte')
         );
 
         return $log_filter;

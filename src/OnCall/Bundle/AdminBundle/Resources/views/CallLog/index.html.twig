@@ -286,6 +286,9 @@ jQuery(document).ready(function() {
     // END more button
 
     // BEGIN date range
+    var date_from = new Date({{ filter.getDTSUTC }});
+    var date_to = new Date({{ filter.getDTEUTC }});
+
     $('#aggregate_range').daterangepicker({
         ranges: {
             'Today': ['today', 'today'],
@@ -331,7 +334,7 @@ jQuery(document).ready(function() {
         }, 1000);
         $('#aggregate_range span').html(start.toString('MMMM d, yyyy') + ' - ' + end.toString('MMMM d, yyyy'));
         // redirect with params
-        var query_string = '?date_from=' + start.toString('yyyy-MM-dd') + '&date_to=' + end.toString('yyyy-MM-dd');
+        var query_string = '?dts=' + start.toString('yyyy-MM-dd') + '&dte=' + end.toString('yyyy-MM-dd');
         var url = location.protocol + '//' + location.host + location.pathname + query_string;
         window.location = url;
 
@@ -362,7 +365,7 @@ jQuery(document).ready(function() {
                     Call Log
                 </li>
                 <li class="pull-right no-text-shadow">
-                    <div id="date_range" class="dashboard-date-range tooltips no-tooltip-on-touch-device responsive" data-tablet="" data-desktop="tooltips" data-placement="top" data-original-title="Change dashboard date range">
+                    <div id="aggregate_range" class="dashboard-date-range tooltips no-tooltip-on-touch-device responsive" data-tablet="" data-desktop="tooltips" data-placement="top" data-original-title="Change dashboard date range">
                         <i class="icon-calendar"></i>
                         <span>October 19, 2013 - October 26, 2013</span>
                         <i class="icon-angle-down"></i>
