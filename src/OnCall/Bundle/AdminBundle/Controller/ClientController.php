@@ -46,9 +46,14 @@ class ClientController extends Controller
             $client_ids[] = $cli->getID();
 
         // get counter summaries
-        $summaries = $this->getDoctrine()
-            ->getRepository('OnCallAdminBundle:Counter')
-            ->findClientSummaries($client_ids);
+        if (count($client_ids) > 0)
+        {
+            $summaries = $this->getDoctrine()
+                ->getRepository('OnCallAdminBundle:Counter')
+                ->findClientSummaries($client_ids);
+        }
+        else
+            $summaries = array('day' => array(), 'month' => array());
 
 
         return $this->render(
