@@ -42,19 +42,19 @@ class AggregateFilter
         $this->date_to = $this->cleanDateTo($date_now);
 
         $this->date_from = $this->cleanDateFrom($date_now);
-        $this->date_from->modify('-7 day');
+        $this->date_from->modify('-6 day');
     }
 
     protected function cleanDateFrom(DateTime $date)
     {
         // strip off time
-        return DateTime::createFromFormat('Y-m-d H:i:s', $date->format('Y-m-d') . '00:00:00');
+        return DateTime::createFromFormat('Y-m-d H:i:s', $date->format('Y-m-d') . ' 00:00:00');
     }
 
     protected function cleanDateTo(DateTime $date)
     {
         // strip off time
-        return DateTime::createFromFormat('Y-m-d H:i:s', $date->format('Y-m-d') . '23:59:59');
+        return DateTime::createFromFormat('Y-m-d H:i:s', $date->format('Y-m-d') . ' 23:59:59');
     }
 
     // setters
