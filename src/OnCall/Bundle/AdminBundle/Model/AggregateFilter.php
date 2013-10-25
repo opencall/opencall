@@ -38,12 +38,10 @@ class AggregateFilter
         $this->item_id = $item_id;
 
         // default date is -7 days to today
-        $date_now = new DateTime();
+        $date_now = new DateTime('now', new DateTimeZone('Asia/Hong_Kong'));
         $this->date_to = $this->cleanDateTo($date_now);
-        $this->date_to->setTimezone(new DateTimeZone('Asia/Hong_Kong'));
 
         $this->date_from = $this->cleanDateFrom($date_now);
-        $this->date_from->setTimezone(new DateTimeZone('Asia/Hong_Kong'));
         $this->date_from->modify('-7 day');
     }
 
