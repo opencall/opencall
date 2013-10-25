@@ -205,6 +205,8 @@ class Counter extends EntityRepository
     {
         // within the past 24 hours
         $date_to = new DateTime();
+        $date_to->modify('+1 day');
+
         $dql = 'select sum(c.count_total) as a_total, c.client_id as a_id from OnCallAdminBundle:Counter c where c.date_in >= :date_from and c.date_in <= :date_to and c.client_id in (:client_ids) group by c.client_id';
         $query = $this->getEntityManager()
             ->createQuery($dql)
