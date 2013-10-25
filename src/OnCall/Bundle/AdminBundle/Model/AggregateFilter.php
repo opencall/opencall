@@ -161,6 +161,7 @@ class AggregateFilter
 
     public function getDateFromUTC()
     {
+        $this->date_from->setTimezone(new DateTimeZone('Asia/Hong_Kong'));
         $date = $this->date_from->format('Y') . ',';
         $date .= ($this->date_from->format('n') - 1) . ',';
         $date .= ($this->date_from->format('j'));
@@ -169,6 +170,7 @@ class AggregateFilter
 
     public function getDateToUTC()
     {
+        $this->date_to->setTimezone(new DateTimeZone('Asia/Hong_Kong'));
         $date = $this->date_to->format('Y') . ',';
         $date .= ($this->date_to->format('n') - 1) . ',';
         $date .= ($this->date_to->format('j'));
