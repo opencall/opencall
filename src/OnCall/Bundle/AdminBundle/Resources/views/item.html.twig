@@ -242,6 +242,7 @@ jQuery(document).ready(function() {
                 pointPadding: 0,
                 groupPadding: 0,
             name: 'Failed Calls',
+            color: '#e7191b',
             data: {{ hourly.failed | json_encode() }},
                 pointStart: Date.UTC(2013, 18, 12),
                 pointInterval: 3600 * 1000, // one hour
@@ -251,6 +252,7 @@ jQuery(document).ready(function() {
                     pointPadding: 0,
                     groupPadding: 0,
             name: 'Potential Leads',
+            color: '#bbe000',
             data: {{ hourly.plead | json_encode() }},
                 pointStart: Date.UTC(2013, 18, 12),
                 pointInterval: 3600 * 1000, // one hour
