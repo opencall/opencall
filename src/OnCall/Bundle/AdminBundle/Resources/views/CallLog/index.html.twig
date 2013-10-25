@@ -284,6 +284,63 @@ jQuery(document).ready(function() {
     // BEGIN more button
     $('#more_button').click(log_more);
     // END more button
+
+    // BEGIN date range
+    $('#aggregate_range').daterangepicker({
+        ranges: {
+            'Today': ['today', 'today'],
+            'Yesterday': ['yesterday', 'yesterday'],
+            'Last 7 Days': [Date.today().add({
+                    days: -6
+                }), 'today'],
+            'Last 30 Days': [Date.today().add({
+                    days: -29
+                }), 'today'],
+            'This Month': [Date.today().moveToFirstDayOfMonth(), Date.today().moveToLastDayOfMonth()],
+            'Last Month': [Date.today().moveToFirstDayOfMonth().add({
+                    months: -1
+                }), Date.today().moveToFirstDayOfMonth().add({
+                    days: -1
+                })]
+        },
+        opens: (App.isRTL() ? 'right' : 'left'),
+        format: 'MM/dd/yyyy',
+        separator: ' to ',
+        startDate: date_from,
+        endDate: date_to,
+        minDate: '01/01/2013',
+        maxDate: '12/31/2017',
+        locale: {
+            applyLabel: 'Submit',
+            fromLabel: 'From',
+            toLabel: 'To',
+            customRangeLabel: 'Custom Range',
+            daysOfWeek: ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'],
+            monthNames: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
+            firstDay: 1
+        },
+        showWeekNumbers: true,
+        buttonClasses: ['btn-danger']
+    },
+
+    function (start, end) {
+        App.blockUI(jQuery("#dashboard"));
+        setTimeout(function () {
+            App.unblockUI(jQuery("#dashboard"));
+            App.scrollTo();
+        }, 1000);
+        $('#aggregate_range span').html(start.toString('MMMM d, yyyy') + ' - ' + end.toString('MMMM d, yyyy'));
+        // redirect with params
+        var query_string = '?date_from=' + start.toString('yyyy-MM-dd') + '&date_to=' + end.toString('yyyy-MM-dd');
+        var url = location.protocol + '//' + location.host + location.pathname + query_string;
+        window.location = url;
+
+    });
+
+    $('#aggregate_range span').html("{{ agg_filter.getDateFromFormatted }} - {{ agg_filter.getDateToFormatted }}");
+    $('#aggregate_range').show();
+
+    // END date range
 });
 </script>
 {% endblock %}
@@ -303,6 +360,13 @@ jQuery(document).ready(function() {
                 </li>
                 <li>
                     Call Log
+                </li>
+                <li class="pull-right no-text-shadow">
+                    <div id="date_range" class="dashboard-date-range tooltips no-tooltip-on-touch-device responsive" data-tablet="" data-desktop="tooltips" data-placement="top" data-original-title="Change dashboard date range">
+                        <i class="icon-calendar"></i>
+                        <span>October 19, 2013 - October 26, 2013</span>
+                        <i class="icon-angle-down"></i>
+                    </div>
                 </li>
             </ul>
 
