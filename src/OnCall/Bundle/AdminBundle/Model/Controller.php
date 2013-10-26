@@ -62,9 +62,9 @@ class Controller extends BaseController
         $date_from = $query->get('date_from');
         $date_to = $query->get('date_to');
         if ($date_from != null)
-            $filter->setDateFrom(new DateTime($date_from));
+            $filter->setDateFromText($date_from);
         if ($date_to != null)
-            $filter->setDateTo(new DateTime($date_to));
+            $filter->setDateToText($date_to);
 
         return $filter;
     }

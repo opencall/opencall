@@ -43,7 +43,12 @@ class AdvertController extends ItemController
         $camp_id = $campaign->getID();
 
         // log url
+        $agg_filter = $data['agg_filter'];
+        $date_from = $agg_filter->getDateFrom();
+        $date_to = $agg_filter->getDateTo();
         $this->log_url = '/client/' . $cid . '/call_log?cid=' . $camp_id . '&agid=' . $id;
+        $this->log_url .= '&dts=' . $date_from->format('Y-m-d') . '&dte=' . $date_to->format('Y-m-d');
+
         $data['log_url'] = $this->log_url;
 
         // fill new parameters

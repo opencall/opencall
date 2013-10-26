@@ -58,6 +58,16 @@ class AggregateFilter
     }
 
     // setters
+    public function setDateFromText($date)
+    {
+        return $this->setDateFrom(new DateTime($date, new DateTimeZone('Asia/Hong_Kong')));
+    }
+
+    public function setDateToText($date)
+    {
+        return $this->setDateTo(new DateTime($date, new DateTimeZone('Asia/Hong_Kong')));
+    }
+
     public function setDateFrom(DateTime $date)
     {
         $this->date_from = $this->cleanDateFrom($date);

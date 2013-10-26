@@ -78,7 +78,6 @@ jQuery(document).ready(function() {
         var query_string = '?date_from=' + start.toString('yyyy-MM-dd') + '&date_to=' + end.toString('yyyy-MM-dd');
         var url = location.protocol + '//' + location.host + location.pathname + query_string;
         window.location = url;
-
     });
 
     $('#aggregate_range span').html("{{ agg_filter.getDateFromFormatted }} - {{ agg_filter.getDateToFormatted }}");

@@ -177,6 +177,12 @@ abstract class ItemController extends Controller
 
         // aggregates
         $agg = $this->processAggregates($id, $fetch_res['child_ids']);
+        $agg_filter = $agg['filters']['parent'];
+
+        // log url
+        $date_from = $agg_filter->getDateFrom();
+        $date_to = $agg_filter->getDateTo();
+        $this->log_url .= '&dts=' . $date_from->format('Y-m-d') . '&dte=' . $date_to->format('Y-m-d');
 
         return array(
             'user' => $user,
@@ -184,7 +190,8 @@ abstract class ItemController extends Controller
             'parent' => $fetch_res['parent'],
             'agg_parent' => $agg['parent'],
             'agg_table' => $agg['table'],
-            'agg_filter' => $this->getFilter($this->agg_type['parent'], $id),
+            // 'agg_filter' => $this->getFilter($this->agg_type['parent'], $id),
+            'agg_filter' => $agg_filter,
             'daily' => $agg['daily'],
             'hourly' => $agg['hourly'],
             'children' => $fetch_res['children'],
