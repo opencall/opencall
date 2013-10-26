@@ -119,6 +119,13 @@ class Advert extends Item
         return $this->xml_replace;
     }
 
+    public function hasXMLReplace()
+    {
+        if (strlen(trim($this->xml_replace)) > 0)
+            return true;
+        return false;
+    }
+
     public function shouldXMLOverride()
     {
         return $this->xml_override;

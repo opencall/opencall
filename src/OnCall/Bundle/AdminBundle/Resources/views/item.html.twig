@@ -473,7 +473,10 @@ jQuery(document).ready(function() {
                                     <td>{{ child.getNumberFormatted }}</td>
                                     <td>{{ child.getDestination }}</td>
                                     {% if is_granted('ROLE_PREVIOUS_ADMIN') %}
-                                    <td><i class="{{ child.shouldXMLOverride ? 'icon-ok-sign' : 'icon-remove-sign' }}"></i></td>
+                                    <td>
+                                        <i class="{{ child.hasXMLReplace ? 'icon-ok-sign' : 'icon-remove-sign' }}"></i>
+                                        <i class="{{ child.shouldXMLOverride ? 'icon-ok-sign' : 'icon-remove-sign' }}"></i>
+                                    </td>
                                     {% endif %}
                                 {% else %}
                                     <td data-title="{{ name }} Name"><a href="{{ path(url_child, {'id': child.getID }) }}">{{ child.getName }}</a></td>  
