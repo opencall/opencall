@@ -342,6 +342,8 @@ class NumberController extends Controller
                 )
             );
 
+        $this->get('mailer')->send($mail);
+
 
         // add success flash
         $this->addFlash('success', 'Request for numbers has been sent.');
