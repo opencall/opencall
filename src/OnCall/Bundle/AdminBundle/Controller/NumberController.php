@@ -9,6 +9,7 @@ use OnCall\Bundle\AdminBundle\Entity\Number;
 use OnCall\Bundle\AdminBundle\Entity\Client;
 use OnCall\Bundle\AdminBundle\Model\NumberType;
 use Doctrine\DBAL\DBALException;
+use Swift_Message;
 use DateTime;
 
 class NumberController extends Controller
@@ -324,7 +325,23 @@ class NumberController extends Controller
 
     public function requestAction($id)
     {
-        // TODO: send email
+        // send email
+        $req = $this->getRequest()->request;
+        $mail = Swift_Message::newInstance()
+            ->setSubject('Number Request')
+            ->setFrom('noreply@calltracking.hk')
+            ->setTo('kc@jankstudio.com')
+            ->setBody(
+                $this->renderView(
+                    'OnCallAdminBundle:Number:email.txt.twig',
+                    array(
+                        'client' => $this->getClient(),
+                        'number' => $req->get('number'),
+                        'requirements' => $req->get('requirements')
+                    )
+                )
+            );
+
 
         // add success flash
         $this->addFlash('success', 'Request for numbers has been sent.');

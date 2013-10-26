@@ -28,12 +28,34 @@ class AccountController extends Controller
         $role_hash = $user->getRoleHash();
         $alerts = array();
 
+        $aggr_count = array();
+        foreach ($accounts as $acc)
+        {
+            $counters = array(
+                'client_count' => 0,
+                'total_numbers' => 0,
+                'call_count' => 0,
+                'duration' => 0
+            );
+            $clients = $acc->getClients();
+            foreach ($clients as $cl)
+            {
+                $counters['client_count'] += 1;
+                $counters['total_numbers'] += $cl->getNumberCount();
+                $counters['call_count'] += $cl->getCallCount();
+                $counters['duration'] += $cl->getDuration();
+            }
+
+            $aggr_count[$acc->getID()] = $counters;
+        }
+
         return $this->render(
             'OnCallAdminBundle:Account:index.html.twig',
             array(
                 'sidebar_menu' => MenuHandler::getMenu($role_hash, 'account'),
                 'alerts' => $alerts,
-                'accounts' => $accounts
+                'accounts' => $accounts,
+                'aggr_count' => $aggr_count
             )
         );
 

@@ -35,6 +35,16 @@ class Client extends Item
      */
     protected $campaigns;
 
+    /**
+     * @ORM\Column(type="integer")
+     */
+    protected $call_count;
+
+    /**
+     * @ORM\Column(type="integer")
+     */
+    protected $duration;
+
     // begin setters
     public function setUser(User $user)
     {
@@ -84,6 +94,16 @@ class Client extends Item
     public function getChildren()
     {
         return $this->getCampaigns();
+    }
+
+    public function getCallCount()
+    {
+        return $this->call_count;
+    }
+
+    public function getDuration()
+    {
+        return $this->duration;
     }
     // end getters
 

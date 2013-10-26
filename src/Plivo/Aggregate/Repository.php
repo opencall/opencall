@@ -37,6 +37,13 @@ class Repository
         $stmt->bindParam(':count_plead', $count_plead);
         $stmt->bindParam(':duration', $entry->getDuration());
 
-        return $stmt->execute();
+        $ares = $stmt->execute();
+
+        $sql = 'update Client set call_count = call_count + 1, duration = duration + :duration where id = :client_id';
+        $cstmt = $this->pdo->prepare($sql);
+        $cstmt->bindParam(':client_id', $entry->getClientID());
+        $cstmt->bindParam(':duration', $entry->getDuration());
+
+        return $cstmt->execute();
     }
 }

@@ -28,8 +28,8 @@ $post = array(
     'BillDuration' => 0,
     'BillRate' => '0.00400',
     'Event' => 'Hangup',
-    'StartTime' => '2013-10-08 09:28:00',
-    'EndTime' => '2013-10-08 09:28:45',
+    'StartTime' => '2013-10-26 06:50:00',
+    'EndTime' => '2013-10-26 09:28:45',
 );
 
 // setup mysql
