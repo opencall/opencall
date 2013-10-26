@@ -333,10 +333,14 @@ jQuery(document).ready(function() {
             App.scrollTo();
         }, 1000);
         $('#aggregate_range span').html(start.toString('MMMM d, yyyy') + ' - ' + end.toString('MMMM d, yyyy'));
+
+        $('#form_dts').val(start.toString('yyyy-MM-dd'));
+        $('#form_dte').val(end.toString('yyyy-MM-dd'));
+
         // redirect with params
-        var query_string = '?dts=' + start.toString('yyyy-MM-dd') + '&dte=' + end.toString('yyyy-MM-dd');
-        var url = location.protocol + '//' + location.host + location.pathname + query_string;
-        window.location = url;
+        // var query_string = '?dts=' + start.toString('yyyy-MM-dd') + '&dte=' + end.toString('yyyy-MM-dd');
+        // var url = location.protocol + '//' + location.host + location.pathname + query_string;
+        // window.location = url;
 
     });
 
@@ -382,6 +386,8 @@ jQuery(document).ready(function() {
         <div class="span12">
             <div class="clearfix"></div>
             <form method="get">
+                <input id="form_dts" type="hidden" name="dts" value="" />
+                <input id="form_dte" type="hidden" name="dte" value="" />
                 <div style="float:left; margin-left: 4px;">
                 by Campaign:<br />
                 <select id="filter_campaign" name="cid" class="small m-wrap" tabindex="1">
