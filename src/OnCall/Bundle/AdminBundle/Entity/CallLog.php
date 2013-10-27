@@ -4,6 +4,7 @@ namespace OnCall\Bundle\AdminBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use DateTime;
+use Plivo\NumberFormatter;
 
 /**
  * @ORM\Entity(repositoryClass="OnCall\Bundle\AdminBundle\Repositories\CallLog")
@@ -168,9 +169,21 @@ class CallLog
         return $this->dialled_number;
     }
 
+    public function getDialledFormatted()
+    {
+        $nf = new NumberFormatter();
+        return $nf->format($this->dialled_number);
+    }
+
     public function getDestinationNumber()
     {
         return $this->destination_number;
+    }
+
+    public function getDestinationFormatted()
+    {
+        $nf = new NumberFormatter();
+        return $nf->format($this->destination_number);
     }
 
     public function getDateStart()

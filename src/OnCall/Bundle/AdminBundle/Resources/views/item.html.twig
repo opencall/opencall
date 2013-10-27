@@ -470,7 +470,7 @@ jQuery(document).ready(function() {
                                 {% if name == 'Advert' %}
                                     <td data-title="{{ name }} Name">{{ child.getName }}</td>  
                                     <td>{{ child.getNumberFormatted }}</td>
-                                    <td>{{ child.getDestination }}</td>
+                                    <td>{{ child.getDestinationFormatted }}</td>
                                     {% if is_granted('ROLE_PREVIOUS_ADMIN') %}
                                     <td>
                                         <i class="{{ child.hasXMLReplace ? 'icon-ok-sign' : 'icon-remove-sign' }}"></i>

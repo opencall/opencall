@@ -508,8 +508,8 @@ jQuery(document).ready(function() {
                         {% for log in logs %}
                             <tr class="log_row" data-id="{{ log.getID }}">
                                 <td data-title="Caller Number">{{ log.getOriginFormatted }}</td>  
-                                <td data-title="Dialled Number">{{ log.getDialledNumber }}</td>  
-                                <td data-title="Destination Number">{{ log.getDestinationNumber }}</td>
+                                <td data-title="Dialled Number">{{ log.getDialledFormatted }}</td>  
+                                <td data-title="Destination Number">{{ log.getDestinationFormatted }}</td>
                                 <td data-title="Call Start Time">
                                 {{ log.getDateStart.format('H:i:s') }}<br /><small>{{ log.getDateStart.format('M d Y') }}</small>
                                 </td>  

@@ -3,6 +3,7 @@
 namespace OnCall\Bundle\AdminBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Plivo\NumberFormatter;
 
 /**
  * @ORM\Entity
@@ -106,12 +107,21 @@ class Advert extends Item
         if ($this->number == null)
             return '';
 
-        return $this->number->getID();
+        return $this->number->getIDFormatted();
     }
 
     public function getDestination()
     {
         return $this->destination;
+    }
+
+    public function getDestinationFormatted()
+    {
+        if ($this->destination == null)
+            return '';
+
+        $nf = new NumberFormatter();
+        return $nf->format($this->destination);
     }
 
     public function getXMLReplace()

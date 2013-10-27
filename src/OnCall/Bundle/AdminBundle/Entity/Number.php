@@ -5,6 +5,7 @@ namespace OnCall\Bundle\AdminBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use DateTime;
 use OnCall\Bundle\AdminBundle\Model\NumberType;
+use Plivo\NumberFormatter;
 
 /**
  * @ORM\Entity
@@ -138,7 +139,8 @@ class Number
 
     public function getIDFormatted()
     {
-        return $this->id;
+        $nf = new NumberFormatter();
+        return $nf->format($this->id);
     }
 
     public function getType()

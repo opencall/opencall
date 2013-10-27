@@ -44,7 +44,7 @@
                     <select name="number" class="m-wrap" tabindex="1">
                         <option value="0" selected="selected"></option>
                         {% for num in numbers %}
-                        <option value="{{ num.getID }}">{{ num.getID }}</option>
+                        <option value="{{ num.getID }}">{{ num.getIDFormatted }}</option>
                         {% endfor %}
                     </select>
                     <br />Need more numbers? Open <a href="/client/{{ client_id }}/numbers">Number Management</a>
@@ -93,7 +93,7 @@
                     <select id="item_number_dropdown" name="number" class="m-wrap" tabindex="1">
                         <option id="item_number_blank" value="0"></option>
                         {% for num in numbers %}
-                        <option value="{{ num.getID }}">{{ num.getID }}</option>
+                        <option value="{{ num.getID }}">{{ num.getIDFormatted }}</option>
                         {% endfor %}
                     </select>
                 </p>
