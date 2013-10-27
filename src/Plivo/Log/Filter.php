@@ -25,7 +25,9 @@ class Filter
         $dmod = '',
         $dsec = '',
         $num = '',
-        $failed = ''
+        $failed = '',
+        $dts = '',
+        $dte = ''
     )
     {
         if ($cid == '')
@@ -69,12 +71,41 @@ class Filter
             $this->failed = false;
 
         // dates
-        $this->dte = new DateTime('now', new DateTimeZone('Asia/Hong_Kong'));
-        $this->cleanDTE();
+        $tz = new DateTimeZone('Asia/Hong_Kong');
 
-        $this->dts = new DateTime('now', new DateTimeZone('Asia/Hong_Kong'));
-        $this->dts->modify('-6 day');
+        // date start
+        try
+        {
+            if ($dts != '')
+                $this->dts = new DateTime($dts, $tz);
+            else
+            {
+                // default to 7 days ago
+                $this->dts = new DateTime(null, $tz);
+                $this->dts->modify('-6 day');
+            }
+        }
+        catch (\Exception $e)
+        {
+            $this->dts = new DateTime(null, $tz);
+            $this->dts->modify('-6 day');
+        }
         $this->cleanDTS();
+
+
+        // date end
+        try
+        {
+            if ($dte != '')
+                $this->dte = new DateTime($dte, $tz);
+            else
+                $this->dte = new DateTime(null, $tz);
+        }
+        catch (\Exception $e)
+        {
+            $this->dte = new DateTime(null, $tz);
+        }
+        $this->cleanDTE();
     }
 
     protected function cleanDTS()
@@ -153,6 +184,16 @@ class Filter
         return false;
     }
 
+    public function getDTS()
+    {
+        return $this->dts;
+    }
+
+    public function getDTE()
+    {
+        return $this->dte;
+    }
+
     public function getDTSUTC()
     {
         $date = $this->dts->format('Y') . ',';
@@ -169,6 +210,22 @@ class Filter
         return 'Date.UTC(' . $date . ')';
     }
 
+    public function getDTSFormatted()
+    {
+        if ($this->dts == null)
+            return '';
+
+        return $this->dts->format('Y-m-d');
+    }
+
+    public function getDTEFormatted()
+    {
+        if ($this->dte == null)
+            return '';
+
+        return $this->dte->format('Y-m-d');
+    }
+
     public function toData()
     {
         return array(
@@ -181,7 +238,9 @@ class Filter
             'number' => $this->num,
             'failed' => $this->failed,
             'dts_utc' => $this->getDTSUTC(),
-            'dte_utc' => $this->getDTEUTC()
+            'dte_utc' => $this->getDTEUTC(),
+            'dts' => $this->getDTSFormatted(),
+            'dte' => $this->getDTEFormatted()
         );
     }
 }

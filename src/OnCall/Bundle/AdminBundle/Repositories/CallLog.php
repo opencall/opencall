@@ -87,6 +87,23 @@ class CallLog extends EntityRepository
         }
     }
 
+    protected function filterDates(Filter $filter, $qb)
+    {
+        // date start
+        if ($filter->getDTS() != null)
+        {
+            $qb->andWhere('cl.date_start >= :date_start')
+                ->setParameter('date_start', $filter->getDTS());
+        }
+
+        // date end
+        if ($filter->getDTE() != null)
+        {
+            $qb->andWhere('cl.date_start <= :date_end')
+                ->setParameter('date_end', $filter->getDTE());
+        }
+    }
+
     public function findLatest($client_id, Filter $filter, $last_id = null, $limit = 10, $offset = 0)
     {
         // create query and set client_id
@@ -107,6 +124,7 @@ class CallLog extends EntityRepository
         $this->filterNumber($filter, $qb);
         $this->filterFailed($filter, $qb);
         $this->filterHCause($filter, $qb);
+        $this->filterDates($filter, $qb);
 
         // order and limit
         $qb->orderBy('cl.id', 'DESC')

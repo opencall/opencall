@@ -211,6 +211,9 @@ function log_more()
     if (filter.failed)
         url += '&failed=1';
 
+    url += '&dts=' + filter.dts;
+    url += '&dte=' + filter.dte;
+
     console.log(url);
     $.get(url, function(data) {
         $('#logbody').append(data);
@@ -344,9 +347,8 @@ jQuery(document).ready(function() {
 
     });
 
-    $('#aggregate_range span').html("{{ agg_filter.getDateFromFormatted }} - {{ agg_filter.getDateToFormatted }}");
+    $('#aggregate_range span').html(date_from.toString('MMMM d, yyyy') + ' - ' + date_to.toString('MMMM d, yyyy'));
     $('#aggregate_range').show();
-
     // END date range
 });
 </script>
