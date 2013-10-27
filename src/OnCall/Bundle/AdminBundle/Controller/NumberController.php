@@ -30,7 +30,7 @@ class NumberController extends Controller
             ->getRepository('OnCallAdminBundle:Number')
             ->createQueryBuilder('n');
 
-        // check if admin or client
+        // check if admin
         if ($this->get('security.context')->isGranted('ROLE_ADMIN'))
         {
             $template = 'OnCallAdminBundle:Number:index.admin.html.twig';
@@ -45,6 +45,8 @@ class NumberController extends Controller
                 $num_query->where('n.client is not null');
             else if ($usage === '0')
                 $num_query->where('n.client is null');
+
+            $client = null;
         }
         else
         {
@@ -72,6 +74,8 @@ class NumberController extends Controller
                 $num_query->where('n.client_id = :client_id')
                     ->setParameter('client_id', $client_id);
             }
+
+            $client = $this->getClient();
 
             // usage filter
             if ($usage === '1')
@@ -106,7 +110,7 @@ class NumberController extends Controller
                 'types' => $types,
                 'type' => $type,
                 'usage' => $usage,
-                'client' => $this->getClient(),
+                'client' => $client,
                 'client_id' => $client_id
             )
         );
