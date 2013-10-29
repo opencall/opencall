@@ -161,7 +161,8 @@ class CallLog
         if ($this->origin_number == 0)
             return 'Anonymous';
 
-        return $this->origin_number;
+        $nf = new NumberFormatter();
+        return $nf->format($this->origin_number);
     }
 
     public function getDialledNumber()
