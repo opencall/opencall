@@ -28,6 +28,7 @@ class CampaignController extends ItemController
         $this->url_child = 'oncall_admin_adgroups';
         $this->url_parent = 'oncall_admin_campaigns';
 
+        $this->child_filter_var = 'cid';
     }
 
     public function indexAction($id)

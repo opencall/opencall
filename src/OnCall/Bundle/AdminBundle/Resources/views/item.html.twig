@@ -480,10 +480,16 @@ jQuery(document).ready(function() {
                                 {% else %}
                                     <td data-title="{{ name }} Name"><a href="{{ path(url_child, {'id': child.getID }) }}">{{ child.getName }}</a></td>  
                                 {% endif %}
-                                <td data-title="Total Calls">{{ agg_table[child.getID].getTotalFormatted }}<a href=""></a></td>
-                                <td data-title="Unique Calls">{{ agg_table[child.getID].getUniqueFormatted }}<a href=""></a></td>
-                                <td data-title="Failed Calls">{{ agg_table[child.getID].getFailedFormatted }}<a href=""></a></td>
-                                <td data-title="Potential Leads">{{ agg_table[child.getID].getPLeadFormatted }}<a href=""></a></td>
+                                <td data-title="Total Calls"><a href="{{ log_url }}&{{ child_filter_var }}={{ child.getID }}">{{ agg_table[child.getID].getTotalFormatted }}</a></td>
+                                <td data-title="Unique Calls">
+                                <a href="{{ log_url }}&{{ child_filter_var }}={{ child.getID }}">{{ agg_table[child.getID].getUniqueFormatted }}</a>
+                                </td>
+                                <td data-title="Failed Calls">
+                                <a href="{{ log_url }}&{{ child_filter_var }}={{ child.getID }}&failed=1">{{ agg_table[child.getID].getFailedFormatted }}</a>
+                                </td>
+                                <td data-title="Potential Leads">
+                                <a href="{{ log_url }}&{{ child_filter_var }}={{ child.getID }}&dmod=greater&dsec=120">{{ agg_table[child.getID].getPLeadFormatted }}</a>
+                                </td>
                                 <td data-title="% Unique">{{ agg_table[child.getID].getUniquePercentFormatted }}%</td>
                                 <td data-title="% Failed">{{ agg_table[child.getID].getFailedPercentFormatted }}%</td>
                                 <td data-title="% Potential Leads">{{ agg_table[child.getID].getPLeadPercentFormatted }}%</td>
@@ -506,10 +512,18 @@ jQuery(document).ready(function() {
                                 {% else %}
                                 <td {% if name == 'Advert' %}colspan="3"{% endif %}><strong>Totals</strong></td>
                                 {% endif %}
-                                <td>{{ agg_parent.getTotalFormatted }}</td>
-                                <td>{{ agg_parent.getUniqueFormatted }}</td>
-                                <td>{{ agg_parent.getFailedFormatted }}</td>
-                                <td>{{ agg_parent.getPLeadFormatted }}</td>
+                                <td>
+                                <a href="{{ log_url }}">{{ agg_parent.getTotalFormatted }}</a>
+                                </td>
+                                <td>
+                                <a href="{{ log_url }}">{{ agg_parent.getUniqueFormatted }}</a>
+                                </td>
+                                <td>
+                                <a href="{{ log_url }}&failed=1">{{ agg_parent.getFailedFormatted }}</a>
+                                </td>
+                                <td>
+                                <a href="{{ log_url }}&dmod=greater&dsec=120">{{ agg_parent.getPLeadFormatted }}</a>
+                                </td>
                                 <td>{{ agg_parent.getUniquePercentFormatted }}%</td>
                                 <td>{{ agg_parent.getFailedPercentFormatted }}%</td>
                                 <td>{{ agg_parent.getPLeadPercentFormatted }}%</td>

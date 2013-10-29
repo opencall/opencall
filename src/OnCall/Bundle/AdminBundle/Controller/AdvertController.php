@@ -30,6 +30,7 @@ class AdvertController extends ItemController
         $this->url_parent = 'oncall_admin_adverts';
 
         $this->child_id_field = 'adgroup_id';
+        $this->child_filter_var = 'adid';
     }
 
     public function indexAction($id)

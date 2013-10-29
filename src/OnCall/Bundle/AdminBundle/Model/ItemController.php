@@ -23,6 +23,8 @@ abstract class ItemController extends Controller
     protected $child_id_field;
     protected $log_url;
 
+    protected $child_filter_var;
+
     public function __construct()
     {
         $this->name = 'Item';
@@ -201,6 +203,7 @@ abstract class ItemController extends Controller
             'client_id' => $this->getClientID(),
             'log_url' => $this->log_url,
             'filters' => $agg['filters'],
+            'child_filter_var' => $this->child_filter_var
         );
     }
 
