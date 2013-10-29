@@ -339,6 +339,8 @@ jQuery(document).ready(function() {
 
         $('#form_dts').val(start.toString('yyyy-MM-dd'));
         $('#form_dte').val(end.toString('yyyy-MM-dd'));
+        $('#filter_submit').click();
+
 
         // redirect with params
         // var query_string = '?dts=' + start.toString('yyyy-MM-dd') + '&dte=' + end.toString('yyyy-MM-dd');
@@ -469,7 +471,7 @@ jQuery(document).ready(function() {
                     <input name="num" type="text" class="small m-wrap" value="{{ filter.getNum }}">
                 </div>
                 <div style="float:left; margin: 20px 0px 0px 4px;">
-                <input type="submit" class="btn green" value="Apply Filters" />
+                <input id="filter_submit" type="submit" class="btn green" value="Apply Filters" />
                 <!-- Kendrick: "Reset" should only show if a filter has been applied -->
                 {% if (filter.canReset) %}
                 <a href="/client/{{ client.getID }}/call_log" class="btn red">Reset Filters</a>
