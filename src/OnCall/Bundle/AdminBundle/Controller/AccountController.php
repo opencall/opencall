@@ -97,6 +97,7 @@ class AccountController extends Controller
         catch (DBALException $e)
         {
             $this->addFlash('error', 'Could not add default client for account.');
+            error_log($e->getMessage());
         }
 
         return $this->redirect($this->generateUrl('oncall_admin_accounts'));

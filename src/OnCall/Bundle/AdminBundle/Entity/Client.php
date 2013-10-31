@@ -45,6 +45,13 @@ class Client extends Item
      */
     protected $duration;
 
+    public function __construct()
+    {
+        $this->call_count = 0;
+        $this->duration = 0;
+        parent::__construct();
+    }
+
     // begin setters
     public function setUser(User $user)
     {
