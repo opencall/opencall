@@ -14,7 +14,7 @@ $(document).ready(function() {
     $('#filter_usage').change(filter_redirect);
     $('#filter_type').change(filter_redirect);
 
-    $('#delete_num').click(function() {
+    $('.delete_num').click(function() {
         var num_id = $(this).data('id');
         $('#dnum_id').html(num_id);
         $('#dnum_form').attr('action', '/number/' + num_id + '/unassign');
@@ -157,7 +157,7 @@ $(document).ready(function() {
                         <td>{{ num.getDateLastCallFormatted }}</td>
                         <td>
                             {% if (not num.isAssigned) %}
-                            <button id="delete_num" href="#deleteNumber" data-toggle="modal" data-id="{{ num.getID }}" role="button" class="btn mini">relinquish</button>
+                            <button href="#deleteNumber" data-toggle="modal" data-id="{{ num.getID }}" role="button" class="btn mini delete_num">relinquish</button>
                             {% endif %}
                         </td>
                     </tr>
