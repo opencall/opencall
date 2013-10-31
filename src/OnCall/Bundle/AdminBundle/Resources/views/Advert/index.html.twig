@@ -140,7 +140,7 @@ function update_item(data)
     else
     {
         $('.item_number_option').remove();
-        $('#item_number_blank').after('<option class="item_number_option" value="' + data.number_id + '" selected="selected">' + data.number_id + '</option>');
+        $('#item_number_blank').after('<option class="item_number_option" value="' + data.number_id + '" selected="selected">' + data.number_id_formatted + '</option>');
     }
 
     $('.item_name').val(data.name);

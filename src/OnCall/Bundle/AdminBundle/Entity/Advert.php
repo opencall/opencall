@@ -110,6 +110,14 @@ class Advert extends Item
         return $this->number->getIDFormatted();
     }
 
+    public function getNumberRaw()
+    {
+        if ($this->number == null)
+            return '';
+
+        return $this->number->getID();
+    }
+
     public function getDestination()
     {
         return $this->destination;
@@ -145,7 +153,8 @@ class Advert extends Item
     public function getData()
     {
         $data = parent::getData();
-        $data['number_id'] = $this->getNumberFormatted();
+        $data['number_id_formatted'] = $this->getNumberFormatted();
+        $data['number_id'] = $this->getNumberRaw();
         $data['destination'] = $this->getDestination();
         $data['xml_replace'] = $this->getXMLReplace();
         $data['xml_override'] = $this->shouldXMLOverride();
