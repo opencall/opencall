@@ -9,7 +9,9 @@ use OnCall\Bundle\AdminBundle\Entity\Client;
 use OnCall\Bundle\AdminBundle\Model\Controller;
 use Doctrine\DBAL\DBALException;
 use Doctrine\ORM\ORMException;
-
+use Plivo\AccountCounter\Repository as ACRepo;
+use Plivo\AccountCounter\Entry as ACEntry;
+use DateTime;
 
 class AccountController extends Controller
 {
@@ -29,24 +31,16 @@ class AccountController extends Controller
         $alerts = array();
 
         $aggr_count = array();
-        foreach ($accounts as $acc)
+        $conn = $this->get('database_connection');
+        $ac_repo = new ACRepo($conn->getWrappedConnection());
+        $res = $ac_repo->fetchAll();
+        foreach ($res as $ac)
         {
-            $counters = array(
-                'client_count' => 0,
-                'total_numbers' => 0,
-                'call_count' => 0,
-                'duration' => 0
-            );
-            $clients = $acc->getClients();
-            foreach ($clients as $cl)
-            {
-                $counters['client_count'] += 1;
-                $counters['total_numbers'] += $cl->getNumberCount();
-                $counters['call_count'] += $cl->getCallCount();
-                $counters['duration'] += $cl->getDuration();
-            }
-
-            $aggr_count[$acc->getID()] = $counters;
+            $user_id = $ac->getUserID();
+            if (!isset($user_id))
+                $aggr_count[$user_id] = array();
+                
+            $aggr_count[$user_id][] = $ac;
         }
 
         return $this->render(
@@ -99,6 +93,11 @@ class AccountController extends Controller
             $this->addFlash('error', 'Could not add default client for account.');
             error_log($e->getMessage());
         }
+
+        // initialize counters
+        $conn = $this->get('database_connection');
+        $ac_repo = new ACRepo($conn->getWrappedConnection());
+        $ac_repo->initialize(new DateTime(), $user->getID());
 
         return $this->redirect($this->generateUrl('oncall_admin_accounts'));
     }

@@ -12,6 +12,9 @@ use Plivo\Aggregate\Entry as AggEntry;
 use Plivo\Aggregate\Repository as AggRepository;
 use Plivo\Log\Pusher as LogPusher;
 use PDO;
+use DateTime;
+use Plivo\AccountCounter\Repository as ACRepo;
+use Plivo\AccountCounter\Entry as ACEntry;
 
 class Hangup
 {
@@ -68,6 +71,15 @@ class Hangup
             // live log
             $log_pusher = new LogPusher($this->zmq);
             $log_pusher->send($log);
+
+            // account counter
+            $num_data = $qmsg->getNumberData();
+            $ac_repo = new ACRepo($this->pdo);
+            $ac_entry = new ACEntry(new DateTime(), $num_data['user_id']);
+            $ac_entry->setCall(1);
+            $ac_entry->setDuration($qmsg->getHangupParams()->getDuration());
+            $ac_repo->append($ac_entry);
+
 
             // end log and aggregate
         }

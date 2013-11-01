@@ -11,6 +11,8 @@ use OnCall\Bundle\AdminBundle\Model\NumberType;
 use Doctrine\DBAL\DBALException;
 use Swift_Message;
 use DateTime;
+use Plivo\AccountCounter\Repository as ACRepo;
+use Plivo\AccountCounter\Entry as ACEntry;
 
 class NumberController extends Controller
 {
@@ -236,6 +238,8 @@ class NumberController extends Controller
             return $this->redirect($this->generateUrl('oncall_admin_numbers'));
         }
 
+        $acc_count = 0;
+
         // iterate through all numbers checked
         foreach ($num_ids as $num)
         {
@@ -257,6 +261,9 @@ class NumberController extends Controller
 
             // TODO: log number assignment
 
+            // account counter
+            $acc_count++;
+
             // assign
             $num_object->setClient($client);
             $num_object->setDateAssign(new DateTime());
@@ -264,6 +271,13 @@ class NumberController extends Controller
 
         // flush db
         $em->flush();
+
+        // account counter code
+        $conn = $this->get('database_connection');
+        $ac_repo = new ACRepo($conn->getWrappedConnection());
+        $ac_entry = new ACEntry(new DateTime(), $client->getUser()->getID());
+        $ac_entry->setNumber($acc_count);
+        $ac_repo->append($ac_entry);
 
         $this->addFlash('success', 'The numbers have been assigned.');
 

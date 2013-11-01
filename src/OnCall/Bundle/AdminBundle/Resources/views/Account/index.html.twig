@@ -153,6 +153,9 @@ $(document).ready(function() {
                                 </td>  
                                 <td data-title="Total Active Clients" valign="top">
                                     <small>
+                                    {% for ac in aggr_count[acc.getID] %}
+                                        <strong>{{ ac.getDateIn.format('m/y') }}</strong>: {{ ac.getClient }}<br />
+                                    {% endfor %}
                                     <!--
                                         <strong>03/13</strong>: 1<br />
                                         <strong>04/13</strong>: 1<br />
@@ -166,6 +169,9 @@ $(document).ready(function() {
                                 </td>
                                 <td data-title="Total Numbers" valign="top">
                                     <small>
+                                    {% for ac in aggr_count[acc.getID] %}
+                                        <strong>{{ ac.getDateIn.format('m/y') }}</strong>: {{ ac.getNumber }}<br />
+                                    {% endfor %}
                                     <!--
                                         <strong>03/13</strong>: 20<br />
                                         <strong>04/13</strong>: 30<br />
@@ -179,6 +185,9 @@ $(document).ready(function() {
                                 </td>
                                 <td data-title="Calls Received" valign="top">
                                     <small>
+                                    {% for ac in aggr_count[acc.getID] %}
+                                        <strong>{{ ac.getDateIn.format('m/y') }}</strong>: {{ ac.getCall }}<br />
+                                    {% endfor %}
                                     <!--
                                         <strong>03/13</strong>: 120<br />
                                         <strong>04/13</strong>: 200<br />
@@ -192,6 +201,9 @@ $(document).ready(function() {
                                 </td>
                                 <td data-title="Total Call Duration" valign="top">
                                     <small>
+                                    {% for ac in aggr_count[acc.getID] %}
+                                        <strong>{{ ac.getDateIn.format('m/y') }}</strong>: {{ ac.getDurationFormatted }}<br />
+                                    {% endfor %}
                                     <!--
                                         <strong>03/13</strong>: 00:45:12<br />
                                         <strong>04/13</strong>: 01:05:12<br />

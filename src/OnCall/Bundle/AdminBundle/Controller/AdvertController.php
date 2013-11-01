@@ -7,6 +7,9 @@ use OnCall\Bundle\AdminBundle\Model\ItemController;
 use OnCall\Bundle\AdminBundle\Model\AggregateFilter;
 use OnCall\Bundle\AdminBundle\Entity\Item;
 use OnCall\Bundle\AdminBundle\Entity\Number;
+use Plivo\AccountCounter\Repository as ACRepo;
+use Plivo\AccountCounter\Entry as ACEntry;
+use DateTime;
 
 class AdvertController extends ItemController
 {

@@ -8,6 +8,9 @@ use OnCall\Bundle\AdminBundle\Model\MenuHandler;
 use OnCall\Bundle\AdminBundle\Model\Timezone;
 use OnCall\Bundle\AdminBundle\Entity\Client;
 use OnCall\Bundle\AdminBundle\Model\ClientStatus;
+use Plivo\AccountCounter\Repository as ACRepo;
+use Plivo\AccountCounter\Entry as ACEntry;
+use DateTime;
 
 class ClientController extends Controller
 {
@@ -94,14 +97,23 @@ class ClientController extends Controller
     {
         $data = $this->getRequest()->request->all();
         $em = $this->getDoctrine()->getManager();
+        
+        $user = $this->getUser();
 
         $client = new Client();
-        $data['user'] = $this->getUser();
+        $data['user'] = $user;
         $data['status'] = ClientStatus::ACTIVE;
         $this->updateClient($client, $data);
 
         $em->persist($client);
         $em->flush();
+
+        // add account counter code
+        $conn = $this->get('database_connection');
+        $ac_repo = new ACRepo($conn->getWrappedConnection());
+        $ac_entry = new ACEntry(new DateTime(), $user->getID());
+        $ac_entry->setClient(1);
+        $ac_repo->append($ac_entry);
 
         return $this->redirect($this->generateUrl('oncall_admin_clients'));
     }
