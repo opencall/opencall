@@ -478,7 +478,7 @@ jQuery(document).ready(function() {
                                     </td>
                                     {% endif %}
                                 {% else %}
-                                    <td data-title="{{ name }} Name"><a href="{{ path(url_child, {'id': child.getID }) }}">{{ child.getName }}</a></td>  
+                                    <td data-title="{{ name }} Name"><a href="{{ path(url_child, {'id': child.getID }) }}?{{ params_child }}">{{ child.getName }}</a></td>  
                                 {% endif %}
                                 <td data-title="Total Calls"><a href="{{ log_url }}&{{ child_filter_var }}={{ child.getID }}">{{ agg_table[child.getID].getTotalFormatted }}</a></td>
                                 <td data-title="Unique Calls">

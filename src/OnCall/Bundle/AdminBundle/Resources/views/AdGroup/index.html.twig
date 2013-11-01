@@ -10,7 +10,7 @@
 
 {% block breadcrumb %}
 <li>
-    <a href="/client/{{ parent.getClient.getID }}/campaigns">{{ parent.getClient.getName }}</a>
+    <a href="/client/{{ parent.getClient.getID }}/campaigns?{{ params_child }}">{{ parent.getClient.getName }}</a>
     <i class="icon-angle-right"></i>
 </li>
 <li>

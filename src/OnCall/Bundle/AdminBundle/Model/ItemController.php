@@ -184,7 +184,11 @@ abstract class ItemController extends Controller
         // log url
         $date_from = $agg_filter->getDateFrom();
         $date_to = $agg_filter->getDateTo();
-        $this->log_url .= '&dts=' . $date_from->format('Y-m-d') . '&dte=' . $date_to->format('Y-m-d');
+        $date_params = 'dts=' . $date_from->format('Y-m-d') . '&dte=' . $date_to->format('Y-m-d');
+        $this->log_url .= '&' . $date_params;
+
+        // child params
+        $params_child = 'date_from=' . $date_from->format('Y-m-d') . '&date_to=' . $date_to->format('Y-m-d');
 
         return array(
             'user' => $user,
@@ -200,6 +204,7 @@ abstract class ItemController extends Controller
             'top_color' => $this->top_color,
             'name' => $this->name,
             'url_child' => $this->url_child,
+            'params_child' => $params_child,
             'client_id' => $this->getClientID(),
             'log_url' => $this->log_url,
             'filters' => $agg['filters'],
