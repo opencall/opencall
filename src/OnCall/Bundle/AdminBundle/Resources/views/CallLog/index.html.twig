@@ -143,7 +143,7 @@ function logtable_add(log)
         return;
     }
 
-    console.log(log);
+    // console.log(log);
 
     var log_id = 'log_' + log.call_id;
 
@@ -216,7 +216,7 @@ function log_more()
     url += '&dts=' + filter.dts;
     url += '&dte=' + filter.dte;
 
-    console.log(url);
+    // console.log(url);
     $.get(url, function(data) {
         $('#logbody').append(data);
     });
@@ -232,7 +232,7 @@ jQuery(document).ready(function() {
             console.log('connected');
             conn.subscribe('client:{{ client.getID }}', function(topic, data) {
                 var log = data.logentry;
-                console.log(log);
+                // console.log(log);
                 logtable_add(log);
             });
         },
