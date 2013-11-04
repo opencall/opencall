@@ -5,6 +5,7 @@ namespace Plivo\Log;
 use DateTime;
 use DateTimeZone;
 use Plivo\Queue\Message;
+use Plivo\NumberFormatter;
 
 class Entry
 {
@@ -272,7 +273,26 @@ class Entry
         if ($this->origin_number == 0)
             return 'Anonymous';
 
-        return $this->origin_number;
+        $nf = new NumberFormatter();
+        return $nf->format($this->origin_number);
+    }
+
+    public function getDialledFormatted()
+    {
+        if ($this->dialled_number == null)
+            return '';
+
+        $nf = new NumberFormatter();
+        return $nf->format($this->dialled_number);
+    }
+
+    public function getDestinationFormatted()
+    {
+        if ($this->destination_number == null)
+            return '';
+
+        $nf = new NumberFormatter();
+        return $nf->format($this->destination_number);
     }
 
     public function getData()
@@ -284,7 +304,9 @@ class Entry
             'origin_number' => $this->origin_number,
             'origin_formatted' => $this->getOriginFormatted(),
             'dialled_number' => $this->dialled_number,
+            'dialled_formatted' => $this->getDialledFormatted(),
             'destination_number' => $this->destination_number,
+            'destination_formatted' => $this->getDestinationFormatted(),
             'duration' => $this->duration,
             'bill_duration' => $this->bill_duration,
             'bill_rate' => $this->bill_rate,

@@ -143,11 +143,13 @@ function logtable_add(log)
         return;
     }
 
+    console.log(log);
+
     var log_id = 'log_' + log.call_id;
 
     var cols = '<td>' + log.origin_formatted + '</td>';
-    cols += '<td>' + log.dialled_number + '</td>';
-    cols += '<td>' + log.destination_number + '</td>';
+    cols += '<td>' + log.dialled_formatted + '</td>';
+    cols += '<td>' + log.destination_formatted + '</td>';
     cols += '<td>' + log.date_start.time + '<br /><small>' + log.date_start.date + '</small></td>';
     cols += '<td>' + log.date_end.time + '<br /><small>' + log.date_end.date + '</small></td>';
     cols += '<td>' + log.duration + 's</td>';
