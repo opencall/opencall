@@ -12,3 +12,6 @@ parameters:
     mailer_password: null
     locale: en
     secret: 001ThisIsMySecretKey1021093
+    redis_scheme: tcp
+    redis_host: devredisnode.5zaozk.0001.apse1.cache.amazonaws.com
+    redis_port: 6379
