@@ -82,7 +82,7 @@ class AccountController extends Controller
             {
                 $client = new Client();
                 $client->setUser($user)
-                    ->setName($user->getName())
+                    ->setName($user->getBusinessName())
                     ->setTimezone('8.0');
                 $em->persist($client);
                 $em->flush();
