@@ -2,7 +2,11 @@
 
 namespace Plivo;
 
-// NOTE: we only support HK for now
+/*
+NOTE: we only support the following countries for now:
+Hong Kong
+Singapore
+*/
 class NumberFormatter
 {
     public function __construct()
@@ -29,6 +33,7 @@ class NumberFormatter
         $ccode = substr($num, 0, 3);
         switch ($ccode)
         {
+            // hong kong
             case '852':
                 return '852';
         }
@@ -41,6 +46,9 @@ class NumberFormatter
         $ccode = substr($num, 0, 2);
         switch ($ccode)
         {
+            // singapore
+            case '65':
+                return '65';
         }
 
         return null;
@@ -87,9 +95,17 @@ class NumberFormatter
     {
         switch ($ccode)
         {
+            // hong kong
             case '852':
                 return array(
                     'pattern' => '/(852)(\\d{4})(\\d+)/',
+                    'format' => '+$1 $2 $3'
+                );
+
+            // singapore
+            case '65':
+                return array(
+                    'pattern' => '/(65)(\\d{4})(\\d+)/',
                     'format' => '+$1 $2 $3'
                 );
         }
