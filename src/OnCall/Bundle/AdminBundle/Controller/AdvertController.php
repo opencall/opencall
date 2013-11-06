@@ -9,6 +9,7 @@ use OnCall\Bundle\AdminBundle\Entity\Item;
 use OnCall\Bundle\AdminBundle\Entity\Number;
 use Plivo\AccountCounter\Repository as ACRepo;
 use Plivo\AccountCounter\Entry as ACEntry;
+use Plivo\NumberFormatter;
 use DateTime;
 
 class AdvertController extends ItemController
@@ -99,7 +100,10 @@ class AdvertController extends ItemController
             if ($data['destination'] == 0)
                 $advert->setDestination(null);
             else
-                $advert->setDestination($data['destination']);
+            {
+                $nf = new NumberFormatter();
+                $advert->setDestination($nf->clean($data['destination']));
+            }
         }
         else
             $advert->setDestination(null);
