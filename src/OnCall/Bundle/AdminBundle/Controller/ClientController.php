@@ -214,10 +214,12 @@ class ClientController extends Controller
         // set inactive
         $client->setStatus(ClientStatus::INACTIVE);
 
+        /*
         // set children (campaigns, ad group, advert) inactive
         $camps = $client->getCampaigns();
         foreach ($camps as $camp)
             $camp->setInactive();
+        */
 
         // set numbers inactive
         $numbers = $client->getNumbers();
