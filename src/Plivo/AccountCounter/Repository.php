@@ -174,7 +174,7 @@ class Repository
         $stmt->bindValue(':number_count', $entry->getNumber());
         $stmt->bindValue(':call_count', $entry->getCall());
         $stmt->bindValue(':duration', $entry->getDuration());
-        $stmt->bindValue(':date_in', $entry->getDateIn()->format('Y-m-d'));
+        $stmt->bindValue(':date_in', $entry->getDateIn()->format('Y-m') . '-01');
         $stmt->bindValue(':user_id', $entry->getUserID());
 
         return $stmt->execute();
