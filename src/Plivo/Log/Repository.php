@@ -13,6 +13,33 @@ class Repository
         $this->pdo = $pdo;
     }
 
+    public function findClientID($call_id)
+    {
+        $sql = 'select client_id from CallLog where call_id = :call_id limit 1';
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->bindParam(':call_id', $call_id);
+
+        if (!$stmt->execute())
+            return 0;
+
+        $row = $stmt->fetch();
+        if (!$row)
+            return 0;
+
+        return $row['client_id'];
+    }
+
+    public function updateCallback($call_id, $b_status, $b_hangup_cause)
+    {
+        $sql = 'update CallLog set b_status = :b_status, b_hangup_cause = :b_hangup_cause where call_id = :call_id';
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->bindParam(':b_status', $b_status);
+        $stmt->bindParam(':b_hangup_cause', $b_hangup_cause);
+        $stmt->bindParam(':call_id', $call_id);
+
+        return $stmt->execute();
+    }
+
     public function persist(Entry $log)
     {
         // persist log entry into database

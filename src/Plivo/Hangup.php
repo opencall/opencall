@@ -35,9 +35,6 @@ class Hangup
     {
         try
         {
-            // config stuff
-            $zmq_server = 'tcp://localhost:5555';
-
             // parse parameters
             $params = new Parameters($post);
 

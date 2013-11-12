@@ -27,10 +27,14 @@ class Entry
     protected $campaign_id;
     protected $client_id;
     protected $response_xml;
+    protected $b_status;
+    protected $b_hangup_cause;
 
     public function __construct()
     {
         $this->date_in = new DateTime('now', new DateTimeZone('Asia/Hong_Kong'));
+        $this->b_hangup_cause = '';
+        $this->b_status = '';
     }
 
     public static function createFromMessage(Message $msg, $use_hangup = true)
@@ -175,6 +179,19 @@ class Entry
     public function setResponseXML($xml)
     {
         $this->response_xml = $xml;
+        return $this;
+    }
+
+    public function setBHangupCause($cause)
+    {
+        $this->b_hangup_cause = $cause;
+        return $this;
+    }
+
+    public function setBStatus($status)
+    {
+        $this->b_status = $status;
+        return $this;
     }
 
     // getters
@@ -295,6 +312,17 @@ class Entry
         return $nf->format($this->destination_number);
     }
 
+    public function getBStatus()
+    {
+        return $this->b_status;
+    }
+
+    public function getBHangupCause()
+    {
+        return $this->b_hangup_cause;
+    }
+
+    // for serialization
     public function getData()
     {
         $data = array(
@@ -316,6 +344,8 @@ class Entry
             'adgroup_id' => $this->adgroup_id,
             'campaign_id' => $this->campaign_id,
             'client_id' => $this->client_id,
+            'b_status' => $this->b_status,
+            'b_hangup_cause' => $this->b_hangup_cause
         );
 
         // date start
