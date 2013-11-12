@@ -65,6 +65,14 @@ class Entry
             ->setStatus($data->getStatus())
             ->setHangupCause($data->getHangupCause());
 
+        // callback data
+        $cb_data = $msg->getCallbackParams();
+        if ($cb_data != null)
+        {
+            $entry->setBStatus($cb_data->getBStatus())
+                ->setBHangupCause($cb_data->getBHangupCause());
+        }
+
         if ($use_hangup)
         {
             $entry->setDateStart(new DateTime($data->getStartTime()))

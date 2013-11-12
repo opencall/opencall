@@ -10,6 +10,7 @@ class Message
 {
     protected $ans_params;
     protected $hangup_params;
+    protected $callback_params;
     protected $num_data;
     protected $xml;
 
@@ -19,6 +20,7 @@ class Message
     {
         $this->ans_params = null;
         $this->hangup_params = null;
+        $this->callback_params = null;
         $this->num_data = null;
         $this->xml = '';
         $this->timestamp = new DateTime();
@@ -34,6 +36,12 @@ class Message
     public function setHangupParams(Parameters $params)
     {
         $this->hangup_params = $params;
+        return $this;
+    }
+
+    public function setCallbackParams(Parameters $params)
+    {
+        $this->callback_params = $params;
         return $this;
     }
 
@@ -58,6 +66,11 @@ class Message
     public function getHangupParams()
     {
         return $this->hangup_params;
+    }
+
+    public function getCallbackParams()
+    {
+        return $this->callback_params;
     }
 
     public function getNumberData()

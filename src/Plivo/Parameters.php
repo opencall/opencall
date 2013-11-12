@@ -17,6 +17,10 @@ class Parameters
     protected $duration;
     protected $bill_duration;
 
+    // params from callback
+    protected $b_hangup_cause;
+    protected $b_status;
+
     // other params based on old answer / hangup scripts
     protected $bill_rate;
     protected $event;
@@ -42,6 +46,9 @@ class Parameters
             ->set('duration', $post, 'Duration')
             ->set('bill_duration', $post, 'BillDuration')
 
+            ->set('b_hangup_cause', $post, 'DialBLegHangupCause')
+            ->set('b_status', $post, 'DialBLegStatus')
+
             ->set('bill_rate', $post, 'BillRate')
             ->set('event', $post, 'Event')
             ->set('hangup_id', $post, 'ScheduledHangupId')
@@ -55,6 +62,9 @@ class Parameters
         // set property if variable exists
         if (isset($var[$name]))
             $this->$prop = $var[$name];
+        else
+            $this->$prop = '';
+
         return $this;
     }
 
@@ -141,5 +151,15 @@ class Parameters
     public function getDuration()
     {
         return $this->duration;
+    }
+
+    public function getBStatus()
+    {
+        return $this->b_status;
+    }
+
+    public function getBHangupCause()
+    {
+        return $this->b_hangup_cause;
     }
 }
