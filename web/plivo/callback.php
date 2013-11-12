@@ -31,4 +31,4 @@ $zmq_socket->connect($zmq_server);
 
 $callback = new Callback($pdo, $redis, $zmq_socket);
 $callback->run($_POST);
-eecho '';
+echo '';
