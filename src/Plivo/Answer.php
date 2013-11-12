@@ -41,6 +41,7 @@ class Answer
 
             // store response xml
             $xml = $response->renderXML();
+            error_log($xml);
 
             // setup queue message
             $qmsg = new QMessage();
