@@ -6,7 +6,7 @@ error_log('START callback dump');
 error_log(print_r($_POST, true));
 error_log('END callback dump');
 
-require_once(__DIR__ . '/../../app/autoload.php');
+require_once(__DIR__ . '/../../../app/autoload.php');
 
 // setup mysql
 $dsn = 'mysql:host=db.oncall;dbname=oncall';
@@ -20,6 +20,14 @@ $context = new ZMQContext();
 $zmq_socket = $context->getSocket(ZMQ::SOCKET_PUSH, 'log_pusher');
 $zmq_socket->connect($zmq_server);
 
+// emulated post
+$post = array(
+    'CallUUID' => 'test-230948029348902',
+    'DialBLegStatus' => 'hangup',
+    'DialAction' => 'hangup',
+    'DialBLegHangupCause' => 'NORMAL_CLEARING'
+);
+
 $callback = new Callback($pdo, $zmq_socket);
-$callback->run($_POST);
+$callback->run($post);
 echo '';
