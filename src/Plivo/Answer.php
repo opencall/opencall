@@ -15,13 +15,15 @@ class Answer
     protected $pdo;
     protected $redis;
     protected $zmq;
+    protected $callback_url;
 
-    public function __construct(PDO $pdo, PredisClient $redis, $zmq, $prefix = 'plivo:ongoing')
+    public function __construct(PDO $pdo, PredisClient $redis, $zmq, $callback_url, $prefix = 'plivo:ongoing')
     {
         $this->pdo = $pdo;
         $this->prefix = $prefix;
         $this->redis = $redis;
         $this->zmq = $zmq;
+        $this->callback_url = $callback_url;
     }
 
     public function run($post)
@@ -33,6 +35,7 @@ class Answer
 
             // get response based on params
             $router = new Router($this->pdo);
+            $router->setCallbackURL($this->callback_url);
             $response = $router->resolve($params);
             $num_data = $router->getNumberData();
 

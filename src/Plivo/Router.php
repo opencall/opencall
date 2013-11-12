@@ -8,11 +8,19 @@ class Router
 {
     protected $pdo;
     protected $num_data;
+    protected $callback_url;
 
     public function __construct($pdo)
     {
         $this->pdo = $pdo;
         $this->num_data = null;
+        $this->callback_url = null;
+    }
+
+    public function setCallbackURL($url)
+    {
+        $this->callback_url = $url;
+        return $this;
     }
 
     public function resolve(Parameters $params)
@@ -50,9 +58,15 @@ class Router
 
         $dest = $res['destination'];
         $act_params['number'] = $dest;
+
         // set caller as caller_id to redirected call
         if ($params->getFrom() != null)
             $act_params['caller_id'] = $params->getFrom();
+
+        // set caller callback url
+        if ($this->callback_url != null)
+            $act_params['callback_url'] = $this->callback_url;
+
         // $act_params['caller_id'] = $params->getTo();
         $action = new Action(Action::TYPE_DIAL, $act_params);
         $resp->addAction($action);
