@@ -40,14 +40,26 @@ class Hangup
 
             // get ongoing call data from redis
             $key = $this->prefix . $params->getUniqueID();
-            $raw_qmsg = $this->redis->get($key);
-            if ($raw_qmsg == null)
+
+            $no_callback = true;
+            while ($no_callback)
             {
-                // TODO: what to do when there's no matching answer param
-                error_log('no previous answer parameters');
-                return null;
+                $raw_qmsg = $this->redis->get($key);
+                if ($raw_qmsg == null)
+                {
+                    // TODO: what to do when there's no matching answer param
+                    error_log('no previous answer parameters');
+                    return null;
+                }
+                $qmsg = unserialize($raw_qmsg);
+
+                if ($qmsg->getCallbackParams() == null)
+                    sleep(1);
+                else
+                    $no_callback = false;
             }
-            $qmsg = unserialize($raw_qmsg);
+
+            // add hangup params
             $qmsg->setHangupParams($params);
 
             // delete key
