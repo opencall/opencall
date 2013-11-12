@@ -25,5 +25,5 @@ $context = new ZMQContext();
 $zmq_socket = $context->getSocket(ZMQ::SOCKET_PUSH, 'log_pusher');
 $zmq_socket->connect($zmq_server);
 
-$answer = new Answer($pdo, $redis, $zmq_socket);
+$answer = new Answer($pdo, $redis, $zmq_socket, 'http://beta.calltracking.hk/plivo/callback.php');
 echo $answer->run($_POST);
