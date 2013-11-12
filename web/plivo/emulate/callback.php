@@ -1,6 +1,7 @@
 <?php
 
 use Plivo\Callback;
+use Predis\Client as PredisClient;
 
 error_log('START callback dump');
 error_log(print_r($_POST, true));
@@ -13,6 +14,9 @@ $dsn = 'mysql:host=db.oncall;dbname=oncall';
 $user = 'webuser';
 $pass = 'lks8jw23';
 $pdo = new PDO($dsn, $user, $pass);
+
+// redis
+$redis = new PredisClient();
 
 // zeromq
 $zmq_server = 'tcp://localhost:5555';
@@ -28,6 +32,6 @@ $post = array(
     'DialBLegHangupCause' => 'NORMAL_CLEARING'
 );
 
-$callback = new Callback($pdo, $zmq_socket);
+$callback = new Callback($pdo, $redis, $zmq_socket);
 $callback->run($post);
 echo '';
