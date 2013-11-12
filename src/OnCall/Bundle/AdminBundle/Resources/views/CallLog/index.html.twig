@@ -154,6 +154,7 @@ function logtable_add(log)
     cols += '<td>' + log.date_end.time + '<br /><small>' + log.date_end.date + '</small></td>';
     cols += '<td>' + log.duration + 's</td>';
     cols += '<td>' + log.hangup_cause + '</td>';
+    cols += '<td class="bhcause">' + log.b_hangup_cause + '</td>';
     cols += '<td><a href="adgroup/' + log.adgroup_id + '/adverts">' + log.advert_name + '</a></td>';
     cols += '<td><a href="campaign/' + log.campaign_id + '/adgroups">' + log.adgroup_name + '</a></td>';
     cols += '<td><a href="client/' + log.client_id + '/campaigns">' + log.campaign_name + '</a></td>';
@@ -170,6 +171,14 @@ function logtable_add(log)
         // add updated rows 
         $(row).prependTo('#logbody').fadeIn('slow');
     }
+}
+
+function logtable_update(log)
+{
+    console.log('callback updating');
+    // update for leg B
+    var log_id = 'log_' + log.call_id;
+    $('#' + log_id + ' .bhcause').html(log.b_hangup_cause);
 }
 
 function log_more()
@@ -231,9 +240,17 @@ jQuery(document).ready(function() {
         function() { // connect
             console.log('connected');
             conn.subscribe('client:{{ client.getID }}', function(topic, data) {
+                var action_type = data.type;
                 var log = data.logentry;
-                // console.log(log);
-                logtable_add(log);
+                if (action_type == 'log')
+                {
+                    // console.log(log);
+                    logtable_add(log);
+                }
+                else if (action_type == 'callback')
+                {
+                    logtable_update(log);
+                }
             });
         },
         function() { // close
@@ -503,6 +520,7 @@ jQuery(document).ready(function() {
                                 {% endif %}
                                 -->
                                 <th style="width: 114px;">Hangup Cause</th>
+                                <th style="width: 114px;">Hangup Cause B</th>
                                 <th style="width: 114px;">Advert</th>
                                 <th style="width: 114px;">AdGroup</th>
                                 <th style="width: 114px;">Campaign</th>
@@ -522,6 +540,7 @@ jQuery(document).ready(function() {
                                 </td>
                                 <td data-title="Duration">{{ log.duration }}s</td>
                                 <td data-title="Hangup Cause">{{ log.hangup_cause }}</td>
+                                <td data-title="Hangup Cause B" class="bhcause"></td>
                                 <td data-title="Advert"><a href="/adgroup/{{ log.adgroup_id }}/adverts">{{ log.advert_name }}</a></td>
                                 <td data-title="AdGroup"><a href="/campaign/{{ log.campaign_id }}/adgroups">{{ log.adgroup_name }}</a></td>
                                 <td data-title="Campaign"><a href="/client/{{ log.client_id }}/campaigns">{{ log.campaign_name }}</a></td>
@@ -545,6 +564,7 @@ jQuery(document).ready(function() {
                                 {% endif %}
                                 -->
                                 <td data-title="Hangup Cause">{{ log.getHangupCause }}</td>
+                                <td data-title="Hangup Cause B">{{ log.getHangupCauseB }}</td>
                                 <td data-title="Advert"><a href="/adgroup/{{ log.getAdGroupID() }}/adverts">{{ log.getAdvert.getName }}</a></td>
                                 <td data-title="AdGroup"><a href="/campaign/{{ log.getCampaignID() }}/adgroups">{{ log.getAdGroup.getName }}</a></td>
                                 <td data-title="Campaign"><a href="/client/{{ log.getClientID() }}/campaigns">{{ log.getCampaign.getName }}</a></td>

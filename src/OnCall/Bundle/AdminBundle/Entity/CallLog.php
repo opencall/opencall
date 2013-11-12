@@ -79,6 +79,16 @@ class CallLog
     protected $hangup_cause;
 
     /**
+     * @ORM\Column(type="string", length=20)
+     */
+    protected $b_status;
+
+    /**
+     * @ORM\Column(type="string", length=100)
+     */
+    protected $b_hangup_cause;
+
+    /**
      * @ORM\Column(type="integer")
      */
     protected $advert_id;
@@ -225,6 +235,16 @@ class CallLog
     public function getHangupCause()
     {
         return $this->hangup_cause;
+    }
+
+    public function getStatusB()
+    {
+        return $this->b_status;
+    }
+
+    public function getHangupCauseB()
+    {
+        return $this->b_hangup_cause;
     }
 
     public function getAdvertID()
