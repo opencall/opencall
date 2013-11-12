@@ -25,6 +25,7 @@ $context = new ZMQContext();
 $zmq_socket = $context->getSocket(ZMQ::SOCKET_PUSH, 'log_pusher');
 $zmq_socket->connect($zmq_server);
 
+error_log(print_r($_POST, true));
 
 // hangup
 $hangup = new Hangup($pdo, $redis, $zmq_socket);
