@@ -50,11 +50,15 @@ class Action
             case self::TYPE_CUSTOM_XML:
                 return $this->params['xml'];
             case self::TYPE_DIAL:
-                $xml = '<Dial><Number';
-                if (isset($this->params['caller_id']))
-                    $xml .= ' callerId="' . $this->params['caller_id'] . '"';
+                // dial
+                $xml = '<Dial';
                 if (isset($this->params['callback_url']))
                     $xml .= ' action="' . $this->params['callback_url'] . '"';
+                $xml .= '>';
+                // number
+                $xml .= '<Number';
+                if (isset($this->params['caller_id']))
+                    $xml .= ' callerId="' . $this->params['caller_id'] . '"';
                 $xml .= '>';
                 $xml .= $this->escapeXML($this->params['number']);
                 $xml .= '</Number></Dial>';
