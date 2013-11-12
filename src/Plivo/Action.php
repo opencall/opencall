@@ -53,7 +53,7 @@ class Action
                 // dial
                 $xml = '<Dial';
                 if (isset($this->params['callback_url']))
-                    $xml .= ' action="' . $this->params['callback_url'] . '"';
+                    $xml .= ' callbackUrl="' . $this->params['callback_url'] . '"';
                 $xml .= '>';
                 // number
                 $xml .= '<Number';
