@@ -17,4 +17,5 @@ $keys = $redis->keys('plivo:ongoing*');
 foreach ($keys as $key)
 {
     echo "deleting $key\n";
+    $redis->del($key);
 }
