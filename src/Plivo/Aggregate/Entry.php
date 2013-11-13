@@ -27,6 +27,7 @@ class Entry
         $num_data = $msg->getNumberData();
         $hangup_data = $msg->getHangupParams();
         $answer_data = $msg->getAnswerParams();
+        $callback_data = $msg->getCallbackParams();
 
         $entry = new self();
 
@@ -49,8 +50,12 @@ class Entry
         $entry->date_in = $date_start->format('Y-m-d H') . ':00:00';
 
         // check if failed
+        $entry->failed = false;
         $status = new Status($hangup_data->getStatus());
-        $entry->failed = $status->isFailed();
+        if ($status->isFailed())
+            $entry->failed = true;
+        if ($callback_data != null && $callback_data->getBHangupCause() != 'NORMAL_CLEARING')
+            $entry->failed = true;
 
         // check if plead
         if ($entry->duration > self::PLEAD_THRESHOLD)
