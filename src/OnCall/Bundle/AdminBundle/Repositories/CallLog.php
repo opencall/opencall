@@ -72,8 +72,9 @@ class CallLog extends EntityRepository
         // failed
         if ($filter->isFailed())
         {
-            $qb->andWhere('cl.status in (:status)')
-                ->setParameter('status', array('busy', 'failed', 'timeout', 'no-answer', 'cancel'));
+            $qb->andWhere('cl.status in (:status) or cl.b_hangup_cause != :normal_clearing')
+                ->setParameter('status', array('busy', 'failed', 'timeout', 'no-answer', 'cancel'))
+                ->setParameter('normal_clearing', 'NORMAL_CLEARING');
         }
     }
 
