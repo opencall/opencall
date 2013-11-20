@@ -42,7 +42,8 @@ class Hangup
             $key = $this->prefix . $params->getUniqueID();
 
             $no_callback = true;
-            while ($no_callback)
+            $iteration = 0;
+            while ($no_callback && $iteration < 10)
             {
                 $raw_qmsg = $this->redis->get($key);
                 if ($raw_qmsg == null)
@@ -54,7 +55,10 @@ class Hangup
                 $qmsg = unserialize($raw_qmsg);
 
                 if ($qmsg->getCallbackParams() == null)
+                {
                     sleep(1);
+                    $iteration++;
+                }
                 else
                     $no_callback = false;
             }
