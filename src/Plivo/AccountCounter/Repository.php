@@ -177,6 +177,9 @@ class Repository
         $stmt->bindValue(':date_in', $entry->getDateIn()->format('Y-m') . '-01');
         $stmt->bindValue(':user_id', $entry->getUserID());
 
+        error_log('SQL - ' . $sql);
+        error_log('params - ' . print_r($entry, true));
+
         return $stmt->execute();
     }
 }
