@@ -179,6 +179,7 @@ class Repository
 
         error_log('SQL - ' . $sql);
         error_log('params - ' . print_r($entry, true));
+        error_log('date - ' . $entry->getDateIn()->format('Y-m') . '-01');
 
         return $stmt->execute();
     }
