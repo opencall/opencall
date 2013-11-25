@@ -40,10 +40,10 @@ class Repository
         return $stmt->execute();
     }
 
-    public function persist(Entry $log)
+    public function insert(Entry $log)
     {
-        // persist log entry into database
-        $sql = 'insert into CallLog (date_in, call_id, origin_number, dialled_number, destination_number, date_start, date_end, duration, bill_duration, bill_rate, status, hangup_cause, advert_id, adgroup_id, campaign_id, client_id, b_status, b_hangup_cause) values (now(), :call_id, :origin, :dialled, :destination, :date_start, :date_end, :duration, :bill_duration, :bill_rate, :status, :hangup_cause, :advert_id, :adgroup_id, :campaign_id, :client_id, :b_status, :b_hangup_cause)';
+        // insert log entry into database
+        $sql = 'insert into CallLog (date_in, call_id, origin_number, dialled_number, destination_number, date_start, date_end, duration, bill_duration, bill_rate, status, hangup_cause, advert_id, adgroup_id, campaign_id, client_id) values (now(), :call_id, :origin, :dialled, :destination, :date_start, :date_end, :duration, :bill_duration, :bill_rate, :status, :hangup_cause, :advert_id, :adgroup_id, :campaign_id, :client_id)';
         $stmt = $this->pdo->prepare($sql);
         $stmt->bindParam(':call_id', $log->getCallID());
         $stmt->bindParam(':origin', $log->getOriginNumber());
@@ -60,8 +60,6 @@ class Repository
         $stmt->bindParam(':adgroup_id', $log->getAdGroupID());
         $stmt->bindParam(':campaign_id', $log->getCampaignID());
         $stmt->bindParam(':client_id', $log->getClientID());
-        $stmt->bindParam(':b_status', $log->getBStatus());
-        $stmt->bindParam(':b_hangup_cause', $log->getBHangupCause());
 
         return $stmt->execute();
     }

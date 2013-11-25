@@ -311,11 +311,13 @@ class CallLog
         }
 
         // check hangup cause A
-        if (strtolower($this->hangup_cause) != 'normal_clearing')
+        $hc = strtolower($this->hangup_cause);
+        if (!empty($hc) && $hc != 'normal_clearing')
             return true;
 
         // check hangup cause B
-        if (strtolower($this->b_hangup_cause) != 'normal_clearing')
+        $hcb = strtolower($this->b_hangup_cause);
+        if (!empty($hcb) && $hcb != 'normal_clearing')
             return true;
 
         return false;

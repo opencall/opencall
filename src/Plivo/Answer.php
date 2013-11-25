@@ -2,27 +2,45 @@
 
 namespace Plivo;
 
-use Predis\Connection\ConnectionException;
-use Plivo\Queue\Message as QMessage;
 use Plivo\Log\Entry as LogEntry;
 use Plivo\Log\Pusher as LogPusher;
+use Plivo\Log\Repository as LogRepository;
 use PDO;
 
 class Answer
 {
-    protected $prefix;
     protected $pdo;
-    protected $redis;
     protected $zmq;
     protected $callback_url;
 
-    public function __construct(PDO $pdo, PredisClient $redis, $zmq, $callback_url, $prefix = 'plivo:ongoing')
+    public function __construct(PDO $pdo, $zmq, $callback_url)
     {
         $this->pdo = $pdo;
-        $this->prefix = $prefix;
-        $this->redis = $redis;
         $this->zmq = $zmq;
         $this->callback_url = $callback_url;
+    }
+
+    protected function createLog($num_data, $params)
+    {
+        $log = new LogEntry();
+        $date = $log->getDateIn();
+        $log->setClientID($num_data['client_id'])
+            ->setCampaignID($num_data['campaign_id'])
+            ->setAdGroupID($num_data['adgroup_id'])
+            ->setAdvertID($num_data['advert_id'])
+            ->setDestinationNumber($num_data['destination'])
+            ->setCallID($params->getUniqueID())
+            ->setOriginNumber($params->getFrom())
+            ->setDialledNumber($params->getTo())
+            ->setDuration(0)
+            ->setBillDuration(0)
+            ->setBillRate($params->getBillRate())
+            ->setStatus($params->getStatus())
+            ->setHangupCause($params->getHangupCause())
+            ->setDateStart($date)
+            ->setDateEnd($date);
+
+        return $log;
     }
 
     public function run($post)
@@ -41,38 +59,17 @@ class Answer
             // store response xml
             $xml = $response->renderXML();
 
-            // setup queue message
-            $qmsg = new QMessage();
-            $qmsg->setAnswerParams($params);
-            $qmsg->setNumberData($num_data);
-            $qmsg->setResponseXML($xml);
-            $serial_qmsg = serialize($qmsg);
-
-            // add as ongoing call to redis
-            $key = $this->prefix . $params->getUniqueID();
-            $this->redis->set($key, $serial_qmsg);
+            // save log
+            $log = $this->createLog($num_data, $params);
+            $log_repo = new LogRepository($this->pdo);
+            $log_repo->insert($log);
 
             // live log
-            $log = LogEntry::createFromMessage($qmsg, false);
             $log_pusher = new LogPusher($this->zmq);
             $log_pusher->send($log);
 
             // output XML
             return $xml;
-        }
-        catch (ConnectionException $e)
-        {
-            // catch redis error
-            error_log('redis exception');
-            $act_params = array(
-                'language' => 'en-GB',
-                'text' => 'There was a problem connecting your call. This error has been logged and we will rectify the problem as soon as possible.'
-            );
-            $response = new Response();
-            $action = new Action(Action::TYPE_SPEAK, $act_params);
-            $response->addAction($action);
-
-            return $response->renderXML();
         }
         catch (PDOException $e)
         {

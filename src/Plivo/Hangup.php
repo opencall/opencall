@@ -2,8 +2,6 @@
 
 namespace Plivo;
 
-use Predis\Client as PredisClient;
-use Predis\Connection\ConnectionException;
 use Plivo\Queue\Message as QMessage;
 use Plivo\Queue\Handler as QHandler;
 use Plivo\Log\Entry as LogEntry;
@@ -19,15 +17,11 @@ use Plivo\AccountCounter\Entry as ACEntry;
 class Hangup
 {
     protected $pdo;
-    protected $redis;
-    protected $prefix;
     protected $zmq;
 
-    public function __construct(PDO $pdo, PredisClient $redis, $zmq, $prefix = 'plivo:ongoing')
+    public function __construct(PDO $pdo, $zmq)
     {
         $this->pdo = $pdo;
-        $this->redis = $redis;
-        $this->prefix = $prefix;
         $this->zmq = $zmq;
     }
 
@@ -37,37 +31,6 @@ class Hangup
         {
             // parse parameters
             $params = new Parameters($post);
-
-            // get ongoing call data from redis
-            $key = $this->prefix . $params->getUniqueID();
-
-            $no_callback = true;
-            $iteration = 0;
-            while ($no_callback && $iteration < 10)
-            {
-                $raw_qmsg = $this->redis->get($key);
-                if ($raw_qmsg == null)
-                {
-                    // TODO: what to do when there's no matching answer param
-                    error_log('no previous answer parameters');
-                    return null;
-                }
-                $qmsg = unserialize($raw_qmsg);
-
-                if ($qmsg->getCallbackParams() == null)
-                {
-                    sleep(1);
-                    $iteration++;
-                }
-                else
-                    $no_callback = false;
-            }
-
-            // add hangup params
-            $qmsg->setHangupParams($params);
-
-            // delete key
-            $this->redis->del($key);
 
             // start log and aggregate
 
@@ -95,11 +58,6 @@ class Hangup
 
 
             // end log and aggregate
-        }
-        catch (ConnectionException $e)
-        {
-            // catch redis error
-            error_log('redis exception');
         }
         catch (PDOException $e)
         {
