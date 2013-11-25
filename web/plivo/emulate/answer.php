@@ -16,10 +16,12 @@ $context = new ZMQContext();
 $zmq_socket = $context->getSocket(ZMQ::SOCKET_PUSH, 'log_pusher');
 $zmq_socket->connect($zmq_server);
 
-
 // emulated post
+$date = new DateTime();
+$call_id = 'test-' . $date->format('YmdHis');
+file_put_contents('/tmp/plivo.call_id', $call_id);
 $post = array(
-    'CallUUID' => 'test-230948029348902',
+    'CallUUID' => $call_id,
     'From' => '0000000000',
     'To' => '85235009085',
     'CallStatus' => 'ringing',

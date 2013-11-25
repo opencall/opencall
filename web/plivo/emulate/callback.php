@@ -25,8 +25,9 @@ $zmq_socket = $context->getSocket(ZMQ::SOCKET_PUSH, 'log_pusher');
 $zmq_socket->connect($zmq_server);
 
 // emulated post
+$call_id = file_get_contents('/tmp/plivo.call_id');
 $post = array(
-    'CallUUID' => 'test-230948029348902',
+    'CallUUID' => $call_id,
     'DialBLegStatus' => 'hangup',
     'DialAction' => 'hangup',
     'DialBLegHangupCause' => 'NORMAL_CLEARING'

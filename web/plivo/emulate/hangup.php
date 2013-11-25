@@ -17,8 +17,12 @@ $zmq_socket->connect($zmq_server);
 $redis = new PredisClient();
 
 // emulated post
+$call_id = file_get_contents('/tmp/plivo.call_id');
+$date_start = new DateTime();
+$date_start->modify('-10 min');
+$date_end = new DateTime();
 $post = array(
-    'CallUUID' => 'test-230948029348902',
+    'CallUUID' => $call_id,
     'From' => '0000000000',
     'To' => '85235009087',
     'CallStatus' => 'cancel',
@@ -28,8 +32,8 @@ $post = array(
     'BillDuration' => 0,
     'BillRate' => '0.00400',
     'Event' => 'Hangup',
-    'StartTime' => '2013-10-26 06:50:00',
-    'EndTime' => '2013-10-26 09:28:45',
+    'StartTime' => $date_start->format('Y-m-d H:i:s'),
+    'EndTime' => $date_end->format('Y-m-d H:i:s')
 );
 
 // setup mysql
