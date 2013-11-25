@@ -172,8 +172,8 @@ function logtable_add(log)
     if (log.failed) {
         cols += '<td class="callLogResult callLogRed"><br />';
         cols += '<strong>' + log.destination_formatted + '</strong><br />';
-        cols += '<small>' + log.hangup_cause + '<br />';
-        cols += log.b_hangup_cause + '</small>';
+        cols += '<small>Caller: ' + log.hangup_cause + '<br />';
+        cols += 'Receiver: ' + log.b_hangup_cause + '</small>';
         cols += '</td>';
     }
     else {
