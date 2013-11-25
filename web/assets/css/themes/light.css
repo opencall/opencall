@@ -341,6 +341,10 @@ Horizontal Menu(new in v1.2)
 /***
 Call Log
 ***/
+
+audio {
+width: 45px;
+}
 .callLog {
 	border-bottom: 1px solid #cecece!important;
 	width: 100%;
