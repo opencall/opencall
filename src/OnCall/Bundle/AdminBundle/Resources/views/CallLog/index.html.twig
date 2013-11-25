@@ -1,4 +1,5 @@
 {% extends '::base.html.twig' %}
+{% import 'OnCallAdminBundle:CallLog:log.html.twig' as log_row %}
 
 {% block plugins %}
 <script src="assets/plugins/bootstrap-daterangepicker/date.js" type="text/javascript"></script>
@@ -505,7 +506,8 @@ jQuery(document).ready(function() {
                 <!-- Kendrick: Live updates should respect any filters that are set -->
                 <h4>Live Updates</h4>
                 <div class="portlet-body no-more-tables">
-                    <table class="table-bordered table-striped table-condensed cf">
+                    <table class="table-condensed cf callLog">
+                        <!--
                         <thead class="cf">
                             <tr>
                                 <th style="width: 114px;">Caller Number</th> 
@@ -514,11 +516,6 @@ jQuery(document).ready(function() {
                                 <th style="width: 73px;">Start Time</th>
                                 <th style="width: 114px;">End Time</th>
                                 <th>Duration</th>
-                                <!--
-                                {% if is_granted('ROLE_PREVIOUS_ADMIN') %}
-                                    <th>Cost (HKD)</th>
-                                {% endif %}
-                                -->
                                 <th style="width: 114px;">Hangup Cause</th>
                                 <th style="width: 114px;">Hangup Cause B</th>
                                 <th style="width: 114px;">Advert</th>
@@ -526,6 +523,7 @@ jQuery(document).ready(function() {
                                 <th style="width: 114px;">Campaign</th>
                             </tr>
                         </thead>
+                        -->
                         <tbody id="logbody">
                         {% for log in ongoing %}
                             <tr id="log_{{ log.call_id }}" class="log_row">
@@ -547,28 +545,7 @@ jQuery(document).ready(function() {
                             </tr>  
                         {% endfor %}
                         {% for log in logs %}
-                            <tr class="log_row" data-id="{{ log.getID }}">
-                                <td data-title="Caller Number">{{ log.getOriginFormatted }}</td>  
-                                <td data-title="Dialled Number">{{ log.getDialledFormatted }}</td>  
-                                <td data-title="Destination Number">{{ log.getDestinationFormatted }}</td>
-                                <td data-title="Call Start Time">
-                                {{ log.getDateStart.format('H:i:s') }}<br /><small>{{ log.getDateStart.format('M d Y') }}</small>
-                                </td>  
-                                <td data-title="Call End Time">
-                                {{ log.getDateEnd.format('H:i:s') }}<br /><small>{{ log.getDateEnd.format('M d Y') }}</small>
-                                </td>
-                                <td data-title="Duration">{{ log.getDuration }}s</td>
-                                <!--
-                                {% if is_granted('ROLE_PREVIOUS_ADMIN') %}
-                                    <td data-title="Cost">{{ log.getBillRate }}</td>
-                                {% endif %}
-                                -->
-                                <td data-title="Hangup Cause">{{ log.getHangupCause }}</td>
-                                <td data-title="Hangup Cause B">{{ log.getHangupCauseB }}</td>
-                                <td data-title="Advert"><a href="/adgroup/{{ log.getAdGroupID() }}/adverts">{{ log.getAdvert.getName }}</a></td>
-                                <td data-title="AdGroup"><a href="/campaign/{{ log.getCampaignID() }}/adgroups">{{ log.getAdGroup.getName }}</a></td>
-                                <td data-title="Campaign"><a href="/client/{{ log.getClientID() }}/campaigns">{{ log.getCampaign.getName }}</a></td>
-                            </tr>  
+                            {{ log_row.display_log(log) }}
                         {% endfor %}
                         </tbody>
                     </table>

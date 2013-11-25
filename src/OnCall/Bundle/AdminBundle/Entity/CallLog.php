@@ -89,6 +89,11 @@ class CallLog
     protected $b_hangup_cause;
 
     /**
+     * @ORM\Column(type="string", length=100)
+     */
+    protected $audio_record;
+
+    /**
      * @ORM\Column(type="integer")
      */
     protected $advert_id;
@@ -247,6 +252,11 @@ class CallLog
         return $this->b_hangup_cause;
     }
 
+    public function getAudioRecord()
+    {
+        return $this->audio_record;
+    }
+
     public function getAdvertID()
     {
         return $this->advert_id;
@@ -285,6 +295,30 @@ class CallLog
     public function getClient()
     {
         return $this->client;
+    }
+
+    public function isFailed()
+    {
+        // check status A
+        switch ($this->status)
+        {
+            case 'busy':
+            case 'failed':
+            case 'timeout':
+            case 'no-answer':
+            case 'cancel':
+                return true;
+        }
+
+        // check hangup cause A
+        if (strtolower($this->hangup_cause) != 'normal_clearing')
+            return true;
+
+        // check hangup cause B
+        if (strtolower($this->b_hangup_cause) != 'normal_clearing')
+            return true;
+
+        return false;
     }
 
     // end getters

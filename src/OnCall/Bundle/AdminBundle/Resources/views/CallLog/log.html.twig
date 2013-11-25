@@ -1,0 +1,75 @@
+{% macro display_log(log) %}
+<tr class="log_row" data-id="{{ log.getID }}">
+    <td class="callLogDate">
+        <strong>{{ log.getDateStart.format('d M') }}<strong>
+        <br />
+        <small>{{ log.getDateStart.format('H:i:s') }}</small><br />
+        <!--
+        <div class="btn-group">
+            <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
+            HKD 99,999.99 <i class="icon-angle-down"></i>
+            </a>
+            <ul class="dropdown-menu">
+                <li><a data-toggle="modal" href="#editSale">Sale</a></li>
+                <li><a href="#">Hot Lead</a></li>
+                <li><a href="#">Warm Lead</a></li>
+                <li><a href="#">Enquiry</a></li>
+                <li><a href="#">Other</a></li>
+            </ul>
+        </div>
+        -->
+    </td>
+    <td class="callLogCaller">
+        <strong>{{ log.getOriginFormatted }}</strong>
+        <!--
+        <br /><a data-toggle="modal" href="#editContact">Unknown Caller - Click to add details</a>
+        -->
+    </td>
+    <td class="callLogDestination">
+        <strong>{{ log.getDialledFormatted }}</strong>
+        <br />
+        <a href="/adgroup/{{ log.getAdGroupID }}/adverts">{{ log.getAdvert.getName }}</a> &raquo;
+        <a href="/campaign/{{ log.getCampaignID }}/adgroups">{{ log.getAdGroup.getName }}</a> &raquo;
+        <a href="/client/{{ log.getClientID }}/campaigns">{{ log.getCampaign.getName }}</a>
+    </td>
+    {% if (log.isFailed) %}
+    <td  class="callLogResult callLogRed">
+        <strong>{{ log.getDestinationFormatted }}</strong>
+        <br />
+        <small>
+            {{ log.getHangupCause }}<br />
+            {{ log.getHangupCauseB }}
+        </small>
+    </td>
+    {% else %}
+    <td  class="callLogResult callLogGreen">
+        <strong>{{ log.getDestinationFormatted }}</strong>
+        <br />
+        <small>
+            {{ log.getHangupCause }}<br />
+            Call Duration: {{ log.getDuration }} seconds
+        </small>
+    </td>
+    {% endif %}
+</tr>
+{% endmacro %}
+
+{% macro old_display_log(log) %}
+<tr class="log_row" data-id="{{ log.getID }}">
+    <td data-title="Caller Number">{{ log.getOriginFormatted }}</td>
+    <td data-title="Dialled Number">{{ log.getDialledFormatted }}</td>
+    <td data-title="Destination Number">{{ log.getDestinationFormatted }}</td>
+    <td data-title="Call Start Time">
+    {{ log.getDateStart.format('H:i:s') }}<br /><small>{{ log.getDateStart.format('M d Y') }}</small>
+    </td>
+    <td data-title="Call End Time">
+    {{ log.getDateEnd.format('H:i:s') }}<br /><small>{{ log.getDateEnd.format('M d Y') }}</small>
+    </td>
+    <td data-title="Duration">{{ log.getDuration }}s</td>
+    <td data-title="Hangup Cause">{{ log.getHangupCause }}</td>
+    <td data-title="Hangup Cause B">{{ log.getHangupCauseB }}</td>
+    <td data-title="Advert"><a href="/adgroup/{{ log.getAdGroupID() }}/adverts">{{ log.getAdvert.getName }}</a></td>
+    <td data-title="AdGroup"><a href="/campaign/{{ log.getCampaignID() }}/adgroups">{{ log.getAdGroup.getName }}</a></td>
+    <td data-title="Campaign"><a href="/client/{{ log.getClientID() }}/campaigns">{{ log.getCampaign.getName }}</a></td>
+</tr>
+{% endmacro %}
