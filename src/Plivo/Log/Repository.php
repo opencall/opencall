@@ -99,6 +99,16 @@ class Repository
         return $stmt->execute();
     }
 
+    public function updateRecord($call_id, $audio_record)
+    {
+        $sql = 'update CallLog set audio_record = :audio_record where call_id = :call_id';
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->bindParam(':audio_record', $audio_record);
+        $stmt->bindParam(':call_id', $call_id);
+
+        return $stmt->execute();
+    }
+
     public function insert(Entry $log)
     {
         // insert log entry into database
