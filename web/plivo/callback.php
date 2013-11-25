@@ -3,10 +3,6 @@
 use Plivo\Callback;
 use Predis\Client as PredisClient;
 
-error_log('START callback dump');
-error_log(print_r($_POST, true));
-error_log('END callback dump');
-
 require_once(__DIR__ . '/../../app/autoload.php');
 
 // setup redis

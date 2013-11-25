@@ -2,16 +2,7 @@
 
 require_once(__DIR__ . '/../../app/autoload.php');
 
-use Predis\Client as PredisClient;
 use Plivo\Answer;
-
-// setup redis
-$rconf = array(
-    'scheme' => 'tcp',
-    'host' => 'devredisnode.5zaozk.0001.apse1.cache.amazonaws.com',
-    'port' => 6379
-);
-$redis = new PredisClient($rconf);
 
 // setup mysql
 $dsn = 'mysql:host=db.oncall;dbname=oncall';
@@ -25,5 +16,5 @@ $context = new ZMQContext();
 $zmq_socket = $context->getSocket(ZMQ::SOCKET_PUSH, 'log_pusher');
 $zmq_socket->connect($zmq_server);
 
-$answer = new Answer($pdo, $redis, $zmq_socket, 'http://beta.calltracking.hk/plivo/callback.php');
+$answer = new Answer($pdo, $zmq_socket, 'http://beta.calltracking.hk/plivo/callback.php');
 echo $answer->run($_POST);
