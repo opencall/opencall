@@ -95,6 +95,7 @@ class AdvertController extends ItemController
             $advert->setNumber($num);
         }
 
+        // destination
         if (isset($data['destination']))
         {
             if ($data['destination'] == 0)
@@ -107,6 +108,21 @@ class AdvertController extends ItemController
         }
         else
             $advert->setDestination(null);
+
+        // record
+        if (isset($data['record']))
+            $advert->setRecord(1);
+        else
+            $advert->setRecord(0);
+
+        // speak
+        if (isset($data['speak']))
+            $advert->setSpeak(1);
+        else
+            $advert->setSpeak(0);
+
+        // speak message
+        $advert->setSpeakMessage($data['speak_message']);
 
         // check xml stuff only if admin
         if ($this->get('security.context')->isGranted('ROLE_PREVIOUS_ADMIN'))

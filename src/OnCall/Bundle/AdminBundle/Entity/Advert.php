@@ -42,6 +42,21 @@ class Advert extends Item
      */
     protected $xml_override;
 
+    /**
+     * @ORM\Column(type="smallint")
+     */
+    protected $record;
+
+    /**
+     * @ORM\Column(type="smallint")
+     */
+    protected $speak;
+
+    /**
+     * @ORM\Column(type="text")
+     */
+    protected $speak_message;
+
     public function __construct()
     {
         parent::__construct();
@@ -82,7 +97,25 @@ class Advert extends Item
     public function setXMLOverride($override = true)
     {
         $this->xml_override = $override;
-        return true;
+        return $this;
+    }
+
+    public function setRecord($record = true)
+    {
+        $this->record = $record;
+        return $this;
+    }
+
+    public function setSpeak($speak = true)
+    {
+        $this->speak = $speak;
+        return $this;
+    }
+
+    public function setSpeakMessage($msg)
+    {
+        $this->speak_message = $msg;
+        return $this;
     }
     // end setters
 
@@ -148,6 +181,21 @@ class Advert extends Item
     {
         return $this->xml_override;
     }
+
+    public function shouldRecord()
+    {
+        return $this->record;
+    }
+
+    public function shouldSpeak()
+    {
+        return $this->speak;
+    }
+
+    public function getSpeakMessage()
+    {
+        return $this->speak_message;
+    }
     // end getters
 
     public function getData()
@@ -158,6 +206,9 @@ class Advert extends Item
         $data['destination'] = $this->getDestination();
         $data['xml_replace'] = $this->getXMLReplace();
         $data['xml_override'] = $this->shouldXMLOverride();
+        $data['record'] = $this->shouldRecord();
+        $data['speak'] = $this->shouldSpeak();
+        $data['speak_message'] = $this->getSpeakMessage();
 
         return $data;
     }

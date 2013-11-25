@@ -49,6 +49,18 @@
                     </select>
                     <br />Need more numbers? Open <a href="/client/{{ client_id }}/numbers">Number Management</a>
                 </p>
+                <h4>Recording</h4>
+                <p>
+                    <input name="record" type="checkbox" class="checkboxes" />
+                    Record calls to this advert
+                </p>
+                <p>
+                    <input name="speak" type="checkbox" class="checkboxes" />
+                    Speak a message at the beginning of the call
+                </p>
+                <p>
+                    <input name="speak_message" type="text" class="span6 m-wrap" />
+                </p>
                 <h4>Advert Destination</h4>
                 <ul>
                     <li>Do not enter spaces or + </li>
@@ -86,9 +98,7 @@
             <div class="span12">
                 <h4>Advert Name</h4>
                 <p class="control-group"><input name="name" type="text" class="item_name span6 m-wrap"></p>
-                <h4>
-                    Advert Number
-                </h4>
+                <h4>Advert Number</h4>
                 <p>
                     <select id="item_number_dropdown" name="number" class="m-wrap" tabindex="1">
                         <option id="item_number_blank" value="0"></option>
@@ -96,6 +106,18 @@
                         <option value="{{ num.getID }}">{{ num.getIDFormatted }}</option>
                         {% endfor %}
                     </select>
+                </p>
+                <h4>Recording</h4>
+                <p>
+                    <input name="record" type="checkbox" class="item_record checkboxes" />
+                    Record calls to this advert
+                </p>
+                <p>
+                    <input name="speak" type="checkbox" class="item_speak checkboxes" />
+                    Speak a message at the beginning of the call
+                </p>
+                <p>
+                    <input name="speak_message" type="text" class="item_speak_message span6 m-wrap" />
                 </p>
                 <h4>Advert Destination</h4>
                 <ul>
@@ -153,6 +175,9 @@ function update_item(data)
     $('.item_destination').val(data.destination);
     $('.item_xml_replace').val(data.xml_replace);
     $('.item_xml_override').prop('checked', data.xml_override);
+    $('.item_record').prop('checked', data.record);
+    $('.item_speak').prop('checked', data.speak);
+    $('.item_speak_message').val(data.speak_message);
     $.uniform.update();
 }
 </script>
