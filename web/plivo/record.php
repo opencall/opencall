@@ -13,4 +13,4 @@ $pdo = new PDO($dsn, $user, $pass);
 $rec = new Record($pdo);
 $rec->run($_POST);
 
-error_log(print_r($_POST, true));
+// error_log(print_r($_POST, true));
