@@ -34,34 +34,6 @@ class CallLogController extends Controller
         return $log_filter;
     }
 
-    protected function getOngoingCalls($client_id, $redis, $log_repo, $prefix = 'plivo:ongoing')
-    {
-        $ongoing = array();
-
-
-        $keys = $redis->keys($prefix . '*');
-        foreach ($keys as $key)
-        {
-            $serial_qmsg = $redis->get($key);
-            $qmsg = unserialize($serial_qmsg);
-            $log = LogEntry::createFromMessage($qmsg, false);
-
-            // check if it's for client
-            if ($log->getClientID() != $client_id)
-                continue;
-
-            $log_data = $log->getData();
-            $names = $log_repo->fetchNames($log_data['advert_id']);
-            $log_data['advert_name'] = $names['advert_name'];
-            $log_data['adgroup_name'] = $names['adgroup_name'];
-            $log_data['campaign_name'] = $names['campaign_name'];
-
-            $ongoing[] = $log_data;
-        }
-
-        return $ongoing;
-    }
-
     public function indexAction($id)
     {
         $user = $this->getUser();
@@ -85,18 +57,6 @@ class CallLogController extends Controller
             ->getRepository('OnCallAdminBundle:CallLog')
             ->findLatest($id, $log_filter);
 
-        // get ongoing
-        // TODO: find out how to set this for production server
-        $rconf = array(
-            'scheme' => $this->container->getParameter('redis_scheme'),
-            'host' => $this->container->getParameter('redis_host'),
-            'port' => $this->container->getParameter('redis_port')
-        );
-        $redis = new PredisClient($rconf);
-        $conn = $this->get('database_connection');
-        $log_repo = new LogRepo($conn->getWrappedConnection());
-        $ongoing = $this->getOngoingCalls($id, $redis, $log_repo);
-
         return $this->render(
             'OnCallAdminBundle:CallLog:index.html.twig',
             array(
@@ -112,7 +72,6 @@ class CallLogController extends Controller
                 'daily' => $daily,
                 'hourly' => $hourly,
                 'logs' => $logs,
-                'ongoing' => $ongoing
             )
         );
     }
