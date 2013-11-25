@@ -360,7 +360,7 @@ class Entry
         if ($this->date_start != null)
             $data['date_start'] = array(
                 'time' => $this->date_start->format('H:i:s'),
-                'date' => $this->date_start->format('M d Y')
+                'date' => $this->date_start->format('d M')
             );
         else
             $data['date_start'] = array(

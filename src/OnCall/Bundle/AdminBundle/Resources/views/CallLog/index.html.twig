@@ -148,17 +148,36 @@ function logtable_add(log)
 
     var log_id = 'log_' + log.call_id;
 
-    var cols = '<td>' + log.origin_formatted + '</td>';
-    cols += '<td>' + log.dialled_formatted + '</td>';
-    cols += '<td>' + log.destination_formatted + '</td>';
-    cols += '<td>' + log.date_start.time + '<br /><small>' + log.date_start.date + '</small></td>';
-    cols += '<td>' + log.date_end.time + '<br /><small>' + log.date_end.date + '</small></td>';
-    cols += '<td>' + log.duration + 's</td>';
-    cols += '<td>' + log.hangup_cause + '</td>';
-    cols += '<td class="bhcause">' + log.b_hangup_cause + '</td>';
-    cols += '<td><a href="adgroup/' + log.adgroup_id + '/adverts">' + log.advert_name + '</a></td>';
-    cols += '<td><a href="campaign/' + log.campaign_id + '/adgroups">' + log.adgroup_name + '</a></td>';
-    cols += '<td><a href="client/' + log.client_id + '/campaigns">' + log.campaign_name + '</a></td>';
+    var cols = '<td class="callLogDate">';
+    cols += '<strong>' + log.date_start.date + '</strong><br />';
+    cols += '<small>' + log.date_start.time + '</small><br />';
+    cols += '</td>';
+
+    cols += '<td class="callLogCaller">';
+    cols += '<strong>' + log.origin_formatted + '</strong>';
+    cols += '</td>';
+
+    cols += '<td class="callLogDestination">';
+    cols += '<strong>' + log.dialled_formatted + '</strong><br />';
+    cols += '<a href="adgroup/' + log.adgroup_id + '/adverts">' + log.advert_name + '</a> &raquo; ';
+    cols += '<a href="campaign/' + log.campaign_id + '/adgroups">' + log.adgroup_name + '</a> &raquo; ';
+    cols += '<a href="client/' + log.client_id + '/campaigns">' + log.campaign_name + '</a></td>';
+    cols += '</td>';
+
+    if (log.failed) {
+        cols += '<td class="callLogResult callLogRed"><br />';
+        cols += '<strong>' + log.destination_formatted + '</strong><br />';
+        cols += '<small>' + log.hangup_cause + '<br />';
+        cols += log.b_hangup_cause + '</small>';
+        cols += '</td>';
+    }
+    else {
+        cols += '<td class="callLogResult callLogGreen"><br />';
+        cols += '<strong>' + log.destination_formatted + '</strong><br />';
+        cols += '<small>' + log.hangup_cause + '<br />';
+        cols += 'Call Duration: ' + log.duration + '</small>';
+        cols += '</td>';
+    }
 
     var row = '<tr class="log_row" data-id="' + log_id + '" id="' + log_id + '" style="display: none;">' + cols + '</tr>';
 
