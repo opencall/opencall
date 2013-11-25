@@ -12,16 +12,15 @@ use DateTime;
 use Plivo\AccountCounter\Repository as ACRepo;
 use Plivo\AccountCounter\Entry as ACEntry;
 
-class Hangup
+class Hangup extends Lockable
 {
     protected $pdo;
     protected $zmq;
-    protected $redis;
 
     public function __construct(PDO $pdo, $redis, $zmq)
     {
+        parent::__construct($redis);
         $this->pdo = $pdo;
-        $this->redis = $redis;
         $this->zmq = $zmq;
     }
 
@@ -45,7 +44,8 @@ class Hangup
             // parse parameters
             $params = new Parameters($post);
 
-            // TODO: lock call_id
+            // lock call_id
+            $this->lock($params->getUniqueID());
 
             // start log and aggregate
 
@@ -76,7 +76,8 @@ class Hangup
             $ac_repo->append($ac_entry);
             */
 
-            // TODO: unlock call_id
+            // unlock call_id
+            $this->unlock($params->getUniqueID());
 
             // end log and aggregate
         }
