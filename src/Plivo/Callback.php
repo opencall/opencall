@@ -48,8 +48,6 @@ class Callback extends Lockable
 
         // TODO: aggregate adjust in case leg A was successful and leg B was not
 
-        sleep(30);
-
         // unlock
         $this->unlock($call_id);
     }
