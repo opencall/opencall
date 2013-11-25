@@ -22,14 +22,15 @@ class Callback extends Lockable
     public function run($post)
     {
         $action = trim($post['DialAction']);
-        $call_id = $post['CallUUID'];
-
-        // lock
-        $this->lock($call_id);
 
         // we only track hangup actions
         if ($action != 'hangup')
             return;
+
+        $call_id = $post['CallUUID'];
+
+        // lock
+        $this->lock($call_id);
 
         // get log
         $log_repo = new LogRepository($this->pdo);
