@@ -389,7 +389,8 @@ class Entry
             'campaign_id' => $this->campaign_id,
             'client_id' => $this->client_id,
             'b_status' => $this->b_status,
-            'b_hangup_cause' => $this->b_hangup_cause
+            'b_hangup_cause' => $this->b_hangup_cause,
+            'audio_record' => $this->audio_record
         );
 
         // date start
