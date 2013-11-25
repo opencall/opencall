@@ -3,7 +3,7 @@
 namespace Plivo\Aggregate;
 
 use DateTime;
-use Plivo\Queue\Message;
+use Plivo\Log\Entry as LogEntry;
 use Plivo\Status;
 
 class Entry
@@ -22,40 +22,27 @@ class Entry
     protected $plead = false;
     protected $duration = 0;
 
-    public static function createFromMessage(Message $msg)
+    public static function createFromLog(LogEntry $log)
     {
-        $num_data = $msg->getNumberData();
-        $hangup_data = $msg->getHangupParams();
-        $answer_data = $msg->getAnswerParams();
-        $callback_data = $msg->getCallbackParams();
-
         $entry = new self();
 
         // number data
-        $entry->client_id = $num_data['client_id'];
-        $entry->campaign_id = $num_data['campaign_id'];
-        $entry->adgroup_id = $num_data['adgroup_id'];
-        $entry->advert_id = $num_data['advert_id'];
-        $entry->number_id = $num_data['number_id'];
-
-        // answer data
-        $entry->caller_id = $answer_data->getFrom();
+        $entry->client_id = $log->getClientID();
+        $entry->campaign_id = $log->getCampaignID();
+        $entry->adgroup_id = $log->getAdGroupID();
+        $entry->advert_id = $log->getAdvertID();
+        $entry->number_id = $log->getDialledNumber();
+        $entry->caller_id = $log->getOriginNumber();
 
         // hangup data
-        // duration
-        $entry->duration = $hangup_data->getDuration();
+        $entry->duration = $log->getDuration();
 
         // capture only the date + hour
-        $date_start = new DateTime($hangup_data->getStartTime());
+        $date_start = $log->getDateStart();
         $entry->date_in = $date_start->format('Y-m-d H') . ':00:00';
 
         // check if failed
-        $entry->failed = false;
-        $status = new Status($hangup_data->getStatus());
-        if ($status->isFailed())
-            $entry->failed = true;
-        if ($callback_data != null && $callback_data->getBHangupCause() != 'NORMAL_CLEARING')
-            $entry->failed = true;
+        $entry->failed = $log->isFailed();
 
         // check if plead
         if ($entry->duration > self::PLEAD_THRESHOLD)

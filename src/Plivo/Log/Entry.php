@@ -29,12 +29,14 @@ class Entry
     protected $response_xml;
     protected $b_status;
     protected $b_hangup_cause;
+    protected $audio_record;
 
     public function __construct()
     {
         $this->date_in = new DateTime('now', new DateTimeZone('Asia/Hong_Kong'));
         $this->b_hangup_cause = '';
         $this->b_status = '';
+        $this->audio_record = null;
     }
 
     public static function createFromMessage(Message $msg, $use_hangup = true)
@@ -202,6 +204,12 @@ class Entry
         return $this;
     }
 
+    public function setAudioRecord($audio)
+    {
+        $this->audio_record = $audio;
+        return $this;
+    }
+
     // getters
     public function getID()
     {
@@ -330,6 +338,34 @@ class Entry
         return $this->b_hangup_cause;
     }
 
+    public function getAudioRecord()
+    {
+        return $this->audio_record;
+    }
+
+    public function isFailed()
+    {
+        switch($this->status)
+        {
+            case 'busy':
+            case 'failed':
+            case 'timeout':
+            case 'no-answer':
+            case 'cancel':
+                return true;
+        }
+
+        $hc = strtolower($this->hangup_cause);
+        if (!empty($hc) && $hc != 'normal_clearing')
+            return true;
+
+        $bhc = strtolower($this->b_hangup_cause);
+        if (!empty($bhc) && $bhc != 'normal_clearing')
+            return true;
+
+        return false;
+    }
+
     // for serialization
     public function getData()
     {
@@ -381,27 +417,7 @@ class Entry
             );
 
         // failed
-        $failed = false;
-        switch($this->status)
-        {
-            case 'busy':
-            case 'failed':
-            case 'timeout':
-            case 'no-answer':
-            case 'cancel':
-                $failed = true;
-                break;
-        }
-
-        $hc = strtolower($this->hangup_cause);
-        if (!empty($hc) && $hc != 'normal_clearing')
-            $failed = true;
-
-        $bhc = strtolower($this->b_hangup_cause);
-        if (!empty($bhc) && $bhc != 'normal_clearing')
-            $failed = true;
-
-        $data['failed'] = $failed;
+        $data['failed'] = $this->isFailed();
 
         return $data;
     }

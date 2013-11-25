@@ -3,6 +3,7 @@
 namespace Plivo\Log;
 
 use PDO;
+use DateTime;
 
 class Repository
 {
@@ -11,6 +12,47 @@ class Repository
     public function __construct(PDO $pdo)
     {
         $this->pdo = $pdo;
+    }
+
+    protected function createEntry($row)
+    {
+        $entry = new Entry();
+        $entry->setCallID($row['call_id'])
+            ->setOriginNumber($row['origin_number'])
+            ->setDialledNumber($row['dialled_number'])
+            ->setDestinationNumber($row['destination_number'])
+            ->setDateStart(new DateTime($row['date_start']))
+            ->setDateEnd(new DateTime($row['date_end']))
+            ->setDuration($row['duration'])
+            ->setBillDuration($row['bill_duration'])
+            ->setBillRate($row['bill_rate'])
+            ->setStatus($row['status'])
+            ->setHangupCause($row['hangup_cause'])
+            ->setAdvertID($row['advert_id'])
+            ->setAdGroupID($row['adgroup_id'])
+            ->setCampaignID($row['campaign_id'])
+            ->setClientID($row['client_id'])
+            ->setBStatus($row['b_status'])
+            ->setBHangupCause($row['b_hangup_cause'])
+            ->setAudioRecord($row['audio_record']);
+
+        return $entry;
+    }
+
+    public function find($call_id)
+    {
+        $sql = 'select * from CallLog where call_id = :call_id limit 1';
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->bindParam(':call_id', $call_id);
+
+        if (!$stmt->execute())
+            return null;
+
+        $row = $stmt->fetch();
+        if (!$row)
+            return null;
+
+        return $this->createEntry($row);
     }
 
     public function findClientID($call_id)
@@ -27,6 +69,23 @@ class Repository
             return 0;
 
         return $row['client_id'];
+    }
+
+    public function updateHangup(Entry $log)
+    {
+        $sql = 'update CallLog set bill_rate = :bill_rate, bill_duration = :bill_duration, duration = :duration, date_start = :date_start, date_end = :date_end, status = :status, hangup_cause = :hangup_cause where call_id = :call_id';
+        $stmt = $this->pdo->prepare($sql);
+
+        $stmt->bindParam(':bill_rate', $log->getBillRate());
+        $stmt->bindParam(':bill_duration', $log->getBillDuration());
+        $stmt->bindParam(':duration', $log->getDuration());
+        $stmt->bindParam(':date_start', $log->getDateStart()->format('Y-m-d H:i:s'));
+        $stmt->bindParam(':date_end', $log->getDateEnd()->format('Y-m-d H:i:s'));
+        $stmt->bindParam(':status', $log->getStatus());
+        $stmt->bindParam(':hangup_cause', $log->getHangupCause());
+        $stmt->bindParam(':call_id', $log->getCallID());
+
+        return $stmt->execute();
     }
 
     public function updateCallback($call_id, $b_status, $b_hangup_cause)

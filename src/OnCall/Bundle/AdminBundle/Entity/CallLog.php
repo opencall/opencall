@@ -161,7 +161,7 @@ class CallLog
         return $this->date_in->format('d M Y');
     }
 
-    public function getCallUniqueID()
+    public function getCallID()
     {
         return $this->call_id;
     }

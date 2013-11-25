@@ -12,18 +12,18 @@ class Callback
     protected $pdo;
     protected $zmq;
     protected $redis;
-    protected $prefix;
 
-    public function __construct(PDO $pdo, $redis, $zmq, $prefix = 'plivo:ongoing')
+    public function __construct(PDO $pdo, $redis, $zmq)
     {
         $this->pdo = $pdo;
         $this->zmq = $zmq;
         $this->redis = $redis;
-        $this->prefix = $prefix;
     }
 
     public function run($post)
     {
+        // TODO: lock call_id
+
         $action = trim($post['DialAction']);
         $call_id = $post['CallUUID'];
 
@@ -31,50 +31,23 @@ class Callback
         if ($action != 'hangup')
             return;
 
-        // try redis
-        $key = $this->prefix . $call_id;
-        $raw_qmsg = $this->redis->get($key);
-        if ($raw_qmsg == null)
-        {
-            $b_status = $post['DialBLegStatus'];
-            $b_hangup_cause = $post['DialBLegHangupCause'];
-            $this->postHangupProcess($call_id, $b_status, $b_hangup_cause);
-        }
-        else
-        {
-            $qmsg = unserialize($raw_qmsg);
-            $this->preHangupProcess($key, $qmsg, $post);
-        }
-    }
-
-    public function postHangupProcess($qmsg, $call_id, $b_status, $b_hangup_cause)
-    {
-        // update call log
+        // get log
         $log_repo = new LogRepository($this->pdo);
+        $log = $log_repo->find($call_id);
+
+        // update call log
+        $b_status = $post['DialBLegStatus'];
+        $b_hangup_cause = $post['DialBLegHangupCause'];
         $log_repo->updateCallback($call_id, $b_status, $b_hangup_cause);
 
-        // get client id
-        $client_id = $log_repo->findClientID($call_id);
-
-        // create log entry to pass
-        $entry = new LogEntry();
-        $entry->setCallID($call_id)
-            ->setBStatus($b_status)
-            ->setBHangupCause($b_hangup_cause)
-            ->setClientID($client_id);
-
         // send update to live log
+        $log->setBStatus($b_status)
+            ->setBHangupCause($b_hangup_cause);
         $log_pusher = new LogPusher($this->zmq);
-        $log_pusher->send($entry, 'callback');
-    }
+        $log_pusher->send($log, 'callback');
 
-    public function preHangupProcess($key, $qmsg, $post)
-    {
-        $params = new Parameters($post);
-        $qmsg->setCallbackParams($params);
-        $serial_qmsg = serialize($qmsg);
-        $this->redis->set($key, $serial_qmsg);
+        // TODO: aggregate adjust in case leg A was successful and leg B was not
 
-        // don't push, hangup will do it for us
+        // TODO: unlock call_id
     }
 }

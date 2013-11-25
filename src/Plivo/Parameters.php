@@ -33,7 +33,6 @@ class Parameters
     {
         // TODO: figure out which ones are required and not
 
-        // answer params
         $this->set('unique_id', $post, 'CallUUID')
             ->set('from', $post, 'From')
             ->set('to', $post, 'To')

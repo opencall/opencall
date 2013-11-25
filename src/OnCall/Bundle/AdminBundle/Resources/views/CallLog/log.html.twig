@@ -1,5 +1,5 @@
 {% macro display_log(log) %}
-<tr class="log_row" data-id="{{ log.getID }}">
+<tr class="log_row" data-id="{{ log.getCallID }}" id="log_{{ log.getCallID }}">
     <td class="callLogDate">
         <strong>{{ log.getDateStart.format('d M') }}</strong>
         <br />
