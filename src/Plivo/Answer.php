@@ -12,12 +12,14 @@ class Answer
     protected $pdo;
     protected $zmq;
     protected $callback_url;
+    protected $record_url;
 
-    public function __construct(PDO $pdo, $zmq, $callback_url)
+    public function __construct(PDO $pdo, $zmq, $callback_url, $record_url)
     {
         $this->pdo = $pdo;
         $this->zmq = $zmq;
         $this->callback_url = $callback_url;
+        $this->record_url = $record_url;
     }
 
     protected function createLog($num_data, $params)
@@ -53,6 +55,7 @@ class Answer
             // get response based on params
             $router = new Router($this->pdo);
             $router->setCallbackURL($this->callback_url);
+            $router->setRecordURL($this->record_url);
             $response = $router->resolve($params);
             $num_data = $router->getNumberData();
 

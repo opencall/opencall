@@ -9,17 +9,25 @@ class Router
     protected $pdo;
     protected $num_data;
     protected $callback_url;
+    protected $record_url;
 
     public function __construct($pdo)
     {
         $this->pdo = $pdo;
         $this->num_data = null;
         $this->callback_url = null;
+        $this->record_url = null;
     }
 
     public function setCallbackURL($url)
     {
         $this->callback_url = $url;
+        return $this;
+    }
+
+    public function setRecordURL($url)
+    {
+        $this->record_url = $url;
         return $this;
     }
 
@@ -30,11 +38,11 @@ class Router
 
         // create resposne
         $resp = new Response();
-        $act_params = array();
 
         // check if any numbers reflected correctly
         if (!$res)
         {
+            $act_params = array();
             $act_params['language'] = 'en-GB';
             $act_params['text'] = 'This number does not have a valid destination. Please contact CallTracking for more information.';
 
@@ -48,6 +56,7 @@ class Router
         // check if it has custom xml
         if ($res['xml_override'])
         {
+            $act_params = array();
             $xml = $res['xml_replace'];
             $act_params['xml'] = $xml;
             $action = new Action(Action::TYPE_CUSTOM_XML, $act_params);
@@ -56,6 +65,19 @@ class Router
             return $resp;
         }
 
+        // TODO: check if we have speak
+
+        // check if we have record
+        if ($res['record'])
+        {
+            $act_params = array();
+            $act_params['record_url'] = $this->record_url;
+            $action = new Action(Action::TYPE_RECORD, $act_params);
+            $resp->addAction($action);
+        }
+
+        // dial action
+        $act_params = array();
         $dest = $res['destination'];
         $act_params['number'] = $dest;
 

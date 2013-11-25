@@ -71,6 +71,12 @@ class Action
                 $xml .= $this->escapeXML($this->params['text']);
                 $xml .= '</Speak>';
                 return $xml;
+            case self::TYPE_RECORD:
+                $xml = '<Record';
+                if (isset($this->params['record_url']))
+                    $xml .= ' action="' . $this->params['record_url'] . '" redirect="false"';
+                $xml .= ' startOnDialAnswer="true" />';
+                return $xml;
         }
 
         return '';
