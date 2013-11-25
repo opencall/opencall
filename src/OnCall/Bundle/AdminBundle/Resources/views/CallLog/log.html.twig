@@ -4,6 +4,11 @@
         <strong>{{ log.getDateStart.format('d M') }}</strong>
         <br />
         <small>{{ log.getDateStart.format('H:i:s') }}</small><br />
+        {% if (log.getAudioRecord != null) %}
+        <audio controls>
+            <source src="{{ log.getAudioRecord }}" type="audio/mp3" />
+        </audio>
+        {% endif %}
     </td>
     <td class="callLogCaller">
         <strong>{{ log.getOriginFormatted }}</strong>

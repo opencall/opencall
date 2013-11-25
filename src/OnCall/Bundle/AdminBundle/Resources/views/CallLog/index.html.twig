@@ -518,23 +518,6 @@ jQuery(document).ready(function() {
                 <h4>Live Updates</h4>
                 <div class="portlet-body no-more-tables">
                     <table class="table-condensed cf callLog">
-                        <!--
-                        <thead class="cf">
-                            <tr>
-                                <th style="width: 114px;">Caller Number</th> 
-                                <th style="width: 114px;">Dialled Number</th>
-                                <th style="width: 114px;">Destination</th>
-                                <th style="width: 73px;">Start Time</th>
-                                <th style="width: 114px;">End Time</th>
-                                <th>Duration</th>
-                                <th style="width: 114px;">Hangup Cause</th>
-                                <th style="width: 114px;">Hangup Cause B</th>
-                                <th style="width: 114px;">Advert</th>
-                                <th style="width: 114px;">AdGroup</th>
-                                <th style="width: 114px;">Campaign</th>
-                            </tr>
-                        </thead>
-                        -->
                         <tbody id="logbody">
                         {% for log in logs %}
                             {{ log_row.display_log(log) }}
