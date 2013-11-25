@@ -372,13 +372,36 @@ class Entry
         if ($this->date_end != null)
             $data['date_end'] = array(
                 'time' => $this->date_end->format('H:i:s'),
-                'date' => $this->date_end->format('M d Y')
+                'date' => $this->date_end->format('d M')
             );
         else
             $data['date_end'] = array(
                 'time' => '',
                 'date' => ''
             );
+
+        // failed
+        $failed = false;
+        switch($this->status)
+        {
+            case 'busy':
+            case 'failed':
+            case 'timeout':
+            case 'no-answer':
+            case 'cancel':
+                $failed = true;
+                break;
+        }
+
+        $hc = strtolower($this->hangup_cause);
+        if (!empty($hc) && $hc != 'normal_clearing')
+            $failed = true;
+
+        $bhc = strtolower($this->b_hangup_cause);
+        if (!empty($bhc) && $bhc != 'normal_clearing')
+            $failed = true;
+
+        $data['failed'] = $failed;
 
         return $data;
     }

@@ -159,9 +159,9 @@ function logtable_add(log)
 
     cols += '<td class="callLogDestination">';
     cols += '<strong>' + log.dialled_formatted + '</strong><br />';
-    cols += '<a href="adgroup/' + log.adgroup_id + '/adverts">' + log.advert_name + '</a> &raquo; ';
+    cols += '<a href="client/' + log.client_id + '/campaigns">' + log.campaign_name + '</a> &raquo;';
     cols += '<a href="campaign/' + log.campaign_id + '/adgroups">' + log.adgroup_name + '</a> &raquo; ';
-    cols += '<a href="client/' + log.client_id + '/campaigns">' + log.campaign_name + '</a></td>';
+    cols += '<a href="adgroup/' + log.adgroup_id + '/adverts">' + log.advert_name + '</a>';
     cols += '</td>';
 
     if (log.failed) {

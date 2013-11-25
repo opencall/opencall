@@ -4,33 +4,16 @@
         <strong>{{ log.getDateStart.format('d M') }}</strong>
         <br />
         <small>{{ log.getDateStart.format('H:i:s') }}</small><br />
-        <!--
-        <div class="btn-group">
-            <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
-            HKD 99,999.99 <i class="icon-angle-down"></i>
-            </a>
-            <ul class="dropdown-menu">
-                <li><a data-toggle="modal" href="#editSale">Sale</a></li>
-                <li><a href="#">Hot Lead</a></li>
-                <li><a href="#">Warm Lead</a></li>
-                <li><a href="#">Enquiry</a></li>
-                <li><a href="#">Other</a></li>
-            </ul>
-        </div>
-        -->
     </td>
     <td class="callLogCaller">
         <strong>{{ log.getOriginFormatted }}</strong>
-        <!--
-        <br /><a data-toggle="modal" href="#editContact">Unknown Caller - Click to add details</a>
-        -->
     </td>
     <td class="callLogDestination">
         <strong>{{ log.getDialledFormatted }}</strong>
         <br />
-        <a href="/adgroup/{{ log.getAdGroupID }}/adverts">{{ log.getAdvert.getName }}</a> &raquo;
+        <a href="/client/{{ log.getClientID }}/campaigns">{{ log.getCampaign.getName }}</a> &raquo;
         <a href="/campaign/{{ log.getCampaignID }}/adgroups">{{ log.getAdGroup.getName }}</a> &raquo;
-        <a href="/client/{{ log.getClientID }}/campaigns">{{ log.getCampaign.getName }}</a>
+        <a href="/adgroup/{{ log.getAdGroupID }}/adverts">{{ log.getAdvert.getName }}</a>
     </td>
     {% if (log.isFailed) %}
     <td  class="callLogResult callLogRed">
