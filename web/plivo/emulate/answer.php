@@ -30,5 +30,10 @@ $post = array(
     'Event' => 'StartApp'
 );
 
-$answer = new Answer($pdo, $zmq_socket, 'http://beta.calltracking.hk/plivo/callback.php');
+$answer = new Answer(
+    $pdo,
+    $zmq_socket,
+    'http://beta.calltracking.hk/plivo/callback.php',
+    'http://beta.calltracking.hk/plivo/record.php'
+);
 echo $answer->run($post);
