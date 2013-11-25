@@ -2,7 +2,6 @@
 
 namespace Plivo;
 
-use Predis\Client as PredisClient;
 use Predis\Connection\ConnectionException;
 use Plivo\Queue\Message as QMessage;
 use Plivo\Log\Entry as LogEntry;
@@ -41,7 +40,6 @@ class Answer
 
             // store response xml
             $xml = $response->renderXML();
-            // error_log($xml);
 
             // setup queue message
             $qmsg = new QMessage();
