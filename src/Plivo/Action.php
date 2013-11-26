@@ -74,7 +74,9 @@ class Action
             case self::TYPE_RECORD:
                 $xml = '<Record';
                 if (isset($this->params['record_url']))
-                    $xml .= ' action="' . $this->params['record_url'] . '" redirect="false"';
+                    $xml .= ' action="' . $this->params['record_url'] . '"';
+                $xml .= ' redirect="false"';
+                $xml .= ' maxLength="600"';
                 $xml .= ' startOnDialAnswer="true" />';
                 return $xml;
         }
