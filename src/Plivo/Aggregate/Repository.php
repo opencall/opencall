@@ -46,4 +46,21 @@ class Repository
 
         return $cstmt->execute();
     }
+
+    public function adjustFailed(Entry $entry)
+    {
+        // adjust failed count without touching the other counters
+        $sql = 'update Counter set count_failed = count_failed + 1 where date_in = :date_in and client_id = :client_id and campaign_id = :campaign_id and adgroup_id = :adgroup_id and advert_id = :advert_id and number_id = :number_id and caller_id = :caller_id';
+
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->bindParam(':date_in', $entry->getDateIn());
+        $stmt->bindParam(':client_id', $entry->getClientID());
+        $stmt->bindParam(':campaign_id', $entry->getCampaignID());
+        $stmt->bindParam(':adgroup_id', $entry->getAdGroupID());
+        $stmt->bindParam(':advert_id', $entry->getAdvertID());
+        $stmt->bindParam(':number_id', $entry->getNumberID());
+        $stmt->bindParam(':caller_id', $entry->getCallerID());
+
+        return $stmt->execute();
+    }
 }
