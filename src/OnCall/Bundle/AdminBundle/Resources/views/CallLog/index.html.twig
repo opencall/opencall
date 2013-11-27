@@ -88,7 +88,7 @@ function filter_check(log)
     }
 
     // hangup cause
-    if (filter.hangup_cause != null && filter.hangup_cause != log.hangup_cause)
+    if (filter.hangup_cause != null && filter.hangup_cause != log.hangup_cause && filter.b_hangup_cause != log.hangup_cause)
         return false;
 
     // duration
