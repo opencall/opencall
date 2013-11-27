@@ -65,7 +65,20 @@ class Router
             return $resp;
         }
 
-        // TODO: check if we have speak
+        // check if we have speak
+        if ($res['speak'])
+        {
+            $text = trim($res['speak_message']);
+            // check if text is there
+            if (strlen($text) > 0)
+            {
+                $act_params = array();
+                $act_params['language'] = 'en-GB';
+                $act_params['text'] = $text;
+                $action = new Action(Action::TYPE_SPEAK, $act_params);
+                $resp->addAction($action);
+            }
+        }
 
         // check if we have record
         if ($res['record'])

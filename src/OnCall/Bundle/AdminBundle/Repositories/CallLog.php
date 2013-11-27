@@ -83,7 +83,7 @@ class CallLog extends EntityRepository
         // hangup cause
         if ($filter->getHCause() != null)
         {
-            $qb->andWhere('cl.hangup_cause = :hangup_cause')
+            $qb->andWhere('cl.hangup_cause = :hangup_cause or cl.b_hangup_cause = :hangup_cause')
                 ->setParameter('hangup_cause', $filter->getHCause());
         }
     }
