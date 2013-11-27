@@ -65,7 +65,7 @@ class Pusher implements WampServerInterface
 
         // fetch names from db
         $names = $this->log_repo->fetchNames($data['logentry']['advert_id']);
-        // print_r($names);
+        print_r($names);
         $data['logentry']['advert_name'] = $names['advert_name'];
         $data['logentry']['adgroup_name'] = $names['adgroup_name'];
         $data['logentry']['campaign_name'] = $names['campaign_name'];
