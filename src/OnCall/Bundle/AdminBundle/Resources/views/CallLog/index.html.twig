@@ -148,13 +148,15 @@ function logtable_add(log)
 
     var log_id = 'log_' + log.call_id;
     var audio_id = 'audio_' + log.call_id;
+    var ap_id = 'ap_' + log.call_id;
 
     var cols = '<td id="' + audio_id + '" class="callLogDate">';
     cols += '<strong>' + log.date_start.date + '</strong><br />';
     cols += '<small>' + log.date_start.time + '</small><br />';
     if (log.audio_record != null) {
         setTimeout(function() {
-            var audio = '<audio controls>';
+            $('#' + ap_id).remove();
+            var audio = '<audio id="' + ap_id + '" controls>';
             audio += '<source src="' + log.audio_record + '" type="audio/mp3" />';
             audio += '</audio>';
             $('#' + audio_id).append(audio);
