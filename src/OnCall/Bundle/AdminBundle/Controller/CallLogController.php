@@ -86,6 +86,27 @@ class CallLogController extends Controller
 
         // build csv data array
         $data = array();
+
+        // header row
+        $row = array(
+            'Date',
+            'Time',
+            'Caller Number',
+            'Dialled Number',
+            'Destination Number',
+            'Advert',
+            'Ad Group',
+            'Campaign',
+            'Call Duration',
+            'Billable Minutes',
+            'Call Result',
+            'Call Result A',
+            'Call Result B',
+            'Recording URL'
+        );
+        $data[] = $row;
+
+        // data rows
         foreach ($logs as $log)
         {
             $succ_text = 'success';
@@ -94,7 +115,7 @@ class CallLogController extends Controller
 
             $row = array(
                 $log->getDateStart()->format('d-m-Y'),
-                $log->getDateStart()->format('h:m:s'),
+                $log->getDateStart()->format('H:m:s'),
                 $log->getOriginNumber(),
                 $log->getDialledNumber(),
                 $log->getDestinationNumber(),
@@ -102,7 +123,7 @@ class CallLogController extends Controller
                 $log->getAdGroup()->getName(),
                 $log->getCampaign()->getName(),
                 $log->getDuration(),
-                $log->getBillDuration(),
+                floor($log->getBillDuration() / 60),
                 $succ_text,
                 $log->getHangupCause(),
                 $log->getHangupCauseB(),
@@ -119,7 +140,7 @@ class CallLogController extends Controller
             )
         );
 
-        // set headers
+        // set http headers
         $resp->headers->set('Content-Type', 'text/csv');
         $resp->headers->set('Content-Description', 'Call Log');
         $resp->headers->set('Content-Disposition', 'attachment; filename=call_log.csv');
