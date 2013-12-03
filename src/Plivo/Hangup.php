@@ -52,6 +52,12 @@ class Hangup extends Lockable
             // get log
             $log_repo = new LogRepository($this->pdo);
             $log = $log_repo->find($params->getUniqueID());
+            // no log entry found (no answer call?)
+            if ($log == null)
+            {
+                $this->unlock($params->getUniqueID());
+                exit;
+            }
 
             // update log with hangup data
             $this->updateLog($log, $params);

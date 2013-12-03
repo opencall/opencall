@@ -198,11 +198,10 @@ function logtable_add(log)
     }
 }
 
-function log_more()
+function get_filter_query_string()
 {
     var filter = filter_get();
-    var last_id = $('.log_row').last().data('id');
-    var url = '/client/{{ client.getID }}/call_log/more/' + last_id;
+    var url = '';
     
     if (filter.campaign_id == null)
         url += '?cid=';
@@ -241,6 +240,21 @@ function log_more()
 
     url += '&dts=' + filter.dts;
     url += '&dte=' + filter.dte;
+
+    return url;
+}
+
+function log_csv()
+{
+    var url = '/client/{{ client.getID }}/call_log/csv' + get_filter_query_string();
+    console.log(url);
+    $(this).attr('href', url);
+}
+
+function log_more()
+{
+    var last_id = $('.log_row').last().data('id');
+    var url = '/client/{{ client.getID }}/call_log/more/' + last_id + get_filter_query_string();
 
     // console.log(url);
     $.get(url, function(data) {
@@ -323,6 +337,10 @@ jQuery(document).ready(function() {
     // BEGIN more button
     $('#more_button').click(log_more);
     // END more button
+
+    // BEGIN csv button
+    $('#csv_button').click(log_csv);
+    // END csv button
 
     // BEGIN date range
     var date_from = new Date({{ filter.getDTSUTC }});
@@ -519,6 +537,9 @@ jQuery(document).ready(function() {
 
             <!-- BEGIN SAMPLE TABLE PORTLET-->
             <div class="controls">
+                <div class="pull-right">
+                    <a id="csv_button" href="">Export Call Log Data to CSV</a>
+                </div>
                 <!-- Kendrick: Live updates should respect any filters that are set -->
                 <h4>Live Updates</h4>
                 <div class="portlet-body">

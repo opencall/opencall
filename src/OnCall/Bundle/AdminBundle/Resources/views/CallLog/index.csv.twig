@@ -1,0 +1,6 @@
+{% for row in csv_data %}
+{% for entry in row %}
+{% if loop.last %}"{{ entry | csv_escape }}"{% else %}"{{ entry | csv_escape }}",{% endif %}
+{% endfor %}
+
+{% endfor %}

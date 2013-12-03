@@ -1,7 +1,8 @@
-parameters:
-#    on_call_admin.example.class: OnCall\Bundle\AdminBundle\Example
-
 services:
+    oncall.twig.csv_extension:
+        class: OnCall\Bundle\AdminBundle\Twig\CSVExtension
+        tags:
+            - { name: twig.extension }
 #    on_call_admin.example:
 #        class: %on_call_admin.example.class%
 #        arguments: [@service_id, "plain_value", %parameter%]

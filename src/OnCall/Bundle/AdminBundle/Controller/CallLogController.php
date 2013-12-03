@@ -76,6 +76,60 @@ class CallLogController extends Controller
         );
     }
 
+    public function csvAction($client_id)
+    {
+        // fetch
+        $log_filter = $this->getLogFilter();
+        $logs = $this->getDoctrine()
+            ->getRepository('OnCallAdminBundle:CallLog')
+            ->findFiltered($client_id, $log_filter);
+
+        // build csv data array
+        $data = array();
+        foreach ($logs as $log)
+        {
+            $succ_text = 'success';
+            if ($log->isFailed())
+                $succ_text = 'failed';
+
+            $row = array(
+                $log->getDateStart()->format('d-m-Y'),
+                $log->getDateStart()->format('h:m:s'),
+                $log->getOriginNumber(),
+                $log->getDialledNumber(),
+                $log->getDestinationNumber(),
+                $log->getAdvert()->getName(),
+                $log->getAdGroup()->getName(),
+                $log->getCampaign()->getName(),
+                $log->getDuration(),
+                $log->getBillDuration(),
+                $succ_text,
+                $log->getHangupCause(),
+                $log->getHangupCauseB(),
+                $log->getAudioRecord()
+            );
+            $data[] = $row;
+        }
+
+        // build response
+        $resp = $this->render(
+            'OnCallAdminBundle:CallLog:index.csv.twig',
+            array(
+                'csv_data' => $data
+            )
+        );
+
+        // set headers
+        $resp->headers->set('Content-Type', 'text/csv');
+        $resp->headers->set('Content-Description', 'Call Log');
+        $resp->headers->set('Content-Disposition', 'attachment; filename=call_log.csv');
+        $resp->headers->set('Content-Transfer-Encoding', 'binary');
+        $resp->headers->set('Pragma', 'no-cache');
+        $resp->headers->set('Expires', '0');
+
+        return $resp;
+    }
+
     public function moreAction($client_id, $last_id)
     {
         // get logs

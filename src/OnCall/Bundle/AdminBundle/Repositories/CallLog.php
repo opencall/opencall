@@ -136,4 +136,27 @@ class CallLog extends EntityRepository
 
         return $query->getResult();
     }
+
+    public function findFiltered($client_id, Filter $filter)
+    {
+        // create query and set client_id
+        $qb = $this->createQueryBuilder('cl')
+            ->where('cl.client_id = :client_id')
+            ->setParameter('client_id', $client_id);
+
+        // filters
+        $this->filterItem($filter, $qb);
+        $this->filterDuration($filter, $qb);
+        $this->filterNumber($filter, $qb);
+        $this->filterFailed($filter, $qb);
+        $this->filterHCause($filter, $qb);
+        $this->filterDates($filter, $qb);
+
+        // order by id
+        $qb->orderBy('cl.id', 'DESC');
+
+        $query = $qb->getQuery();
+
+        return $query->getResult();
+    }
 }

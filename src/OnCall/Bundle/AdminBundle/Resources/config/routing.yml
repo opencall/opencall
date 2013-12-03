@@ -210,3 +210,8 @@ oncall_admin_call_log_more:
     pattern: /client/{client_id}/call_log/more/{last_id}
     defaults: { _controller: OnCallAdminBundle:CallLog:more }
     methods: [GET]
+
+oncall_admin_call_log_csv:
+    pattern: /client/{client_id}/call_log/csv
+    defaults: { _controller: OnCallAdminBundle:CallLog:csv }
+    methods: [GET]
