@@ -44,64 +44,63 @@
             </div>
             <div class="control-group">
                 <!--ie8, ie9 does not support html5 placeholder, so we just show field title for that-->
-                <label class="control-label visible-ie8 visible-ie9">Username</label>
+                <label class="control-label visible-ie8 visible-ie9">{% trans %}login.username{% endtrans %}</label>
                 <div class="controls">
                     <div class="input-icon left">
                         <i class="icon-user"></i>
-                        <input class="m-wrap placeholder-no-fix" type="text" placeholder="Username" name="_username"/>
+                        <input class="m-wrap placeholder-no-fix" type="text" placeholder="{% trans %}login.username{% endtrans %}" name="_username"/>
                     </div>
                 </div>
             </div>
             <div class="control-group">
-                <label class="control-label visible-ie8 visible-ie9">Password</label>
+                <label class="control-label visible-ie8 visible-ie9">{% trans %}login.password{% endtrans %}</label>
                 <div class="controls">
                     <div class="input-icon left">
                         <i class="icon-lock"></i>
-                        <input class="m-wrap placeholder-no-fix" type="password" placeholder="Password" name="_password"/>
+                        <input class="m-wrap placeholder-no-fix" type="password" placeholder="{% trans %}login.password{% endtrans %}" name="_password"/>
                     </div>
                 </div>
             </div>
             <div class="form-actions">
                 <label class="checkbox">
-                <input type="checkbox" name="remember" value="1"/> Remember me
+                <input type="checkbox" name="remember" value="1"/> {% trans %}login.remember{% endtrans %}
                 </label>
                 <button type="submit" class="btn blue pull-right">
-                Login <i class="m-icon-swapright m-icon-white"></i>
+                {% trans %}login.login{% endtrans %} <i class="m-icon-swapright m-icon-white"></i>
                 </button>            
             </div>
             <div class="forget-password">
-                <h4>Forgot your password ?</h4>
-                <p>
-                    No problem, click <a href="javascript:;" class="" id="forget-password">here</a>
-                    to reset your password.
+                <h4>{% trans %}login.forgot{% endtrans %} ?</h4>
+                <p>{% trans %}login.reset.1{% endtrans %} <a href="javascript:;" class="" id="forget-password">{% trans %}login.reset.here{% endtrans %}</a>
+                {% trans %}login.reset.2{% endtrans %}
                 </p>
             </div>
             <div class="create-account">
                 <p>
-                    Don't have an account yet ?&nbsp; 
-                    <a href="javascript:;" id="register-btn" class="">Create an account</a>
+                    {% trans %}login.account.no{% endtrans %}&nbsp; 
+                    <a href="javascript:;" id="register-btn" class="">{% trans %}login.account.create{% endtrans %}</a>
                 </p>
             </div>
         </form>
         <!-- END LOGIN FORM -->        
         <!-- BEGIN FORGOT PASSWORD FORM -->
         <form class="form-vertical forget-form" action="index.html">
-            <h3 class="">Forget Password ?</h3>
-            <p>Enter your e-mail address below to reset your password.</p>
+            <h3 class="">{% trans %}login.forget.title{% endtrans %}</h3>
+            <p>{% trans %}login.forget.text{% endtrans %}</p>
             <div class="control-group">
                 <div class="controls">
                     <div class="input-icon left">
                         <i class="icon-envelope"></i>
-                        <input class="m-wrap placeholder-no-fix" type="text" placeholder="Email" name="email" />
+                        <input class="m-wrap placeholder-no-fix" type="text" placeholder="{% trans %}text.email{% endtrans %}" name="email" />
                     </div>
                 </div>
             </div>
             <div class="form-actions">
                 <button type="button" id="back-btn" class="btn">
-                <i class="m-icon-swapleft"></i> Back
+                <i class="m-icon-swapleft"></i> {% trans %}text.back{% endtrans %}
                 </button>
                 <button type="submit" class="btn blue pull-right">
-                Submit <i class="m-icon-swapright m-icon-white"></i>
+                {% trans %}text.submit{% endtrans %} <i class="m-icon-swapright m-icon-white"></i>
                 </button>            
             </div>
         </form>
@@ -111,20 +110,20 @@
             <h3 class="">Sign Up</h3>
             <p>Enter your account details below:</p>
             <div class="control-group">
-                <label class="control-label visible-ie8 visible-ie9">Username</label>
+                <label class="control-label visible-ie8 visible-ie9">{% trans %}login.username{% endtrans %}</label>
                 <div class="controls">
                     <div class="input-icon left">
                         <i class="icon-user"></i>
-                        <input class="m-wrap placeholder-no-fix" type="text" placeholder="Username" name="username"/>
+                        <input class="m-wrap placeholder-no-fix" type="text" placeholder="{% trans %}login.username{% endtrans %}" name="username"/>
                     </div>
                 </div>
             </div>
             <div class="control-group">
-                <label class="control-label visible-ie8 visible-ie9">Password</label>
+                <label class="control-label visible-ie8 visible-ie9">{% trans %}login.password{% endtrans %}</label>
                 <div class="controls">
                     <div class="input-icon left">
                         <i class="icon-lock"></i>
-                        <input class="m-wrap placeholder-no-fix" type="password" id="register_password" placeholder="Password" name="password"/>
+                        <input class="m-wrap placeholder-no-fix" type="password" id="register_password" placeholder="{% trans %}login.password{% endtrans %}" name="password"/>
                     </div>
                 </div>
             </div>
@@ -139,11 +138,11 @@
             </div>
             <div class="control-group">
                 <!--ie8, ie9 does not support html5 placeholder, so we just show field title for that-->
-                <label class="control-label visible-ie8 visible-ie9">Email</label>
+                <label class="control-label visible-ie8 visible-ie9">{% trans %}text.email{% endtrans %}</label>
                 <div class="controls">
                     <div class="input-icon left">
                         <i class="icon-envelope"></i>
-                        <input class="m-wrap placeholder-no-fix" type="text" placeholder="Email" name="email"/>
+                        <input class="m-wrap placeholder-no-fix" type="text" placeholder="{% trans %}text.email{% endtrans %}" name="email"/>
                     </div>
                 </div>
             </div>
@@ -157,7 +156,7 @@
             </div>
             <div class="form-actions">
                 <button id="register-back-btn" type="button" class="btn">
-                <i class="m-icon-swapleft"></i>  Back
+                <i class="m-icon-swapleft"></i>  {% trans %}text.back{% endtrans %}
                 </button>
                 <button type="submit" id="register-submit-btn" class="btn blue pull-right">
                 Sign Up <i class="m-icon-swapright m-icon-white"></i>

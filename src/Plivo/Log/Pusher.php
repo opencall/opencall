@@ -2,6 +2,8 @@
 
 namespace Plivo\Log;
 
+use ZMQ;
+
 class Pusher
 {
     protected $socket;
@@ -22,7 +24,8 @@ class Pusher
         );
 
         $json = json_encode($data);
-        $this->socket->send($json);
+        error_log('sending log');
+        $this->socket->send($json, ZMQ::MODE_NOBLOCK);
 
         return $this;
     }

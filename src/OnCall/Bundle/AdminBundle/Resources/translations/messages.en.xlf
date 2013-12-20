@@ -1,0 +1,68 @@
+<?xml version="1.0"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+    <file source-language="en" datatype="plaintext" original="file.ext">
+        <body>
+            <trans-unit id="101">
+                <source>login.username</source>
+                <target>Username</target>
+            </trans-unit>
+            <trans-unit id="102">
+                <source>login.password</source>
+                <target>Password</target>
+            </trans-unit>
+            <trans-unit id="103">
+                <source>login.remember</source>
+                <target>Remember me</target>
+            </trans-unit>
+            <trans-unit id="104">
+                <source>login.login</source>
+                <target>Login</target>
+            </trans-unit>
+            <trans-unit id="105">
+                <source>login.forgot</source>
+                <target>Forgot your password</target>
+            </trans-unit>
+            <trans-unit id="1061">
+                <source>login.reset.1</source>
+                <target>No problem, click</target>
+            </trans-unit>
+            <trans-unit id="1062">
+                <source>login.reset.2</source>
+                <target>to reset your password.</target>
+            </trans-unit>
+            <trans-unit id="1063">
+                <source>login.reset.here</source>
+                <target>here</target>
+            </trans-unit>
+            <trans-unit id="107">
+                <source>login.account.no</source>
+                <target>Don't have an account yet ?</target>
+            </trans-unit>
+            <trans-unit id="108">
+                <source>login.account.create</source>
+                <target>Create an account</target>
+            </trans-unit>
+            <trans-unit id="1091">
+                <source>login.forget.title</source>
+                <target>Forget Password ?</target>
+            </trans-unit>
+            <trans-unit id="1092">
+                <source>login.forget.text</source>
+                <target>Enter your e-mail address below to reset your password.</target>
+            </trans-unit>
+
+            <trans-unit id="201">
+                <source>text.email</source>
+                <target>Email</target>
+            </trans-unit>
+            <trans-unit id="202">
+                <source>text.back</source>
+                <target>Back</target>
+            </trans-unit>
+            <trans-unit id="203">
+                <source>text.submit</source>
+                <target>Submit</target>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>
