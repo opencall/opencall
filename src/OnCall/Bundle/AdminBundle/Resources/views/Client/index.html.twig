@@ -7,7 +7,7 @@ function update_client(client_id)
     $.get('/client/' + client_id, function(client) {
         $('.cl_name').val(client.name);
         $('.cl_name_text').text(client.name);
-        $('.cl_delete_text').val('Delete ' + client.name);
+        $('.cl_delete_text').val('{% trans %}text.delete{% endtrans %} ' + client.name);
         $('.cl_timezone').val(client.timezone);
         $('.cl_status').val(client.status);
     }, 'json');
@@ -50,13 +50,12 @@ $(document).ready(function() {
     <div class="row-fluid">
         <div class="span12">
             <!-- BEGIN PAGE TITLE & BREADCRUMB-->
-            <h3 class="page-title">
-                Clients
+            <h3 class="page-title">{% trans %}menu.clients{% endtrans %}
             </h3>
         </div>
         <div class="row-fluid">
             <div class="span12">
-                <button class="btn green" style="marging-bottom: 4px;" data-toggle="modal" href="#addClient"><i class="icon-plus"></i>Add New Client</button>
+                <button class="btn green" style="marging-bottom: 4px;" data-toggle="modal" href="#addClient"><i class="icon-plus"></i> {% trans %}client.add{% endtrans %}</button>
                 <br />
                 <br />
                 <!-- BEGIN INLINE NOTIFICATIONS PORTLET-->
@@ -65,16 +64,16 @@ $(document).ready(function() {
                 <div id="editClient" class="modal hide fade" tabindex="-1" data-width="760">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
-                        <h3>Edit Client</h3>
+                        <h3>{% trans %}client.edit{% endtrans %}</h3>
                     </div>
                     <div class="modal-body">
                         <div class="row-fluid">
                             <div class="span6 control-group">
-                                <h4 class="control-label">Client Name</h4>
+                                <h4 class="control-label">{% trans %}client.name{% endtrans %}</h4>
                                 <p><input name="name" type="text" class="cl_name span12 m-wrap"></p>
                             </div>
                             <div class="span6">
-                                <h4>Client Timezone</h4>
+                                <h4>{% trans %}client.timezone{% endtrans %}</h4>
                                 <p><select class="cl_timezone" name="timezone">
                                     {% for tz_key,tz_name in timezones %}
                                         <option value="{{ tz_key }}">{{ tz_name }}</option>
@@ -85,7 +84,7 @@ $(document).ready(function() {
                             {% if is_granted('ROLE_PREVIOUS_ADMIN') %}
                             <div class="row-fluid">
                                 <div class="span6">
-                                    <h4>Client Status</h4>
+                                    <h4>{% trans %}client.status{% endtrans %}</h4>
                                     <p><select name="status" class="cl_status small m-wrap" tabindex="1">
                                         <option value="1">Active</option>
                                         <option value="0">Inactive</option>
@@ -96,8 +95,8 @@ $(document).ready(function() {
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" data-dismiss="modal" class="btn">Cancel</button>
-                        <input type="submit" class="btn green" value="Save changes" />
+                        <button type="button" data-dismiss="modal" class="btn">{% trans %}text.cancel{% endtrans %}</button>
+                        <input type="submit" class="btn green" value="{% trans %}text.save_changes{% endtrans %}" />
                     </div>
                 </div>
                 </form>
@@ -107,14 +106,14 @@ $(document).ready(function() {
                 <div id="deleteClient" class="modal hide fade" tabindex="-1" role="dialog" aria-hidden="true">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
-                        <h3 id="myModalLabel3">Delete <span class="cl_name_text"></span></h3>
+                        <h3 id="myModalLabel3">{% trans %}text.delete{% endtrans %} <span class="cl_name_text"></span></h3>
                     </div>
                     <div class="modal-body">
-                        <p>Deleting a client will remove all phone numbers from your adverts and relinquish them, making them available to all CallTracking customers to use. Please note, you will be billed for the remainder of the month for these phone numbers. Press "Delete" to proceed.</p>
+                        <p>{% trans %}client.delete_text{% endtrans %}</p>
                     </div>
                     <div class="modal-footer">
-                        <button class="btn pull-left green" data-dismiss="modal" aria-hidden="true">Cancel</button>
-                        <input type="submit" class="btn red cl_delete_text" value="Delete All Data for McDonalds" />
+                        <button class="btn pull-left green" data-dismiss="modal" aria-hidden="true">{% trans %}text.cancel{% endtrans %}</button>
+                        <input type="submit" class="btn red cl_delete_text" value="{% trans %}text.delete{% endtrans %}" />
                     </div>
                 </div>
                 </form>
@@ -124,7 +123,7 @@ $(document).ready(function() {
                 <div id="addClient" class="modal hide fade" tabindex="-1" data-width="760">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
-                        <h3>Add Client</h3>
+                        <h3>{% trans %}client.add{% endtrans %}</h3>
                     </div>
                     <div class="modal-body">
                         <div class="row-fluid">
@@ -149,8 +148,8 @@ $(document).ready(function() {
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" data-dismiss="modal" class="btn">Cancel</button>
-                        <input type="submit" class="btn green" value="Add Client" />
+                        <button type="button" data-dismiss="modal" class="btn">{% trans %}text.cancel{% endtrans %}</button>
+                        <input type="submit" class="btn green" value="{% trans %}client.add{% endtrans %}" />
                     </div>
                 </div>
                 </form>
@@ -167,17 +166,17 @@ $(document).ready(function() {
                                 <a href="client/{{ cli.getID }}/campaigns">{{ cli.getName }}</a>
                             </h3>
                             <ul>
-                                <li><i class="icon-angle-right"></i> {{ cli.getNumberCount }} numbers assigned</li>
-                                <li><i class="icon-angle-right"></i> {{ summ_day[cli.getID] }} calls in the past 24 hours</li>
-                                <li><i class="icon-angle-right"></i> {{ summ_month[cli.getID] }} calls this month</li>
+                                <li><i class="icon-angle-right"></i> {{ cli.getNumberCount }} {% trans %}client.numbers_assigned{% endtrans %}</li>
+                                <li><i class="icon-angle-right"></i> {{ summ_day[cli.getID] }} {% trans %}client.call_day{% endtrans %}</li>
+                                <li><i class="icon-angle-right"></i> {{ summ_month[cli.getID] }} {% trans %}client.call_month{% endtrans %}</li>
                                 <!-- To be added in later versions -->
                                 <!--<li><i class="icon-angle-right"></i> 2,260 inclusive calls remaining</li>-->
                                 <!--<li><i class="icon-angle-right"></i> $XXX/month + $0 overage in Aug</li>-->
 
                             </ul>
-                            <a href="client/{{ cli.getID }}/campaigns" class="btn mini green" ><i class="icon-edit"></i> view</a>
-                            <button data-toggle="modal" data-id="{{ cli.getID }}" href="#editClient" class="btn mini client_edit" ><i class="icon-edit"></i> edit</button>
-                            <button data-toggle="modal" data-id="{{ cli.getID }}" href="#deleteClient" href="#" class="btn mini client_delete"><i class="icon-trash"></i> delete</button>
+                            <a href="client/{{ cli.getID }}/campaigns" class="btn mini green" ><i class="icon-edit"></i> {% trans %}text.view{% endtrans %}</a>
+                            <button data-toggle="modal" data-id="{{ cli.getID }}" href="#editClient" class="btn mini client_edit" ><i class="icon-edit"></i> {% trans %}text.edit{% endtrans %}</button>
+                            <button data-toggle="modal" data-id="{{ cli.getID }}" href="#deleteClient" href="#" class="btn mini client_delete"><i class="icon-trash"></i> {% trans %}text.delete{% endtrans %}</button>
                         </div>
                     </div>
                     {% endfor %}

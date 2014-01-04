@@ -63,6 +63,97 @@
                 <source>text.submit</source>
                 <target>Submit</target>
             </trans-unit>
+            <trans-unit id="204">
+                <source>text.have_feedback</source>
+                <target>Have some feedback</target>
+            </trans-unit>
+            <trans-unit id="205">
+                <source>text.feedback</source>
+                <target>Please let us know - this platform is for you. We want to provide the features you need and ensure a bug free experience.</target>
+            </trans-unit>
+            <trans-unit id="206">
+                <source>text.email</source>
+                <target>E-mail</target>
+            </trans-unit>
+            <trans-unit id="207">
+                <source>text.view</source>
+                <target>View</target>
+            </trans-unit>
+            <trans-unit id="208">
+                <source>text.edit</source>
+                <target>Edit</target>
+            </trans-unit>
+            <trans-unit id="209">
+                <source>text.delete</source>
+                <target>Delete</target>
+            </trans-unit>
+            <trans-unit id="210">
+                <source>text.cancel</source>
+                <target>Cancel</target>
+            </trans-unit>
+            <trans-unit id="211">
+                <source>text.save_changes</source>
+                <target>Save Changes</target>
+            </trans-unit>
+
+
+            <trans-unit id="301">
+                <source>menu.admin_back</source>
+                <target>Back to Admin</target>
+            </trans-unit>
+            <trans-unit id="302">
+                <source>menu.clients</source>
+                <target>Clients</target>
+            </trans-unit>
+            <trans-unit id="303">
+                <source>menu.modify_account</source>
+                <target>Modify Account</target>
+            </trans-unit>
+            <trans-unit id="304">
+                <source>menu.support</source>
+                <target>Support</target>
+            </trans-unit>
+            <trans-unit id="305">
+                <source>menu.logout</source>
+                <target>Log Out</target>
+            </trans-unit>
+
+            <trans-unit id="401">
+                <source>client.add</source>
+                <target>Add New Client</target>
+            </trans-unit>
+            <trans-unit id="402">
+                <source>client.numbers_assigned</source>
+                <target>numbers assigned</target>
+            </trans-unit>
+            <trans-unit id="403">
+                <source>client.call_day</source>
+                <target>calls in the past 24 hours</target>
+            </trans-unit>
+            <trans-unit id="404">
+                <source>client.call_month</source>
+                <target>calls this month</target>
+            </trans-unit>
+            <trans-unit id="405">
+                <source>client.name</source>
+                <target>Client Name</target>
+            </trans-unit>
+            <trans-unit id="406">
+                <source>client.timezone</source>
+                <target>Client Timezone</target>
+            </trans-unit>
+            <trans-unit id="407">
+                <source>client.status</source>
+                <target>Client Status</target>
+            </trans-unit>
+            <trans-unit id="408">
+                <source>client.edit</source>
+                <target>Edit Client</target>
+            </trans-unit>
+            <trans-unit id="409">
+                <source>client.delete_text</source>
+                <target>Deleting a client will remove all phone numbers from your adverts and relinquish them, making them available to all CallTracking customers to use. Please note, you will be billed for the remainder of the month for these phone numbers. Press "Delete" to proceed.</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>

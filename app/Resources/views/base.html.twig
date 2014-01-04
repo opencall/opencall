@@ -60,28 +60,28 @@
 				<ul class="nav pull-right">
                     {% if is_granted('ROLE_PREVIOUS_ADMIN') %}
                     <li>
-                        <a href="/?_switch=_exit"><i class="icon-male"></i>Back to Admin</a>
+                        <a href="/?_switch=_exit"><i class="icon-male"></i>{% trans %}menu.admin_back{% endtrans %}</a>
                     </li>
                     {% endif %}
 
                     {% if (not is_granted('ROLE_ADMIN')) and (user.isMultiClient) %}
                     <li>
-                        <a href="/clients"><i class="icon-male"></i>Clients</a>
+                        <a href="/clients"><i class="icon-male"></i>{% trans %}menu.clients{% endtrans %}</a>
                     </li>
                     {% endif %}
 
                     <li>
-                        <a href="/password"><i class="icon-cog"></i>Modify Account</a>
+                        <a href="/password"><i class="icon-cog"></i>{% trans %}menu.modify_account{% endtrans %}</a>
                     </li>
 
                     {% if not is_granted('ROLE_ADMIN') %}
                     <li>
-                        <a href="mailto:mark.hollinworth@calltracking.hk"><i class="icon-heart"></i>Support</a>
+                        <a href="mailto:mark.hollinworth@calltracking.hk"><i class="icon-heart"></i>{% trans %}menu.support{% endtrans %}</a>
                     </li>
                     {% endif %}
 
                     <li>
-                        <a href="/logout"><i class="icon-off"></i>Log Out </a>
+                        <a href="/logout"><i class="icon-off"></i>{% trans %}menu.logout{% endtrans %} </a>
                     </li>
 				</ul>
 				<!-- END TOP NAVIGATION MENU --> 
@@ -98,9 +98,9 @@
             {{ menu.display_group(sidebar_menu) }}
 			<!-- END SIDEBAR MENU -->
             <div style="margin: 20px 0px 0px 0px; padding: 20px; font-size: 11px; color:#888;">
-                <h3 style="font-size: 14px; margin:0px;padding:0px;"><i class="icon-comment"></i> &nbsp;&nbsp; Have some feedback?</h3>
-                <p>Please let us know - this platform is for you. We want to provide the features you need and ensure a bug free experience.
-                    <br>E-mail: <a href="mailto:feedback@calltracking.hk">feedback@calltracking.hk</a>
+                <h3 style="font-size: 14px; margin:0px;padding:0px;"><i class="icon-comment"></i> &nbsp;&nbsp; {% trans %}text.have_feedback{% endtrans %}?</h3>
+                <p>{% trans %}text.feedback{% endtrans %}
+                    <br>{% trans %}text.email{% endtrans %}: <a href="mailto:feedback@calltracking.hk">feedback@calltracking.hk</a>
                 </p>
             </div>
 		</div>
