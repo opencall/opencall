@@ -241,6 +241,27 @@
                 <target>Action</target>
             </trans-unit>
 
+            <trans-unit id="601">
+                <source>acc.new_password</source>
+                <target>New Password</target>
+            </trans-unit>
+            <trans-unit id="602">
+                <source>acc.rep_password</source>
+                <target>Repeat Password</target>
+            </trans-unit>
+            <trans-unit id="603">
+                <source>acc.msg.blank</source>
+                <target>Password cannot be blank.</target>
+            </trans-unit>
+            <trans-unit id="604">
+                <source>acc.msg.match</source>
+                <target>Passwords do not match.</target>
+            </trans-unit>
+            <trans-unit id="605">
+                <source>acc.msg.success</source>
+                <target>Password changed successfully.</target>
+            </trans-unit>
+
         </body>
     </file>
 </xliff>

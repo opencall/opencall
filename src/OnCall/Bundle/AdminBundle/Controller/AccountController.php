@@ -174,18 +174,19 @@ class AccountController extends Controller
     public function passwordSubmitAction()
     {
         $data = $this->getRequest()->request->all();
+        $trans = $this->get('translator');
 
         // field check
         if (!isset($data['pass1']) || !isset($data['pass2']) || empty($data['pass1']) || empty($data['pass2']))
         {
-            $this->addFlash('error', 'Password cannot be blank.');
+            $this->addFlash('error', $trans->trans('acc.msg.blank'));
             return $this->redirect($this->generateUrl('oncall_admin_password_form'));
         }
 
         // match check
         if ($data['pass1'] != $data['pass2'])
         {
-            $this->addFlash('error', 'Passwords do not match.');
+            $this->addFlash('error', $trans->trans('acc.msg.match'));
             return $this->redirect($this->generateUrl('oncall_admin_password_form'));
         }
 
@@ -195,7 +196,7 @@ class AccountController extends Controller
         $mgr = $this->get('fos_user.user_manager');
         $mgr->updateUser($user);
 
-        $this->addFlash('success', 'Password changed successfully.');
+        $this->addFlash('success', $trans->trans('acc.msg.success'));
 
         return $this->redirect($this->generateUrl('oncall_admin_password_form'));
     }
