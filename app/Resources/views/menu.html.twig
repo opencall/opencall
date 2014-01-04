@@ -6,7 +6,7 @@
     {% endif %}
         <a href="{{ menu_item.getURL() }}">
             <i class="{{ menu_item.getIcon() }}"></i>
-            <span class="title">{{ menu_item.getName() }}</span>
+            <span class="title">{{ menu_item.getName()|trans }}</span>
         </a>
     </li>
 {% endmacro %}

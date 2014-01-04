@@ -117,6 +117,22 @@
                 <source>menu.logout</source>
                 <target>Log Out</target>
             </trans-unit>
+            <trans-unit id="306">
+                <source>menu.account_management</source>
+                <target>Account Management</target>
+            </trans-unit>
+            <trans-unit id="307">
+                <source>menu.number_management</source>
+                <target>Number Management</target>
+            </trans-unit>
+            <trans-unit id="308">
+                <source>menu.campaigns</source>
+                <target>Campaigns</target>
+            </trans-unit>
+            <trans-unit id="309">
+                <source>menu.call_log</source>
+                <target>Call Log</target>
+            </trans-unit>
 
             <trans-unit id="401">
                 <source>client.add</source>

@@ -13,13 +13,13 @@ class MenuHandler
         {
             $menu_group->addItem(new MenuItem(
                 'account',
-                'Account Management',
+                'menu.account_management',
                 '/accounts',
                 'icon-signal'
             ));
             $menu_group->addItem(new MenuItem(
                 'number',
-                'Number Management',
+                'menu.number_management',
                 '/numbers',
                 'icon-th'
             ));
@@ -31,19 +31,19 @@ class MenuHandler
             {
                 $menu_group->addItem(new MenuItem(
                     'campaigns',
-                    'Campaigns',
+                    'menu.campaigns',
                     '/client/' . $client_id . '/campaigns',
                     'icon-signal'
                 ));
                 $menu_group->addItem(new MenuItem(
                     'call_log',
-                    'Call Log',
+                    'menu.call_log',
                     '/client/' . $client_id . '/call_log',
                     'icon-phone'
                 ));
                 $menu_group->addItem(new MenuItem(
                     'number',
-                    'Number Management',
+                    'menu.number_management',
                     '/client/' . $client_id . '/numbers',
                     'icon-th'
                 ));
