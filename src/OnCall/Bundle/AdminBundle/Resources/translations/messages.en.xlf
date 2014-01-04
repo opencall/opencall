@@ -95,6 +95,18 @@
                 <source>text.save_changes</source>
                 <target>Save Changes</target>
             </trans-unit>
+            <trans-unit id="212">
+                <source>text.yes</source>
+                <target>Yes</target>
+            </trans-unit>
+            <trans-unit id="213">
+                <source>text.no</source>
+                <target>No</target>
+            </trans-unit>
+            <trans-unit id="214">
+                <source>text.relinquish</source>
+                <target>Relinquish</target>
+            </trans-unit>
 
 
             <trans-unit id="301">
@@ -170,6 +182,65 @@
                 <source>client.delete_text</source>
                 <target>Deleting a client will remove all phone numbers from your adverts and relinquish them, making them available to all CallTracking customers to use. Please note, you will be billed for the remainder of the month for these phone numbers. Press "Delete" to proceed.</target>
             </trans-unit>
+
+
+            <trans-unit id="501">
+                <source>num.filter_usage</source>
+                <target>Filter By Usage</target>
+            </trans-unit>
+            <trans-unit id="502">
+                <source>num.filter_type</source>
+                <target>Filter By Type</target>
+            </trans-unit>
+            <trans-unit id="503">
+                <source>num.delete_num</source>
+                <target>Delete Number</target>
+            </trans-unit>
+            <trans-unit id="504">
+                <source>num.delete_text</source>
+                <target>Relinquishing a number will permanently remove it from this client account and it will be re-entered into the pool for all CallTracking customers to use. Please note, you will be billed for the remainder of the month for this phone number. Press "Delete Number" to proceed.</target>
+            </trans-unit>
+            <trans-unit id="505">
+                <source>num.number</source>
+                <target>Number</target>
+            </trans-unit>
+            <trans-unit id="506">
+                <source>num.in_use</source>
+                <target>In Use</target>
+            </trans-unit>
+            <trans-unit id="507">
+                <source>num.advert</source>
+                <target>Advert</target>
+            </trans-unit>
+            <trans-unit id="508">
+                <source>num.adgroup</source>
+                <target>AdGroup</target>
+            </trans-unit>
+            <trans-unit id="509">
+                <source>num.campaign</source>
+                <target>Campaign</target>
+            </trans-unit>
+            <trans-unit id="510">
+                <source>num.type</source>
+                <target>Type</target>
+            </trans-unit>
+            <trans-unit id="511">
+                <source>num.cost</source>
+                <target>Cost/Month</target>
+            </trans-unit>
+            <trans-unit id="512">
+                <source>num.date_add</source>
+                <target>Date Added to Client</target>
+            </trans-unit>
+            <trans-unit id="513">
+                <source>num.last_called</source>
+                <target>Last Called</target>
+            </trans-unit>
+            <trans-unit id="514">
+                <source>num.action</source>
+                <target>Action</target>
+            </trans-unit>
+
         </body>
     </file>
 </xliff>

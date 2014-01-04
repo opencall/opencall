@@ -28,16 +28,14 @@ $(document).ready(function() {
     <!-- BEGIN PAGE HEADER-->
     <div class="row-fluid">
         <div class="span12">    
-            <h3 class="page-title">
-                Number Management 
+            <h3 class="page-title">{% trans %}menu.number_management{% endtrans %}
             </h3>
             <ul class="breadcrumb">
                 <li>
                     {{ client.getName }}
                     <i class="icon-angle-right"></i>
                 </li>
-                <li>
-                    Number Management
+                <li>{% trans %}menu.number_management{% endtrans %}
                 </li>
             </ul>
 
@@ -47,14 +45,14 @@ $(document).ready(function() {
             <br /><br /><br />
             -->
 
-            Filter By Usage:
+            {% trans %}num.filter_usage{% endtrans %}:
             <select id="filter_usage" class="small m-wrap" tabindex="1">
                 <option value="" {{ (usage is sameas('')) ? 'selected="selected"' : '' }}>-</option>
                 <option value="1" {{ (usage is sameas('1')) ? 'selected="selected"' : '' }}>In Use</option>
                 <option value="0" {{ (usage is sameas('0')) ? 'selected="selected"' : '' }}>Not In Use</option>
             </select>
 
-            Filter By Type:
+            {% trans %}num.filter_type{% endtrans %}:
             <select id="filter_type" class="small m-wrap" tabindex="1">
                 <option value="">-</option>
                 {% for value,text in types %}
@@ -103,15 +101,15 @@ $(document).ready(function() {
             <div id="deleteNumber" class="modal hide fade" tabindex="-1" role="dialog" aria-hidden="true">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
-                    <h3 id="myModalLabel3">Delete <span id="dnum_id">85266821490</span>?</h3>
+                    <h3 id="myModalLabel3">{% trans %}text.delete{% endtrans %} <span id="dnum_id">85266821490</span>?</h3>
                 </div>
                 <div class="modal-body">
-                    <p>Relinquishing a number will permanently remove it from this client account and it will be re-entered into the pool for all CallTracking customers to use. Please note, you will be billed for the remainder of the month for this phone number. Press "Delete Number" to proceed.</p>
+                    <p>{% trans %}num.delete_text{% endtrans %}
                 </div>
                 <form id="dnum_form" method="post">
                 <div class="modal-footer">
-                    <button class="btn pull-left green" data-dismiss="modal" aria-hidden="true">Cancel</button>
-                    <input type="submit" class="btn red" value="Delete Number" />
+                    <button class="btn pull-left green" data-dismiss="modal" aria-hidden="true">{% trans %}text.cancel{% endtrans %}</button>
+                    <input type="submit" class="btn red" value="{% trans %}num.delete_num{% endtrans %}" />
                 </div>
                 </form>
             </div>
@@ -121,23 +119,23 @@ $(document).ready(function() {
             <table class="table-bordered table-striped table-condensed cf">
                 <thead>
                     <tr>
-                        <th style="width:108px;">Number</th>
-                        <th>In Use</th>
-                        <th>Advert</th>
-                        <th>AdGroup</th>
-                        <th>Campaign</th>
-                        <th>Type</th>
-                        <th>Cost/Month (HKD)</th>
-                        <th style="width:90px;">Date Added to Client</th>
-                        <th>Last Called<br /><small>dd/mm/yy hh:mm</small></th>
-                        <th>Action</th>
+                        <th style="width:108px;">{% trans %}num.number{% endtrans %}</th>
+                        <th>{% trans %}num.in_use{% endtrans %}</th>
+                        <th>{% trans %}num.advert{% endtrans %}</th>
+                        <th>{% trans %}num.adgroup{% endtrans %}</th>
+                        <th>{% trans %}num.campaign{% endtrans %}</th>
+                        <th>{% trans %}num.type{% endtrans %}</th>
+                        <th>{% trans %}num.cost{% endtrans %} (HKD)</th>
+                        <th style="width:90px;">{% trans %}num.date_add{% endtrans %}</th>
+                        <th>{% trans %}num.last_called{% endtrans %}<br /><small>dd/mm/yy hh:mm</small></th>
+                        <th>{% trans %}num.action{% endtrans %}</th>
                     </tr>
                 </thead>
                 <tbody>
                     {% for num in numbers %}
                     <tr>
                         <td>{{ num.getIDFormatted }}</td>
-                        <td>{{ num.isAssigned ? 'Yes' : 'No' }}</td>
+                        <td>{{ num.isAssigned ? 'text.yes'|trans : 'text.no'|trans }}</td>
                         {% if num.getAdvert %}
                             <td><a href="/adgroup/{{ num.getAdGroup.getID }}/adverts">{{ num.getAdvertFormatted }}</a></td>
                         {% else %}
@@ -159,7 +157,7 @@ $(document).ready(function() {
                         <td>{{ num.getDateLastCallFormatted }}</td>
                         <td>
                             {% if (not num.isAssigned) %}
-                            <button href="#deleteNumber" data-toggle="modal" data-id="{{ num.getID }}" role="button" class="btn mini delete_num">relinquish</button>
+                            <button href="#deleteNumber" data-toggle="modal" data-id="{{ num.getID }}" role="button" class="btn mini delete_num">{% trans %}text.relinquish{% endtrans %}</button>
                             {% endif %}
                         </td>
                     </tr>
