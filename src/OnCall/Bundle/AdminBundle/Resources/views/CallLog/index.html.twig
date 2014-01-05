@@ -178,15 +178,15 @@ function logtable_add(log)
     if (log.failed) {
         cols += '<td class="callLogResult callLogRed"><br />';
         cols += '<strong>' + log.destination_formatted + '</strong><br />';
-        cols += '<small>Caller: ' + log.hangup_cause + '<br />';
-        cols += 'Receiver: ' + log.b_hangup_cause + '</small>';
+        cols += '<small>{% trans %}text.caller{% endtrans %}: ' + log.hangup_cause + '<br />';
+        cols += '{% trans %}text.receiver{% endtrans %}: ' + log.b_hangup_cause + '</small>';
         cols += '</td>';
     }
     else {
         cols += '<td class="callLogResult callLogGreen"><br />';
         cols += '<strong>' + log.destination_formatted + '</strong><br />';
         cols += '<small>' + log.hangup_cause + '<br />';
-        cols += 'Call Duration: ' + log.duration + ' seconds</small>';
+        cols += '{% trans %}text.call_duration{% endtrans %}: ' + log.duration + ' {% trans %}log.seconds{% endtrans %}</small>';
         cols += '</td>';
     }
 
@@ -422,7 +422,7 @@ jQuery(document).ready(function() {
     <div class="row-fluid">
         <div class="span12">
             <!-- BEGIN PAGE TITLE & BREADCRUMB-->
-            <h3 class="page-title">Call Log</h3>
+            <h3 class="page-title">{% trans %}menu.call_log{% endtrans %}</h3>
             {{ flash.display_flash_messages }}
             <ul class="breadcrumb">
                 <li>
@@ -430,7 +430,7 @@ jQuery(document).ready(function() {
                     <i class="icon-angle-right"></i>
                 </li>
                 <li>
-                    Call Log
+                    {% trans %}menu.call_log{% endtrans %}
                 </li>
                 <li class="pull-right no-text-shadow">
                     <div id="aggregate_range" class="dashboard-date-range tooltips no-tooltip-on-touch-device responsive" data-tablet="" data-desktop="tooltips" data-placement="top" data-original-title="Change dashboard date range">
@@ -453,7 +453,7 @@ jQuery(document).ready(function() {
                 <input id="form_dts" type="hidden" name="dts" value="" />
                 <input id="form_dte" type="hidden" name="dte" value="" />
                 <div style="float:left; margin-left: 4px;">
-                by Campaign:<br />
+                {% trans %}log.by_campaign{% endtrans %}:<br />
                 <select id="filter_campaign" name="cid" class="small m-wrap" tabindex="1">
                     <option value=""></option>
                     {% for camp in campaigns %}
@@ -467,20 +467,20 @@ jQuery(document).ready(function() {
                 </div>
                 <!-- Kendrick: Adgroup will only appear once a Campaign is chosen -->
                 <div id="container_adgroup" class="hidden" style="float:left; margin-left: 4px;">
-                by AdGroup:<br />
+                {% trans %}log.by_adgroup{% endtrans %}:<br />
                     <select id="filter_adgroup" name="agid" class="small m-wrap" tabindex="1">
                         <option value=""></option>
                     </select>
                 </div>
                 <!-- Kendrick: Advert will only appear once an Advert is chosen -->
                 <div id="container_advert" class="hidden" style="float:left; margin-left: 4px;">
-                by Advert:<br />
+                {% trans %}log.by_advert{% endtrans %}:<br />
                     <select id="filter_advert" name="adid" class="small m-wrap" tabindex="1">
                         <option value=""></option>
                     </select>
                 </div>
                 <div style="float:left; margin-left: 4px;">
-                by Hangup Cause:<br />
+                {% trans %}log.by_hcause{% endtrans %}:<br />
                     <select name="hcause" class="small m-wrap" tabindex="1">
                         <option value=""></option>
                         {% for cause in hangup_causes %}
@@ -493,7 +493,7 @@ jQuery(document).ready(function() {
                     </select>
                 </div>
                 <div style="float:left; margin-left: 4px;">
-                by Duration:<br />
+                {% trans %}log.by_duration{% endtrans %}:<br />
                 <div class="control-group">
                     <div class="controls">
                         <div class="input-prepend">
@@ -518,7 +518,7 @@ jQuery(document).ready(function() {
                                     {% endif %}
                                 {% endfor %}
                             </select>
-                            <input name="dsec" class="m-wrap xsmall" type="text" placeholder="seconds" value="{{ filter.getDSec }}" />
+                            <input name="dsec" class="m-wrap xsmall" type="text" placeholder="{% trans %}log.seconds{% endtrans %}" value="{{ filter.getDSec }}" />
                         </div>
                     </div>
                 </div>
@@ -527,14 +527,14 @@ jQuery(document).ready(function() {
                         It should search the caller, destination and dialled numbers 
                  -->
                 <div style="float:left; margin-left: 4px;">
-                by Number:<br />
+                {% trans %}log.by_number{% endtrans %}:<br />
                     <input name="num" type="text" class="small m-wrap" value="{{ filter.getNum }}">
                 </div>
                 <div style="float:left; margin: 20px 0px 0px 4px;">
-                <input id="filter_submit" type="submit" class="btn green" value="Apply Filters" />
+                <input id="filter_submit" type="submit" class="btn green" value="{% trans %}log.apply_filters{% endtrans %}" />
                 <!-- Kendrick: "Reset" should only show if a filter has been applied -->
                 {% if (filter.canReset) %}
-                <a href="/client/{{ client.getID }}/call_log" class="btn red">Reset Filters</a>
+                <a href="/client/{{ client.getID }}/call_log" class="btn red">{% trans %}log.reset_filters{% endtrans %}</a>
                 {% endif %}
                 </div>
             </form>
@@ -544,10 +544,10 @@ jQuery(document).ready(function() {
             <!-- BEGIN SAMPLE TABLE PORTLET-->
             <div class="controls">
                 <div class="pull-right">
-                    <a id="csv_button" href="">Export Call Log Data to CSV</a>
+                    <a id="csv_button" href="">{% trans %}log.export{% endtrans %}</a>
                 </div>
                 <!-- Kendrick: Live updates should respect any filters that are set -->
-                <h4>Live Updates</h4>
+                <h4>{% trans %}log.live_updates{% endtrans %}</h4>
                 <div class="portlet-body">
                     <table class="table-condensed cf callLog">
                         <tbody id="logbody">
@@ -559,7 +559,7 @@ jQuery(document).ready(function() {
                 </div>
             </div>
             <div>
-            <button id="more_button" class="btn green">More</button>
+            <button id="more_button" class="btn green">{% trans %}text.more{% endtrans %}</button>
             </div>
             <!-- END SAMPLE TABLE PORTLET-->
         </div>

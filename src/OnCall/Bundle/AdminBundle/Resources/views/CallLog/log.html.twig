@@ -25,8 +25,8 @@
         <strong>{{ log.getDestinationFormatted }}</strong>
         <br />
         <small>
-            Caller: {{ log.getHangupCause }}<br />
-            Receiver: {{ log.getHangupCauseB }}
+            {% trans %}text.caller{% endtrans %}: {{ log.getHangupCause }}<br />
+            {% trans %}text.receiver{% endtrans %}: {{ log.getHangupCauseB }}
         </small>
     </td>
     {% else %}
@@ -35,7 +35,7 @@
         <br />
         <small>
             {{ log.getHangupCause }}<br />
-            Call Duration: {{ log.getDuration }} seconds
+            {% trans %}text.call_duration{% endtrans %}: {{ log.getDuration }} seconds
         </small>
     </td>
     {% endif %}
