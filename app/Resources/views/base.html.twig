@@ -83,6 +83,19 @@
                     <li>
                         <a href="/logout"><i class="icon-off"></i>{% trans %}menu.logout{% endtrans %} </a>
                     </li>
+                    <li>
+                        <form id="locale_form" method="get" action="/locale/en">
+                        <select id="locale_select" name="locale">
+                            {% if app.request.locale == 'zh' %}
+                            <option value="en">English</option>
+                            <option value="zh" selected>Chinese</option>
+                            {% else %}
+                            <option value="en">English</option>
+                            <option value="zh">Chinese</option>
+                            {% endif %}
+                        </select>
+                        </form>
+                    </li>
 				</ul>
 				<!-- END TOP NAVIGATION MENU --> 
 			</div>
@@ -195,6 +208,10 @@
 	<script>
 		jQuery(document).ready(function() {   
 		   App.init(); // initlayout and core plugins
+           $('#locale_select').change(function() {
+             $('#locale_form').attr('action', '/locale/' + $(this).val());
+             $('#locale_form').submit();
+           });
 		});
 	</script>
     {% block javascript %}{% endblock %}

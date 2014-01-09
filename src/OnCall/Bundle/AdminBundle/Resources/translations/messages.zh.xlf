@@ -1,0 +1,327 @@
+<?xml version="1.0"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+    <file source-language="en" datatype="plaintext" original="file.ext">
+        <body>
+            <trans-unit id="101">
+                <source>login.username</source>
+                <target>Username</target>
+            </trans-unit>
+            <trans-unit id="102">
+                <source>login.password</source>
+                <target>Password</target>
+            </trans-unit>
+            <trans-unit id="103">
+                <source>login.remember</source>
+                <target>Remember me</target>
+            </trans-unit>
+            <trans-unit id="104">
+                <source>login.login</source>
+                <target>Login</target>
+            </trans-unit>
+            <trans-unit id="105">
+                <source>login.forgot</source>
+                <target>Forgot your password</target>
+            </trans-unit>
+            <trans-unit id="1061">
+                <source>login.reset.1</source>
+                <target>No problem, click</target>
+            </trans-unit>
+            <trans-unit id="1062">
+                <source>login.reset.2</source>
+                <target>to reset your password.</target>
+            </trans-unit>
+            <trans-unit id="1063">
+                <source>login.reset.here</source>
+                <target>here</target>
+            </trans-unit>
+            <trans-unit id="107">
+                <source>login.account.no</source>
+                <target>Don't have an account yet ?</target>
+            </trans-unit>
+            <trans-unit id="108">
+                <source>login.account.create</source>
+                <target>Create an account</target>
+            </trans-unit>
+            <trans-unit id="1091">
+                <source>login.forget.title</source>
+                <target>Forget Password ?</target>
+            </trans-unit>
+            <trans-unit id="1092">
+                <source>login.forget.text</source>
+                <target>Enter your e-mail address below to reset your password.</target>
+            </trans-unit>
+
+            <trans-unit id="201">
+                <source>text.email</source>
+                <target>Email</target>
+            </trans-unit>
+            <trans-unit id="202">
+                <source>text.back</source>
+                <target>Back</target>
+            </trans-unit>
+            <trans-unit id="203">
+                <source>text.submit</source>
+                <target>Submit</target>
+            </trans-unit>
+            <trans-unit id="204">
+                <source>text.have_feedback</source>
+                <target>Have some feedback</target>
+            </trans-unit>
+            <trans-unit id="205">
+                <source>text.feedback</source>
+                <target>Please let us know - this platform is for you. We want to provide the features you need and ensure a bug free experience.</target>
+            </trans-unit>
+            <trans-unit id="206">
+                <source>text.email</source>
+                <target>E-mail</target>
+            </trans-unit>
+            <trans-unit id="207">
+                <source>text.view</source>
+                <target>View</target>
+            </trans-unit>
+            <trans-unit id="208">
+                <source>text.edit</source>
+                <target>Edit</target>
+            </trans-unit>
+            <trans-unit id="209">
+                <source>text.delete</source>
+                <target>Delete</target>
+            </trans-unit>
+            <trans-unit id="210">
+                <source>text.cancel</source>
+                <target>Cancel</target>
+            </trans-unit>
+            <trans-unit id="211">
+                <source>text.save_changes</source>
+                <target>Save Changes</target>
+            </trans-unit>
+            <trans-unit id="212">
+                <source>text.yes</source>
+                <target>Yes</target>
+            </trans-unit>
+            <trans-unit id="213">
+                <source>text.no</source>
+                <target>No</target>
+            </trans-unit>
+            <trans-unit id="214">
+                <source>text.relinquish</source>
+                <target>Relinquish</target>
+            </trans-unit>
+            <trans-unit id="215">
+                <source>text.more</source>
+                <target>More</target>
+            </trans-unit>
+            <trans-unit id="216">
+                <source>text.call_duration</source>
+                <target>Call Duration</target>
+            </trans-unit>
+            <trans-unit id="217">
+                <source>text.caller</source>
+                <target>Caller</target>
+            </trans-unit>
+            <trans-unit id="218">
+                <source>text.receiver</source>
+                <target>Receiver</target>
+            </trans-unit>
+
+
+            <trans-unit id="301">
+                <source>menu.admin_back</source>
+                <target>Back to Admin</target>
+            </trans-unit>
+            <trans-unit id="302">
+                <source>menu.clients</source>
+                <target>Clients</target>
+            </trans-unit>
+            <trans-unit id="303">
+                <source>menu.modify_account</source>
+                <target>Modify Account</target>
+            </trans-unit>
+            <trans-unit id="304">
+                <source>menu.support</source>
+                <target>Support</target>
+            </trans-unit>
+            <trans-unit id="305">
+                <source>menu.logout</source>
+                <target>Log Out</target>
+            </trans-unit>
+            <trans-unit id="306">
+                <source>menu.account_management</source>
+                <target>Account Management</target>
+            </trans-unit>
+            <trans-unit id="307">
+                <source>menu.number_management</source>
+                <target>Number Management</target>
+            </trans-unit>
+            <trans-unit id="308">
+                <source>menu.campaigns</source>
+                <target>Campaigns</target>
+            </trans-unit>
+            <trans-unit id="309">
+                <source>menu.call_log</source>
+                <target>Call Log</target>
+            </trans-unit>
+
+            <trans-unit id="401">
+                <source>client.add</source>
+                <target>Add New Client</target>
+            </trans-unit>
+            <trans-unit id="402">
+                <source>client.numbers_assigned</source>
+                <target>numbers assigned</target>
+            </trans-unit>
+            <trans-unit id="403">
+                <source>client.call_day</source>
+                <target>calls in the past 24 hours</target>
+            </trans-unit>
+            <trans-unit id="404">
+                <source>client.call_month</source>
+                <target>calls this month</target>
+            </trans-unit>
+            <trans-unit id="405">
+                <source>client.name</source>
+                <target>Client Name</target>
+            </trans-unit>
+            <trans-unit id="406">
+                <source>client.timezone</source>
+                <target>Client Timezone</target>
+            </trans-unit>
+            <trans-unit id="407">
+                <source>client.status</source>
+                <target>Client Status</target>
+            </trans-unit>
+            <trans-unit id="408">
+                <source>client.edit</source>
+                <target>Edit Client</target>
+            </trans-unit>
+            <trans-unit id="409">
+                <source>client.delete_text</source>
+                <target>Deleting a client will remove all phone numbers from your adverts and relinquish them, making them available to all CallTracking customers to use. Please note, you will be billed for the remainder of the month for these phone numbers. Press "Delete" to proceed.</target>
+            </trans-unit>
+
+
+            <trans-unit id="501">
+                <source>num.filter_usage</source>
+                <target>Filter By Usage</target>
+            </trans-unit>
+            <trans-unit id="502">
+                <source>num.filter_type</source>
+                <target>Filter By Type</target>
+            </trans-unit>
+            <trans-unit id="503">
+                <source>num.delete_num</source>
+                <target>Delete Number</target>
+            </trans-unit>
+            <trans-unit id="504">
+                <source>num.delete_text</source>
+                <target>Relinquishing a number will permanently remove it from this client account and it will be re-entered into the pool for all CallTracking customers to use. Please note, you will be billed for the remainder of the month for this phone number. Press "Delete Number" to proceed.</target>
+            </trans-unit>
+            <trans-unit id="505">
+                <source>num.number</source>
+                <target>Number</target>
+            </trans-unit>
+            <trans-unit id="506">
+                <source>num.in_use</source>
+                <target>In Use</target>
+            </trans-unit>
+            <trans-unit id="507">
+                <source>num.advert</source>
+                <target>Advert</target>
+            </trans-unit>
+            <trans-unit id="508">
+                <source>num.adgroup</source>
+                <target>AdGroup</target>
+            </trans-unit>
+            <trans-unit id="509">
+                <source>num.campaign</source>
+                <target>Campaign</target>
+            </trans-unit>
+            <trans-unit id="510">
+                <source>num.type</source>
+                <target>Type</target>
+            </trans-unit>
+            <trans-unit id="511">
+                <source>num.cost</source>
+                <target>Cost/Month</target>
+            </trans-unit>
+            <trans-unit id="512">
+                <source>num.date_add</source>
+                <target>Date Added to Client</target>
+            </trans-unit>
+            <trans-unit id="513">
+                <source>num.last_called</source>
+                <target>Last Called</target>
+            </trans-unit>
+            <trans-unit id="514">
+                <source>num.action</source>
+                <target>Action</target>
+            </trans-unit>
+
+            <trans-unit id="601">
+                <source>acc.new_password</source>
+                <target>New Password</target>
+            </trans-unit>
+            <trans-unit id="602">
+                <source>acc.rep_password</source>
+                <target>Repeat Password</target>
+            </trans-unit>
+            <trans-unit id="603">
+                <source>acc.msg.blank</source>
+                <target>Password cannot be blank.</target>
+            </trans-unit>
+            <trans-unit id="604">
+                <source>acc.msg.match</source>
+                <target>Passwords do not match.</target>
+            </trans-unit>
+            <trans-unit id="605">
+                <source>acc.msg.success</source>
+                <target>Password changed successfully.</target>
+            </trans-unit>
+
+            <trans-unit id="701">
+                <source>log.by_campaign</source>
+                <target>by Campaign</target>
+            </trans-unit>
+            <trans-unit id="702">
+                <source>log.by_adgroup</source>
+                <target>by AdGroup</target>
+            </trans-unit>
+            <trans-unit id="703">
+                <source>log.by_advert</source>
+                <target>by Advert</target>
+            </trans-unit>
+            <trans-unit id="704">
+                <source>log.by_hcause</source>
+                <target>by Hangup Cause</target>
+            </trans-unit>
+            <trans-unit id="705">
+                <source>log.by_duration</source>
+                <target>by Duration</target>
+            </trans-unit>
+            <trans-unit id="706">
+                <source>log.by_number</source>
+                <target>by Number</target>
+            </trans-unit>
+            <trans-unit id="707">
+                <source>log.seconds</source>
+                <target>seconds</target>
+            </trans-unit>
+            <trans-unit id="708">
+                <source>log.live_updates</source>
+                <target>Live Updates</target>
+            </trans-unit>
+            <trans-unit id="709">
+                <source>log.apply_filters</source>
+                <target>Apply Filters</target>
+            </trans-unit>
+            <trans-unit id="710">
+                <source>log.reset_filters</source>
+                <target>Reset Filters</target>
+            </trans-unit>
+            <trans-unit id="711">
+                <source>log.export</source>
+                <target>Export Call Log Data to CSV</target>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>

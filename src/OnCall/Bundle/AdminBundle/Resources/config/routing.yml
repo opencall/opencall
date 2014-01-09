@@ -215,3 +215,9 @@ oncall_admin_call_log_csv:
     pattern: /client/{client_id}/call_log/csv
     defaults: { _controller: OnCallAdminBundle:CallLog:csv }
     methods: [GET]
+
+# locale
+oncall_admin_locale:
+    pattern: /locale/{locale}
+    defaults: { _controller: OnCallAdminBundle:Locale:change }
+    methods: [GET]

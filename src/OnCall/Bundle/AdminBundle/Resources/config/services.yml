@@ -3,6 +3,11 @@ services:
         class: OnCall\Bundle\AdminBundle\Twig\CSVExtension
         tags:
             - { name: twig.extension }
+    oncall.locale.listener:
+        class: OnCall\Bundle\AdminBundle\EventListener\LocaleListener
+        arguments: ["%kernel.default_locale%"]
+        tags:
+            - { name: kernel.event_subscriber }
 #    on_call_admin.example:
 #        class: %on_call_admin.example.class%
 #        arguments: [@service_id, "plain_value", %parameter%]
