@@ -1,11 +1,11 @@
 {% extends 'OnCallAdminBundle::item.html.twig' %}
 
 {% block title %}
-All Campaigns 
+{% trans %}camp.all_campaigns{% endtrans %}
 {% endblock %}
 
 {% block delete_text %}
-<p>Deleting a campaign will release all phone numbers assigned to your adverts. Please note, you will be billed for these numbers until you relinquish them in Number Management. Press "Delete" to proceed.</p>
+<p>{% trans %}camp.delete_text{% endtrans %}</p>
 {% endblock %}
 
 {% block breadcrumb %}
@@ -14,6 +14,6 @@ All Campaigns
     <i class="icon-angle-right"></i>
 </li>
 <li>
-    Campaigns
+    {% trans %}camp.campaigns{% endtrans %}
 </li>
 {% endblock %}

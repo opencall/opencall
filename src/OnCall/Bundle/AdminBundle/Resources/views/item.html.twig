@@ -14,7 +14,7 @@
     {
         $('.item_name').val(data.name);
         $('.item_name_text').html(data.name);
-        $('.item_delete_button').html('Delete: ' + data.name);
+        $('.item_delete_button').html('{% trans %}text.delete{% endtrans %}: ' + data.name);
         $('.item_status').val(data.status);
     }
 </script>
@@ -122,7 +122,7 @@ jQuery(document).ready(function() {
                 },
             },
             title: {
-                text: 'Calls',
+                text: '{% trans %}item.calls{% endtrans %}',
                 style: {
                     color: '#888'
                 }
@@ -136,7 +136,7 @@ jQuery(document).ready(function() {
             type: 'areaspline',
                     pointPadding: 0,
                     groupPadding: 0,
-            name: 'Total Calls',
+            name: '{% trans %}item.total_calls{% endtrans %}',
             data: {{ daily.total | json_encode() }},
                 // Kendrick - this date needs to be set in all the series to match what is selected
                 // in the calendar. It automatically counts up the date depending on the "data" above
@@ -147,7 +147,7 @@ jQuery(document).ready(function() {
             type: 'areaspline',
                     pointPadding: 0,
                     groupPadding: 0,
-            name: 'Failed Calls',
+            name: '{% trans %}item.failed_calls{% endtrans %}',
             color: '#e7191b',
             data: {{ daily.failed | json_encode() }},
                 pointStart: daily_from.getTime(),
@@ -157,7 +157,7 @@ jQuery(document).ready(function() {
             type: 'areaspline',
                     pointPadding: 0,
                     groupPadding: 0,
-            name: 'Potential Leads',
+            name: '{% trans %}item.potential_leads{% endtrans %}',
             color: '#bbe000',
             data: {{ daily.plead | json_encode() }},
                 pointStart: daily_from.getTime(),
@@ -229,7 +229,7 @@ jQuery(document).ready(function() {
             type: 'column',
                 pointPadding: 0,
                 groupPadding: 0,
-            name: 'Total Calls',
+            name: '{% trans %}item.total_calls{% endtrans %}',
             data: {{ hourly.total | json_encode() }},
                 // Kendrick - even though we're totalling the data for multiple days, we need to specify
                 // a specific date, so ignore the date in "pointStart" here UNLESS we're looking at a single day
@@ -240,7 +240,7 @@ jQuery(document).ready(function() {
             type: 'column',
                 pointPadding: 0,
                 groupPadding: 0,
-            name: 'Failed Calls',
+            name: '{% trans %}item.failed_calls{% endtrans %}',
             color: '#e7191b',
             data: {{ hourly.failed | json_encode() }},
                 pointStart: Date.UTC(2013, 18, 12),
@@ -250,7 +250,7 @@ jQuery(document).ready(function() {
             type: 'column',
                     pointPadding: 0,
                     groupPadding: 0,
-            name: 'Potential Leads',
+            name: '{% trans %}item.potential_leads{% endtrans %}',
             color: '#bbe000',
             data: {{ hourly.plead | json_encode() }},
                 pointStart: Date.UTC(2013, 18, 12),
@@ -356,7 +356,7 @@ jQuery(document).ready(function() {
                     <div class="details">
                         <div class="number">
                             <a href="{{ log_url }}">
-                            {{ agg_parent.getTotalFormatted }} Calls
+                            {{ agg_parent.getTotalFormatted }} {% trans %}item.calls{% endtrans %}
                             </a>
                         </div>
                     </div>
@@ -370,7 +370,7 @@ jQuery(document).ready(function() {
                     <div class="details">
                         <div class="number">
                             <!-- <a href="{{ log_url }}"> -->
-                            {{ agg_parent.getUniqueFormatted }} Unique <small>({{ agg_parent.getUniquePercentFormatted }}%)</small>
+                            {{ agg_parent.getUniqueFormatted }} {% trans %}item.unique{% endtrans %} <small>({{ agg_parent.getUniquePercentFormatted }}%)</small>
                             <!-- </a> -->
                         </div>
                     </div>
@@ -384,7 +384,7 @@ jQuery(document).ready(function() {
                     <div class="details">
                         <div class="number">
                             <a href="{{ log_url }}&dmod=greater&dsec=120">
-                            {{ agg_parent.getPLeadFormatted }} Leads <small>({{ agg_parent.getPLeadPercentFormatted }}%)</small>
+                            {{ agg_parent.getPLeadFormatted }} {% trans %}item.leads{% endtrans %} <small>({{ agg_parent.getPLeadPercentFormatted }}%)</small>
                             </a>
                         </div>
                     </div>                
@@ -398,7 +398,7 @@ jQuery(document).ready(function() {
                     <div class="details">
                         <div class="number">
                             <a href="{{ log_url }}&failed=1">
-                            {{ agg_parent.getFailedFormatted }} Failed Calls <small>({{ agg_parent.getFailedPercentFormatted }}%)</small>
+                            {{ agg_parent.getFailedFormatted }} {% trans %}item.failed_calls{% endtrans %} <small>({{ agg_parent.getFailedPercentFormatted }}%)</small>
                             </a>
                         </div>
                     </div>
@@ -417,8 +417,8 @@ jQuery(document).ready(function() {
                     <div class="portlet-body">
                         <div class="tabbable tabbable-custom">
                             <ul class="nav nav-tabs">
-                                <li class="active"><a href="#tab_campaign_daily" data-toggle="tab">Daily</a></li>
-                                <li class=""><a href="#tab_campaign_hourly" data-toggle="tab">Hourly</a></li>
+                                <li class="active"><a href="#tab_campaign_daily" data-toggle="tab">{% trans %}item.daily{% endtrans %}</a></li>
+                                <li class=""><a href="#tab_campaign_hourly" data-toggle="tab">{% trans %}item.hourly{% endtrans %}</a></li>
                             </ul>
                             <div class="tab-content">
                                 <div class="tab-pane active" id="tab_campaign_daily">
@@ -432,7 +432,7 @@ jQuery(document).ready(function() {
                     </div>
                 </div>
                 <!-- END PORTLET-->
-                <button class="btn green" style="margin-bottom: 4px;"  data-toggle="modal" href="#addModal"><i class="icon-plus"></i> Add New {{ name }}</button>
+                <button class="btn green" style="margin-bottom: 4px;"  data-toggle="modal" href="#addModal"><i class="icon-plus"></i> {% trans %}item.add_new{% endtrans %} {{ name }}</button>
                  
                 <div class="portlet-body no-more-tables">
                     <table class="table-bordered table-striped table-condensed cf">
@@ -441,7 +441,7 @@ jQuery(document).ready(function() {
                                 {% if is_granted('ROLE_PREVIOUS_ADMIN') %}
                                 <th></th>
                                 {% endif %}
-                                <th style="width: 140px;">{{ name }} Name</th>
+                                <th style="width: 140px;">{{ name }} {% trans %}item.name{% endtrans %}</th>
                                 {% if name == 'Advert' %}
                                     <th style="width: 114px;">Ad Number</th>
                                     <th style="width: 114px;">Ad Destination</th>
@@ -449,16 +449,16 @@ jQuery(document).ready(function() {
                                     <th>Rules<br /><small>(Use?)</small></th>
                                     {% endif %}
                                 {% endif %}
-                                <th>Total Calls</th> 
-                                <th>Unique Calls</th>
-                                <th>Failed Calls</th>
-                                <th titla="calls > 2 mins" alt="calls > 2 mins">Potential Leads</small></th>
-                                <th>% Unique</th>
-                                <th>% Failed</th>
-                                <th>% Potential</th>
-                                <th>Total Duration<br /><small>hh:mm:ss</small></th>
-                                <th>Avg Duration<br /><small>hh:mm:ss</small></th>
-                                <th>Action</th>
+                                <th>{% trans %}item.total_calls{% endtrans %}</th> 
+                                <th>{% trans %}item.unique_calls{% endtrans %}</th>
+                                <th>{% trans %}item.failed_calls{% endtrans %}</th>
+                                <th titla="calls > 2 mins" alt="calls > 2 mins">{% trans %}item.potential_leads{% endtrans %}</small></th>
+                                <th>% {% trans %}item.unique{% endtrans %}</th>
+                                <th>% {% trans %}item.failed{% endtrans %}</th>
+                                <th>% {% trans %}item.potential{% endtrans %}</th>
+                                <th>{% trans %}item.total_duration{% endtrans %}<br /><small>hh:mm:ss</small></th>
+                                <th>{% trans %}item.avg_duration{% endtrans %}<br /><small>hh:mm:ss</small></th>
+                                <th>{% trans %}num.action{% endtrans %}</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -468,7 +468,7 @@ jQuery(document).ready(function() {
                                 <td data-title="Status" style="text-align: center;"><i class="{{ child.isActive ? 'icon-ok-sign' : 'icon-remove-sign' }}"></i></td>  
                                 {% endif %}
                                 {% if name == 'Advert' %}
-                                    <td data-title="{{ name }} Name">{{ child.getName }}</td>  
+                                    <td data-title="{{ name }} {% trans %}item.name{% endtrans %}">{{ child.getName }}</td>  
                                     <td>{{ child.getNumberFormatted }}</td>
                                     <td>{{ child.getDestinationFormatted }}</td>
                                     {% if is_granted('ROLE_PREVIOUS_ADMIN') %}
@@ -478,29 +478,29 @@ jQuery(document).ready(function() {
                                     </td>
                                     {% endif %}
                                 {% else %}
-                                    <td data-title="{{ name }} Name"><a href="{{ path(url_child, {'id': child.getID }) }}?{{ params_child }}">{{ child.getName }}</a></td>  
+                                    <td data-title="{{ name }} {% trans %}item.name{% endtrans %}"><a href="{{ path(url_child, {'id': child.getID }) }}?{{ params_child }}">{{ child.getName }}</a></td>  
                                 {% endif %}
-                                <td data-title="Total Calls"><a href="{{ log_url }}&{{ child_filter_var }}={{ child.getID }}">{{ agg_table[child.getID].getTotalFormatted }}</a></td>
-                                <td data-title="Unique Calls">
+                                <td data-title="{% trans %}item.total_calls{% endtrans %}"><a href="{{ log_url }}&{{ child_filter_var }}={{ child.getID }}">{{ agg_table[child.getID].getTotalFormatted }}</a></td>
+                                <td data-title="{% trans %}item.unique_calls{% endtrans %}">
                                 <!-- <a href="{{ log_url }}&{{ child_filter_var }}={{ child.getID }}"> -->
                                 {{ agg_table[child.getID].getUniqueFormatted }}
                                 <!-- </a> -->
                                 </td>
-                                <td data-title="Failed Calls">
+                                <td data-title="{% trans %}item.failed_calls{% endtrans %}">
                                 <a href="{{ log_url }}&{{ child_filter_var }}={{ child.getID }}&failed=1">{{ agg_table[child.getID].getFailedFormatted }}</a>
                                 </td>
-                                <td data-title="Potential Leads">
+                                <td data-title="{% trans %}item.potential_leads{% endtrans %}">
                                 <a href="{{ log_url }}&{{ child_filter_var }}={{ child.getID }}&dmod=greater&dsec=120">{{ agg_table[child.getID].getPLeadFormatted }}</a>
                                 </td>
-                                <td data-title="% Unique">{{ agg_table[child.getID].getUniquePercentFormatted }}%</td>
+                                <td data-title="% {% trans %}item.unique{% endtrans %}">{{ agg_table[child.getID].getUniquePercentFormatted }}%</td>
                                 <td data-title="% Failed">{{ agg_table[child.getID].getFailedPercentFormatted }}%</td>
-                                <td data-title="% Potential Leads">{{ agg_table[child.getID].getPLeadPercentFormatted }}%</td>
+                                <td data-title="% {% trans %}item.potential_leads{% endtrans %}">{{ agg_table[child.getID].getPLeadPercentFormatted }}%</td>
                                 <td data-title="Total Duration">{{ agg_table[child.getID].getDurationFormatted }}</td>
                                 <td data-title="Avg Duration">{{ agg_table[child.getID].getDurationAverageFormatted }}</td>
                                 <td data-title="Action">
-                                    <button href="#editModal" data-id="{{ child.getID }}" data-toggle="modal" role="button" class="edit_button btn mini" ><i class="icon-edit"></i> edit</button>
+                                    <button href="#editModal" data-id="{{ child.getID }}" data-toggle="modal" role="button" class="edit_button btn mini" ><i class="icon-edit"></i> {% trans %}text.edit{% endtrans %}</button>
                                     {% if child.isActive %}
-                                    <button href="#deleteModal" data-id="{{ child.getID }}" data-toggle="modal" role="button" class="delete_button btn mini" ><i class="icon-trash"></i> delete</button>
+                                    <button href="#deleteModal" data-id="{{ child.getID }}" data-toggle="modal" role="button" class="delete_button btn mini" ><i class="icon-trash"></i> {% trans %}text.delete{% endtrans %}</button>
                                     {% endif %}
                                 </td>   
                             </tr>  
@@ -510,9 +510,9 @@ jQuery(document).ready(function() {
                             <tr>
                                 {% if is_granted('ROLE_PREVIOUS_ADMIN') %}
                                 <td></td>
-                                <td {% if name == 'Advert' %}colspan="4"{% endif %}><strong>Totals</strong></td>
+                                <td {% if name == 'Advert' %}colspan="4"{% endif %}><strong>{% trans %}item.totals{% endtrans %}</strong></td>
                                 {% else %}
-                                <td {% if name == 'Advert' %}colspan="3"{% endif %}><strong>Totals</strong></td>
+                                <td {% if name == 'Advert' %}colspan="3"{% endif %}><strong>{% trans %}item.totals{% endtrans %}</strong></td>
                                 {% endif %}
                                 <td>
                                 <a href="{{ log_url }}">{{ agg_parent.getTotalFormatted }}</a>
@@ -542,21 +542,21 @@ jQuery(document).ready(function() {
                 <div id="addModal" class="modal hide fade" tabindex="-1" data-width="760">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
-                        <h3>Add {{ name }}</h3>
+                        <h3>{% trans %}item.add{% endtrans %} {{ name }}</h3>
                     </div>
                     <form id="add_form" method="post">
                     <div class="modal-body">
                         <div class="row-fluid">
                             <div class="span6">
-                                <h4>{{ name }} Name</h4>
+                                <h4>{{ name }} {% trans %}item.name{% endtrans %}</h4>
                                 <p class="control-group"><input name="name" type="text" class="span12 m-wrap"></p>
                             </div>
 
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" data-dismiss="modal" class="btn">Cancel</button>
-                        <input type="submit" class="btn green" value="Add {{ name }}" />
+                        <button type="button" data-dismiss="modal" class="btn">{% trans %}text.cancel{% endtrans %}</button>
+                        <input type="submit" class="btn green" value="{% trans %}item.add{% endtrans %} {{ name }}" />
                     </div>
                     </form>
                 </div>
@@ -574,12 +574,12 @@ jQuery(document).ready(function() {
                     <div class="modal-body">
                         <div class="row-fluid">
                             <div class="span6">
-                                <h4>{{ name }} Name</h4>
+                                <h4>{{ name }} {% trans %}item.name{% endtrans %}</h4>
                                 <p class="control-group"><input type="text" name="name" class="item_name span12 m-wrap"></p>
                             </div>
                             {% if is_granted('ROLE_PREVIOUS_ADMIN') %}
                             <div class="span6">
-                                <h4>{{ name }} Status</h4>
+                                <h4>{{ name }} {% trans %}item.status{% endtrans %}</h4>
                                 <p>
                                     <select name="status" class="item_status small m-wrap" tabindex="1">
                                         <option value="1">Active</option>
@@ -591,8 +591,8 @@ jQuery(document).ready(function() {
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" data-dismiss="modal" class="btn">Cancel</button>
-                        <input type="submit" class="btn green" value="Save changes" />
+                        <button type="button" data-dismiss="modal" class="btn">{% trans %}text.cancel{% endtrans %}</button>
+                        <input type="submit" class="btn green" value="{% trans %}text.save_changes{% endtrans %}" />
                     </div>
                     </form>
                 </div>
@@ -604,7 +604,7 @@ jQuery(document).ready(function() {
                 <div id="deleteModal" class="modal hide fade" tabindex="-1" role="dialog" aria-hidden="true">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
-                        <h3 id="myModalLabel3">Delete "<span class="item_name_text"></span>" {{ name }}</h3>
+                        <h3 id="myModalLabel3">{% trans %}text.delete{% endtrans %} "<span class="item_name_text"></span>" {{ name }}</h3>
                     </div>
                     <div class="modal-body">
                     {% block delete_text %}
@@ -612,8 +612,8 @@ jQuery(document).ready(function() {
                     </div>
                     <form id="delete_form" method="post">
                     <div class="modal-footer">
-                        <button class="btn pull-left green" data-dismiss="modal" aria-hidden="true">Cancel</button>
-                        <button class="btn red item_delete_button" data-id="0">Delete: MTR</button>
+                        <button class="btn pull-left green" data-dismiss="modal" aria-hidden="true">{% trans %}text.cancel{% endtrans %}</button>
+                        <button class="btn red item_delete_button" data-id="0">{% trans %}text.delete{% endtrans %}: MTR</button>
                     </div>
                     </form>
                 </div>

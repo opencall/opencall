@@ -322,6 +322,96 @@
                 <source>log.export</source>
                 <target>Export Call Log Data to CSV</target>
             </trans-unit>
+
+
+            <trans-unit id="801">
+                <source>item.calls</source>
+                <target>Calls</target>
+            </trans-unit>
+            <trans-unit id="802">
+                <source>item.unique</source>
+                <target>Unique</target>
+            </trans-unit>
+            <trans-unit id="803">
+                <source>item.leads</source>
+                <target>Leads</target>
+            </trans-unit>
+            <trans-unit id="804">
+                <source>item.failed_calls</source>
+                <target>Failed Calls</target>
+            </trans-unit>
+            <trans-unit id="805">
+                <source>item.total_calls</source>
+                <target>Total Calls</target>
+            </trans-unit>
+            <trans-unit id="806">
+                <source>item.potential_leads</source>
+                <target>Potential Leads</target>
+            </trans-unit>
+            <trans-unit id="807">
+                <source>item.daily</source>
+                <target>Daily</target>
+            </trans-unit>
+            <trans-unit id="808">
+                <source>item.hourly</source>
+                <target>Hourly</target>
+            </trans-unit>
+            <trans-unit id="809">
+                <source>item.name</source>
+                <target>Name</target>
+            </trans-unit>
+            <trans-unit id="810">
+                <source>item.unique_calls</source>
+                <target>Unique Calls</target>
+            </trans-unit>
+            <trans-unit id="811">
+                <source>item.failed</source>
+                <target>Failed</target>
+            </trans-unit>
+            <trans-unit id="812">
+                <source>item.potential</source>
+                <target>Potential</target>
+            </trans-unit>
+            <trans-unit id="813">
+                <source>item.total_duration</source>
+                <target>Total Duration</target>
+            </trans-unit>
+            <trans-unit id="814">
+                <source>item.avg_duration</source>
+                <target>Avg Duration</target>
+            </trans-unit>
+            <trans-unit id="815">
+                <source>item.totals</source>
+                <target>Totals</target>
+            </trans-unit>
+            <trans-unit id="816">
+                <source>item.add</source>
+                <target>Add</target>
+            </trans-unit>
+            <trans-unit id="817">
+                <source>item.add_new</source>
+                <target>Add New</target>
+            </trans-unit>
+            <trans-unit id="818">
+                <source>item.status</source>
+                <target>Status</target>
+            </trans-unit>
+
+
+
+            <trans-unit id="901">
+                <source>camp.all_campaigns</source>
+                <target>All Campaigns</target>
+            </trans-unit>
+            <trans-unit id="902">
+                <source>camp.campaigns</source>
+                <target>Campaigns</target>
+            </trans-unit>
+            <trans-unit id="903">
+                <source>camp.delete_text</source>
+                <target>Deleting a campaign will release all phone numbers assigned to your adverts. Please note, you will be billed for these numbers until you relinquish them in Number Management. Press "Delete" to proceed.</target>
+            </trans-unit>
+
         </body>
     </file>
 </xliff>
