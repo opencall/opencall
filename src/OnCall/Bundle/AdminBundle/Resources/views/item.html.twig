@@ -443,10 +443,10 @@ jQuery(document).ready(function() {
                                 {% endif %}
                                 <th style="width: 140px;">{{ name }} {% trans %}item.name{% endtrans %}</th>
                                 {% if name == 'Advert' %}
-                                    <th style="width: 114px;">Ad Number</th>
-                                    <th style="width: 114px;">Ad Destination</th>
+                                    <th style="width: 114px;">{% trans %}item.ad_number{% endtrans %}</th>
+                                    <th style="width: 114px;">{% trans %}item.ad_destination{% endtrans %}</th>
                                     {% if is_granted('ROLE_PREVIOUS_ADMIN') %}
-                                    <th>Rules<br /><small>(Use?)</small></th>
+                                    <th>{% trans %}item.rules{% endtrans %}<br /><small>({% trans %}item.use{% endtrans %}?)</small></th>
                                     {% endif %}
                                 {% endif %}
                                 <th>{% trans %}item.total_calls{% endtrans %}</th> 

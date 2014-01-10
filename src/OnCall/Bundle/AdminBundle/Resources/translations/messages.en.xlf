@@ -396,6 +396,22 @@
                 <source>item.status</source>
                 <target>Status</target>
             </trans-unit>
+            <trans-unit id="819">
+                <source>item.ad_number</source>
+                <target>Ad Number</target>
+            </trans-unit>
+            <trans-unit id="820">
+                <source>item.ad_destination</source>
+                <target>Ad Destination</target>
+            </trans-unit>
+            <trans-unit id="821">
+                <source>item.rules</source>
+                <target>Rules</target>
+            </trans-unit>
+            <trans-unit id="822">
+                <source>item.use</source>
+                <target>Use</target>
+            </trans-unit>
 
 
 
