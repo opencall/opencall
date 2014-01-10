@@ -1,11 +1,11 @@
 {% extends 'OnCallAdminBundle::item.html.twig' %}
 
 {% block title %}
-{{ parent.getName }} <small>Campaign</small>
+{{ parent.getName }} <small>{% trans %}adg.campaign{% endtrans %}</small>
 {% endblock %}
 
 {% block delete_text %}
-<p>Deleting an AdGroup will release all phone numbers assigned to your adverts. Please note, you will be billed for these numbers until you relinquish them in Number Management. Press "Delete" to proceed.</p>
+<p>{% trans %}adg.delete_text{% endtrans %}</p>
 {% endblock %}
 
 {% block breadcrumb %}
@@ -18,6 +18,6 @@
     <i class="icon-angle-right"></i>
 </li>
 <li>
-    AdGroups
+    {% trans %}adg.adgroups{% endtrans %}
 </li>
 {% endblock %}

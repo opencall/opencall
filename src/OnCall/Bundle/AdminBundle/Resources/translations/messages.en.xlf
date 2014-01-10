@@ -22,15 +22,15 @@
                 <source>login.forgot</source>
                 <target>Forgot your password</target>
             </trans-unit>
-            <trans-unit id="1061">
+            <trans-unit id="106.1">
                 <source>login.reset.1</source>
                 <target>No problem, click</target>
             </trans-unit>
-            <trans-unit id="1062">
+            <trans-unit id="106.2">
                 <source>login.reset.2</source>
                 <target>to reset your password.</target>
             </trans-unit>
-            <trans-unit id="1063">
+            <trans-unit id="106.3">
                 <source>login.reset.here</source>
                 <target>here</target>
             </trans-unit>
@@ -413,8 +413,6 @@
                 <target>Use</target>
             </trans-unit>
 
-
-
             <trans-unit id="901">
                 <source>camp.all_campaigns</source>
                 <target>All Campaigns</target>
@@ -426,6 +424,19 @@
             <trans-unit id="903">
                 <source>camp.delete_text</source>
                 <target>Deleting a campaign will release all phone numbers assigned to your adverts. Please note, you will be billed for these numbers until you relinquish them in Number Management. Press "Delete" to proceed.</target>
+            </trans-unit>
+
+            <trans-unit id="1001">
+                <source>adg.campaign</source>
+                <target>Campaign</target>
+            </trans-unit>
+            <trans-unit id="1002">
+                <source>adg.adgroups</source>
+                <target>AdGroups</target>
+            </trans-unit>
+            <trans-unit id="1003">
+                <source>adg.delete_text</source>
+                <target>Deleting an AdGroup will release all phone numbers assigned to your adverts. Please note, you will be billed for these numbers until you relinquish them in Number Management. Press "Delete" to proceed.</target>
             </trans-unit>
 
         </body>
