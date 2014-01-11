@@ -187,6 +187,27 @@ class AggregateFilter
         return 'Date.UTC(' . $date . ')';
     }
 
+    public function getDateFromLocale1()
+    {
+        return 'idate.' . strtolower($this->date_from->format('F'));
+    }
+
+    public function getDateFromLocale2()
+    {
+        return $this->date_from->format('j, Y');
+    }
+
+    public function getDateToLocale1()
+    {
+        return 'idate.' . strtolower($this->date_to->format('F'));
+    }
+
+    public function getDateToLocale2()
+    {
+        return $this->date_to->format('j, Y');
+    }
+
+
     public function getDateFromFormatted()
     {
         return $this->date_from->format('F j, Y');

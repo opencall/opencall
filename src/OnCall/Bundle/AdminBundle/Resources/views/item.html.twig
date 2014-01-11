@@ -32,16 +32,16 @@ jQuery(document).ready(function() {
 
     $('#aggregate_range').daterangepicker({
         ranges: {
-            'Today': ['today', 'today'],
-            'Yesterday': ['yesterday', 'yesterday'],
-            'Last 7 Days': [Date.today().add({
+            '{% trans %}idate.today{% endtrans %}': ['today', 'today'],
+            '{% trans %}idate.yesterday{% endtrans %}': ['yesterday', 'yesterday'],
+            '{% trans %}idate.7_days{% endtrans %}': [Date.today().add({
                     days: -6
                 }), 'today'],
-            'Last 30 Days': [Date.today().add({
+            '{% trans %}idate.30_days{% endtrans %}': [Date.today().add({
                     days: -29
                 }), 'today'],
-            'This Month': [Date.today().moveToFirstDayOfMonth(), Date.today().moveToLastDayOfMonth()],
-            'Last Month': [Date.today().moveToFirstDayOfMonth().add({
+            '{% trans %}idate.this_month{% endtrans %}': [Date.today().moveToFirstDayOfMonth(), Date.today().moveToLastDayOfMonth()],
+            '{% trans %}idate.last_month{% endtrans %}': [Date.today().moveToFirstDayOfMonth().add({
                     months: -1
                 }), Date.today().moveToFirstDayOfMonth().add({
                     days: -1
@@ -58,9 +58,22 @@ jQuery(document).ready(function() {
             applyLabel: 'Submit',
             fromLabel: 'From',
             toLabel: 'To',
-            customRangeLabel: 'Custom Range',
+            customRangeLabel: '{% trans %}idate.custom_range{% endtrans %}',
             daysOfWeek: ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'],
-            monthNames: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
+            monthNames: [
+                '{% trans %}idate.january{% endtrans %}',
+                '{% trans %}idate.febuary{% endtrans %}',
+                '{% trans %}idate.march{% endtrans %}',
+                '{% trans %}idate.april{% endtrans %}',
+                '{% trans %}idate.may{% endtrans %}May',
+                '{% trans %}idate.june{% endtrans %}',
+                '{% trans %}idate.july{% endtrans %}',
+                '{% trans %}idate.august{% endtrans %}',
+                '{% trans %}idate.september{% endtrans %}',
+                '{% trans %}idate.october{% endtrans %}',
+                '{% trans %}idate.november{% endtrans %}',
+                '{% trans %}idate.december{% endtrans %}'
+            ],
             firstDay: 1
         },
         showWeekNumbers: true,
@@ -80,9 +93,51 @@ jQuery(document).ready(function() {
         window.location = url;
     });
 
-    $('#aggregate_range span').html("{{ agg_filter.getDateFromFormatted }} - {{ agg_filter.getDateToFormatted }}");
+    $('#aggregate_range span').html("{{ agg_filter.getDateFromLocale1 | trans }} {{ agg_filter.getDateFromLocale2 }} - {{ agg_filter.getDateToLocale1 | trans }} {{ agg_filter.getDateToLocale2 }}");
     $('#aggregate_range').show();
     // END DATE RANGE
+
+    Highcharts.setOptions({
+        lang: {
+            months: [
+                '{% trans %}idate.january{% endtrans %}',
+                '{% trans %}idate.febuary{% endtrans %}',
+                '{% trans %}idate.march{% endtrans %}',
+                '{% trans %}idate.april{% endtrans %}',
+                '{% trans %}idate.may{% endtrans %}May',
+                '{% trans %}idate.june{% endtrans %}',
+                '{% trans %}idate.july{% endtrans %}',
+                '{% trans %}idate.august{% endtrans %}',
+                '{% trans %}idate.september{% endtrans %}',
+                '{% trans %}idate.october{% endtrans %}',
+                '{% trans %}idate.november{% endtrans %}',
+                '{% trans %}idate.december{% endtrans %}'
+            ],
+            shortMonths: [
+                '{% trans %}idate.jan{% endtrans %}',
+                '{% trans %}idate.feb{% endtrans %}',
+                '{% trans %}idate.mar{% endtrans %}',
+                '{% trans %}idate.apr{% endtrans %}',
+                '{% trans %}idate.may{% endtrans %}May',
+                '{% trans %}idate.jun{% endtrans %}',
+                '{% trans %}idate.jul{% endtrans %}',
+                '{% trans %}idate.aug{% endtrans %}',
+                '{% trans %}idate.sep{% endtrans %}',
+                '{% trans %}idate.oct{% endtrans %}',
+                '{% trans %}idate.nov{% endtrans %}',
+                '{% trans %}idate.dec{% endtrans %}'
+            ],
+            weekdays: [
+                '{% trans %}idate.sunday{% endtrans %}',
+                '{% trans %}idate.monday{% endtrans %}',
+                '{% trans %}idate.tuesday{% endtrans %}',
+                '{% trans %}idate.wednesday{% endtrans %}',
+                '{% trans %}idate.thursday{% endtrans %}',
+                '{% trans %}idate.friday{% endtrans %}',
+                '{% trans %}idate.saturday{% endtrans %}'
+            ]
+        }
+    });
 
     // daily chart
     // START DAILY CHART
@@ -90,7 +145,7 @@ jQuery(document).ready(function() {
         chart: {
             zoomType: 'x',
             spacingRight: 0,
-            spacingLeft: 0,
+            spacingLeft: 0
         },
         title: {
             text: ''
@@ -98,7 +153,7 @@ jQuery(document).ready(function() {
         xAxis: {
             type: 'datetime',
             dateTimeLabelFormats: {
-                day: '%e of %b'
+                day: '{% trans %}idate.chart_format{% endtrans %}'
             },
             // min: 0.5, 
             // Kendrick: the value below must be the number of data points -1.5
@@ -334,7 +389,7 @@ jQuery(document).ready(function() {
                 <li class="pull-right no-text-shadow">
                     <div id="aggregate_range" class="dashboard-date-range tooltips no-tooltip-on-touch-device responsive" data-tablet="" data-desktop="tooltips" data-placement="top" data-original-title="Change dashboard date range">
                         <i class="icon-calendar"></i>
-                        <span>{{ agg_filter.getDateFromFormatted }} - {{ agg_filter.getDateToFormatted }}</span>
+                        <span>{{ agg_filter.getDateFromLocale1 | trans }} {{ agg_filter.getDateFromLocale2 }} - {{ agg_filter.getDateToLocale1 | trans }} {{ agg_filter.getDateToLocale2 }}</span>
                         <i class="icon-angle-down"></i>
                     </div>
                 </li>

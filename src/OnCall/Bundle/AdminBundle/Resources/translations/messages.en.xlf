@@ -439,6 +439,237 @@
                 <target>Deleting an AdGroup will release all phone numbers assigned to your adverts. Please note, you will be billed for these numbers until you relinquish them in Number Management. Press "Delete" to proceed.</target>
             </trans-unit>
 
+            <trans-unit id="1101">
+                <source>advert.adgroup</source>
+                <target>AdGroup</target>
+            </trans-unit>
+            <trans-unit id="1102">
+                <source>advert.adverts</source>
+                <target>Adverts</target>
+            </trans-unit>
+            <trans-unit id="1103">
+                <source>advert.delete_text</source>
+                <target>Deleting an advert will release the phone number assigned to it. Please note, you will be billed for this number until you relinquish it in Number Management. Press "Delete" to proceed.</target>
+            </trans-unit>
+            <trans-unit id="1104">
+                <source>advert.add_advert</source>
+                <target>Add Advert</target>
+            </trans-unit>
+            <trans-unit id="1105">
+                <source>advert.advert_name</source>
+                <target>Advert Name</target>
+            </trans-unit>
+            <trans-unit id="1106">
+                <source>advert.advert_number</source>
+                <target>Advert Number</target>
+            </trans-unit>
+            <trans-unit id="1107">
+                <source>advert.need_more</source>
+                <target>Need more numbers? Open </target>
+            </trans-unit>
+            <trans-unit id="1108">
+                <source>advert.recording</source>
+                <target>Recording</target>
+            </trans-unit>
+            <trans-unit id="1109">
+                <source>advert.record_calls</source>
+                <target>Record calls to this advert</target>
+            </trans-unit>
+            <trans-unit id="1110">
+                <source>advert.speak_message</source>
+                <target>Speak a message at the beginning of the call</target>
+            </trans-unit>
+            <trans-unit id="1111">
+                <source>advert.advert_destination</source>
+                <target>Advert Destination</target>
+            </trans-unit>
+            <trans-unit id="1112">
+                <source>advert.not_spaces</source>
+                <target>Do not enter spaces or +</target>
+            </trans-unit>
+            <trans-unit id="1113">
+                <source>advert.include_country_code</source>
+                <target>Include the country code</target>
+            </trans-unit>
+            <trans-unit id="1114">
+                <source>advert.eg_number</source>
+                <target>e.g. 85266821490</target>
+            </trans-unit>
+            <trans-unit id="1115">
+                <source>advert.advanced_rules</source>
+                <target>Advanced Rules (admin only)</target>
+            </trans-unit>
+            <trans-unit id="1116">
+                <source>advert.override_destination</source>
+                <target>Override Destination</target>
+            </trans-unit>
+            <trans-unit id="1117">
+                <source>advert.advert_status</source>
+                <target>Advert Status</target>
+            </trans-unit>
+
+            <trans-unit id="1201">
+                <source>idate.today</source>
+                <target>Today</target>
+            </trans-unit>
+            <trans-unit id="1202">
+                <source>idate.yesterday</source>
+                <target>Yesterday</target>
+            </trans-unit>
+            <trans-unit id="1203">
+                <source>idate.7_days</source>
+                <target>Last 7 Days</target>
+            </trans-unit>
+            <trans-unit id="1204">
+                <source>idate.30_days</source>
+                <target>Last 30 Days</target>
+            </trans-unit>
+            <trans-unit id="1205">
+                <source>idate.this_month</source>
+                <target>This Month</target>
+            </trans-unit>
+            <trans-unit id="1206">
+                <source>idate.last_month</source>
+                <target>Last Month</target>
+            </trans-unit>
+            <trans-unit id="1207">
+                <source>idate.custom_range</source>
+                <target>Custom Range</target>
+            </trans-unit>
+            <trans-unit id="1208">
+                <source>idate.january</source>
+                <target>January</target>
+            </trans-unit>
+            <trans-unit id="1209">
+                <source>idate.febuary</source>
+                <target>Febuary</target>
+            </trans-unit>
+            <trans-unit id="1210">
+                <source>idate.march</source>
+                <target>March</target>
+            </trans-unit>
+            <trans-unit id="1211">
+                <source>idate.april</source>
+                <target>April</target>
+            </trans-unit>
+            <trans-unit id="1212">
+                <source>idate.may</source>
+                <target>May</target>
+            </trans-unit>
+            <trans-unit id="1213">
+                <source>idate.june</source>
+                <target>June</target>
+            </trans-unit>
+            <trans-unit id="1214">
+                <source>idate.july</source>
+                <target>July</target>
+            </trans-unit>
+            <trans-unit id="1215">
+                <source>idate.august</source>
+                <target>August</target>
+            </trans-unit>
+            <trans-unit id="1216">
+                <source>idate.september</source>
+                <target>September</target>
+            </trans-unit>
+            <trans-unit id="1217">
+                <source>idate.october</source>
+                <target>October</target>
+            </trans-unit>
+            <trans-unit id="1218">
+                <source>idate.november</source>
+                <target>November</target>
+            </trans-unit>
+            <trans-unit id="1219">
+                <source>idate.december</source>
+                <target>December</target>
+            </trans-unit>
+            <trans-unit id="1220">
+                <source>idate.jan</source>
+                <target>Jan</target>
+            </trans-unit>
+            <trans-unit id="1221">
+                <source>idate.feb</source>
+                <target>Feb</target>
+            </trans-unit>
+            <trans-unit id="1222">
+                <source>idate.mar</source>
+                <target>Mar</target>
+            </trans-unit>
+            <trans-unit id="1223">
+                <source>idate.apr</source>
+                <target>Apr</target>
+            </trans-unit>
+            <trans-unit id="1224">
+                <source>idate.may</source>
+                <target>May</target>
+            </trans-unit>
+            <trans-unit id="1225">
+                <source>idate.jun</source>
+                <target>Jun</target>
+            </trans-unit>
+            <trans-unit id="1226">
+                <source>idate.jul</source>
+                <target>Jul</target>
+            </trans-unit>
+            <trans-unit id="1227">
+                <source>idate.aug</source>
+                <target>Aug</target>
+            </trans-unit>
+            <trans-unit id="1228">
+                <source>idate.sep</source>
+                <target>Sep</target>
+            </trans-unit>
+            <trans-unit id="1229">
+                <source>idate.oct</source>
+                <target>Oct</target>
+            </trans-unit>
+            <trans-unit id="1230">
+                <source>idate.nov</source>
+                <target>Nov</target>
+            </trans-unit>
+            <trans-unit id="1231">
+                <source>idate.dec</source>
+                <target>Dec</target>
+            </trans-unit>
+            <trans-unit id="1232">
+                <source>idate.chart_format</source>
+                <target>%e of %b</target>
+            </trans-unit>
+
+            <trans-unit id="1233">
+                <source>idate.monday</source>
+                <target>Monday</target>
+            </trans-unit>
+            <trans-unit id="1234">
+                <source>idate.tuesday</source>
+                <target>Tuesday</target>
+            </trans-unit>
+            <trans-unit id="1235">
+                <source>idate.tuesday</source>
+                <target>Tuesday</target>
+            </trans-unit>
+            <trans-unit id="1236">
+                <source>idate.wednesday</source>
+                <target>Wednesday</target>
+            </trans-unit>
+            <trans-unit id="1237">
+                <source>idate.thursday</source>
+                <target>Thursday</target>
+            </trans-unit>
+            <trans-unit id="1238">
+                <source>idate.friday</source>
+                <target>Friday</target>
+            </trans-unit>
+            <trans-unit id="1239">
+                <source>idate.saturday</source>
+                <target>Saturday</target>
+            </trans-unit>
+            <trans-unit id="1240">
+                <source>idate.sunday</source>
+                <target>Sunday</target>
+            </trans-unit>
+
         </body>
     </file>
 </xliff>
