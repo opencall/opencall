@@ -584,6 +584,7 @@
                 <source>idate.december</source>
                 <target>December</target>
             </trans-unit>
+
             <trans-unit id="1220">
                 <source>idate.jan</source>
                 <target>Jan</target>
@@ -668,6 +669,15 @@
             <trans-unit id="1240">
                 <source>idate.sunday</source>
                 <target>Sunday</target>
+            </trans-unit>
+
+            <trans-unit id="1301">
+                <source>locale.en</source>
+                <target>English</target>
+            </trans-unit>
+            <trans-unit id="1302">
+                <source>locale.zh</source>
+                <target>Chinese</target>
             </trans-unit>
 
         </body>

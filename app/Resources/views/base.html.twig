@@ -87,11 +87,11 @@
                         <form id="locale_form" method="get" action="/locale/en">
                         <select id="locale_select" name="locale">
                             {% if app.request.locale == 'zh' %}
-                            <option value="en">English</option>
-                            <option value="zh" selected>Chinese</option>
+                            <option value="en">{% trans %}locale.en{% endtrans %}</option>
+                            <option value="zh" selected>{% trans %}locale.zh{% endtrans %}</option>
                             {% else %}
-                            <option value="en">English</option>
-                            <option value="zh">Chinese</option>
+                            <option value="en">{% trans %}locale.en{% endtrans %}</option>
+                            <option value="zh">{% trans %}locale.zh{% endtrans %}</option>
                             {% endif %}
                         </select>
                         </form>
