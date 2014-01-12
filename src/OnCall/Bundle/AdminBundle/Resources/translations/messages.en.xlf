@@ -123,6 +123,10 @@
                 <source>text.receiver</source>
                 <target>Receiver</target>
             </trans-unit>
+            <trans-unit id="219">
+                <source>text.footer</source>
+                <target>2013 CallTracking.hk</target>
+            </trans-unit>
 
 
             <trans-unit id="301">
@@ -678,6 +682,40 @@
             <trans-unit id="1302">
                 <source>locale.zh</source>
                 <target>Chinese</target>
+            </trans-unit>
+
+
+            <trans-unit id="1401">
+                <source>title.account_management</source>
+                <target>Account Management</target>
+            </trans-unit>
+            <trans-unit id="1402">
+                <source>title.modify_account</source>
+                <target>Modify Account</target>
+            </trans-unit>
+            <trans-unit id="1403">
+                <source>title.number_management</source>
+                <target>Number Management</target>
+            </trans-unit>
+            <trans-unit id="1404">
+                <source>title.clients</source>
+                <target>Clients</target>
+            </trans-unit>
+            <trans-unit id="1405">
+                <source>title.campaigns</source>
+                <target>Campaigns</target>
+            </trans-unit>
+            <trans-unit id="1406">
+                <source>title.adgroups</source>
+                <target>AdGroups</target>
+            </trans-unit>
+            <trans-unit id="1407">
+                <source>title.adverts</source>
+                <target>Adverts</target>
+            </trans-unit>
+            <trans-unit id="1408">
+                <source>title.call_log</source>
+                <target>Call Log</target>
             </trans-unit>
 
         </body>

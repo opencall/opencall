@@ -1,6 +1,10 @@
 {% extends '::base.html.twig' %}
 {% import 'OnCallAdminBundle:CallLog:log.html.twig' as log_row %}
 
+{% block main_title %}
+{% trans %}title.call_log{% endtrans %}
+{% endblock %}
+
 {% block plugins %}
 <script src="assets/plugins/bootstrap-daterangepicker/date.js" type="text/javascript"></script>
 <script src="assets/plugins/bootstrap-daterangepicker/daterangepicker.js" type="text/javascript"></script> 

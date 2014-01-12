@@ -1,5 +1,9 @@
 {% extends '::base.html.twig' %}
 
+{% block main_title %}
+{% trans %}title.clients{% endtrans %}
+{% endblock %}
+
 {% block javascript %}
 <script type="text/javascript">
 function update_client(client_id)

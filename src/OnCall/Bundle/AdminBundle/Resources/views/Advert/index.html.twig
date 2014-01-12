@@ -1,5 +1,10 @@
 {% extends 'OnCallAdminBundle::item.html.twig' %}
 
+{% block main_title %}
+{% trans %}title.adverts{% endtrans %}
+{% endblock %}
+
+
 {% block title %}
 {{ parent.getName }} <small>{% trans %}advert.adgroup{% endtrans %}</small>
 {% endblock %}

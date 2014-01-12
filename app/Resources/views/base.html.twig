@@ -9,7 +9,7 @@
 <head>
     <base href="/" />
 	<meta charset="utf-8" />
-	<title>Dashboard</title>
+	<title>{% block main_title %}Dashboard{% endblock %}</title>
 	<meta content="width=device-width, initial-scale=1.0" name="viewport" />
 	<!-- BEGIN GLOBAL MANDATORY STYLES -->
     <link href='http://fonts.googleapis.com/css?family=Lato:400,700|Cabin:400,700' rel='stylesheet' type='text/css'>
@@ -128,7 +128,7 @@
 	<!-- BEGIN FOOTER -->
 	<div class="footer">
 		<div class="footer-inner">
-			&copy; 2013 CallTracking.hk
+			&copy; {% trans %}text.footer{% endtrans %}
 		</div>
 		<div class="footer-tools">
 			<span class="go-top">
