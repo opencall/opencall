@@ -4,33 +4,33 @@
         <body>
             <trans-unit id="101">
                 <source>login.username</source>
-                <target>Username</target>
+                <target>用戶名稱</target>
             </trans-unit>
             <trans-unit id="102">
                 <source>login.password</source>
-                <target>Password</target>
+                <target>密碼</target>
             </trans-unit>
             <trans-unit id="103">
                 <source>login.remember</source>
-                <target>Remember me</target>
+                <target>記住我</target>
             </trans-unit>
             <trans-unit id="104">
                 <source>login.login</source>
-                <target>Login</target>
+                <target>登入</target>
             </trans-unit>
             <trans-unit id="105">
                 <source>login.forgot</source>
                 <target>Forgot your password</target>
             </trans-unit>
-            <trans-unit id="1061">
+            <trans-unit id="106.1">
                 <source>login.reset.1</source>
                 <target>No problem, click</target>
             </trans-unit>
-            <trans-unit id="1062">
+            <trans-unit id="106.2">
                 <source>login.reset.2</source>
                 <target>to reset your password.</target>
             </trans-unit>
-            <trans-unit id="1063">
+            <trans-unit id="106.3">
                 <source>login.reset.here</source>
                 <target>here</target>
             </trans-unit>
@@ -65,11 +65,11 @@
             </trans-unit>
             <trans-unit id="204">
                 <source>text.have_feedback</source>
-                <target>Have some feedback</target>
+                <target>有意見？</target>
             </trans-unit>
             <trans-unit id="205">
                 <source>text.feedback</source>
-                <target>Please let us know - this platform is for you. We want to provide the features you need and ensure a bug free experience.</target>
+                <target>請告訴我們–這是為你而設的平台。我們希望為你提供所需要的和確保運作無誤。</target>
             </trans-unit>
             <trans-unit id="206">
                 <source>text.email</source>
@@ -77,51 +77,55 @@
             </trans-unit>
             <trans-unit id="207">
                 <source>text.view</source>
-                <target>View</target>
+                <target>查看</target>
             </trans-unit>
             <trans-unit id="208">
                 <source>text.edit</source>
-                <target>Edit</target>
+                <target>修改</target>
             </trans-unit>
             <trans-unit id="209">
                 <source>text.delete</source>
-                <target>Delete</target>
+                <target>刪除</target>
             </trans-unit>
             <trans-unit id="210">
                 <source>text.cancel</source>
-                <target>Cancel</target>
+                <target>取消</target>
             </trans-unit>
             <trans-unit id="211">
                 <source>text.save_changes</source>
-                <target>Save Changes</target>
+                <target>儲存更改</target>
             </trans-unit>
             <trans-unit id="212">
                 <source>text.yes</source>
-                <target>Yes</target>
+                <target>是</target>
             </trans-unit>
             <trans-unit id="213">
                 <source>text.no</source>
-                <target>No</target>
+                <target>否</target>
             </trans-unit>
             <trans-unit id="214">
                 <source>text.relinquish</source>
-                <target>Relinquish</target>
+                <target>放棄</target>
             </trans-unit>
             <trans-unit id="215">
                 <source>text.more</source>
-                <target>More</target>
+                <target>更多</target>
             </trans-unit>
             <trans-unit id="216">
                 <source>text.call_duration</source>
-                <target>Call Duration</target>
+                <target>通話長度</target>
             </trans-unit>
             <trans-unit id="217">
                 <source>text.caller</source>
-                <target>Caller</target>
+                <target>來電者</target>
             </trans-unit>
             <trans-unit id="218">
                 <source>text.receiver</source>
-                <target>Receiver</target>
+                <target>接電者</target>
+            </trans-unit>
+            <trans-unit id="219">
+                <source>text.footer</source>
+                <target>2013 CallTracking.hk</target>
             </trans-unit>
 
 
@@ -131,197 +135,589 @@
             </trans-unit>
             <trans-unit id="302">
                 <source>menu.clients</source>
-                <target>Clients</target>
+                <target>客戶</target>
             </trans-unit>
             <trans-unit id="303">
                 <source>menu.modify_account</source>
-                <target>Modify Account</target>
+                <target>修改帳戶</target>
             </trans-unit>
             <trans-unit id="304">
                 <source>menu.support</source>
-                <target>Support</target>
+                <target>支援</target>
             </trans-unit>
             <trans-unit id="305">
                 <source>menu.logout</source>
-                <target>Log Out</target>
+                <target>登出</target>
             </trans-unit>
             <trans-unit id="306">
                 <source>menu.account_management</source>
-                <target>Account Management</target>
+                <target>管理帳戶</target>
             </trans-unit>
             <trans-unit id="307">
                 <source>menu.number_management</source>
-                <target>Number Management</target>
+                <target>管理號碼</target>
             </trans-unit>
             <trans-unit id="308">
                 <source>menu.campaigns</source>
-                <target>Campaigns</target>
+                <target>活動</target>
             </trans-unit>
             <trans-unit id="309">
                 <source>menu.call_log</source>
-                <target>Call Log</target>
+                <target>通話記錄</target>
             </trans-unit>
 
             <trans-unit id="401">
                 <source>client.add</source>
-                <target>Add New Client</target>
+                <target>增加新客戶</target>
             </trans-unit>
             <trans-unit id="402">
                 <source>client.numbers_assigned</source>
-                <target>numbers assigned</target>
+                <target>分配電話號碼</target>
             </trans-unit>
             <trans-unit id="403">
                 <source>client.call_day</source>
-                <target>calls in the past 24 hours</target>
+                <target>過去二十四小時的通話</target>
             </trans-unit>
             <trans-unit id="404">
                 <source>client.call_month</source>
-                <target>calls this month</target>
+                <target>過去一個月的通話</target>
             </trans-unit>
             <trans-unit id="405">
                 <source>client.name</source>
-                <target>Client Name</target>
+                <target>客戶名稱</target>
             </trans-unit>
             <trans-unit id="406">
                 <source>client.timezone</source>
-                <target>Client Timezone</target>
+                <target>客戶時區</target>
             </trans-unit>
             <trans-unit id="407">
                 <source>client.status</source>
-                <target>Client Status</target>
+                <target>客戶狀態</target>
             </trans-unit>
             <trans-unit id="408">
                 <source>client.edit</source>
-                <target>Edit Client</target>
+                <target>修改客戶</target>
             </trans-unit>
             <trans-unit id="409">
                 <source>client.delete_text</source>
-                <target>Deleting a client will remove all phone numbers from your adverts and relinquish them, making them available to all CallTracking customers to use. Please note, you will be billed for the remainder of the month for these phone numbers. Press "Delete" to proceed.</target>
+                <target>刪除客戶會從你的廣告中移除電話號碼並放棄，開放予CallTracking其他用戶使用。請注意，你仍然需要為這些號碼繳付餘下月費。按「刪除」進行。</target>
             </trans-unit>
 
 
             <trans-unit id="501">
                 <source>num.filter_usage</source>
-                <target>Filter By Usage</target>
+                <target>按用途篩選</target>
             </trans-unit>
             <trans-unit id="502">
                 <source>num.filter_type</source>
-                <target>Filter By Type</target>
+                <target>按類型篩選</target>
             </trans-unit>
             <trans-unit id="503">
                 <source>num.delete_num</source>
-                <target>Delete Number</target>
+                <target>刪除電話號碼</target>
             </trans-unit>
             <trans-unit id="504">
                 <source>num.delete_text</source>
-                <target>Relinquishing a number will permanently remove it from this client account and it will be re-entered into the pool for all CallTracking customers to use. Please note, you will be billed for the remainder of the month for this phone number. Press "Delete Number" to proceed.</target>
+                <target>放棄電話號碼會從這個客戶帳戶中永久移除，開放予CallTracking其他用戶使用。請注意，你仍然需要為號碼活動繳付餘下月費。按「刪除號碼」進行。</target>
             </trans-unit>
             <trans-unit id="505">
                 <source>num.number</source>
-                <target>Number</target>
+                <target>電話號碼</target>
             </trans-unit>
             <trans-unit id="506">
                 <source>num.in_use</source>
-                <target>In Use</target>
+                <target>使用中</target>
             </trans-unit>
             <trans-unit id="507">
                 <source>num.advert</source>
-                <target>Advert</target>
+                <target>廣告</target>
             </trans-unit>
             <trans-unit id="508">
                 <source>num.adgroup</source>
-                <target>AdGroup</target>
+                <target>廣告組</target>
             </trans-unit>
             <trans-unit id="509">
                 <source>num.campaign</source>
-                <target>Campaign</target>
+                <target>活動</target>
             </trans-unit>
             <trans-unit id="510">
                 <source>num.type</source>
-                <target>Type</target>
+                <target>類型</target>
             </trans-unit>
             <trans-unit id="511">
                 <source>num.cost</source>
-                <target>Cost/Month</target>
+                <target>費用/每月</target>
             </trans-unit>
             <trans-unit id="512">
                 <source>num.date_add</source>
-                <target>Date Added to Client</target>
+                <target>增加客戶日期</target>
             </trans-unit>
             <trans-unit id="513">
                 <source>num.last_called</source>
-                <target>Last Called</target>
+                <target>最後通話記錄</target>
             </trans-unit>
             <trans-unit id="514">
                 <source>num.action</source>
-                <target>Action</target>
+                <target>行動</target>
             </trans-unit>
 
             <trans-unit id="601">
                 <source>acc.new_password</source>
-                <target>New Password</target>
+                <target>新密碼</target>
             </trans-unit>
             <trans-unit id="602">
                 <source>acc.rep_password</source>
-                <target>Repeat Password</target>
+                <target>重覆密碼</target>
             </trans-unit>
             <trans-unit id="603">
                 <source>acc.msg.blank</source>
-                <target>Password cannot be blank.</target>
+                <target>不可留空密碼</target>
             </trans-unit>
             <trans-unit id="604">
                 <source>acc.msg.match</source>
-                <target>Passwords do not match.</target>
+                <target>密碼不同</target>
             </trans-unit>
             <trans-unit id="605">
                 <source>acc.msg.success</source>
-                <target>Password changed successfully.</target>
+                <target>成功更改密碼</target>
             </trans-unit>
 
             <trans-unit id="701">
                 <source>log.by_campaign</source>
-                <target>by Campaign</target>
+                <target>按活動</target>
             </trans-unit>
             <trans-unit id="702">
                 <source>log.by_adgroup</source>
-                <target>by AdGroup</target>
+                <target>按廣告組</target>
             </trans-unit>
             <trans-unit id="703">
                 <source>log.by_advert</source>
-                <target>by Advert</target>
+                <target>按廣告</target>
             </trans-unit>
             <trans-unit id="704">
                 <source>log.by_hcause</source>
-                <target>by Hangup Cause</target>
+                <target>按掛斷原因</target>
             </trans-unit>
             <trans-unit id="705">
                 <source>log.by_duration</source>
-                <target>by Duration</target>
+                <target>按長度</target>
             </trans-unit>
             <trans-unit id="706">
                 <source>log.by_number</source>
-                <target>by Number</target>
+                <target>按號碼</target>
             </trans-unit>
             <trans-unit id="707">
                 <source>log.seconds</source>
-                <target>seconds</target>
+                <target>秒</target>
             </trans-unit>
             <trans-unit id="708">
                 <source>log.live_updates</source>
-                <target>Live Updates</target>
+                <target>即時更新</target>
             </trans-unit>
             <trans-unit id="709">
                 <source>log.apply_filters</source>
-                <target>Apply Filters</target>
+                <target>應用篩選</target>
             </trans-unit>
             <trans-unit id="710">
                 <source>log.reset_filters</source>
-                <target>Reset Filters</target>
+                <target>重設篩選</target>
             </trans-unit>
             <trans-unit id="711">
                 <source>log.export</source>
-                <target>Export Call Log Data to CSV</target>
+                <target>輸出通話記錄至CSV文件</target>
             </trans-unit>
+
+
+            <trans-unit id="801">
+                <source>item.calls</source>
+                <target>全部通話</target>
+            </trans-unit>
+            <trans-unit id="802">
+                <source>item.unique</source>
+                <target>個別通話</target>
+            </trans-unit>
+            <trans-unit id="803">
+                <source>item.leads</source>
+                <target>潛在客戶</target>
+            </trans-unit>
+            <trans-unit id="804">
+                <source>item.failed_calls</source>
+                <target>失敗通話</target>
+            </trans-unit>
+            <trans-unit id="805">
+                <source>item.total_calls</source>
+                <target>全部通話</target>
+            </trans-unit>
+            <trans-unit id="806">
+                <source>item.potential_leads</source>
+                <target>潛在客戶</target>
+            </trans-unit>
+            <trans-unit id="807">
+                <source>item.daily</source>
+                <target>每天</target>
+            </trans-unit>
+            <trans-unit id="808">
+                <source>item.hourly</source>
+                <target>每小時</target>
+            </trans-unit>
+            <trans-unit id="809">
+                <source>item.name</source>
+                <target>Name</target>
+            </trans-unit>
+            <trans-unit id="810">
+                <source>item.unique_calls</source>
+                <target>個別的</target>
+            </trans-unit>
+            <trans-unit id="811">
+                <source>item.failed</source>
+                <target>失敗的</target>
+            </trans-unit>
+            <trans-unit id="812">
+                <source>item.potential</source>
+                <target>潛在的</target>
+            </trans-unit>
+            <trans-unit id="813">
+                <source>item.total_duration</source>
+                <target>總長度</target>
+            </trans-unit>
+            <trans-unit id="814">
+                <source>item.avg_duration</source>
+                <target>平均長度</target>
+            </trans-unit>
+            <trans-unit id="815">
+                <source>item.totals</source>
+                <target>全部</target>
+            </trans-unit>
+            <trans-unit id="816">
+                <source>item.add</source>
+                <target>Add</target>
+            </trans-unit>
+            <trans-unit id="817">
+                <source>item.add_new</source>
+                <target>Add New</target>
+            </trans-unit>
+            <trans-unit id="818">
+                <source>item.status</source>
+                <target>Status</target>
+            </trans-unit>
+            <trans-unit id="819">
+                <source>item.ad_number</source>
+                <target>廣告電話號碼</target>
+            </trans-unit>
+            <trans-unit id="820">
+                <source>item.ad_destination</source>
+                <target>廣告目的地</target>
+            </trans-unit>
+            <trans-unit id="821">
+                <source>item.rules</source>
+                <target>Rules</target>
+            </trans-unit>
+            <trans-unit id="822">
+                <source>item.use</source>
+                <target>Use</target>
+            </trans-unit>
+
+            <trans-unit id="901">
+                <source>camp.all_campaigns</source>
+                <target>All Campaigns</target>
+            </trans-unit>
+            <trans-unit id="902">
+                <source>camp.campaigns</source>
+                <target>Campaigns</target>
+            </trans-unit>
+            <trans-unit id="903">
+                <source>camp.delete_text</source>
+                <target>Deleting a campaign will release all phone numbers assigned to your adverts. Please note, you will be billed for these numbers until you relinquish them in Number Management. Press "Delete" to proceed.</target>
+            </trans-unit>
+
+            <trans-unit id="1001">
+                <source>adg.campaign</source>
+                <target>Campaign</target>
+            </trans-unit>
+            <trans-unit id="1002">
+                <source>adg.adgroups</source>
+                <target>AdGroups</target>
+            </trans-unit>
+            <trans-unit id="1003">
+                <source>adg.delete_text</source>
+                <target>Deleting an AdGroup will release all phone numbers assigned to your adverts. Please note, you will be billed for these numbers until you relinquish them in Number Management. Press "Delete" to proceed.</target>
+            </trans-unit>
+
+            <trans-unit id="1101">
+                <source>advert.adgroup</source>
+                <target>AdGroup</target>
+            </trans-unit>
+            <trans-unit id="1102">
+                <source>advert.adverts</source>
+                <target>Adverts</target>
+            </trans-unit>
+            <trans-unit id="1103">
+                <source>advert.delete_text</source>
+                <target>Deleting an advert will release the phone number assigned to it. Please note, you will be billed for this number until you relinquish it in Number Management. Press "Delete" to proceed.</target>
+            </trans-unit>
+            <trans-unit id="1104">
+                <source>advert.add_advert</source>
+                <target>Add Advert</target>
+            </trans-unit>
+            <trans-unit id="1105">
+                <source>advert.advert_name</source>
+                <target>廣告名稱</target>
+            </trans-unit>
+            <trans-unit id="1106">
+                <source>advert.advert_number</source>
+                <target>廣告電話號碼</target>
+            </trans-unit>
+            <trans-unit id="1107">
+                <source>advert.need_more</source>
+                <target>需要更多號碼？ 開啟管理號碼</target>
+            </trans-unit>
+            <trans-unit id="1108">
+                <source>advert.recording</source>
+                <target>錄音</target>
+            </trans-unit>
+            <trans-unit id="1109">
+                <source>advert.record_calls</source>
+                <target>錄取這次廣告通話</target>
+            </trans-unit>
+            <trans-unit id="1110">
+                <source>advert.speak_message</source>
+                <target>於通話前說信息</target>
+            </trans-unit>
+            <trans-unit id="1111">
+                <source>advert.advert_destination</source>
+                <target>廣告目的地</target>
+            </trans-unit>
+            <trans-unit id="1112">
+                <source>advert.not_spaces</source>
+                <target>不可輸入空白格或+</target>
+            </trans-unit>
+            <trans-unit id="1113">
+                <source>advert.include_country_code</source>
+                <target>輸入地區號碼</target>
+            </trans-unit>
+            <trans-unit id="1114">
+                <source>advert.eg_number</source>
+                <target>例：85266821490</target>
+            </trans-unit>
+            <trans-unit id="1115">
+                <source>advert.advanced_rules</source>
+                <target>Advanced Rules (admin only)</target>
+            </trans-unit>
+            <trans-unit id="1116">
+                <source>advert.override_destination</source>
+                <target>Override Destination</target>
+            </trans-unit>
+            <trans-unit id="1117">
+                <source>advert.advert_status</source>
+                <target>Advert Status</target>
+            </trans-unit>
+
+            <trans-unit id="1201">
+                <source>idate.today</source>
+                <target>Today</target>
+            </trans-unit>
+            <trans-unit id="1202">
+                <source>idate.yesterday</source>
+                <target>Yesterday</target>
+            </trans-unit>
+            <trans-unit id="1203">
+                <source>idate.7_days</source>
+                <target>Last 7 Days</target>
+            </trans-unit>
+            <trans-unit id="1204">
+                <source>idate.30_days</source>
+                <target>Last 30 Days</target>
+            </trans-unit>
+            <trans-unit id="1205">
+                <source>idate.this_month</source>
+                <target>This Month</target>
+            </trans-unit>
+            <trans-unit id="1206">
+                <source>idate.last_month</source>
+                <target>Last Month</target>
+            </trans-unit>
+            <trans-unit id="1207">
+                <source>idate.custom_range</source>
+                <target>Custom Range</target>
+            </trans-unit>
+            <trans-unit id="1208">
+                <source>idate.january</source>
+                <target>January</target>
+            </trans-unit>
+            <trans-unit id="1209">
+                <source>idate.febuary</source>
+                <target>Febuary</target>
+            </trans-unit>
+            <trans-unit id="1210">
+                <source>idate.march</source>
+                <target>March</target>
+            </trans-unit>
+            <trans-unit id="1211">
+                <source>idate.april</source>
+                <target>April</target>
+            </trans-unit>
+            <trans-unit id="1212">
+                <source>idate.may</source>
+                <target>May</target>
+            </trans-unit>
+            <trans-unit id="1213">
+                <source>idate.june</source>
+                <target>June</target>
+            </trans-unit>
+            <trans-unit id="1214">
+                <source>idate.july</source>
+                <target>July</target>
+            </trans-unit>
+            <trans-unit id="1215">
+                <source>idate.august</source>
+                <target>August</target>
+            </trans-unit>
+            <trans-unit id="1216">
+                <source>idate.september</source>
+                <target>September</target>
+            </trans-unit>
+            <trans-unit id="1217">
+                <source>idate.october</source>
+                <target>October</target>
+            </trans-unit>
+            <trans-unit id="1218">
+                <source>idate.november</source>
+                <target>November</target>
+            </trans-unit>
+            <trans-unit id="1219">
+                <source>idate.december</source>
+                <target>December</target>
+            </trans-unit>
+
+            <trans-unit id="1220">
+                <source>idate.jan</source>
+                <target>Jan</target>
+            </trans-unit>
+            <trans-unit id="1221">
+                <source>idate.feb</source>
+                <target>Feb</target>
+            </trans-unit>
+            <trans-unit id="1222">
+                <source>idate.mar</source>
+                <target>Mar</target>
+            </trans-unit>
+            <trans-unit id="1223">
+                <source>idate.apr</source>
+                <target>Apr</target>
+            </trans-unit>
+            <trans-unit id="1224">
+                <source>idate.may</source>
+                <target>May</target>
+            </trans-unit>
+            <trans-unit id="1225">
+                <source>idate.jun</source>
+                <target>Jun</target>
+            </trans-unit>
+            <trans-unit id="1226">
+                <source>idate.jul</source>
+                <target>Jul</target>
+            </trans-unit>
+            <trans-unit id="1227">
+                <source>idate.aug</source>
+                <target>Aug</target>
+            </trans-unit>
+            <trans-unit id="1228">
+                <source>idate.sep</source>
+                <target>Sep</target>
+            </trans-unit>
+            <trans-unit id="1229">
+                <source>idate.oct</source>
+                <target>Oct</target>
+            </trans-unit>
+            <trans-unit id="1230">
+                <source>idate.nov</source>
+                <target>Nov</target>
+            </trans-unit>
+            <trans-unit id="1231">
+                <source>idate.dec</source>
+                <target>Dec</target>
+            </trans-unit>
+            <trans-unit id="1232">
+                <source>idate.chart_format</source>
+                <target>%e of %b</target>
+            </trans-unit>
+
+            <trans-unit id="1233">
+                <source>idate.monday</source>
+                <target>Monday</target>
+            </trans-unit>
+            <trans-unit id="1234">
+                <source>idate.tuesday</source>
+                <target>Tuesday</target>
+            </trans-unit>
+            <trans-unit id="1235">
+                <source>idate.tuesday</source>
+                <target>Tuesday</target>
+            </trans-unit>
+            <trans-unit id="1236">
+                <source>idate.wednesday</source>
+                <target>Wednesday</target>
+            </trans-unit>
+            <trans-unit id="1237">
+                <source>idate.thursday</source>
+                <target>Thursday</target>
+            </trans-unit>
+            <trans-unit id="1238">
+                <source>idate.friday</source>
+                <target>Friday</target>
+            </trans-unit>
+            <trans-unit id="1239">
+                <source>idate.saturday</source>
+                <target>Saturday</target>
+            </trans-unit>
+            <trans-unit id="1240">
+                <source>idate.sunday</source>
+                <target>Sunday</target>
+            </trans-unit>
+
+            <trans-unit id="1301">
+                <source>locale.en</source>
+                <target>English</target>
+            </trans-unit>
+            <trans-unit id="1302">
+                <source>locale.zh</source>
+                <target>中文</target>
+            </trans-unit>
+
+
+            <trans-unit id="1401">
+                <source>title.account_management</source>
+                <target>管理帳戶</target>
+            </trans-unit>
+            <trans-unit id="1402">
+                <source>title.modify_account</source>
+                <target>修改帳戶</target>
+            </trans-unit>
+            <trans-unit id="1403">
+                <source>title.number_management</source>
+                <target>管理號碼</target>
+            </trans-unit>
+            <trans-unit id="1404">
+                <source>title.clients</source>
+                <target>客戶</target>
+            </trans-unit>
+            <trans-unit id="1405">
+                <source>title.campaigns</source>
+                <target>活動</target>
+            </trans-unit>
+            <trans-unit id="1406">
+                <source>title.adgroups</source>
+                <target>廣告組</target>
+            </trans-unit>
+            <trans-unit id="1407">
+                <source>title.adverts</source>
+                <target>廣告</target>
+            </trans-unit>
+            <trans-unit id="1408">
+                <source>title.call_log</source>
+                <target>通話記錄</target>
+            </trans-unit>
+
         </body>
     </file>
 </xliff>
