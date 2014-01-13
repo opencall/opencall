@@ -349,6 +349,7 @@ Header and header elements.
 
 .header .brand img {
   margin-left: 20px;
+  margin-top: -7px;
 }
 
 .header .btn-navbar {
