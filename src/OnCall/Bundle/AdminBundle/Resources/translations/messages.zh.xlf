@@ -423,7 +423,7 @@
             </trans-unit>
             <trans-unit id="902">
                 <source>camp.campaigns</source>
-                <target>Campaigns</target>
+                <target>活動</target>
             </trans-unit>
             <trans-unit id="903">
                 <source>camp.delete_text</source>
@@ -432,7 +432,7 @@
 
             <trans-unit id="1001">
                 <source>adg.campaign</source>
-                <target>Campaign</target>
+                <target>活動</target>
             </trans-unit>
             <trans-unit id="1002">
                 <source>adg.adgroups</source>
