@@ -53,11 +53,11 @@
 
             <trans-unit id="201">
                 <source>text.email</source>
-                <target>Email</target>
+                <target>電郵</target>
             </trans-unit>
             <trans-unit id="202">
                 <source>text.back</source>
-                <target>Back</target>
+                <target>以前</target>
             </trans-unit>
             <trans-unit id="203">
                 <source>text.submit</source>
@@ -73,7 +73,7 @@
             </trans-unit>
             <trans-unit id="206">
                 <source>text.email</source>
-                <target>E-mail</target>
+                <target>電郵</target>
             </trans-unit>
             <trans-unit id="207">
                 <source>text.view</source>
@@ -125,7 +125,7 @@
             </trans-unit>
             <trans-unit id="219">
                 <source>text.footer</source>
-                <target>2013 CallTracking.hk</target>
+                <target>2013 - 2014 CallTracking.hk</target>
             </trans-unit>
 
 
@@ -398,7 +398,7 @@
             </trans-unit>
             <trans-unit id="818">
                 <source>item.status</source>
-                <target>Status</target>
+                <target>狀態</target>
             </trans-unit>
             <trans-unit id="819">
                 <source>item.ad_number</source>
@@ -419,7 +419,7 @@
 
             <trans-unit id="901">
                 <source>camp.all_campaigns</source>
-                <target>All Campaigns</target>
+                <target>活動</target>
             </trans-unit>
             <trans-unit id="902">
                 <source>camp.campaigns</source>
@@ -436,7 +436,7 @@
             </trans-unit>
             <trans-unit id="1002">
                 <source>adg.adgroups</source>
-                <target>AdGroups</target>
+                <target>廣告組</target>
             </trans-unit>
             <trans-unit id="1003">
                 <source>adg.delete_text</source>
@@ -445,11 +445,11 @@
 
             <trans-unit id="1101">
                 <source>advert.adgroup</source>
-                <target>AdGroup</target>
+                <target>廣告組</target>
             </trans-unit>
             <trans-unit id="1102">
                 <source>advert.adverts</source>
-                <target>Adverts</target>
+                <target>广告</target>
             </trans-unit>
             <trans-unit id="1103">
                 <source>advert.delete_text</source>
@@ -457,7 +457,7 @@
             </trans-unit>
             <trans-unit id="1104">
                 <source>advert.add_advert</source>
-                <target>Add Advert</target>
+                <target>新增廣告</target>
             </trans-unit>
             <trans-unit id="1105">
                 <source>advert.advert_name</source>
@@ -514,128 +514,128 @@
 
             <trans-unit id="1201">
                 <source>idate.today</source>
-                <target>Today</target>
+                <target>这天</target>
             </trans-unit>
             <trans-unit id="1202">
                 <source>idate.yesterday</source>
-                <target>Yesterday</target>
+                <target>昨天</target>
             </trans-unit>
             <trans-unit id="1203">
                 <source>idate.7_days</source>
-                <target>Last 7 Days</target>
+                <target>前六天</target>
             </trans-unit>
             <trans-unit id="1204">
                 <source>idate.30_days</source>
-                <target>Last 30 Days</target>
+                <target>过去30天</target>
             </trans-unit>
             <trans-unit id="1205">
                 <source>idate.this_month</source>
-                <target>This Month</target>
+                <target>本月</target>
             </trans-unit>
             <trans-unit id="1206">
                 <source>idate.last_month</source>
-                <target>Last Month</target>
+                <target>上月</target>
             </trans-unit>
             <trans-unit id="1207">
                 <source>idate.custom_range</source>
-                <target>Custom Range</target>
+                <target>定制范围</target>
             </trans-unit>
             <trans-unit id="1208">
                 <source>idate.january</source>
-                <target>January</target>
+                <target>一月</target>
             </trans-unit>
             <trans-unit id="1209">
                 <source>idate.febuary</source>
-                <target>Febuary</target>
+                <target>二月</target>
             </trans-unit>
             <trans-unit id="1210">
                 <source>idate.march</source>
-                <target>March</target>
+                <target>三月</target>
             </trans-unit>
             <trans-unit id="1211">
                 <source>idate.april</source>
-                <target>April</target>
+                <target>四月</target>
             </trans-unit>
             <trans-unit id="1212">
                 <source>idate.may</source>
-                <target>May</target>
+                <target>五月</target>
             </trans-unit>
             <trans-unit id="1213">
                 <source>idate.june</source>
-                <target>June</target>
+                <target>六月</target>
             </trans-unit>
             <trans-unit id="1214">
                 <source>idate.july</source>
-                <target>July</target>
+                <target>七月</target>
             </trans-unit>
             <trans-unit id="1215">
                 <source>idate.august</source>
-                <target>August</target>
+                <target>八月</target>
             </trans-unit>
             <trans-unit id="1216">
                 <source>idate.september</source>
-                <target>September</target>
+                <target>九月</target>
             </trans-unit>
             <trans-unit id="1217">
                 <source>idate.october</source>
-                <target>October</target>
+                <target>十月</target>
             </trans-unit>
             <trans-unit id="1218">
                 <source>idate.november</source>
-                <target>November</target>
+                <target>十一月</target>
             </trans-unit>
             <trans-unit id="1219">
                 <source>idate.december</source>
-                <target>December</target>
+                <target>十二月</target>
             </trans-unit>
 
             <trans-unit id="1220">
                 <source>idate.jan</source>
-                <target>Jan</target>
+                <target>一月</target>
             </trans-unit>
             <trans-unit id="1221">
                 <source>idate.feb</source>
-                <target>Feb</target>
+                <target>二月</target>
             </trans-unit>
             <trans-unit id="1222">
                 <source>idate.mar</source>
-                <target>Mar</target>
+                <target>三月</target>
             </trans-unit>
             <trans-unit id="1223">
                 <source>idate.apr</source>
-                <target>Apr</target>
+                <target>四月</target>
             </trans-unit>
             <trans-unit id="1224">
                 <source>idate.may</source>
-                <target>May</target>
+                <target>五月</target>
             </trans-unit>
             <trans-unit id="1225">
                 <source>idate.jun</source>
-                <target>Jun</target>
+                <target>六月</target>
             </trans-unit>
             <trans-unit id="1226">
                 <source>idate.jul</source>
-                <target>Jul</target>
+                <target>七月</target>
             </trans-unit>
             <trans-unit id="1227">
                 <source>idate.aug</source>
-                <target>Aug</target>
+                <target>八月</target>
             </trans-unit>
             <trans-unit id="1228">
                 <source>idate.sep</source>
-                <target>Sep</target>
+                <target>九月</target>
             </trans-unit>
             <trans-unit id="1229">
                 <source>idate.oct</source>
-                <target>Oct</target>
+                <target>十月</target>
             </trans-unit>
             <trans-unit id="1230">
                 <source>idate.nov</source>
-                <target>Nov</target>
+                <target>十一月</target>
             </trans-unit>
             <trans-unit id="1231">
                 <source>idate.dec</source>
-                <target>Dec</target>
+                <target>十二月</target>
             </trans-unit>
             <trans-unit id="1232">
                 <source>idate.chart_format</source>
@@ -644,35 +644,35 @@
 
             <trans-unit id="1233">
                 <source>idate.monday</source>
-                <target>Monday</target>
+                <target>星期</target>
             </trans-unit>
             <trans-unit id="1234">
                 <source>idate.tuesday</source>
-                <target>Tuesday</target>
+                <target>星期二</target>
             </trans-unit>
             <trans-unit id="1235">
                 <source>idate.tuesday</source>
-                <target>Tuesday</target>
+                <target>星期二</target>
             </trans-unit>
             <trans-unit id="1236">
                 <source>idate.wednesday</source>
-                <target>Wednesday</target>
+                <target>星期三</target>
             </trans-unit>
             <trans-unit id="1237">
                 <source>idate.thursday</source>
-                <target>Thursday</target>
+                <target>星期四</target>
             </trans-unit>
             <trans-unit id="1238">
                 <source>idate.friday</source>
-                <target>Friday</target>
+                <target>星期五</target>
             </trans-unit>
             <trans-unit id="1239">
                 <source>idate.saturday</source>
-                <target>Saturday</target>
+                <target>星期六</target>
             </trans-unit>
             <trans-unit id="1240">
                 <source>idate.sunday</source>
-                <target>Sunday</target>
+                <target>星期天</target>
             </trans-unit>
 
             <trans-unit id="1301">
