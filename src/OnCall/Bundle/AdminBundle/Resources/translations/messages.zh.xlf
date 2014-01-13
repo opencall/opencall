@@ -394,7 +394,7 @@
             </trans-unit>
             <trans-unit id="817">
                 <source>item.add_new</source>
-                <target>Add New</target>
+                <target>新增</target>
             </trans-unit>
             <trans-unit id="818">
                 <source>item.status</source>
