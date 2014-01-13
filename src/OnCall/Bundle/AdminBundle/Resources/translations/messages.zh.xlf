@@ -639,7 +639,7 @@
             </trans-unit>
             <trans-unit id="1232">
                 <source>idate.chart_format</source>
-                <target>%e of %b</target>
+                <target>%e %b</target>
             </trans-unit>
 
             <trans-unit id="1233">

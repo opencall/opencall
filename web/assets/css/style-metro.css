@@ -21,6 +21,9 @@ select:focus {
    outline: none !important;
 }
 
+#locale_form {
+	margin-top: 6px;
+}
 .btn {
 	background-color: #e5e5e5;
 	background-image: none;
