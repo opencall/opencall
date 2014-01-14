@@ -65,7 +65,7 @@
             </trans-unit>
             <trans-unit id="204">
                 <source>text.have_feedback</source>
-                <target>Have some feedback</target>
+                <target>Have some feedback?</target>
             </trans-unit>
             <trans-unit id="205">
                 <source>text.feedback</source>
