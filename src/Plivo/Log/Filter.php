@@ -243,4 +243,24 @@ class Filter
             'dte' => $this->getDTEFormatted()
         );
     }
+
+    public function getDTSLocale1()
+    {
+        return 'idate.' . strtolower($this->dts->format('F'));
+    }
+
+    public function getDTSLocale2()
+    {
+        return $this->dts->format('j, Y');
+    }
+
+    public function getDTELocale1()
+    {
+        return 'idate.' . strtolower($this->dte->format('F'));
+    }
+
+    public function getDTELocale2()
+    {
+        return $this->dte->format('j, Y');
+    }
 }

@@ -358,16 +358,16 @@ jQuery(document).ready(function() {
 
     $('#aggregate_range').daterangepicker({
         ranges: {
-            'Today': ['today', 'today'],
-            'Yesterday': ['yesterday', 'yesterday'],
-            'Last 7 Days': [Date.today().add({
+            '{% trans %}idate.today{% endtrans %}': ['today', 'today'],
+            '{% trans %}idate.yesterday{% endtrans %}': ['yesterday', 'yesterday'],
+            '{% trans %}idate.7_days{% endtrans %}': [Date.today().add({
                     days: -6
                 }), 'today'],
-            'Last 30 Days': [Date.today().add({
+            '{% trans %}idate.30_days{% endtrans %}': [Date.today().add({
                     days: -29
                 }), 'today'],
-            'This Month': [Date.today().moveToFirstDayOfMonth(), Date.today().moveToLastDayOfMonth()],
-            'Last Month': [Date.today().moveToFirstDayOfMonth().add({
+            '{% trans %}idate.this_month{% endtrans %}': [Date.today().moveToFirstDayOfMonth(), Date.today().moveToLastDayOfMonth()],
+            '{% trans %}idate.last_month{% endtrans %}': [Date.today().moveToFirstDayOfMonth().add({
                     months: -1
                 }), Date.today().moveToFirstDayOfMonth().add({
                     days: -1
@@ -384,9 +384,22 @@ jQuery(document).ready(function() {
             applyLabel: 'Submit',
             fromLabel: 'From',
             toLabel: 'To',
-            customRangeLabel: 'Custom Range',
+            customRangeLabel: '{% trans %}idate.custom_range{% endtrans %}',
             daysOfWeek: ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'],
-            monthNames: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
+            monthNames: [
+                '{% trans %}idate.january{% endtrans %}',
+                '{% trans %}idate.febuary{% endtrans %}',
+                '{% trans %}idate.march{% endtrans %}',
+                '{% trans %}idate.april{% endtrans %}',
+                '{% trans %}idate.may{% endtrans %}May',
+                '{% trans %}idate.june{% endtrans %}',
+                '{% trans %}idate.july{% endtrans %}',
+                '{% trans %}idate.august{% endtrans %}',
+                '{% trans %}idate.september{% endtrans %}',
+                '{% trans %}idate.october{% endtrans %}',
+                '{% trans %}idate.november{% endtrans %}',
+                '{% trans %}idate.december{% endtrans %}'
+            ],
             firstDay: 1
         },
         showWeekNumbers: true,
@@ -413,7 +426,8 @@ jQuery(document).ready(function() {
 
     });
 
-    $('#aggregate_range span').html(date_from.toString('MMMM d, yyyy') + ' - ' + date_to.toString('MMMM d, yyyy'));
+    $('#aggregate_range span').html("{{ filter.getDTSLocale1 | trans }} {{ filter.getDTSLocale2 }} - {{ filter.getDTELocale1 | trans }} {{ filter.getDTELocale2 }}");
+    // date_from.toString('MMMM d, yyyy') + ' - ' + date_to.toString('MMMM d, yyyy'));
     $('#aggregate_range').show();
     // END date range
 });
