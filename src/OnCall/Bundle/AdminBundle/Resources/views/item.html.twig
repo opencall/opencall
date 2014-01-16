@@ -322,19 +322,19 @@ jQuery(document).ready(function() {
     var delete_id = 0;
 
     $('.edit_button').click(function() {
-        var url = '/{{ name | lower }}/' + $(this).data('id');
+        var url = '/{{ url_prefix }}/' + $(this).data('id');
         $('#edit_form').attr('action', url);
         $.get(url, update_item, 'json');
     });
 
     $('.delete_button').click(function() {
         delete_id = $(this).data('id');
-        var edit_url = '/{{ name | lower }}/' + $(this).data('id');
+        var edit_url = '/{{ url_prefix }}/' + $(this).data('id');
         $.get(edit_url, update_item, 'json');
     });
 
     $('.item_delete_button').click(function() {
-        var delete_url = '/{{ name | lower }}/' + delete_id + '/delete';
+        var delete_url = '/{{ url_prefix }}/' + delete_id + '/delete';
         $.post(delete_url, function() {
             location.reload();
         });
@@ -497,7 +497,7 @@ jQuery(document).ready(function() {
                                 <th></th>
                                 {% endif %}
                                 <th style="width: 140px;">{{ name }} {% trans %}item.name{% endtrans %}</th>
-                                {% if name == 'Advert' %}
+                                {% if url_prefix == 'advert' %}
                                     <th style="width: 114px;">{% trans %}item.ad_number{% endtrans %}</th>
                                     <th style="width: 114px;">{% trans %}item.ad_destination{% endtrans %}</th>
                                     {% if is_granted('ROLE_PREVIOUS_ADMIN') %}
@@ -522,7 +522,7 @@ jQuery(document).ready(function() {
                                 {% if is_granted('ROLE_PREVIOUS_ADMIN') %}
                                 <td data-title="Status" style="text-align: center;"><i class="{{ child.isActive ? 'icon-ok-sign' : 'icon-remove-sign' }}"></i></td>  
                                 {% endif %}
-                                {% if name == 'Advert' %}
+                                {% if url_prefix == 'advert' %}
                                     <td data-title="{{ name }} {% trans %}item.name{% endtrans %}">{{ child.getName }}</td>  
                                     <td>{{ child.getNumberFormatted }}</td>
                                     <td>{{ child.getDestinationFormatted }}</td>
@@ -565,9 +565,9 @@ jQuery(document).ready(function() {
                             <tr>
                                 {% if is_granted('ROLE_PREVIOUS_ADMIN') %}
                                 <td></td>
-                                <td {% if name == 'Advert' %}colspan="4"{% endif %}><strong>{% trans %}item.totals{% endtrans %}</strong></td>
+                                <td {% if url_prefix == 'advert' %}colspan="4"{% endif %}><strong>{% trans %}item.totals{% endtrans %}</strong></td>
                                 {% else %}
-                                <td {% if name == 'Advert' %}colspan="3"{% endif %}><strong>{% trans %}item.totals{% endtrans %}</strong></td>
+                                <td {% if url_prefix == 'advert' %}colspan="3"{% endif %}><strong>{% trans %}item.totals{% endtrans %}</strong></td>
                                 {% endif %}
                                 <td>
                                 <a href="{{ log_url }}">{{ agg_parent.getTotalFormatted }}</a>
