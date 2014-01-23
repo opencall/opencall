@@ -675,6 +675,27 @@
                 <target>Sunday</target>
             </trans-unit>
 
+            <trans-unit id="1241">
+                <source>idate.print_chart</source>
+                <target>Print</target>
+            </trans-unit>
+            <trans-unit id="1242">
+                <source>idate.download_jpeg</source>
+                <target>Download JPEG image</target>
+            </trans-unit>
+            <trans-unit id="1243">
+                <source>idate.download_pdf</source>
+                <target>Download PDF document</target>
+            </trans-unit>
+            <trans-unit id="1244">
+                <source>idate.download_png</source>
+                <target>Download PNG image</target>
+            </trans-unit>
+            <trans-unit id="1245">
+                <source>idate.download_svg</source>
+                <target>Download SVG vector image</target>
+            </trans-unit>
+
             <trans-unit id="1301">
                 <source>locale.en</source>
                 <target>English</target>
