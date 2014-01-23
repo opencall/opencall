@@ -268,7 +268,10 @@ function log_more()
 
     // console.log(url);
     $.get(url, function(data) {
-        $('#logbody').append(data);
+        if (data.trim() != '')
+            $('#logbody').append(data);
+        else
+            alert('{% trans %}log.alert{% endtrans %}');
     });
 }
 

@@ -326,6 +326,10 @@
                 <source>log.export</source>
                 <target>Export Call Log Data to CSV</target>
             </trans-unit>
+            <trans-unit id="712">
+                <source>log.alert</source>
+                <target>No more log entries to retrieve.</target>
+            </trans-unit>
 
 
             <trans-unit id="801">
