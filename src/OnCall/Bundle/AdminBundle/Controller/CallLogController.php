@@ -57,6 +57,8 @@ class CallLogController extends Controller
             ->getRepository('OnCallAdminBundle:CallLog')
             ->findLatest($id, $log_filter);
 
+        $params = $this->getRequest()->query->all();
+
         return $this->render(
             'OnCallAdminBundle:CallLog:index.html.twig',
             array(
@@ -67,7 +69,7 @@ class CallLogController extends Controller
                 'user' => $user,
                 'client' => $this->getClient(),
                 'campaigns' => $this->getClient()->getCampaigns(),
-                'sidebar_menu' => MenuHandler::getMenu($role_hash, 'call_log', $this->getClientID()),
+                'sidebar_menu' => MenuHandler::getMenu($role_hash, 'call_log', $this->getClientID(), $params),
                 'agg_filter' => $daily_filter,
                 'daily' => $daily,
                 'hourly' => $hourly,

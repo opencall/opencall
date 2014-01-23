@@ -43,10 +43,12 @@ class AccountController extends Controller
             $aggr_count[$user_id][] = $ac;
         }
 
+        $params = $this->getRequest()->query->all();
+
         return $this->render(
             'OnCallAdminBundle:Account:index.html.twig',
             array(
-                'sidebar_menu' => MenuHandler::getMenu($role_hash, 'account'),
+                'sidebar_menu' => MenuHandler::getMenu($role_hash, 'account', null, $params),
                 'alerts' => $alerts,
                 'accounts' => $accounts,
                 'aggr_count' => $aggr_count
@@ -161,11 +163,12 @@ class AccountController extends Controller
     {
         $user = $this->getUser();
         $role_hash = $user->getRoleHash();
+        $params = $this->getRequest->query->all();
 
         return $this->render(
             'OnCallAdminBundle:Account:password.html.twig',
              array(
-                'sidebar_menu' => MenuHandler::getMenu($role_hash),
+                'sidebar_menu' => MenuHandler::getMenu($role_hash, null, null, $params),
                 'user' => $user
             )
         );

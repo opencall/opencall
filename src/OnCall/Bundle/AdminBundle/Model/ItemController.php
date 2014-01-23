@@ -190,9 +190,11 @@ abstract class ItemController extends Controller
         // child params
         $params_child = 'date_from=' . $date_from->format('Y-m-d') . '&date_to=' . $date_to->format('Y-m-d');
 
+        $params = $this->getRequest()->query->all();
+
         return array(
             'user' => $user,
-            'sidebar_menu' => MenuHandler::getMenu($role_hash, 'campaigns', $client_id),
+            'sidebar_menu' => MenuHandler::getMenu($role_hash, 'campaigns', $client_id, $params),
             'parent' => $fetch_res['parent'],
             'agg_parent' => $agg['parent'],
             'agg_table' => $agg['table'],
