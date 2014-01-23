@@ -416,6 +416,10 @@
                 <source>item.use</source>
                 <target>Use</target>
             </trans-unit>
+            <trans-unit id="823">
+                <source>item.edit</source>
+                <target>Edit</target>
+            </trans-unit>
 
             <trans-unit id="901">
                 <source>camp.all_campaigns</source>
