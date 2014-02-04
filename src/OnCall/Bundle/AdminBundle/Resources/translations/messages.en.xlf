@@ -553,8 +553,8 @@
                 <target>January</target>
             </trans-unit>
             <trans-unit id="1209">
-                <source>idate.febuary</source>
-                <target>Febuary</target>
+                <source>idate.february</source>
+                <target>February</target>
             </trans-unit>
             <trans-unit id="1210">
                 <source>idate.march</source>
