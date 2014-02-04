@@ -59,6 +59,26 @@ class CallLogController extends Controller
 
         $params = $this->getRequest()->query->all();
 
+        // create hash for campaigns, ad groups and adverts
+        $campaigns = $this->getClient()->getCampaigns();
+        $camp_hash = array();
+        $adg_hash = array();
+        $advert_hash = array();
+        foreach ($campaigns as $camp)
+        {
+            $camp_hash[$camp->getID()] = $camp->getName();
+            $adgroups = $camp->getAdGroups();
+            foreach ($adgroups as $adg)
+            {
+                $adg_hash[$adg->getID()] = $adg->getName();
+                $adverts = $adg->getAdverts();
+                foreach ($adverts as $ad)
+                {
+                    $advert_hash[$ad->getID()] = $ad->getName();
+                }
+            }
+        }
+
         return $this->render(
             'OnCallAdminBundle:CallLog:index.html.twig',
             array(
@@ -68,12 +88,15 @@ class CallLogController extends Controller
                 'filter_json' => json_encode($log_filter->toData()),
                 'user' => $user,
                 'client' => $this->getClient(),
-                'campaigns' => $this->getClient()->getCampaigns(),
+                'campaigns' => $campaigns,
                 'sidebar_menu' => MenuHandler::getMenu($role_hash, 'call_log', $this->getClientID(), $params),
                 'agg_filter' => $daily_filter,
                 'daily' => $daily,
                 'hourly' => $hourly,
                 'logs' => $logs,
+                'hash_camp' => json_encode($camp_hash),
+                'hash_adg' => json_encode($adg_hash),
+                'hash_advert' => json_encode($advert_hash),
             )
         );
     }

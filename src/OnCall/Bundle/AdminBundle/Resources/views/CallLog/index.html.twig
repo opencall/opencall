@@ -140,6 +140,24 @@ function filter_check(log)
     return true;
 }
 
+function campaign_name(id)
+{
+    var camps = {{ hash_camp|raw }};
+    return camps[id];
+}
+
+function adgroup_name(id)
+{
+    var adgroups = {{ hash_adg|raw }};
+    return adgroups[id];
+}
+
+function advert_name(id)
+{
+    var adverts = {{ hash_advert|raw }};
+    return adverts[id];
+}
+
 function logtable_add(log)
 {
     if (!filter_check(log))
@@ -174,9 +192,9 @@ function logtable_add(log)
 
     cols += '<td class="callLogDestination">';
     cols += '<strong>' + log.dialled_formatted + '</strong><br />';
-    cols += '<a href="client/' + log.client_id + '/campaigns">' + log.campaign_name + '</a> &raquo; ';
-    cols += '<a href="campaign/' + log.campaign_id + '/adgroups">' + log.adgroup_name + '</a> &raquo; ';
-    cols += '<a href="adgroup/' + log.adgroup_id + '/adverts">' + log.advert_name + '</a>';
+    cols += '<a href="client/' + log.client_id + '/campaigns">' + campaign_name(log.campaign_id) + '</a> &raquo; ';
+    cols += '<a href="campaign/' + log.campaign_id + '/adgroups">' + adgroup_name(log.adgroup_id) + '</a> &raquo; ';
+    cols += '<a href="adgroup/' + log.adgroup_id + '/adverts">' + advert_name(log.advert_id) + '</a>';
     cols += '</td>';
 
     if (log.failed) {
