@@ -216,6 +216,22 @@ oncall_admin_call_log_csv:
     defaults: { _controller: OnCallAdminBundle:CallLog:csv }
     methods: [GET]
 
+# lead rescue
+oncall_admin_lrescue:
+    pattern: /client/{id}/lead_rescue
+    defaults: { _controller: OnCallAdminBundle:LeadRescue:index }
+    methods: [GET]
+
+oncall_admin_lrescue_more:
+    pattern: /client/{client_id}/lead_rescue/more/{last_id}
+    defaults: { _controller: OnCallAdminBundle:LeadRescue:more }
+    methods: [GET]
+
+oncall_admin_lrescue_csv:
+    pattern: /client/{client_id}/lead_rescue/csv
+    defaults: { _controller: OnCallAdminBundle:LeadRescue:csv }
+    methods: [GET]
+
 # locale
 oncall_admin_locale:
     pattern: /locale/{locale}

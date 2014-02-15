@@ -1,0 +1,608 @@
+{% extends '::base.html.twig' %}
+{% import 'OnCallAdminBundle:LeadRescue:log.html.twig' as log_row %}
+
+{% block main_title %}
+{% trans %}title.lead_rescue{% endtrans %}
+{% endblock %}
+
+{% block plugins %}
+<script src="assets/plugins/bootstrap-daterangepicker/date.js" type="text/javascript"></script>
+<script src="assets/plugins/bootstrap-daterangepicker/daterangepicker.js" type="text/javascript"></script> 
+<script src="assets/plugins/highcharts/highcharts.js" type="text/javascript"></script>
+<script src="assets/plugins/highcharts/modules/exporting.js" type="text/javascript"></script>
+<script src="/assets/scripts/autobahn.min.js"></script>
+{% endblock %}
+
+{% block javascript %}
+{% block ajax_update_item %}
+<script type="text/javascript">
+    function update_item(data)
+    {
+        $('.item_name').val(data.name);
+        $('.item_name_text').html(data.name);
+        $('.item_delete_button').html('Delete All Data for: ' + data.name);
+        $('.item_status').val(data.status);
+    }
+</script>
+{% endblock %}
+
+<script>
+// functions
+function campaign_set(campaign_id, adgroup_id, advert_id)
+{
+    var url = '/campaign/' + campaign_id + '/adgroups/dropdown';
+    $.get(url, function(data) {
+        var options = '<option value=""></option>';
+        for (var i = 0; i < data.length; i++)
+            options += '<option value="' + data[i].id + '">' + data[i].name + '</option>';
+        $('#filter_adgroup').html(options);
+        $('#container_adgroup').removeClass('hidden');
+        if (adgroup_id != null)
+        {
+            $('#filter_adgroup').val(adgroup_id);
+            adg_set(adgroup_id, advert_id);
+        }
+    }, 'json');
+}
+
+function adg_set(adgroup_id, advert_id)
+{
+    var url = '/adgroup/' + adgroup_id + '/adverts/dropdown';
+    $.get(url, function(data) {
+        var options = '<option value=""></option>';
+        for (var i = 0; i < data.length; i++)
+            options += '<option value="' + data[i].id + '">' + data[i].name + '</option>';
+        $('#filter_advert').html(options);
+        $('#container_advert').removeClass('hidden');
+        if (advert_id != null)
+        {
+            $('#filter_advert').val(advert_id);
+        }
+    }, 'json');
+}
+
+function filter_get()
+{
+    return {{ filter_json|raw }};
+}
+
+function filter_check(log)
+{
+    var filter = filter_get();
+
+    // campaign
+    if (filter.campaign_id != null)
+    {
+        if (filter.campaign_id != log.campaign_id)
+            return false;
+
+        // adgroup
+        if (filter.adgroup_id != null)
+        {
+            if (filter.adgroup_id != log.adgroup_id)
+                return false;
+
+            // advert
+            if (filter.advert_id != null)
+            {
+                if (filter.advert_id != log.advert_id)
+                    return false;
+            }
+        }
+    }
+
+    // hangup cause
+    if (filter.hangup_cause != null && filter.hangup_cause != log.hangup_cause && filter.b_hangup_cause != log.hangup_cause)
+        return false;
+
+    // duration
+    if (filter.duration_secs != null)
+    {
+        switch (filter.duration_mod)
+        {
+            case 'less':
+                if (log.duration >= filter.duration_secs)
+                    return false;
+                break;
+            case 'greater':
+                if (log.duration <= filter.duration_secs)
+                    return false;
+                break;
+            case 'equal':
+                if (log.duration != filter.duration_secs)
+                    return false;
+                break;
+            default:
+                return false;
+        }
+    }
+
+    // number
+    if (filter.number != null)
+    {
+        if (log.dialled_number.indexOf(filter.number) == -1)
+            return false;
+    }
+
+    // failed
+    if (filter.failed)
+    {
+        switch(log.status)
+        {
+            case 'ringing':
+            case 'in-progress':
+            case 'completed':
+                return false;
+        }
+    }
+
+    // all clear
+    return true;
+}
+
+function campaign_name(id)
+{
+    var camps = {{ hash_camp|raw }};
+    return camps[id];
+}
+
+function adgroup_name(id)
+{
+    var adgroups = {{ hash_adg|raw }};
+    return adgroups[id];
+}
+
+function advert_name(id)
+{
+    var adverts = {{ hash_advert|raw }};
+    return adverts[id];
+}
+
+function logtable_add(log)
+{
+    if (!filter_check(log))
+    {
+        console.log('failed filter check');
+        return;
+    }
+
+    // console.log(log);
+
+    var log_id = 'log_' + log.call_id;
+    var audio_id = 'audio_' + log.call_id;
+    var ap_id = 'ap_' + log.call_id;
+
+    var cols = '<td id="' + audio_id + '" class="callLogDate">';
+    cols += '<strong>' + log.date_start.date + '</strong><br />';
+    cols += '<small>' + log.date_start.time + '</small><br />';
+    if (log.audio_record != null) {
+        setTimeout(function() {
+            $('#' + ap_id).remove();
+            var audio = '<audio id="' + ap_id + '" controls>';
+            audio += '<source src="' + log.audio_record + '" type="audio/mp3" />';
+            audio += '</audio>';
+            $('#' + audio_id).append(audio);
+        }, 5000);
+    }
+    cols += '</td>';
+
+    cols += '<td class="callLogCaller">';
+    cols += '<strong>' + log.origin_formatted + '</strong>';
+    cols += '</td>';
+
+    cols += '<td class="callLogDestination">';
+    cols += '<strong>' + log.dialled_formatted + '</strong><br />';
+    cols += '<a href="client/' + log.client_id + '/campaigns">' + campaign_name(log.campaign_id) + '</a> &raquo; ';
+    cols += '<a href="campaign/' + log.campaign_id + '/adgroups">' + adgroup_name(log.adgroup_id) + '</a> &raquo; ';
+    cols += '<a href="adgroup/' + log.adgroup_id + '/adverts">' + advert_name(log.advert_id) + '</a>';
+    cols += '</td>';
+
+    if (log.failed) {
+        cols += '<td class="callLogResult callLogRed"><br />';
+        cols += '<strong>' + log.destination_formatted + '</strong><br />';
+        cols += '<small>{% trans %}text.caller{% endtrans %}: ' + log.hangup_cause + '<br />';
+        cols += '{% trans %}text.receiver{% endtrans %}: ' + log.b_hangup_cause + '</small>';
+        cols += '</td>';
+    }
+    else {
+        cols += '<td class="callLogResult callLogGreen"><br />';
+        cols += '<strong>' + log.destination_formatted + '</strong><br />';
+        cols += '<small>' + log.hangup_cause + '<br />';
+        cols += '{% trans %}text.call_duration{% endtrans %}: ' + log.duration + ' {% trans %}log.seconds{% endtrans %}</small>';
+        cols += '</td>';
+    }
+
+    var row = '<tr class="log_row" data-id="' + log_id + '" id="' + log_id + '" style="display: none;">' + cols + '</tr>';
+
+    // check if row already exists
+    if ($('#' + log_id).length > 0)
+    {
+        $('#' + log_id).html(cols);
+    }
+    else
+    {
+        // add updated rows 
+        $(row).prependTo('#logbody').fadeIn('slow');
+    }
+}
+
+function get_filter_query_string()
+{
+    var filter = filter_get();
+    var url = '';
+    
+    if (filter.campaign_id == null)
+        url += '?cid=';
+    else
+        url += '?cid=' + filter.campaign_id;
+
+    if (filter.adgroup_id == null)
+        url += '&agid=';
+    else
+        url += '&agid=' + filter.adgroup_id;
+
+    if (filter.advert_id == null)
+        url += '&adid=';
+    else
+        url += '&adid=' + filter.advert_id;
+
+    if (filter.hangup_cause == null)
+        url += '&hcause=';
+    else
+        url += '&hcause=' + filter.hangup_cause;
+
+    url += '&dmod=' + filter.duration_mod;
+
+    if (filter.duration_secs == null)
+        url += '&dsec=';
+    else
+        url += '&dsec=' + filter.duration_secs;
+
+    if (filter.number == null)
+        url += '&num=';
+    else
+        url += '&num=' + filter.number;
+
+    if (filter.failed)
+        url += '&failed=1';
+
+    url += '&dts=' + filter.dts;
+    url += '&dte=' + filter.dte;
+
+    return url;
+}
+
+function log_csv()
+{
+    var url = '/client/{{ client.getID }}/lead_rescue/csv' + get_filter_query_string();
+    console.log(url);
+    $(this).attr('href', url);
+}
+
+function log_more()
+{
+    var last_id = $('.log_row').last().data('id');
+    var url = '/client/{{ client.getID }}/lead_rescue/more/' + last_id + get_filter_query_string();
+
+    // console.log(url);
+    $.get(url, function(data) {
+        if (data.trim() != '')
+            $('#logbody').append(data);
+        else
+            alert('{% trans %}log.alert{% endtrans %}');
+    });
+}
+
+// startup
+jQuery(document).ready(function() {
+    // START websocket connection
+    console.log('connecting to websocket server');
+    var conn = new ab.Session(
+        'ws://{{ app.request.host }}:8080',
+        function() { // connect
+            console.log('connected');
+            conn.subscribe('client:{{ client.getID }}', function(topic, data) {
+                var action_type = data.type;
+                var log = data.logentry;
+                if (action_type == 'log')
+                {
+                    // console.log(log);
+                    logtable_add(log);
+                }
+                else if (action_type == 'callback')
+                {
+                    logtable_add(log);
+                }
+            });
+        },
+        function() { // close
+            console.warn('WebSocket connection closed');
+        },
+        { // extra parameters
+            'skipSubprotocolCheck': true
+        }
+    );
+    // END websocket
+
+    // START filter dropdowns
+    // campaign
+    $('#filter_campaign').change(function() {
+        var campaign_id = $(this).val();
+        if (campaign_id == '')
+        {
+            $('#filter_adgroup').html('<option value=""></option>');
+            $('#container_adgroup').val('');
+            $('#container_adgroup').addClass('hidden');
+
+            $('#filter_advert').html('<option value=""></option>');
+            $('#container_advert').val('');
+            $('#container_advert').addClass('hidden');
+        }
+        else
+        {
+            campaign_set(campaign_id);
+        }
+    });
+
+    // ad group
+    $('#filter_adgroup').change(function() {
+        var adgroup_id = $(this).val();
+        if (adgroup_id == '')
+        {
+            $('#filter_advert').html('<option value=""></option>');
+            $('#container_advert').val('');
+            $('#container_advert').addClass('hidden');
+        }
+        else
+        {
+            adg_set(adgroup_id);
+        }
+    });
+
+    // check existing filters
+    {% if filter.getCID != null %}
+    campaign_set({{ filter.getCID }}, {{ filter.getAGID ? filter.getAGID : 'null'}}, {{ filter.getAdID ? filter.getAdID : 'null' }});
+    {% endif %}
+    // END filter dropdowns
+
+    // BEGIN more button
+    $('#more_button').click(log_more);
+    // END more button
+
+    // BEGIN csv button
+    $('#csv_button').click(log_csv);
+    // END csv button
+
+    // BEGIN date range
+    var date_from = new Date({{ filter.getDTSUTC }});
+    var date_to = new Date({{ filter.getDTEUTC }});
+
+    $('#aggregate_range').daterangepicker({
+        ranges: {
+            '{% trans %}idate.today{% endtrans %}': ['today', 'today'],
+            '{% trans %}idate.yesterday{% endtrans %}': ['yesterday', 'yesterday'],
+            '{% trans %}idate.7_days{% endtrans %}': [Date.today().add({
+                    days: -6
+                }), 'today'],
+            '{% trans %}idate.30_days{% endtrans %}': [Date.today().add({
+                    days: -29
+                }), 'today'],
+            '{% trans %}idate.this_month{% endtrans %}': [Date.today().moveToFirstDayOfMonth(), Date.today().moveToLastDayOfMonth()],
+            '{% trans %}idate.last_month{% endtrans %}': [Date.today().moveToFirstDayOfMonth().add({
+                    months: -1
+                }), Date.today().moveToFirstDayOfMonth().add({
+                    days: -1
+                })]
+        },
+        opens: (App.isRTL() ? 'right' : 'left'),
+        format: 'MM/dd/yyyy',
+        separator: ' to ',
+        startDate: date_from,
+        endDate: date_to,
+        minDate: '01/01/2013',
+        maxDate: '12/31/2017',
+        locale: {
+            applyLabel: 'Submit',
+            fromLabel: 'From',
+            toLabel: 'To',
+            customRangeLabel: '{% trans %}idate.custom_range{% endtrans %}',
+            daysOfWeek: ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'],
+            monthNames: [
+                '{% trans %}idate.january{% endtrans %}',
+                '{% trans %}idate.february{% endtrans %}',
+                '{% trans %}idate.march{% endtrans %}',
+                '{% trans %}idate.april{% endtrans %}',
+                '{% trans %}idate.may{% endtrans %}May',
+                '{% trans %}idate.june{% endtrans %}',
+                '{% trans %}idate.july{% endtrans %}',
+                '{% trans %}idate.august{% endtrans %}',
+                '{% trans %}idate.september{% endtrans %}',
+                '{% trans %}idate.october{% endtrans %}',
+                '{% trans %}idate.november{% endtrans %}',
+                '{% trans %}idate.december{% endtrans %}'
+            ],
+            firstDay: 1
+        },
+        showWeekNumbers: true,
+        buttonClasses: ['btn-danger']
+    },
+
+    function (start, end) {
+        App.blockUI(jQuery("#dashboard"));
+        setTimeout(function () {
+            App.unblockUI(jQuery("#dashboard"));
+            App.scrollTo();
+        }, 1000);
+        $('#aggregate_range span').html(start.toString('MMMM d, yyyy') + ' - ' + end.toString('MMMM d, yyyy'));
+
+        $('#form_dts').val(start.toString('yyyy-MM-dd'));
+        $('#form_dte').val(end.toString('yyyy-MM-dd'));
+        $('#filter_submit').click();
+
+
+        // redirect with params
+        // var query_string = '?dts=' + start.toString('yyyy-MM-dd') + '&dte=' + end.toString('yyyy-MM-dd');
+        // var url = location.protocol + '//' + location.host + location.pathname + query_string;
+        // window.location = url;
+
+    });
+
+    $('#aggregate_range span').html("{{ filter.getDTSLocale1 | trans }} {{ filter.getDTSLocale2 }} - {{ filter.getDTELocale1 | trans }} {{ filter.getDTELocale2 }}");
+    // date_from.toString('MMMM d, yyyy') + ' - ' + date_to.toString('MMMM d, yyyy'));
+    $('#aggregate_range').show();
+    // END date range
+});
+</script>
+{% endblock %}
+
+{% block body %}
+<div class="container-fluid">
+<!-- START CAMPAIGNS -->
+    <div class="row-fluid">
+        <div class="span12">
+            <!-- BEGIN PAGE TITLE & BREADCRUMB-->
+            <h3 class="page-title">{% trans %}menu.lead_rescue{% endtrans %}</h3>
+            {{ flash.display_flash_messages }}
+            <ul class="breadcrumb">
+                <li>
+                    {{ client.getName }}
+                    <i class="icon-angle-right"></i>
+                </li>
+                <li>
+                    {% trans %}menu.lead_rescue{% endtrans %}
+                </li>
+                <li class="pull-right no-text-shadow">
+                    <div id="aggregate_range" class="dashboard-date-range tooltips no-tooltip-on-touch-device responsive" data-tablet="" data-desktop="tooltips" data-placement="top" data-original-title="Change dashboard date range">
+                        <i class="icon-calendar"></i>
+                        <span>October 19, 2013 - October 26, 2013</span>
+                        <i class="icon-angle-down"></i>
+                    </div>
+                </li>
+            </ul>
+
+            <!-- END PAGE TITLE & BREADCRUMB-->
+        </div>
+    </div>
+    <!-- END PAGE HEADER-->
+    <!-- BEGIN PAGE CONTENT-->
+    <div class="row-fluid">
+        <div class="span12">
+            <div class="clearfix"></div>
+            <form method="get">
+                <input id="form_dts" type="hidden" name="dts" value="" />
+                <input id="form_dte" type="hidden" name="dte" value="" />
+                <div style="float:left; margin-left: 4px;">
+                {% trans %}log.by_campaign{% endtrans %}:<br />
+                <select id="filter_campaign" name="cid" class="small m-wrap" tabindex="1">
+                    <option value=""></option>
+                    {% for camp in campaigns %}
+                        {% if camp.getID == filter.getCID %}
+                        <option value="{{ camp.getID }}" selected="selected">{{ camp.getName }}</option>
+                        {% else %}
+                        <option value="{{ camp.getID }}">{{ camp.getName }}</option>
+                        {% endif %}
+                    {% endfor %}
+                </select>
+                </div>
+                <!-- Kendrick: Adgroup will only appear once a Campaign is chosen -->
+                <div id="container_adgroup" class="hidden" style="float:left; margin-left: 4px;">
+                {% trans %}log.by_adgroup{% endtrans %}:<br />
+                    <select id="filter_adgroup" name="agid" class="small m-wrap" tabindex="1">
+                        <option value=""></option>
+                    </select>
+                </div>
+                <!-- Kendrick: Advert will only appear once an Advert is chosen -->
+                <div id="container_advert" class="hidden" style="float:left; margin-left: 4px;">
+                {% trans %}log.by_advert{% endtrans %}:<br />
+                    <select id="filter_advert" name="adid" class="small m-wrap" tabindex="1">
+                        <option value=""></option>
+                    </select>
+                </div>
+                <div style="float:left; margin-left: 4px;">
+                {% trans %}log.by_hcause{% endtrans %}:<br />
+                    <select name="hcause" class="small m-wrap" tabindex="1">
+                        <option value=""></option>
+                        {% for cause in hangup_causes %}
+                            {% if (cause == filter.getHCause) %}
+                                <option value="{{ cause }}" selected="selected">{{ cause }}</option>
+                            {% else %}
+                                <option value="{{ cause }}">{{ cause }}</option>
+                            {% endif %}
+                        {% endfor %}
+                    </select>
+                </div>
+                <div style="float:left; margin-left: 4px;">
+                {% trans %}log.by_duration{% endtrans %}:<br />
+                <div class="control-group">
+                    <div class="controls">
+                        <div class="input-prepend">
+                        <!--
+                            <div class="btn-group">
+                                <button class="btn dropdown-toggle" data-toggle="dropdown">
+                                Less Than
+                                <span class="caret"></span></button>
+                                <ul id="drop_durmod" class="dropdown-menu">
+                                    <li><a href="#top" class="filter_durmod" data-id="less">Less Than</a></li>
+                                    <li><a href="#top" class="filter_durmod" data-id="greater">Greater Than</a></li>
+                                    <li><a href="#top" class="filter_durmod" data-id="equal">Equal To</a></li>
+                                </ul>
+                            </div>
+                        -->
+                            <select name="dmod" class="small m-wrap">
+                                {% for val,mod in duration_mods %}
+                                    {% if (val == filter.getDMod) %}
+                                        <option value="{{ val }}" selected="selected">{{ mod }}</option>
+                                    {% else %}
+                                        <option value="{{ val }}">{{ mod }}</option>
+                                    {% endif %}
+                                {% endfor %}
+                            </select>
+                            <input name="dsec" class="m-wrap xsmall" type="text" placeholder="{% trans %}log.seconds{% endtrans %}" value="{{ filter.getDSec }}" />
+                        </div>
+                    </div>
+                </div>
+                </div>
+                <!-- Kendrick: The number search should allow for partial matches (e.g. if I search for 1111 it will match 66821111 and 11110049)
+                        It should search the caller, destination and dialled numbers 
+                 -->
+                <div style="float:left; margin-left: 4px;">
+                {% trans %}log.by_number{% endtrans %}:<br />
+                    <input name="num" type="text" class="small m-wrap" value="{{ filter.getNum }}">
+                </div>
+                <div style="float:left; margin: 20px 0px 0px 4px;">
+                <input id="filter_submit" type="submit" class="btn green" value="{% trans %}log.apply_filters{% endtrans %}" />
+                <!-- Kendrick: "Reset" should only show if a filter has been applied -->
+                {% if (filter.canReset) %}
+                <a href="/client/{{ client.getID }}/lead_rescue" class="btn red">{% trans %}log.reset_filters{% endtrans %}</a>
+                {% endif %}
+                </div>
+            </form>
+
+            <div class="clearfix"></div>
+
+            <!-- BEGIN SAMPLE TABLE PORTLET-->
+            <div class="controls">
+                <div class="pull-right">
+                    <a id="csv_button" href="">{% trans %}log.export{% endtrans %}</a>
+                </div>
+                <!-- Kendrick: Live updates should respect any filters that are set -->
+                <h4>{% trans %}log.call_log{% endtrans %}</h4>
+                <div class="portlet-body">
+                    <table class="table-condensed cf callLog">
+                        <tbody id="logbody">
+                        {% for log in logs %}
+                            {{ log_row.display_log(log) }}
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div>
+            <button id="more_button" class="btn green">{% trans %}text.more{% endtrans %}</button>
+            </div>
+            <!-- END SAMPLE TABLE PORTLET-->
+        </div>
+    </div>
+    <!-- END CAMPAIGNS -->
+</div>
+{% endblock %}

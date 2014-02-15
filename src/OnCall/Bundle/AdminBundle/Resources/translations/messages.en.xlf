@@ -163,7 +163,11 @@
             </trans-unit>
             <trans-unit id="309">
                 <source>menu.call_log</source>
-                <target>Call Log</target>
+                <target>Live Log</target>
+            </trans-unit>
+            <trans-unit id="310">
+                <source>menu.lead_rescue</source>
+                <target>Lead Rescue</target>
             </trans-unit>
 
             <trans-unit id="401">
@@ -329,6 +333,10 @@
             <trans-unit id="712">
                 <source>log.alert</source>
                 <target>No more log entries to retrieve.</target>
+            </trans-unit>
+            <trans-unit id="713">
+                <source>log.call_log</source>
+                <target>Call Log</target>
             </trans-unit>
 
 
@@ -744,7 +752,11 @@
             </trans-unit>
             <trans-unit id="1408">
                 <source>title.call_log</source>
-                <target>Call Log</target>
+                <target>Live Log</target>
+            </trans-unit>
+            <trans-unit id="1409">
+                <source>title.lead_rescue</source>
+                <target>Lead Rescue</target>
             </trans-unit>
 
         </body>

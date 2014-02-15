@@ -66,6 +66,12 @@ class MenuHandler
                     'icon-phone'
                 ));
                 $menu_group->addItem(new MenuItem(
+                    'lead_rescue',
+                    'menu.lead_rescue',
+                    '/client/' . $client_id . '/lead_rescue?' . http_build_query($call_log_params),
+                    'icon-phone'
+                ));
+                $menu_group->addItem(new MenuItem(
                     'number',
                     'menu.number_management',
                     '/client/' . $client_id . '/numbers',
