@@ -26,7 +26,7 @@ $post = array(
     'CallUUID' => $call_id,
     'DialBLegStatus' => 'hangup',
     'DialAction' => 'hangup',
-    'DialBLegHangupCause' => 'NORMAL_CLEARING'
+    'DialBLegHangupCause' => 'ORIGINATOR_CANCEL'
 );
 
 $callback = new Callback($pdo, $redis, $zmq_socket);

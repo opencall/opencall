@@ -9,7 +9,7 @@ use OnCall\Entity\QueueHandler,
 // setup redis
 $rconf = array(
     'scheme' => 'tcp',
-    'host' => 'devredisnode.5zaozk.0001.apse1.cache.amazonaws.com',
+    'host' => 'localhost',
     'port' => 6379
 );
 $redis = new Client($rconf);

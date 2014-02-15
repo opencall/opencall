@@ -15,7 +15,7 @@ try
     $queue_id = 'plivo_log';
     $rconf = array(
         'scheme' => 'tcp',
-        'host' => 'devredisnode.5zaozk.0001.apse1.cache.amazonaws.com',
+        'host' => 'localhost',
         'port' => 6379
     );
     $redis = new PredisClient($rconf);
