@@ -163,7 +163,11 @@
             </trans-unit>
             <trans-unit id="309">
                 <source>menu.call_log</source>
-                <target>通話記錄</target>
+                <target>LiveLog&#8482;</target>
+            </trans-unit>
+            <trans-unit id="310">
+                <source>menu.lead_rescue</source>
+                <target>LeadRescue&#8482;</target>
             </trans-unit>
 
             <trans-unit id="401">
@@ -715,7 +719,11 @@
             </trans-unit>
             <trans-unit id="1408">
                 <source>title.call_log</source>
-                <target>通話記錄</target>
+                <target>LiveLog&#8482;</target>
+            </trans-unit>
+            <trans-unit id="1409">
+                <source>title.lead_rescue</source>
+                <target>LeadRescue&#8482;</target>
             </trans-unit>
 
         </body>
