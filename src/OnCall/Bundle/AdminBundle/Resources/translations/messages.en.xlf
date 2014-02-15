@@ -163,11 +163,11 @@
             </trans-unit>
             <trans-unit id="309">
                 <source>menu.call_log</source>
-                <target>Live Log</target>
+                <target>Live Log &#8482;</target>
             </trans-unit>
             <trans-unit id="310">
                 <source>menu.lead_rescue</source>
-                <target>Lead Rescue</target>
+                <target>Lead Rescue &#8482;</target>
             </trans-unit>
 
             <trans-unit id="401">
@@ -752,11 +752,11 @@
             </trans-unit>
             <trans-unit id="1408">
                 <source>title.call_log</source>
-                <target>Live Log</target>
+                <target>Live Log &#8482;</target>
             </trans-unit>
             <trans-unit id="1409">
                 <source>title.lead_rescue</source>
-                <target>Lead Rescue</target>
+                <target>Lead Rescue &#8482;</target>
             </trans-unit>
 
         </body>
