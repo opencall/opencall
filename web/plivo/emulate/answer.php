@@ -33,7 +33,7 @@ $post = array(
 $answer = new Answer(
     $pdo,
     $zmq_socket,
-    'http://beta.calltracking.hk/plivo/callback.php',
-    'http://beta.calltracking.hk/plivo/record.php'
+    'http://dev.calltracking.hk/plivo/callback.php',
+    'http://dev.calltracking.hk/plivo/record.php'
 );
 echo $answer->run($post);
