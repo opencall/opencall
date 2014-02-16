@@ -322,7 +322,6 @@ class CallLog
 
         return false;
     }
-
     // end getters
 
     public function getData()

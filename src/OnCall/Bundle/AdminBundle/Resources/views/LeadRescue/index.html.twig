@@ -63,23 +63,42 @@ function adg_set(adgroup_id, advert_id)
 
 function alert_camp_set(campaign_id, adgroup_id, advert_id)
 {
+    $('#alert_adgroup').html('<option value="">All</option>');
+    $('#alert_adgroup').val('');
+    $('#ca_adgroup').addClass('hidden');
+
+    $('#alert_advert').html('<option value="">All</option>');
+    $('#alert_advert').val('');
+    $('#ca_advert').addClass('hidden');
+
+    if (campaign_id != null)
+        $('#alert_campaign').val(campaign_id);
+
     var url = '/campaign/' + campaign_id + '/adgroups/dropdown';
     $.get(url, function(data) {
         var options = '<option value="">All</option>';
         for (var i = 0; i < data.length; i++)
             options += '<option value="' + data[i].id + '">' + data[i].name + '</option>';
-        $('#alert_adgroup').html(options);
-        $('#ca_adgroup').removeClass('hidden');
+
+        if (campaign_id != null)
+        {
+            $('#alert_adgroup').html(options);
+            $('#ca_adgroup').removeClass('hidden');
+        }
         if (adgroup_id != null)
         {
             $('#alert_adgroup').val(adgroup_id);
-            adg_set(adgroup_id, advert_id);
+            alert_adg_set(adgroup_id, advert_id);
         }
     }, 'json');
 }
 
 function alert_adg_set(adgroup_id, advert_id)
 {
+    $('#alert_advert').html('<option value="">All</option>');
+    $('#alert_advert').val('');
+    $('#ca_advert').addClass('hidden');
+
     var url = '/adgroup/' + adgroup_id + '/adverts/dropdown';
     $.get(url, function(data) {
         var options = '<option value="">All</option>';
@@ -396,30 +415,19 @@ jQuery(document).ready(function() {
     {% if filter.getCID != null %}
     campaign_set({{ filter.getCID }}, {{ filter.getAGID ? filter.getAGID : 'null'}}, {{ filter.getAdID ? filter.getAdID : 'null' }});
     {% endif %}
+
+    alert_camp_set({{ client.getAlertCampaignID ? client.getAlertCampaignID : 'null' }}, {{ client.getAlertAdGroupID ? client.getAlertAdGroupID : 'null' }}, {{ client.getAlertAdvertID ? client.getAlertAdvertID : 'null' }});
+
     // END filter dropdowns
 
     // BEGIN alert settings
     $('#alert_campaign').change(function() {
         var campaign_id = $(this).val();
-
-        $('#alert_adgroup').html('<option value="">All</option>');
-        $('#ca_adgroup').val('');
-        $('#ca_adgroup').addClass('hidden');
-
-        $('#alert_advert').html('<option value="">All</option>');
-        $('#ca_advert').val('');
-        $('#ca_advert').addClass('hidden');
-
         alert_camp_set(campaign_id);
     });
 
     $('#alert_adgroup').change(function() {
         var adgroup_id = $(this).val();
-
-        $('#alert_advert').html('<option value="">All</option>');
-        $('#ca_advert').val('');
-        $('#ca_advert').addClass('hidden');
-
         alert_adg_set(adgroup_id);
     });
     // END alert settings
@@ -524,7 +532,13 @@ jQuery(document).ready(function() {
             <div class="row-fluid">
                 <div style="margin-bottom: 10px">
                     <p>
-                    <input type="checkbox" name="enable" /> Enabled
+                    <input type="checkbox" name="enable" value="1" {{ client.isAlertEnabled ? 'checked' : '' }} /> Enabled
+                    </p>
+                </div>
+                <div>
+                    <p>
+                        Email:<br />
+                        <input type="text" name="email" class="large m-wrap" value="{{ client.getAlertEmail }}" />
                     </p>
                 </div>
                 <div>

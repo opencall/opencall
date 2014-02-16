@@ -231,4 +231,45 @@ class ClientController extends Controller
 
         return $this->redirect($this->generateUrl('oncall_admin_clients'));
     }
+
+    public function alertAction($id)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $data = $this->getRequest()->request->all();
+
+        // find
+        $client = $this->getDoctrine()
+            ->getRepository('OnCallAdminBundle:Client')
+            ->find($id);
+        if ($client == null)
+        {
+            return $this->redirect($this->getRequest()->headers->get('referer'));
+        }
+
+        // set alert data
+        $client->setAlertEmail($data['email']);
+
+        if (isset($data['cid']) && $data['cid'] != '' && $data['cid'] != 0)
+            $client->setAlertCampaignID($data['cid']);
+        else
+            $client->setAlertCampaignID(null);
+
+        if (isset($data['agid']) && $data['agid'] != '' && $data['agid'] != 0)
+            $client->setAlertAdGroupID($data['agid']);
+        else
+            $client->setAlertAdGroupID(null);
+
+        if (isset($data['adid']) && $data['adid'] != '' && $data['adid'] != 0)
+            $client->setAlertAdvertID($data['adid']);
+        else
+            $client->setAlertAdvertID(null);
+
+        if (isset($data['enable']))
+            $client->setAlertEnabled(true);
+        else
+            $client->setAlertEnabled(false);
+
+        $em->flush();
+        return $this->redirect($this->getRequest()->headers->get('referer'));
+    }
 }

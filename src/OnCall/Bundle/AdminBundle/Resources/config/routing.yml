@@ -112,6 +112,11 @@ oncall_admin_client_delete:
     defaults: { _controller: OnCallAdminBundle:Client:delete }
     methods: [POST]
 
+oncall_admin_client_alert:
+    pattern: /client/{id}/alert
+    defaults: { _controller: OnCallAdminBundle:Client:alert }
+    methods: [POST]
+
 #campaign routes
 oncall_admin_campaigns:
     pattern: /client/{id}/campaigns
