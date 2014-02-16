@@ -61,6 +61,39 @@ function adg_set(adgroup_id, advert_id)
     }, 'json');
 }
 
+function alert_camp_set(campaign_id, adgroup_id, advert_id)
+{
+    var url = '/campaign/' + campaign_id + '/adgroups/dropdown';
+    $.get(url, function(data) {
+        var options = '<option value="">All</option>';
+        for (var i = 0; i < data.length; i++)
+            options += '<option value="' + data[i].id + '">' + data[i].name + '</option>';
+        $('#alert_adgroup').html(options);
+        $('#ca_adgroup').removeClass('hidden');
+        if (adgroup_id != null)
+        {
+            $('#alert_adgroup').val(adgroup_id);
+            adg_set(adgroup_id, advert_id);
+        }
+    }, 'json');
+}
+
+function alert_adg_set(adgroup_id, advert_id)
+{
+    var url = '/adgroup/' + adgroup_id + '/adverts/dropdown';
+    $.get(url, function(data) {
+        var options = '<option value="">All</option>';
+        for (var i = 0; i < data.length; i++)
+            options += '<option value="' + data[i].id + '">' + data[i].name + '</option>';
+        $('#alert_advert').html(options);
+        $('#ca_advert').removeClass('hidden');
+        if (advert_id != null)
+        {
+            $('#alert_advert').val(advert_id);
+        }
+    }, 'json');
+}
+
 function filter_get()
 {
     return {{ filter_json|raw }};
@@ -295,7 +328,7 @@ function log_more()
 
 // startup
 jQuery(document).ready(function() {
-    // START websocket connection
+    // BEGIN websocket connection
     console.log('connecting to websocket server');
     var conn = new ab.Session(
         'ws://{{ app.request.host }}:8080',
@@ -324,7 +357,7 @@ jQuery(document).ready(function() {
     );
     // END websocket
 
-    // START filter dropdowns
+    // BEGIN filter dropdowns
     // campaign
     $('#filter_campaign').change(function() {
         var campaign_id = $(this).val();
@@ -364,6 +397,32 @@ jQuery(document).ready(function() {
     campaign_set({{ filter.getCID }}, {{ filter.getAGID ? filter.getAGID : 'null'}}, {{ filter.getAdID ? filter.getAdID : 'null' }});
     {% endif %}
     // END filter dropdowns
+
+    // BEGIN alert settings
+    $('#alert_campaign').change(function() {
+        var campaign_id = $(this).val();
+
+        $('#alert_adgroup').html('<option value="">All</option>');
+        $('#ca_adgroup').val('');
+        $('#ca_adgroup').addClass('hidden');
+
+        $('#alert_advert').html('<option value="">All</option>');
+        $('#ca_advert').val('');
+        $('#ca_advert').addClass('hidden');
+
+        alert_camp_set(campaign_id);
+    });
+
+    $('#alert_adgroup').change(function() {
+        var adgroup_id = $(this).val();
+
+        $('#alert_advert').html('<option value="">All</option>');
+        $('#ca_advert').val('');
+        $('#ca_advert').addClass('hidden');
+
+        alert_adg_set(adgroup_id);
+    });
+    // END alert settings
 
     // BEGIN more button
     $('#more_button').click(log_more);
@@ -456,6 +515,58 @@ jQuery(document).ready(function() {
 {% endblock %}
 
 {% block body %}
+<div id="alert_modal" class="modal hide fade">
+    <div class="modal-header">
+        <h3>{% trans %}log.alert_button{% endtrans %}</h3>
+    </div>
+    <form method="post" action="/client/{{ client.getID }}/alert">
+        <div class="modal-body">
+            <div class="row-fluid">
+                <div style="margin-bottom: 10px">
+                    <p>
+                    <input type="checkbox" name="enable" /> Enabled
+                    </p>
+                </div>
+                <div>
+                    <p>
+                    {% trans %}log.by_campaign{% endtrans %}:<br />
+                    <select id="alert_campaign" name="cid" class="large m-wrap" tabindex="1">
+                        <option value="">All</option>
+                        {% for camp in campaigns %}
+                            {% if camp.getID == filter.getCID %}
+                            <option value="{{ camp.getID }}" selected="selected">{{ camp.getName }}</option>
+                            {% else %}
+                            <option value="{{ camp.getID }}">{{ camp.getName }}</option>
+                            {% endif %}
+                        {% endfor %}
+                    </select>
+                    </p>
+                </div>
+                <div id="ca_adgroup" class="hidden" style="margin-left: 4px;">
+                    <p>
+                    {% trans %}log.by_adgroup{% endtrans %}:<br />
+                    <select id="alert_adgroup" name="agid" class="large m-wrap" tabindex="1">
+                        <option value=""></option>
+                    </select>
+                    </p>
+                </div>
+                <div id="ca_advert" class="hidden" style="margin-left: 4px;">
+                    <p>
+                    {% trans %}log.by_advert{% endtrans %}:<br />
+                    <select id="alert_advert" name="adid" class="large m-wrap" tabindex="1">
+                        <option value=""></option>
+                    </select>
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal-footer">
+            <button type="button" data-dismiss="modal" class="btn">{% trans %}text.cancel{% endtrans %}</button>
+            <input type="submit" class="btn green" value="{% trans %}log.alert_submit{% endtrans %}" />
+        </div>
+    </form>
+</div>
 <div class="container-fluid">
 <!-- START CAMPAIGNS -->
     <div class="row-fluid">
@@ -575,6 +686,9 @@ jQuery(document).ready(function() {
                 {% if (filter.canReset) %}
                 <a href="/client/{{ client.getID }}/lead_rescue" class="btn red">{% trans %}log.reset_filters{% endtrans %}</a>
                 {% endif %}
+                </div>
+                <div style="clear:both; margin:20px 0px 0px 4px;">
+                    <button class="btn green" data-toggle="modal" href="#alert_modal">{% trans %}log.alert_button{% endtrans %}</button>
                 </div>
             </form>
 

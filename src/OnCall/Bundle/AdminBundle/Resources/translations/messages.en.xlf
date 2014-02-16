@@ -338,6 +338,14 @@
                 <source>log.call_log</source>
                 <target>Call Log</target>
             </trans-unit>
+            <trans-unit id="714">
+                <source>log.alert_button</source>
+                <target>Alert Settings</target>
+            </trans-unit>
+            <trans-unit id="715">
+                <source>log.alert_submit</source>
+                <target>Update Alert Settings</target>
+            </trans-unit>
 
 
             <trans-unit id="801">
