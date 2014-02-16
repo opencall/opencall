@@ -11,6 +11,8 @@ use PDO;
 use DateTime;
 use Plivo\AccountCounter\Repository as ACRepo;
 use Plivo\AccountCounter\Entry as ACEntry;
+use Plivo\Alert\Sender as AlertSender;
+use Plivo\Alert\Repository as AlertRepo;
 
 class Hangup extends Lockable
 {
@@ -55,6 +57,7 @@ class Hangup extends Lockable
             // no log entry found (no answer call?)
             if ($log == null)
             {
+                error_log('no answer entry');
                 $this->unlock($params->getUniqueID());
                 exit;
             }
@@ -62,6 +65,11 @@ class Hangup extends Lockable
             // update log with hangup data
             $this->updateLog($log, $params);
             $log_repo->updateHangup($log);
+
+            // alerts
+            $al_repo = new AlertRepo($this->pdo);
+            $al_sender = new AlertSender($al_repo);
+            $al_sender->send($log);
 
             // aggregate
             $agg_repo = new AggRepository($this->pdo);
