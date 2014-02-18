@@ -150,19 +150,41 @@ class Copier
             $new_client_id = $this->pdo->lastInsertId();
             $client_id = $row['id'];
 
+            // get and save counters
+            $count_rows = $this->getCounters($client_id);
+            $this->storeCounters($count_rows, $new_client_id);
+
+            // get and save call log
+            $log_rows = $this->getCallLogs($client_id);
+            $this->storeCallLogs($log_rows, $new_client_id);
+
             // campaigns
             $camp_rows = $this->getCampaigns($client_id);
             $this->storeCampaigns($camp_rows, $new_client_id);
-
-            // get and save counters
-            $rows = $this->getCounters($client_id);
-            $this->storeCounters($rows, $new_client_id);
-
-            // get and save call log
-            $rows = $this->getCallLogs($client_id);
-            $this->storeCallLogs($rows, $new_client_id);
         }
 
+    }
+
+    protected function updateLog($field, $client_id, $old_val, $new_val)
+    {
+        $sql = "update CallLog set $field = :new_val where client_id = :client_id and $field = :old_val";
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->bindParam(':client_id', $client_id);
+        $stmt->bindParam(':new_val', $new_val);
+        $stmt->bindParam(':old_val', $old_val);
+
+        return $stmt->execute();
+    }
+
+    protected function updateCounter($field, $client_id, $old_val, $new_val)
+    {
+        $sql = "update Counter set $field = :new_val where client_id = :client_id and $field = :old_val";
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->bindParam(':client_id', $client_id);
+        $stmt->bindParam(':new_val', $new_val);
+        $stmt->bindParam(':old_val', $old_val);
+
+        return $stmt->execute();
     }
 
     protected function getCampaigns($client_id)
@@ -189,9 +211,16 @@ class Copier
 
             $stmt->execute();
 
+            $old_camp_id = $row['id'];
             $new_camp_id = $this->pdo->lastInsertId();
-            $adg_rows = $this->getAdGroups($row['id']);
-            $this->storeAdGroups($adg_rows, $new_camp_id);
+
+            // counters and logs
+            $this->updateCounter('campaign_id', $client_id, $old_camp_id, $new_camp_id);
+            $this->updateLog('campaign_id', $client_id, $old_camp_id, $new_camp_id);
+
+            // ad groups
+            $adg_rows = $this->getAdGroups($old_camp_id);
+            $this->storeAdGroups($adg_rows, $new_camp_id, $client_id);
         }
     }
 
@@ -206,7 +235,7 @@ class Copier
         return $stmt->fetchAll();
     }
 
-    protected function storeAdGroups($rows, $camp_id)
+    protected function storeAdGroups($rows, $camp_id, $client_id)
     {
         $sql = 'insert into AdGroup (campaign_id, name, status, date_create) values (:camp_id, :name, :status, :date_create)';
         $stmt = $this->pdo->prepare($sql);
@@ -219,9 +248,16 @@ class Copier
 
             $stmt->execute();
 
+            $old_adg_id = $row['id'];
             $new_adg_id = $this->pdo->lastInsertId();
-            $ad_rows = $this->getAdverts($row['id']);
-            $this->storeAdverts($ad_rows, $new_adg_id);
+
+            // counters and logs
+            $this->updateCounter('adgroup_id', $client_id, $old_adg_id, $new_adg_id);
+            $this->updateLog('adgroup_id', $client_id, $old_adg_id, $new_adg_id);
+
+            // advert
+            $ad_rows = $this->getAdverts($old_adg_id);
+            $this->storeAdverts($ad_rows, $new_adg_id, $client_id);
         }
     }
 
@@ -236,7 +272,7 @@ class Copier
         return $stmt->fetchAll();
     }
 
-    protected function storeAdverts($rows, $adg_id)
+    protected function storeAdverts($rows, $adg_id, $client_id)
     {
         $sql = 'insert into Advert (adgroup_id, name, xml_replace, xml_override, status, date_create, record, speak, speak_message) values (:adg_id, :name, :xml_replace, :xml_override, :status, :date_create, :record, :speak, :speak_message)';
         $stmt = $this->pdo->prepare($sql);
@@ -253,6 +289,13 @@ class Copier
             $stmt->bindParam(':speak_message', $row['speak_message']);
 
             $stmt->execute();
+
+            $old_ad_id = $row['id'];
+            $new_ad_id = $this->pdo->lastInsertId();
+
+            // counters and logs
+            $this->updateCounter('advert_id', $client_id, $old_ad_id, $new_ad_id);
+            $this->updateLog('advert_id', $client_id, $old_ad_id, $new_ad_id);
         }
     }
 
