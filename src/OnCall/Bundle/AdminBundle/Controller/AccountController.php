@@ -163,7 +163,7 @@ class AccountController extends Controller
     {
         $user = $this->getUser();
         $role_hash = $user->getRoleHash();
-        $params = $this->getRequest->query->all();
+        $params = $this->getRequest()->query->all();
 
         return $this->render(
             'OnCallAdminBundle:Account:password.html.twig',
