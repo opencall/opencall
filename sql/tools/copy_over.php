@@ -313,11 +313,11 @@ class Copier
             $stmt->bindParam(':destination_number', $row['destination_number']);
             $stmt->bindParam(':date_start', $row['date_start']);
             $stmt->bindParam(':date_end', $row['date_end']);
-            $stmt->bindParam(':duration', $row['']);
-            $stmt->bindParam(':bill_duration', $row['']);
-            $stmt->bindParam(':bill_rate', $row['']);
-            $stmt->bindParam(':status', $row['']);
-            $stmt->bindParam(':hangup_cause', $row['']);
+            $stmt->bindParam(':duration', $row['duration']);
+            $stmt->bindParam(':bill_duration', $row['bill_duration']);
+            $stmt->bindParam(':bill_rate', $row['bill_rate']);
+            $stmt->bindParam(':status', $row['status']);
+            $stmt->bindParam(':hangup_cause', $row['hangup_cause']);
             $stmt->bindParam(':advert_id', $row['advert_id']);
             $stmt->bindParam(':adgroup_id', $row['adgroup_id']);
             $stmt->bindParam(':campaign_id', $row['campaign_id']);
