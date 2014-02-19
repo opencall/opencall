@@ -36,8 +36,12 @@ class Sender
     protected function email(Entry $alert, LogEntry $log)
     {
         error_log('sending email - ' . $alert->getEmail());
-        $subject = 'Calltracking.hk Lead Rescue Alert';
-        $message = 'Failure of call.';
-        mail($alert->getEmail(), $subject, $message);
+        $subject = 'Missed Call Alert: [origin_number] called your ad: [advert] in [campaign].';
+        $message = file_get_contents(__DIR__ . '/../../../email/alert.txt');
+        $headers = "From: noreply@calltracking.hk\r\n" .
+            "Reply-To: noreply@calltracking.hk\r\n" .
+            "X-Mailer: PHP/" . phpversion();
+
+        mail($alert->getEmail(), $subject, $message, $headers);
     }
 }
