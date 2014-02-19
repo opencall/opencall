@@ -1,0 +1,10 @@
+You missed a call - please see the details below:
+
+When: [date_in]
+Caller number: [origin_number]
+Dialled number: [dialled_number]
+Advert: [advert] (Adgroup: [adgroup], Campaign: [campaign])
+Failure Reason: [reason]
+
+To view this information online, please visit: [lead_rescue_url]
+
