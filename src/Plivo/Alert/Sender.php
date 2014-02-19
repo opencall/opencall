@@ -42,6 +42,9 @@ class Sender
         $ftext = str_replace('[dialled_number]', $log->getDialledFormatted(), $ftext);
         $ftext = str_replace('[reason]', $log->getBHangupCause(), $ftext);
         $ftext = str_replace('[lead_rescue_url]', 'http://dev.calltracking.hk/client/' . $log->getClientID() . '/lead_rescue', $ftext);
+        $ftext = str_replace('[advert]', $this->fetchItemName('Advert', $log->getAdvertID()));
+        $ftext = str_replace('[adgroup]', $this->fetchItemName('AdGroup', $log->getAdvertID()));
+        $ftext = str_replace('[campaign]', $this->fetchItemName('Campaign', $log->getAdvertID()));
 
         return $ftext;
     }
@@ -58,5 +61,24 @@ class Sender
             "X-Mailer: PHP/" . phpversion();
 
         mail($alert->getEmail(), $subject, $message, $headers);
+    }
+
+    protected function fetchItemName($table, $id)
+    {
+        $pdo = $this->repo->getPDO();
+
+        $sql = "select * from $table where id = :id";
+        $stmt = $pdo->prepare($sql);
+        $stmt->bindParam(':id', $id);
+
+        if (!$stmt->execute())
+            return 'Unknown';
+
+        $row = $stmt->fetch();
+        if (!$row)
+            return 'Unknown';
+
+
+        return $row['name'];
     }
 }
