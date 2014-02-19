@@ -41,4 +41,9 @@ class Repository
 
         return $this->createEntry($row);
     }
+
+    public function getPDO()
+    {
+        return $this->pdo;
+    }
 }
