@@ -43,8 +43,8 @@ class Sender
         $ftext = str_replace('[reason]', $log->getBHangupCause(), $ftext);
         $ftext = str_replace('[lead_rescue_url]', 'http://dev.calltracking.hk/client/' . $log->getClientID() . '/lead_rescue', $ftext);
         $ftext = str_replace('[advert]', $this->fetchItemName('Advert', $log->getAdvertID()), $ftext);
-        $ftext = str_replace('[adgroup]', $this->fetchItemName('AdGroup', $log->getAdvertID()), $ftext);
-        $ftext = str_replace('[campaign]', $this->fetchItemName('Campaign', $log->getAdvertID()), $ftext);
+        $ftext = str_replace('[adgroup]', $this->fetchItemName('AdGroup', $log->getAdGroupID()), $ftext);
+        $ftext = str_replace('[campaign]', $this->fetchItemName('Campaign', $log->getCampaignID()), $ftext);
 
         return $ftext;
     }
