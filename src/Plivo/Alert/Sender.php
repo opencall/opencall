@@ -56,7 +56,7 @@ class Sender
 
         $m_template = file_get_contents(__DIR__ . '/../../../email/alert.txt');
         $message = $this->filterText($alert, $log, $m_template);
-        $headers = "From: noreply@calltracking.hk\r\n" .
+        $headers = "From: LeadRescue <noreply@calltracking.hk>\r\n" .
             "Reply-To: noreply@calltracking.hk\r\n" .
             "X-Mailer: PHP/" . phpversion();
 
