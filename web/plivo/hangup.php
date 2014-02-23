@@ -1,6 +1,7 @@
 <?php
 
 require_once(__DIR__ . '/../../app/autoload.php');
+require_once(__DIR__ . '/../../src/PHPMailer/PHPMailerAutoload.php');
 
 use Predis\Client as PredisClient;
 use Plivo\Hangup;
