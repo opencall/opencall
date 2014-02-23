@@ -1,7 +1,7 @@
 <?php
 
 require_once(__DIR__ . '/../../../app/autoload.php');
-require_once(__DIR__ . '/../../src/PHPMailer/PHPMailerAutoload.php');
+require_once(__DIR__ . '/../../../src/PHPMailer/PHPMailerAutoload.php');
 
 use Predis\Client as PredisClient;
 use Plivo\Hangup;
@@ -25,10 +25,10 @@ $date_end = new DateTime();
 $post = array(
     'CallUUID' => $call_id,
     'From' => '0000000000',
-    'To' => '85235009087',
-    'CallStatus' => 'completed',
+    'To' => '6531582180',
+    'CallStatus' => 'cancel',
     'Direction' => 'inbound',
-    'HangupCause' => 'NORMAL_CLEARING',
+    'HangupCause' => 'ORIGINATOR_CANCEL',
     'Duration' => 42,
     'BillDuration' => 0,
     'BillRate' => '0.00400',
