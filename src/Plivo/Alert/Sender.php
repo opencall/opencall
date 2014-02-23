@@ -63,7 +63,7 @@ class Sender
         $mail->Host = 'smtp.mailgun.org';
         $mail->SMTPDebug = 0;
         $mail->SMTPAuth = true;
-        $mail->Port = 25;
+        $mail->Port = 587;
         $mail->Username = 'postmaster@calltracking.asia';
         $mail->Password = '8f5m8qylczc2';
 
