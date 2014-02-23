@@ -3,6 +3,7 @@
 namespace Plivo\Alert;
 
 use Plivo\Log\Entry as LogEntry;
+use PHPMailer;
 
 class Sender
 {
@@ -52,15 +53,36 @@ class Sender
     protected function email(Entry $alert, LogEntry $log)
     {
         error_log('sending email - ' . $alert->getEmail());
-        $subject = $this->filterText($alert, $log, 'Missed Call Alert: [origin_number] called your ad: [advert] in [campaign].');
 
         $m_template = file_get_contents(__DIR__ . '/../../../email/alert.txt');
         $message = $this->filterText($alert, $log, $m_template);
-        $headers = "From: LeadRescue <noreply@calltracking.hk>\r\n" .
-            "Reply-To: noreply@calltracking.hk\r\n" .
-            "X-Mailer: PHP/" . phpversion();
 
-        mail($alert->getEmail(), $subject, $message, $headers);
+        $mail = new PHPMailer();
+        $mail->IsSMTP();
+        $mail->CharSet = 'UTF-8';
+        $mail->Host = 'smtp.mailgun.org';
+        $mail->SMTPDebug = 0;
+        $mail->SMTPAuth = true;
+        $mail->Port = 25;
+        $mail->Username = 'postmaster@calltracking.asia';
+        $mail->Password = '8f5m8qylczc2';
+
+        $mail->From = 'noreply@calltracking.hk';
+        $mail->FromName = 'LeadRescue';
+        $mail->addAddress($alert->getEmail());
+        $mail->addREplyTo('noreply@calltracking.hk', 'LeadResue');
+        $mail->Subject = $this->filterText($alert, $log, 'Missed Call Alert: [origin_number] called your ad: [advert] in [campaign].');
+        $mail->Body = $message;
+
+        $res = $mail->send();
+        if (!$res)
+        {
+            error_log('mail sending error - ' . $mail->ErrorInfo);
+            return false;
+        }
+
+        error_log('email sent!');
+        return true;
     }
 
     protected function fetchItemName($table, $id)
