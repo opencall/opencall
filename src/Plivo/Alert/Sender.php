@@ -67,10 +67,10 @@ class Sender
         $mail->Username = 'postmaster@calltracking.asia';
         $mail->Password = '8f5m8qylczc2';
 
-        $mail->From = 'noreply@calltracking.hk';
+        $mail->From = 'noreply@calltracking.asia';
         $mail->FromName = 'LeadRescue';
         $mail->addAddress($alert->getEmail());
-        $mail->addREplyTo('noreply@calltracking.hk', 'LeadResue');
+        $mail->addREplyTo('noreply@calltracking.asia', 'LeadRescue');
         $mail->Subject = $this->filterText($alert, $log, 'Missed Call Alert: [origin_number] called your ad: [advert] in [campaign].');
         $mail->Body = $message;
 
