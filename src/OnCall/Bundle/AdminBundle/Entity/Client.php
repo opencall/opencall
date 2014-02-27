@@ -74,6 +74,7 @@ class Client extends Item
     {
         $this->call_count = 0;
         $this->duration = 0;
+        $this->alert_enable = false;
         parent::__construct();
     }
 
