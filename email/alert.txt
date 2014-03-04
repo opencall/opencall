@@ -1,10 +1,24 @@
+<p>
 You missed a call - please see the details below:
+</p>
 
-When: [date_in]
-Caller number: [origin_number]
-Dialled number: [dialled_number]
-Advert: [advert] (Adgroup: [adgroup], Campaign: [campaign])
-Failure Reason: [reason]
+<p>
+<b>When:</b> [date_in]<br />
+<b>Caller number:</b> [origin_number]<br />
+<b>Dialled number:</b> [dialled_number]<br />
+<b>Advert:</b> [advert] (Adgroup: [adgroup], Campaign: [campaign])<br />
+<b>Failure Reason:</b> [reason]
+</p>
 
-To view this information online, please visit: [lead_rescue_url]
+<p>
+To view this information online, please visit: <a
+href="[lead_rescue_url]">[lead_rescue_url]</a>
+</p>
 
+<p>
+<b>Powered by LeadRescue&#8482;</b> - a CallTracking Service<br />
+</p>
+
+<p>
+<img src="http://www.calltracking.hk/email-signature.png" />
+</p>

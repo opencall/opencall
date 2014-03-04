@@ -73,6 +73,7 @@ class Sender
         $mail->addREplyTo('noreply@calltracking.asia', 'LeadRescue');
         $mail->Subject = $this->filterText($alert, $log, 'Missed Call Alert: [origin_number] called your ad: [advert] in [campaign].');
         $mail->Body = $message;
+        $mail->IsHTML(true);
 
         $res = $mail->send();
         if (!$res)
