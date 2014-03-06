@@ -49,6 +49,9 @@ class NumberFormatter
             // singapore
             case '65':
                 return '65';
+            // australia
+            case '61':
+                return '61';
         }
 
         return null;
@@ -107,6 +110,13 @@ class NumberFormatter
                 return array(
                     'pattern' => '/(65)(\\d{4})(\\d+)/',
                     'format' => '+$1 $2 $3'
+                );
+
+            // australia
+            case '61':
+                return array(
+                    'pattern' => '/(61)(\\d+)/',
+                    'format' => '+$1 $2'
                 );
         }
 
