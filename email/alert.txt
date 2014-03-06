@@ -20,5 +20,6 @@ href="[lead_rescue_url]">[lead_rescue_url]</a>
 </p>
 
 <p>
-<img src="http://www.calltracking.hk/email-signature.png" />
+<a
+href="http://www.calltracking.hk/?utm_source=leadrescue-signature&utm_medium=email&utm_campaign=email+signatures"><img src="http://www.calltracking.hk/email-signature.png" /></a>
 </p>

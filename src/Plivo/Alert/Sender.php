@@ -36,7 +36,7 @@ class Sender
 
     protected function filterText($alert, $log, $text)
     {
-        $date_start = $log->getDateStart()->format('H:i') . '(GMT+8) on ' . $log->getDateStart()->format('l jS \o\f F');
+        $date_start = $log->getDateStart()->format('H:i') . '(GMT +8) on ' . $log->getDateStart()->format('l jS \o\f F');
 
         $ftext = str_replace('[date_in]', $date_start, $text);
         $ftext = str_replace('[origin_number]', $log->getOriginFormatted(), $ftext);
