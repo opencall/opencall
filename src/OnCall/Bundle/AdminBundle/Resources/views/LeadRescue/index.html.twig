@@ -719,7 +719,7 @@ jQuery(document).ready(function() {
                     <table class="table-condensed cf callLog">
                         <tbody id="logbody">
                         {% for log in logs %}
-                            {{ log_row.display_log(log) }}
+                            {{ log_row.display_log(log, client_timezone) }}
                         {% endfor %}
                         </tbody>
                     </table>

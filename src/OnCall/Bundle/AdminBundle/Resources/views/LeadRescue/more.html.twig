@@ -1,5 +1,5 @@
 {% import 'OnCallAdminBundle:CallLog:log.html.twig' as log_row %}
 {% for log in logs %}
-    {{ log_row.display_log(log) }}
+    {{ log_row.display_log(log, client_timezone) }}
 {% endfor %}
 

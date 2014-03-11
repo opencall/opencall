@@ -5,6 +5,7 @@ namespace OnCall\Bundle\AdminBundle\Controller;
 use OnCall\Bundle\AdminBundle\Model\Controller;
 use OnCall\Bundle\AdminBundle\Model\MenuHandler;
 use OnCall\Bundle\AdminBundle\Model\AggregateFilter;
+use OnCall\Bundle\AdminBundle\Model\Timezone;
 use Plivo\HangupCause;
 use Plivo\DurationModifier;
 use Plivo\Log\Filter as LogFilter;
@@ -32,6 +33,14 @@ class LeadRescueController extends Controller
         );
 
         return $log_filter;
+    }
+
+    protected function getClientTimezone()
+    {
+        $client = $this->getClient();
+        $timezone = Timezone::toPHPTimezone($client->getTimezone());
+
+        return $timezone;
     }
 
     public function indexAction($id)
@@ -97,6 +106,7 @@ class LeadRescueController extends Controller
                 'hash_camp' => json_encode($camp_hash),
                 'hash_adg' => json_encode($adg_hash),
                 'hash_advert' => json_encode($advert_hash),
+                'client_timezone' => $this->getClientTimezone(),
             )
         );
     }
@@ -131,6 +141,8 @@ class LeadRescueController extends Controller
         );
         $data[] = $row;
 
+        $tzone = $this->getClientTimezone();
+
         // data rows
         foreach ($logs as $log)
         {
@@ -139,8 +151,8 @@ class LeadRescueController extends Controller
                 $succ_text = 'failed';
 
             $row = array(
-                $log->getDateStart()->format('d-m-Y'),
-                $log->getDateStart()->format('H:m:s'),
+                $log->getDateStart()->setTimezone($tzone)->format('d-m-Y'),
+                $log->getDateStart()->setTimezone($tzone)->format('H:i:s'),
                 $log->getOriginNumber(),
                 $log->getDialledNumber(),
                 $log->getDestinationNumber(),
@@ -161,7 +173,8 @@ class LeadRescueController extends Controller
         $resp = $this->render(
             'OnCallAdminBundle:LeadRescue:index.csv.twig',
             array(
-                'csv_data' => $data
+                'csv_data' => $data,
+                'client_timezone' => $this->getClientTimezone(),
             )
         );
 
@@ -187,7 +200,8 @@ class LeadRescueController extends Controller
         return $this->render(
             'OnCallAdminBundle:LeadRescue:more.html.twig',
             array(
-                'logs' => $logs
+                'logs' => $logs,
+                'client_timezone' => $this->getClientTimezone(),
             )
         );
     }
