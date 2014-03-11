@@ -1,9 +1,9 @@
-{% macro display_log(log) %}
+{% macro display_log(log, client_timezone) %}
 <tr class="log_row" data-id="{{ log.getID }}" id="log_{{ log.getCallID }}">
     <td class="callLogDate">
-        <strong>{{ log.getDateStart.format('d M') }}</strong>
+        <strong>{{ log.getDateStart.setTimezone(client_timezone).format('d M') }}</strong>
         <br />
-        <small>{{ log.getDateStart.format('H:i:s') }}</small><br />
+        <small>{{ log.getDateStart.setTimezone(client_timezone).format('H:i:s') }}</small><br />
         {% if (log.getAudioRecord != null) %}
         <audio controls>
             <source src="{{ log.getAudioRecord }}" type="audio/mp3" />
@@ -48,10 +48,10 @@
     <td data-title="Dialled Number">{{ log.getDialledFormatted }}</td>
     <td data-title="Destination Number">{{ log.getDestinationFormatted }}</td>
     <td data-title="Call Start Time">
-    {{ log.getDateStart.format('H:i:s') }}<br /><small>{{ log.getDateStart.format('M d Y') }}</small>
+    {{ log.getDateStart.setTimezone(client_timezone).format('H:i:s') }}<br /><small>{{ log.getDateStart.setTimezone(client_timezone).format('M d Y') }}</small>
     </td>
     <td data-title="Call End Time">
-    {{ log.getDateEnd.format('H:i:s') }}<br /><small>{{ log.getDateEnd.format('M d Y') }}</small>
+    {{ log.getDateEnd.setTimezone(client_timezone).format('H:i:s') }}<br /><small>{{ log.getDateEnd.setTimezone(client_timezone).format('M d Y') }}</small>
     </td>
     <td data-title="Duration">{{ log.getDuration }}s</td>
     <td data-title="Hangup Cause">{{ log.getHangupCause }}</td>

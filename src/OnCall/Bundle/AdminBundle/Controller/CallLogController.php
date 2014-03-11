@@ -5,6 +5,7 @@ namespace OnCall\Bundle\AdminBundle\Controller;
 use OnCall\Bundle\AdminBundle\Model\Controller;
 use OnCall\Bundle\AdminBundle\Model\MenuHandler;
 use OnCall\Bundle\AdminBundle\Model\AggregateFilter;
+use OnCall\Bundle\AdminBundle\Model\Timezone;
 use Plivo\HangupCause;
 use Plivo\DurationModifier;
 use Plivo\Log\Filter as LogFilter;
@@ -79,6 +80,10 @@ class CallLogController extends Controller
             }
         }
 
+        $client = $this->getClient();
+        $timezone = Timezone::toPHPTimezone($client->getTimezone());
+        error_log('timezone - ' . $timezone->getName());
+
         return $this->render(
             'OnCallAdminBundle:CallLog:index.html.twig',
             array(
@@ -87,7 +92,7 @@ class CallLogController extends Controller
                 'filter' => $log_filter,
                 'filter_json' => json_encode($log_filter->toData()),
                 'user' => $user,
-                'client' => $this->getClient(),
+                'client' => $client,
                 'campaigns' => $campaigns,
                 'sidebar_menu' => MenuHandler::getMenu($role_hash, 'call_log', $this->getClientID(), $params),
                 'agg_filter' => $daily_filter,
@@ -97,6 +102,7 @@ class CallLogController extends Controller
                 'hash_camp' => json_encode($camp_hash),
                 'hash_adg' => json_encode($adg_hash),
                 'hash_advert' => json_encode($advert_hash),
+                'client_timezone' => $timezone,
             )
         );
     }
