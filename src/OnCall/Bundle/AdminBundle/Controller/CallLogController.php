@@ -39,7 +39,6 @@ class CallLogController extends Controller
     {
         $client = $this->getClient();
         $timezone = Timezone::toPHPTimezone($client->getTimezone());
-        error_log('timezone - ' . $timezone->getName());
 
         return $timezone;
     }
@@ -142,6 +141,8 @@ class CallLogController extends Controller
         );
         $data[] = $row;
 
+        $tzone = $this->getClientTimezone();
+
         // data rows
         foreach ($logs as $log)
         {
@@ -149,7 +150,6 @@ class CallLogController extends Controller
             if ($log->isFailed())
                 $succ_text = 'failed';
 
-            $tzone = $this->getClientTimezone();
 
             $row = array(
                 $log->getDateStart()->setTimezone($tzone)->format('d-m-Y'),
