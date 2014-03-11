@@ -35,6 +35,15 @@ class CallLogController extends Controller
         return $log_filter;
     }
 
+    protected function getClientTimezone()
+    {
+        $client = $this->getClient();
+        $timezone = Timezone::toPHPTimezone($client->getTimezone());
+        error_log('timezone - ' . $timezone->getName());
+
+        return $timezone;
+    }
+
     public function indexAction($id)
     {
         $user = $this->getUser();
@@ -80,10 +89,6 @@ class CallLogController extends Controller
             }
         }
 
-        $client = $this->getClient();
-        $timezone = Timezone::toPHPTimezone($client->getTimezone());
-        error_log('timezone - ' . $timezone->getName());
-
         return $this->render(
             'OnCallAdminBundle:CallLog:index.html.twig',
             array(
@@ -92,7 +97,7 @@ class CallLogController extends Controller
                 'filter' => $log_filter,
                 'filter_json' => json_encode($log_filter->toData()),
                 'user' => $user,
-                'client' => $client,
+                'client' => $this->getClient(),
                 'campaigns' => $campaigns,
                 'sidebar_menu' => MenuHandler::getMenu($role_hash, 'call_log', $this->getClientID(), $params),
                 'agg_filter' => $daily_filter,
@@ -102,7 +107,7 @@ class CallLogController extends Controller
                 'hash_camp' => json_encode($camp_hash),
                 'hash_adg' => json_encode($adg_hash),
                 'hash_advert' => json_encode($advert_hash),
-                'client_timezone' => $timezone,
+                'client_timezone' => $this->getClientTimezone(),
             )
         );
     }
@@ -193,7 +198,8 @@ class CallLogController extends Controller
         return $this->render(
             'OnCallAdminBundle:CallLog:more.html.twig',
             array(
-                'logs' => $logs
+                'logs' => $logs,
+                'client_timezone' => $this->getClientTimezone(),
             )
         );
     }
