@@ -35,14 +35,6 @@ class CallLogController extends Controller
         return $log_filter;
     }
 
-    protected function getClientTimezone()
-    {
-        $client = $this->getClient();
-        $timezone = Timezone::toPHPTimezone($client->getTimezone());
-
-        return $timezone;
-    }
-
     public function indexAction($id)
     {
         $user = $this->getUser();

@@ -53,6 +53,14 @@ class Controller extends BaseController
         return $client;
     }
 
+    protected function getClientTimezone()
+    {
+        $client = $this->getClient();
+        $timezone = Timezone::toPHPTimezone($client->getTimezone());
+
+        return $timezone;
+    }
+
     protected function getFilter($type, $pid)
     {
         $filter = new AggregateFilter($type, $pid);
