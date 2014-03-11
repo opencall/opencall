@@ -110,6 +110,20 @@ class Counter extends EntityRepository
         return $multi_ia;
     }
 
+    protected function offsetHour($offset, $hour)
+    {
+        $add_hour = $offset - 8;
+        $res_hour = $hour + $add_hour;
+
+        if ($res_hour > 24)
+            return $res_hour - 24;
+
+        if ($res_hour < 0)
+            return $res_hour + 24;
+
+        return $res_hour;
+    }
+
     public function findChartAggregate(AggregateFilter $filter)
     {
         $dql = $this->getDQLChartPrefix($filter->getItemType(), $filter->getChildrenType());
@@ -121,6 +135,9 @@ class Counter extends EntityRepository
 
         $date_from = $filter->getDateFrom();
         $date_to = $filter->getDateTo();
+
+        $offset = floor($filter->getClientTimezone()->getOffset($date_from) / 3600);
+        error_log('offset - ' . $offset);
 
         // if daily, check if date is a single date... 
         // if so, set date_from to date - 1 day
@@ -170,7 +187,10 @@ class Counter extends EntityRepository
         {
             // cycle through results
             foreach ($res as $row)
-                $multi_ia[$row['hourly'] + 0] = $this->createItemAggregate(0, $row);
+            {
+                $off_hour = $this->offsetHour($offset, $row['hourly']);
+                $multi_ia[$off_hour] = $this->createItemAggregate(0, $row);
+            }
 
             // make sure all hours have a value
             for ($i = 0; $i < 24; $i++)

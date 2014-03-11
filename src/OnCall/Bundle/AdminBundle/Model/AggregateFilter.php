@@ -31,6 +31,7 @@ class AggregateFilter
     protected $date_to;
     protected $item_id;
     protected $filter_type;
+    protected $client_timezone;
 
     public function __construct($filter_type, $item_id)
     {
@@ -70,13 +71,13 @@ class AggregateFilter
 
     public function setDateFrom(DateTime $date)
     {
-        $this->date_from = $this->cleanDateFrom($date);
+        $this->date_from = $date;
         return $this;
     }
 
     public function setDateTo(DateTime $date)
     {
-        $this->date_to = $this->cleanDateTo($date);
+        $this->date_to = $date;
         return $this;
     }
 
@@ -89,6 +90,12 @@ class AggregateFilter
     public function setItemID($item_id)
     {
         $this->item_id = $item_id;
+        return $this;
+    }
+
+    public function setClientTimezone(DateTimeZone $tzone)
+    {
+        $this->client_timezone = $tzone;
         return $this;
     }
 
@@ -244,5 +251,10 @@ class AggregateFilter
         }
 
         return false;
+    }
+
+    public function getClientTimezone()
+    {
+        return $this->client_timezone;
     }
 }

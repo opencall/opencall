@@ -6,6 +6,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller as BaseController;
 use OnCall\Bundle\AdminBundle\Model\AggregateFilter;
 use OnCall\Bundle\AdminBundle\Model\Timezone;
 use DateTime;
+use DateTimeZone;
 
 
 class Controller extends BaseController
@@ -65,15 +66,29 @@ class Controller extends BaseController
     protected function getFilter($type, $pid)
     {
         $filter = new AggregateFilter($type, $pid);
+        $def_timezone = new DateTimeZone('Asia/Hong_Kong');
+        $cl_timezone = $this->getClientTimezone();
+        $filter->setClientTimezone($cl_timezone);
 
         // check dates
         $query = $this->getRequest()->query;
         $date_from = $query->get('date_from');
         $date_to = $query->get('date_to');
+
+        // modify according to client timezone
         if ($date_from != null)
-            $filter->setDateFromText($date_from);
+        {
+            $curr_date_from = DateTime::createFromFormat('Y-m-d H:i:s', $date_from . ' 00:00:00', $cl_timezone);
+            $curr_date_from->setTimezone($def_timezone);
+            $filter->setDateFrom($curr_date_from);
+        }
+
         if ($date_to != null)
-            $filter->setDateToText($date_to);
+        {
+            $curr_date_to = DateTime::createFromFormat('Y-m-d H:i:s', $date_to . ' 23:59:59', $cl_timezone);
+            $curr_date_from->setTimezone($def_timezone);
+            $filter->setDateTo($curr_date_to);
+        }
 
         return $filter;
     }
