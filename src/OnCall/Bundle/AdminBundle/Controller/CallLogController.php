@@ -149,9 +149,11 @@ class CallLogController extends Controller
             if ($log->isFailed())
                 $succ_text = 'failed';
 
+            $tzone = $this->getClientTimezone();
+
             $row = array(
-                $log->getDateStart()->format('d-m-Y'),
-                $log->getDateStart()->format('H:m:s'),
+                $log->getDateStart()->setTimezone($tzone)->format('d-m-Y'),
+                $log->getDateStart()->setTimezone($tzone)->format('H:i:s'),
                 $log->getOriginNumber(),
                 $log->getDialledNumber(),
                 $log->getDestinationNumber(),
