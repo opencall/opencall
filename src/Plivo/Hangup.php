@@ -13,6 +13,7 @@ use Plivo\AccountCounter\Repository as ACRepo;
 use Plivo\AccountCounter\Entry as ACEntry;
 use Plivo\Alert\Sender as AlertSender;
 use Plivo\Alert\Repository as AlertRepo;
+use OnCall\Bundle\AdminBundle\Model\Timezone;
 
 class Hangup extends Lockable
 {
@@ -75,6 +76,11 @@ class Hangup extends Lockable
             $agg_repo = new AggRepository($this->pdo);
             $agg = AggEntry::createFromLog($log);
             $agg_repo->persist($agg);
+
+            // get client timezone
+            $tzone = $log_repo->getClientTimezone($log->getClientID());
+            $cl_tzone = $cl_tzone = Timezone::toPHPTimezone($tzone);
+            $log->getDateStart()->setTimezone($cl_tzone);
 
             // live log
             $log_pusher = new LogPusher($this->zmq);

@@ -6,6 +6,7 @@ use Plivo\Log\Entry as LogEntry;
 use Plivo\Log\Pusher as LogPusher;
 use Plivo\Log\Repository as LogRepository;
 use PDO;
+use OnCall\Bundle\AdminBundle\Model\Timezone;
 
 class Answer
 {
@@ -24,8 +25,12 @@ class Answer
 
     protected function createLog($num_data, $params)
     {
+        $tzone = $num_data['timezone'];
+        $cl_tzone = Timezone::toPHPTimezone($tzone);
+
         $log = new LogEntry();
         $date = $log->getDateIn();
+        $date->setTimezone($cl_tzone);
         $log->setClientID($num_data['client_id'])
             ->setCampaignID($num_data['campaign_id'])
             ->setAdGroupID($num_data['adgroup_id'])
@@ -41,6 +46,7 @@ class Answer
             ->setHangupCause($params->getHangupCause())
             ->setDateStart($date)
             ->setDateEnd($date);
+
 
         return $log;
     }

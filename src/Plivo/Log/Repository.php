@@ -55,6 +55,22 @@ class Repository
         return $this->createEntry($row);
     }
 
+    public function getClientTimezone($client_id)
+    {
+        $sql = 'select timezone from Client where id = :client_id limit 1';
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->bindParam(':client_id', $client_id);
+
+        if (!$stmt->execute())
+            return null;
+
+        $row = $stmt->fetch();
+        if (!$row)
+            return null;
+
+        return $row['timezone'];
+    }
+
     public function findClientID($call_id)
     {
         $sql = 'select client_id from CallLog where call_id = :call_id limit 1';
