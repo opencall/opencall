@@ -2,6 +2,8 @@
 
 namespace OnCall\Bundle\AdminBundle\Model;
 
+use DateTimeZone;
+
 class Timezone extends NamedValue
 {
     static $names = array(
@@ -36,4 +38,47 @@ class Timezone extends NamedValue
         '11.0' => '(GMT +11:00) Magadan, Solomon Islands, New Caledonia',
         '12.0' => '(GMT +12:00) Auckland, Wellington, Fiji, Kamchatka',
     );
+
+    static $tzone = array(
+        '-12.0'=>'Pacific/Kwajalein', 
+        '-11.0'=>'Pacific/Samoa', 
+        '-10.0'=>'Pacific/Honolulu', 
+        '-9.0'=>'America/Juneau', 
+        '-8.0'=>'America/Los_Angeles', 
+        '-7.0'=>'America/Denver', 
+        '-6.0'=>'America/Mexico_City', 
+        '-5.0'=>'America/New_York', 
+        '-4.0'=>'America/Caracas', 
+        '-3.5'=>'America/St_Johns', 
+        '-3.0'=>'America/Argentina/Buenos_Aires', 
+        '-2.0'=>'Atlantic/Azores',// no cities here so just picking an hour ahead 
+        '-1.0'=>'Atlantic/Azores', 
+        '0.0'=>'Europe/London', 
+        '1.0'=>'Europe/Paris', 
+        '2.0'=>'Europe/Helsinki', 
+        '3.0'=>'Europe/Moscow', 
+        '3.5'=>'Asia/Tehran', 
+        '4.0'=>'Asia/Baku', 
+        '4.5'=>'Asia/Kabul', 
+        '5.0'=>'Asia/Karachi', 
+        '5.5'=>'Asia/Calcutta', 
+        '6.0'=>'Asia/Colombo', 
+        '7.0'=>'Asia/Bangkok', 
+        '8.0'=>'Asia/Singapore', 
+        '9.0'=>'Asia/Tokyo', 
+        '9.5'=>'Australia/Darwin', 
+        '10.0'=>'Pacific/Guam', 
+        '11.0'=>'Asia/Magadan', 
+        '12.0'=>'Asia/Kamchatka' 
+    );
+
+    public static function toPHPTimezone($gmt)
+    {
+        error_log('gmt - ' . $gmt);
+        // default to gmt +8
+        if (!isset(self::$tzone[$gmt]))
+            return new DateTimeZone('Asia/Singapore');
+
+        return new DateTimeZone(self::$tzone[$gmt]);
+    }
 }
