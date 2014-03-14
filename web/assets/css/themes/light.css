@@ -701,9 +701,9 @@ Landscape phone to portrait tablet
 		#sideFeedback { display: none; }
 }
 
-		.row-fluid .span6 {
-			width: 47.6%!important;
-		}
+		/*.row-fluid .span6 {
+			width: 47.6%;
+		}*/
 		
 		/*.row-fluid [class*="span"] {
 			margin-right: 2.1%;
