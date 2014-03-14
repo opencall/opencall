@@ -76,7 +76,7 @@ class Action
                 if (isset($this->params['record_url']))
                     $xml .= ' action="' . $this->params['record_url'] . '"';
                 $xml .= ' redirect="false"';
-                $xml .= ' maxLength="600"';
+                $xml .= ' maxLength="1200"';
                 $xml .= ' startOnDialAnswer="true" />';
                 return $xml;
         }
