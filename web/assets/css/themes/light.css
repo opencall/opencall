@@ -664,7 +664,6 @@ Landscape phone to portrait tablet
 
 @media (min-width:980px) and (max-width: 1295px) {
 
-	#sideFeedback { display: none; }
 	
 	.row-fluid .span3 {
 		width: 28%;
@@ -683,6 +682,12 @@ Landscape phone to portrait tablet
 		margin-right: 15px!important;
 	}
 	
+
+}
+
+@media(max-width:979px) {
+	#sideFeedback { display: none; }
+
 	.navbar-inverse .nav>li>a, .navbar-inverse .nav>li>a:visited {
 		color: #000;
 	}
@@ -700,14 +705,14 @@ Landscape phone to portrait tablet
 			width: 47.6%!important;
 		}
 		
-		.row-fluid [class*="span"] {
+		/*.row-fluid [class*="span"] {
 			margin-right: 2.1%;
 			margin-left: 0!important;
 		}
 		
 		.row-fluid .span3 {
 			width: 25%!important;
-		}
+		}*/
 		
 
 }
