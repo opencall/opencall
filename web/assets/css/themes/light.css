@@ -578,14 +578,7 @@ Gritter Notifications
 Landscape phone to portrait tablet
 ***/
 @media (max-width: 979px) {
-	#sideFeedback { display: none; }
-	.navbar-inverse .nav>li>a, .navbar-inverse .nav>li>a:visited {
-		color: #000;
-	}
 
-	.navbar-inverse .nav>li>a:hover {
-		color: #888;
-	}
   /***
   page sidebar
   ***/
@@ -702,11 +695,7 @@ Landscape phone to portrait tablet
 @media(min-width:768px) and (max-width:979px){
 		#sideFeedback { display: none; }
 }
-		.navbar .nav.pull-right {
-		float: left;
-		margin-right: 0;
-		margin-top: 13px;
-		}
+
 		.row-fluid .span6 {
 			width: 47.6%!important;
 		}
@@ -720,11 +709,5 @@ Landscape phone to portrait tablet
 			width: 25%!important;
 		}
 		
-		.navbar-inverse .nav>li>a, .navbar-inverse .nav>li>a:visited {
-			color: #000;
-		}
 
-		.navbar-inverse .nav>li>a:hover {
-			color: #888;
-		}
 }
