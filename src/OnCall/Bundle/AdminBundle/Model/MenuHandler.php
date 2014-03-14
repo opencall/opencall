@@ -69,7 +69,7 @@ class MenuHandler
                     'lead_rescue',
                     'menu.lead_rescue',
                     '/client/' . $client_id . '/lead_rescue?' . http_build_query($call_log_params),
-                    'icon-phone'
+                    'icon-star'
                 ));
                 $menu_group->addItem(new MenuItem(
                     'number',
