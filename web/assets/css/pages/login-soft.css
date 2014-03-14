@@ -16,13 +16,14 @@ Login page
 
 
 .login .content {
-  background-color: #bbe000;
+  background-color: #000;
   width: 291px;
   margin: 60px auto; 
   margin-bottom: 0px;
   padding: 30px;  
   padding-top: 20px;  
-  padding-bottom: 15px;  
+  padding-bottom: 15px; 
+  border-radius: 15px!important  
 }
 
 .login .content h3 {

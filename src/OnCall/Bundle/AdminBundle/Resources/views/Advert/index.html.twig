@@ -46,44 +46,62 @@
             <div class="span12">
                 <h4>{% trans %}advert.advert_name{% endtrans %}</h4>
                 <p class="control-group"><input type="text" name="name" class="span6 m-wrap"></p>
-                <h4>{% trans %}advert.advert_number{% endtrans %}</h4>
-                <p>                                                 
-                    <select name="number" class="m-wrap" tabindex="1">
-                        <option value="0" selected="selected"></option>
-                        {% for num in numbers %}
-                        <option value="{{ num.getID }}">{{ num.getIDFormatted }}</option>
-                        {% endfor %}
-                    </select>
-                    <br />{% trans %}advert.need_more{% endtrans %} <a href="/client/{{ client_id }}/numbers">{% trans %}menu.number_management{% endtrans %}</a>
-                </p>
-                <h4>{% trans %}advert.recording{% endtrans %}</h4>
-                <p>
-                    <input name="record" type="checkbox" class="checkboxes" />
-                    {% trans %}advert.record_calls{% endtrans %}
-                </p>
-                <p>
-                    <input name="speak" type="checkbox" class="checkboxes" />
-                    {% trans %}advert.speak_message{% endtrans %}
-                </p>
-                <p>
-                    <input name="speak_message" type="text" class="span6 m-wrap" />
-                </p>
-                <h4>{% trans %}advert.advert_destination{% endtrans %}</h4>
-                <ul>
-                    <li>{% trans %}advert.not_spaces{% endtrans %} </li>
-                    <li>{% trans %}advert.include_country_code{% endtrans %}</li>
-                    <li>{% trans %}advert.eg_number{% endtrans %}</li>
-                </ul>
-                <p><input name="destination" type="text" class="span6 m-wrap"></p>
-                <!-- Kendrick: Advanced Rules (and override) should only be shown to an admin -->
-                {% if is_granted('ROLE_PREVIOUS_ADMIN') %}
-                <h4>{% trans %}advert.advanced_rules{% endtrans %}</h4>
-                <p><textarea name="xml_replace" class="span12 m-wrap"></textarea></p>
-                <p><input name="xml_override" type="checkbox" class="checkboxes" value="1" /> {% trans %}advert.override_destination{% endtrans %}</p>
-                {% endif %}
-            </div>
 
-        </div>
+			</div>
+		</div>
+		<div class="row-fluid">
+			<div class="span6">
+				<h4>{% trans %}advert.advert_number{% endtrans %}</h4>
+				<p>                                                 
+					<select name="number" class="m-wrap" tabindex="1">
+						<option value="0" selected="selected"></option>
+						{% for num in numbers %}
+						<option value="{{ num.getID }}">{{ num.getIDFormatted }}</option>
+						{% endfor %}
+					</select>
+				   <!-- <br />{% trans %}advert.need_more{% endtrans %} <a href="/client/{{ client_id }}/numbers">{% trans %}menu.number_management{% endtrans %}</a>-->
+				</p>
+			</div>
+			<div class="span6">
+				<h4>{% trans %}advert.advert_destination{% endtrans %}</h4>
+				{% trans %}advert.not_spaces{% endtrans %}. {% trans %}advert.include_country_code{% endtrans %}. {% trans %}advert.eg_number{% endtrans %}.
+				<p><input name="destination" type="text" class="span6 m-wrap"></p>
+			</div>
+		</div>
+		<div class="row-fluid">
+			<div class="span6">
+				<h4>{% trans %}advert.recording{% endtrans %}</h4>
+				<p>
+					<input name="record" type="checkbox" class="checkboxes" />
+					{% trans %}advert.record_calls{% endtrans %}
+				</p>
+			</div>
+			<div class="span6">
+				<h4>Play Message</h4>
+				<p>
+					<input name="speak" type="checkbox" class="checkboxes" />
+					{% trans %}advert.speak_message{% endtrans %}
+				</p>
+				<p>
+					<input name="speak_message" type="text" class="span12 m-wrap" />
+				</p>
+			</div>
+		</div>
+
+
+		
+
+		{% if is_granted('ROLE_PREVIOUS_ADMIN') %}
+		<!-- Kendrick: Advanced Rules (and override) should only be shown to an admin -->
+		<div class="span12">
+			<h4>{% trans %}advert.advanced_rules{% endtrans %}</h4>
+			<p><textarea name="xml_replace" class="span12 m-wrap"></textarea></p>
+			<p><input name="xml_override" type="checkbox" class="checkboxes" value="1" /> {% trans %}advert.override_destination{% endtrans %}</p>
+		</div>
+		{% endif %}
+	
+
+
     </div>
     <div class="modal-footer">
         <button type="button" data-dismiss="modal" class="btn">{% trans %}text.cancel{% endtrans %}</button>
@@ -105,6 +123,10 @@
             <div class="span12">
                 <h4>{% trans %}advert.advert_name{% endtrans %}</h4>
                 <p class="control-group"><input name="name" type="text" class="item_name span6 m-wrap"></p>
+			</div>
+		</div>
+		<div class="row-fluid">
+			<div class="span6">
                 <h4>{% trans %}advert.advert_number{% endtrans %}</h4>
                 <p>
                     <select id="item_number_dropdown" name="number" class="m-wrap" tabindex="1">
@@ -114,26 +136,36 @@
                         {% endfor %}
                     </select>
                 </p>
+			</div>
+			<div class="span6">
+                <h4>{% trans %}advert.advert_destination{% endtrans %}</h4>
+                {% trans %}advert.not_spaces{% endtrans %}. {% trans %}advert.include_country_code{% endtrans %}. {% trans %}advert.eg_number{% endtrans %}.
+                <p><input name="destination" type="text" class="item_destination span6 m-wrap"></p>
+			</div>
+		</div>
+		<div class="row-fluid">
+			<div class="span6">
                 <h4>{% trans %}advert.recording{% endtrans %}</h4>
                 <p>
                     <input name="record" type="checkbox" class="item_record checkboxes" />
                     {% trans %}advert.record_calls{% endtrans %}
                 </p>
+			</div>
+			<div class="span6">
+				<h4>Play Message</h4>
                 <p>
                     <input name="speak" type="checkbox" class="item_speak checkboxes" />
                     {% trans %}advert.speak_message{% endtrans %}
                 </p>
                 <p>
-                    <input name="speak_message" type="text" class="item_speak_message span6 m-wrap" />
+                    <input name="speak_message" type="text" class="item_speak_message span12 m-wrap" />
                 </p>
-                <h4>{% trans %}advert.advert_destination{% endtrans %}</h4>
-                <ul>
-                    <li>{% trans %}advert.not_spaces{% endtrans %} </li>
-                    <li>{% trans %}advert.include_country_code{% endtrans %}</li>
-                    <li>{% trans %}advert.eg_number{% endtrans %}</li>
-                </ul>
-                <p><input name="destination" type="text" class="item_destination span6 m-wrap"></p>
-                {% if is_granted('ROLE_PREVIOUS_ADMIN') %}
+			</div>
+		</div>
+
+        {% if is_granted('ROLE_PREVIOUS_ADMIN') %}
+        <div class="row-fluid">
+            <div class="span12">
                 <!-- Kendrick: Advanced Rules (and override) should only be shown to an admin -->
                 <h4>{% trans %}advert.advanced_rules{% endtrans %}</h4>
                 <p><textarea name="xml_replace" class="item_xml_replace span12 m-wrap"></textarea></p>
@@ -144,9 +176,10 @@
                     <option value="1">Active</option>
                     <option value="0">Inactive</option>
                 </select></p>
-                {% endif %}
             </div>
         </div>
+        {% endif %}
+
     </div>
     <div class="modal-footer">
         <button type="button" data-dismiss="modal" class="btn">{% trans %}text.cancel{% endtrans %}</button>

@@ -36,7 +36,7 @@
         <form class="form-vertical login-form" action="{{ path("fos_user_security_check") }}" method="post">
             <input type="hidden" name="_csrf_token" value="{{ csrf_token }}" />
     <div class="logo">
-        <img src="assets/img/logo.png" alt="" /> 
+        <a href="http://www.calltracking.hk"><img src="assets/img/logo.png" alt="Back to CallTracking" /></a>
     </div>
             <div class="alert alert-error hide">
                 <button class="close" data-dismiss="alert"></button>
@@ -62,19 +62,19 @@
                 </div>
             </div>
             <div class="form-actions">
-                <label class="checkbox">
+               <!-- <label class="checkbox">
                 <input type="checkbox" name="remember" value="1"/> {% trans %}login.remember{% endtrans %}
-                </label>
+                </label>-->
                 <button type="submit" class="btn blue pull-right">
                 {% trans %}login.login{% endtrans %} <i class="m-icon-swapright m-icon-white"></i>
                 </button>            
             </div>
-            <div class="forget-password">
+            <!--<div class="forget-password">
                 <h4>{% trans %}login.forgot{% endtrans %} ?</h4>
                 <p>{% trans %}login.reset.1{% endtrans %} <a href="javascript:;" class="" id="forget-password">{% trans %}login.reset.here{% endtrans %}</a>
                 {% trans %}login.reset.2{% endtrans %}
                 </p>
-            </div>
+            </div>-->
             <!--<div class="create-account">
                 <p>
                     {% trans %}login.account.no{% endtrans %}&nbsp; 
@@ -158,7 +158,7 @@
                 <button id="register-back-btn" type="button" class="btn">
                 <i class="m-icon-swapleft"></i>  {% trans %}text.back{% endtrans %}
                 </button>
-                <button type="submit" id="register-submit-btn" class="btn blue pull-right">
+                <button type="submit" id="register-submit-btn" class="btn green pull-right">
                 Sign Up <i class="m-icon-swapright m-icon-white"></i>
                 </button>            
             </div>
