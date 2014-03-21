@@ -115,7 +115,7 @@ class Counter extends EntityRepository
         $add_hour = $offset - 8;
         $res_hour = $hour + $add_hour;
 
-        if ($res_hour > 24)
+        if ($res_hour >= 24)
             return $res_hour - 24;
 
         if ($res_hour < 0)
