@@ -2,3 +2,4 @@ app/logs/*.log
 app/logs
 cache/*
 app/cache/*
+vendor/*
