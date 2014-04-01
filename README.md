@@ -29,4 +29,4 @@ Please see [CONTRIBUTING](http://www.ocall.org/get-involved/) for details.
 
 ## License
 
-GPL v3 License. Please see [License File](https://www.gnu.org/copyleft/gpl.html) for more information.
+GPL v3 License. Please see [License File](LICENSE) for more information.
