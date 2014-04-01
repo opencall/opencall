@@ -1,10 +1,10 @@
 {% extends '::base.html.twig' %}
 
 {% block plugins %}
-<script src="assets/plugins/bootstrap-daterangepicker/date.js" type="text/javascript"></script>
-<script src="assets/plugins/bootstrap-daterangepicker/daterangepicker.js" type="text/javascript"></script> 
-<script src="assets/plugins/highcharts/highcharts.js" type="text/javascript"></script>
-<script src="assets/plugins/highcharts/modules/exporting.js" type="text/javascript"></script>
+<script src="{{ asset( 'assets/plugins/bootstrap-daterangepicker/date.js' ) }}" type="text/javascript"></script>
+<script src="{{ asset( 'assets/plugins/bootstrap-daterangepicker/daterangepicker.js' ) }}" type="text/javascript"></script>
+<script src="{{ asset( 'assets/plugins/highcharts/highcharts.js' ) }}" type="text/javascript"></script>
+<script src="{{ asset( 'assets/plugins/highcharts/modules/exporting.js' ) }}" type="text/javascript"></script>
 {% endblock %}
 
 {% block javascript %}
@@ -160,13 +160,13 @@ jQuery(document).ready(function() {
             dateTimeLabelFormats: {
                 day: '{% trans %}idate.chart_format{% endtrans %}'
             },
-            // min: 0.5, 
+            // min: 0.5,
             // Kendrick: the value below must be the number of data points -1.5
             // In this example there are 5 categories (above) so the max should be 5 - 1.5 =3.5
             // this is so that the graph is to the edge
             //max: 5.5,
             labels: {
-                rotation: -45, 
+                rotation: -45,
                 style: {
                   color: '#888'
                 },
@@ -250,8 +250,8 @@ jQuery(document).ready(function() {
             // Kendrick: the value below must be the number of data points -1.5
             // In this example there are 5 categories (above) so the max should be 5 - 1.5 =3.5
             // this is so that the graph is to the edge
-            labels: {                
-                rotation: -45, 
+            labels: {
+                rotation: -45,
                 style: {
                   color: '#888'
                 },
@@ -447,7 +447,7 @@ jQuery(document).ready(function() {
                             {{ agg_parent.getPLeadFormatted }} {% trans %}item.leads{% endtrans %} <small>({{ agg_parent.getPLeadPercentFormatted }}%)</small>
                             </a>
                         </div>
-                    </div>                
+                    </div>
                 </div>
             </div>
             <div class="span3 responsive" data-tablet="span6  fix-offset" data-desktop="span3">
@@ -469,7 +469,7 @@ jQuery(document).ready(function() {
         <!-- END DASHBOARD STATS -->
         <div class="clearfix"></div>
     <div class="row-fluid">
-        
+
         <div class="span12">
             <!-- BEGIN SAMPLE TABLE PORTLET-->
                 <!-- BEGIN PORTLET-->
@@ -493,7 +493,7 @@ jQuery(document).ready(function() {
                 </div>
                 <!-- END PORTLET-->
                 <button class="btn green" style="margin-bottom: 4px;"  data-toggle="modal" href="#addModal"><i class="icon-plus"></i> {% trans %}item.add_new{% endtrans %} {{ name }}</button>
-                 
+
                 <div class="portlet-body no-more-tables">
                     <table class="table-bordered table-striped table-condensed cf">
                         <thead class="cf">
@@ -509,7 +509,7 @@ jQuery(document).ready(function() {
                                     <th>{% trans %}item.rules{% endtrans %}<br /><small>({% trans %}item.use{% endtrans %}?)</small></th>
                                     {% endif %}
                                 {% endif %}
-                                <th>{% trans %}item.total_calls{% endtrans %}</th> 
+                                <th>{% trans %}item.total_calls{% endtrans %}</th>
                                 <th>{% trans %}item.unique_calls{% endtrans %}</th>
                                 <th>{% trans %}item.failed_calls{% endtrans %}</th>
                                 <th titla="calls > 2 mins" alt="calls > 2 mins">{% trans %}item.potential_leads{% endtrans %}</small></th>
@@ -525,10 +525,10 @@ jQuery(document).ready(function() {
                         {% for child in children %}
                             <tr>
                                 {% if is_granted('ROLE_PREVIOUS_ADMIN') %}
-                                <td data-title="Status" style="text-align: center;"><i class="{{ child.isActive ? 'icon-ok-sign' : 'icon-remove-sign' }}"></i></td>  
+                                <td data-title="Status" style="text-align: center;"><i class="{{ child.isActive ? 'icon-ok-sign' : 'icon-remove-sign' }}"></i></td>
                                 {% endif %}
                                 {% if url_prefix == 'advert' %}
-                                    <td data-title="{{ name }} {% trans %}item.name{% endtrans %}">{{ child.getName }}</td>  
+                                    <td data-title="{{ name }} {% trans %}item.name{% endtrans %}">{{ child.getName }}</td>
                                     <td>{{ child.getNumberFormatted }}</td>
                                     <td>{{ child.getDestinationFormatted }}</td>
                                     {% if is_granted('ROLE_PREVIOUS_ADMIN') %}
@@ -538,7 +538,7 @@ jQuery(document).ready(function() {
                                     </td>
                                     {% endif %}
                                 {% else %}
-                                    <td data-title="{{ name }} {% trans %}item.name{% endtrans %}"><a href="{{ path(url_child, {'id': child.getID }) }}?{{ params_child }}">{{ child.getName }}</a></td>  
+                                    <td data-title="{{ name }} {% trans %}item.name{% endtrans %}"><a href="{{ path(url_child, {'id': child.getID }) }}?{{ params_child }}">{{ child.getName }}</a></td>
                                 {% endif %}
                                 <td data-title="{% trans %}item.total_calls{% endtrans %}"><a href="{{ log_url }}&{{ child_filter_var }}={{ child.getID }}">{{ agg_table[child.getID].getTotalFormatted }}</a></td>
                                 <td data-title="{% trans %}item.unique_calls{% endtrans %}">
@@ -562,8 +562,8 @@ jQuery(document).ready(function() {
                                     {% if child.isActive %}
                                     <button href="#deleteModal" data-id="{{ child.getID }}" data-toggle="modal" role="button" class="delete_button btn mini" ><i class="icon-trash"></i> {% trans %}text.delete{% endtrans %}</button>
                                     {% endif %}
-                                </td>   
-                            </tr>  
+                                </td>
+                            </tr>
                         {% endfor %}
                         </tbody>
                         <tfoot>

@@ -1,9 +1,9 @@
 var Login = function () {
-    
+
     return {
         //main function to initiate the module
         init: function () {
-        	
+
            $('.login-form').validate({
 	            errorElement: 'label', //default input error message container
 	            errorClass: 'help-inline', // default input error message class
@@ -29,7 +29,7 @@ var Login = function () {
 	                }
 	            },
 
-	            invalidHandler: function (event, validator) { //display error alert on form submit   
+	            invalidHandler: function (event, validator) { //display error alert on form submit
 	                $('.alert-error', $('.login-form')).show();
 	            },
 
@@ -79,7 +79,7 @@ var Login = function () {
 	                }
 	            },
 
-	            invalidHandler: function (event, validator) { //display error alert on form submit   
+	            invalidHandler: function (event, validator) { //display error alert on form submit
 
 	            },
 
@@ -151,7 +151,7 @@ var Login = function () {
 	                }
 	            },
 
-	            invalidHandler: function (event, validator) { //display error alert on form submit   
+	            invalidHandler: function (event, validator) { //display error alert on form submit
 
 	            },
 
@@ -166,7 +166,7 @@ var Login = function () {
 	            },
 
 	            errorPlacement: function (error, element) {
-	                if (element.attr("name") == "tnc") { // insert checkbox errors after the container                  
+	                if (element.attr("name") == "tnc") { // insert checkbox errors after the container
 	                    error.addClass('help-small no-left-padding').insertAfter($('#register_tnc_error'));
 	                } else {
 	                    error.addClass('help-small no-left-padding').insertAfter(element.closest('.input-icon'));
@@ -189,8 +189,8 @@ var Login = function () {
 	        });
 
 	        $.backstretch([
-		        "assets/img/bg/1.jpg",
-		        "assets/img/bg/2.jpg"
+		        backgnd1,
+		        backgnd2
 		        ], {
 		          fade: 1000,
 		          duration: 8000

@@ -6,11 +6,11 @@
 {% endblock %}
 
 {% block plugins %}
-<script src="assets/plugins/bootstrap-daterangepicker/date.js" type="text/javascript"></script>
-<script src="assets/plugins/bootstrap-daterangepicker/daterangepicker.js" type="text/javascript"></script> 
-<script src="assets/plugins/highcharts/highcharts.js" type="text/javascript"></script>
-<script src="assets/plugins/highcharts/modules/exporting.js" type="text/javascript"></script>
-<script src="/assets/scripts/autobahn.min.js"></script>
+<script src="{{ asset( 'assets/plugins/bootstrap-daterangepicker/date.js' ) }}" type="text/javascript"></script>
+<script src="{{ asset( 'assets/plugins/bootstrap-daterangepicker/daterangepicker.js' ) }}" type="text/javascript"></script>
+<script src="{{ asset( 'assets/plugins/highcharts/highcharts.js' ) }}" type="text/javascript"></script>
+<script src="{{ asset( 'assets/plugins/highcharts/modules/exporting.js' ) }}" type="text/javascript"></script>
+<script src="{{ asset( 'assets/scripts/autobahn.min.js' ) }}"></script>
 {% endblock %}
 
 {% block javascript %}
@@ -273,7 +273,7 @@ function logtable_add(log)
     }
     else
     {
-        // add updated rows 
+        // add updated rows
         $(row).prependTo('#logbody').fadeIn('slow');
     }
 }
@@ -282,7 +282,7 @@ function get_filter_query_string()
 {
     var filter = filter_get();
     var url = '';
-    
+
     if (filter.campaign_id == null)
         url += '?cid=';
     else
@@ -688,7 +688,7 @@ jQuery(document).ready(function() {
                 </div>
                 </div>
                 <!-- Kendrick: The number search should allow for partial matches (e.g. if I search for 1111 it will match 66821111 and 11110049)
-                        It should search the caller, destination and dialled numbers 
+                        It should search the caller, destination and dialled numbers
                  -->
                 <div style="float:left; margin-left: 4px;">
                 {% trans %}log.by_number{% endtrans %}:<br />
