@@ -13,28 +13,28 @@
 	<meta content="width=device-width, initial-scale=1.0" name="viewport" />
 	<!-- BEGIN GLOBAL MANDATORY STYLES -->
     <link href='http://fonts.googleapis.com/css?family=Lato:400,700|Cabin:400,700' rel='stylesheet' type='text/css'>
-	<link href="assets/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
-	<link href="assets/plugins/bootstrap/css/bootstrap-responsive.min.css" rel="stylesheet" type="text/css"/>
-	<link href="assets/plugins/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
-	<link href="assets/css/style-metro.css" rel="stylesheet" type="text/css"/>
-	<link href="assets/css/style.css" rel="stylesheet" type="text/css"/>
-	<link href="assets/css/style-responsive.css" rel="stylesheet" type="text/css"/>
-	<link href="assets/css/themes/light.css" rel="stylesheet" type="text/css" id="style_color"/>
-	<link href="assets/plugins/uniform/css/uniform.default.css" rel="stylesheet" type="text/css"/>
+	<link href="{{ asset( 'assets/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet' ) }}" type="text/css"/>
+	<link href="{{ asset( 'assets/plugins/bootstrap/css/bootstrap-responsive.min.css' ) }}" rel="stylesheet" type="text/css"/>
+	<link href="{{ asset( 'assets/plugins/font-awesome/css/font-awesome.min.css' ) }}" rel="stylesheet" type="text/css"/>
+	<link href="{{ asset( 'assets/css/style-metro.css' ) }}" rel="stylesheet" type="text/css"/>
+	<link href="{{ asset( 'assets/css/style.css' ) }}" rel="stylesheet" type="text/css"/>
+	<link href="{{ asset( 'assets/css/style-responsive.css' ) }}" rel="stylesheet" type="text/css"/>
+	<link href="{{ asset( 'assets/css/themes/light.css' ) }}" rel="stylesheet" type="text/css" id="style_color"/>
+	<link href="{{ asset( 'assets/plugins/uniform/css/uniform.default.css' ) }}" rel="stylesheet" type="text/css"/>
 	<!-- END GLOBAL MANDATORY STYLES -->
-	<!-- BEGIN PAGE LEVEL STYLES --> 
-	<link href="assets/plugins/bootstrap-daterangepicker/daterangepicker.css" rel="stylesheet" type="text/css" />
-	<link href="assets/plugins/bootstrap-modal/css/bootstrap-modal.css" rel="stylesheet" type="text/css"/>
-	
-	<link href="assets/css/pages/pricing-tables.css" rel="stylesheet" type="text/css"/>
-    <link rel="stylesheet" type="text/css" href="assets/plugins/bootstrap-toggle-buttons/static/stylesheets/bootstrap-toggle-buttons.css" />
+	<!-- BEGIN PAGE LEVEL STYLES -->
+	<link href="{{ asset( 'assets/plugins/bootstrap-daterangepicker/daterangepicker.css' ) }}" rel="stylesheet" type="text/css" />
+	<link href="{{ asset( 'assets/plugins/bootstrap-modal/css/bootstrap-modal.css' ) }}" rel="stylesheet" type="text/css"/>
+
+	<link href="{{ asset( 'assets/css/pages/pricing-tables.css' ) }}" rel="stylesheet" type="text/css"/>
+    <link href="{{ asset( 'assets/plugins/bootstrap-toggle-buttons/static/stylesheets/bootstrap-toggle-buttons.css' ) }}" rel="stylesheet" type="text/css" />
 
 	<!-- END PAGE LEVEL STYLES -->
 	<link rel="shortcut icon" href="favicon.ico" />
-	<script src="assets/plugins/jquery-1.10.1.min.js" type="text/javascript"></script>
-	<script src="assets/plugins/jquery-migrate-1.2.1.min.js" type="text/javascript"></script>
+	<script src="{{ asset( 'assets/plugins/jquery-1.10.1.min.js' ) }}" type="text/javascript"></script>
+	<script src="{{ asset( 'assets/plugins/jquery-migrate-1.2.1.min.js' ) }}" type="text/javascript"></script>
 	<!-- IMPORTANT! Load jquery-ui-1.10.1.custom.min.js before bootstrap.min.js to fix bootstrap tooltip conflict with jquery ui tooltip -->
-	<script src="assets/plugins/jquery-ui/jquery-ui-1.10.1.custom.min.js" type="text/javascript"></script>   
+	<script src="{{ asset( 'assets/plugins/jquery-ui/jquery-ui-1.10.1.custom.min.js' ) }}" type="text/javascript"></script>
 
 
 </head>
@@ -48,15 +48,15 @@
 			<div class="container-fluid">
 				<!-- BEGIN LOGO -->
 				<a class="brand" href="/">
-				<img src="assets/img/logo.png" alt="logo" />
+				<img src="{{ asset( 'assets/img/logo.png' ) }}" alt="logo" />
 				</a>
 				<!-- END LOGO -->
 				<!-- BEGIN RESPONSIVE MENU TOGGLER -->
 				<a href="javascript:;" class="btn-navbar collapsed" data-toggle="collapse" data-target=".nav-collapse">
-				<img src="assets/img/menu-toggler.png" alt="" />
-				</a>          
-				<!-- END RESPONSIVE MENU TOGGLER -->    
-				<!-- BEGIN TOP NAVIGATION MENU -->              
+				<img src="{{ asset( 'assets/img/menu-toggler.png' ) }}" alt="" />
+				</a>
+				<!-- END RESPONSIVE MENU TOGGLER -->
+				<!-- BEGIN TOP NAVIGATION MENU -->
 				<ul class="nav pull-right">
                     {% if is_granted('ROLE_PREVIOUS_ADMIN') %}
                     <li>
@@ -97,17 +97,17 @@
                         </form>
                     </li>
 				</ul>
-				<!-- END TOP NAVIGATION MENU --> 
+				<!-- END TOP NAVIGATION MENU -->
 			</div>
 		</div>
 		<!-- END TOP NAVIGATION BAR -->
 	</div>
 	<!-- END HEADER -->
-	<!-- BEGIN CONTAINER -->   
+	<!-- BEGIN CONTAINER -->
 	<div class="page-container row-fluid">
 		<!-- BEGIN SIDEBAR -->
 		<div class="page-sidebar nav-collapse collapse">
-			<!-- BEGIN SIDEBAR MENU -->   
+			<!-- BEGIN SIDEBAR MENU -->
             {{ menu.display_group(sidebar_menu) }}
 			<!-- END SIDEBAR MENU -->
             <div id="sideFeedback">
@@ -122,7 +122,7 @@
 		<div class="page-content">
         {% block body %}{% endblock %}
 		</div>
-		<!-- END PAGE -->    
+		<!-- END PAGE -->
 	</div>
 	<!-- END CONTAINER -->
 	<!-- BEGIN FOOTER -->
@@ -139,34 +139,34 @@
 	<!-- END FOOTER -->
 	<!-- BEGIN JAVASCRIPTS(Load javascripts at bottom, this will reduce page load time) -->
 	<!-- BEGIN CORE PLUGINS -->
-   
-	<script src="assets/plugins/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
+
+	<script src="{{ asset( 'assets/plugins/bootstrap/js/bootstrap.min.js' ) }}" type="text/javascript"></script>
 	<!--[if lt IE 9]>
-	<script src="assets/plugins/excanvas.min.js"></script>
-	<script src="assets/plugins/respond.min.js"></script>  
-	<![endif]-->   
-	<script src="assets/plugins/jquery-slimscroll/jquery.slimscroll.min.js" type="text/javascript"></script>
-	<script src="assets/plugins/jquery.blockui.min.js" type="text/javascript"></script>  
-	<script src="assets/plugins/jquery.cookie.min.js" type="text/javascript"></script>
-	<script src="assets/plugins/uniform/jquery.uniform.min.js" type="text/javascript" ></script>
-    <script src="assets/plugins/jquery.form.min.js" type="text/javascript"></script>
+	<script src="{{ asset( 'assets/plugins/excanvas.min.js' ) }}"></script>
+	<script src="{{ asset( 'assets/plugins/respond.min.js' ) }}"></script>
+	<![endif]-->
+	<script src="{{ asset( 'assets/plugins/jquery-slimscroll/jquery.slimscroll.min.js' ) }}" type="text/javascript"></script>
+	<script src="{{ asset( 'assets/plugins/jquery.blockui.min.js' ) }}" type="text/javascript"></script>
+	<script src="{{ asset( 'assets/plugins/jquery.cookie.min.js' ) }}" type="text/javascript"></script>
+	<script src="{{ asset( 'assets/plugins/uniform/jquery.uniform.min.js' ) }}" type="text/javascript" ></script>
+    <script src="{{ asset( 'assets/plugins/jquery.form.min.js' ) }}" type="text/javascript"></script>
 	<!-- END CORE PLUGINS -->
 	<!-- BEGIN PAGE LEVEL PLUGINS -->
-    <script type="text/javascript" src="assets/plugins/jquery-validation/dist/jquery.validate.min.js"></script>
-    <script type="text/javascript" src="assets/plugins/jquery-validation/dist/additional-methods.min.js"></script>
-    <script type="text/javascript" src="assets/plugins/select2/select2.min.js"></script>
-    <script type="text/javascript" src="assets/plugins/chosen-bootstrap/chosen/chosen.jquery.min.js"></script>
+    <script src="{{ asset( 'assets/plugins/jquery-validation/dist/jquery.validate.min.js' ) }}" type="text/javascript"></script>
+    <script src="{{ asset( 'assets/plugins/jquery-validation/dist/additional-methods.min.js' ) }}" type="text/javascript"></script>
+    <script src="{{ asset( 'assets/plugins/select2/select2.min.js' ) }}" type="text/javascript"></script>
+    <script src="{{ asset( 'assets/plugins/chosen-bootstrap/chosen/chosen.jquery.min.js' ) }}" type="text/javascript"></script>
     {% block plugins %}{% endblock %}
 	<!-- END PAGE LEVEL PLUGINS -->
 	<!-- BEGIN PAGE LEVEL SCRIPTS -->
-	<script src="assets/scripts/app.js" type="text/javascript"></script>
-    <script src="assets/scripts/form-validation.js"></script>
-	<script src="assets/scripts/index.js" type="text/javascript"></script> 
-    <script src="assets/scripts/form-components.js"></script>
-	<script src="assets/scripts/ui-modals.js"></script>
+	<script src="{{ asset( 'assets/scripts/app.js' ) }}" type="text/javascript"></script>
+    <script src="{{ asset( 'assets/scripts/form-validation.js' ) }}"></script>
+	<script src="{{ asset( 'assets/scripts/index.js' ) }}" type="text/javascript"></script>
+    <script src="{{ asset( 'assets/scripts/form-components.js' ) }}"></script>
+	<script src="{{ asset( 'assets/scripts/ui-modals.js' ) }}"></script>
 
 
-	<!-- END PAGE LEVEL SCRIPTS -->  
+	<!-- END PAGE LEVEL SCRIPTS -->
     <script type="text/javascript">
     function validate_init(selector, rules)
     {
@@ -206,7 +206,7 @@
     </script>
 
 	<script>
-		jQuery(document).ready(function() {   
+		jQuery(document).ready(function() {
 		   App.init(); // initlayout and core plugins
            $('#locale_select').change(function() {
              $('#locale_form').attr('action', '/locale/' + $(this).val());
@@ -217,7 +217,7 @@
     {% block javascript %}{% endblock %}
     {% block js_validation %}{% endblock %}
 	<!-- END JAVASCRIPTS -->
-	
+
 </body>
 <!-- END BODY -->
 </html>
