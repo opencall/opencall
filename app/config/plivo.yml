@@ -1,0 +1,23 @@
+leadrescue:
+    smtp_host: smtp.host.here
+    smtp_port: 25
+    smtp_user: smtp_user
+    smtp_pass: smtp_password
+    mail_from_email: from@email.com
+    mail_from_name: From Name
+    mail_reply_email: reply_to@email.com
+    mail_reply_name: From Name
+    base_url: "http://base_url.com"
+
+database:
+    host: db.host.com
+    user: db_user
+    db_name: database
+    pass: db_password
+
+livelog:
+    zmq_server: "tcp://localhost:5555"
+
+url:
+    callback: "http://plivo.callback.url.com"
+    record: "http://plivo.record.url.com"
