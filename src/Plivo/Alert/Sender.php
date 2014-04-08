@@ -8,10 +8,12 @@ use PHPMailer;
 class Sender
 {
     protected $repo;
+    protected $mail_config;
 
-    public function __construct(Repository $repo)
+    public function __construct(Repository $repo, $mail_config)
     {
         $this->repo = $repo;
+        $this->mail_config = $mail_config;
     }
 
     public function send(LogEntry $log)
@@ -42,7 +44,7 @@ class Sender
         $ftext = str_replace('[origin_number]', $log->getOriginFormatted(), $ftext);
         $ftext = str_replace('[dialled_number]', $log->getDialledFormatted(), $ftext);
         $ftext = str_replace('[reason]', $log->getBHangupCause(), $ftext);
-        $ftext = str_replace('[lead_rescue_url]', 'http://dev.calltracking.hk/client/' . $log->getClientID() . '/lead_rescue', $ftext);
+        $ftext = str_replace('[lead_rescue_url]', $this->mail_config['base_url'] . '/client/' . $log->getClientID() . '/lead_rescue', $ftext);
         $ftext = str_replace('[advert]', $this->fetchItemName('Advert', $log->getAdvertID()), $ftext);
         $ftext = str_replace('[adgroup]', $this->fetchItemName('AdGroup', $log->getAdGroupID()), $ftext);
         $ftext = str_replace('[campaign]', $this->fetchItemName('Campaign', $log->getCampaignID()), $ftext);
@@ -60,17 +62,17 @@ class Sender
         $mail = new PHPMailer();
         $mail->IsSMTP();
         $mail->CharSet = 'UTF-8';
-        $mail->Host = 'smtp.mailgun.org';
+        $mail->Host = $this->mail_config['smtp_host'];
         $mail->SMTPDebug = 0;
         $mail->SMTPAuth = true;
-        $mail->Port = 587;
-        $mail->Username = 'postmaster@calltracking.asia';
-        $mail->Password = '8f5m8qylczc2';
+        $mail->Port = $this->mail_config['smtp_port'];
+        $mail->Username = $this->mail_config['smtp_user'];
+        $mail->Password = $this->mail_config['smtp_pass'];
 
-        $mail->From = 'noreply@calltracking.asia';
-        $mail->FromName = 'LeadRescue';
+        $mail->From = $this->mail_config['mail_from_email'];
+        $mail->FromName = $this->mail_config['mail_from_name'];
         $mail->addAddress($alert->getEmail());
-        $mail->addREplyTo('noreply@calltracking.asia', 'LeadRescue');
+        $mail->addREplyTo($this->mail_config['mail_reply_email'], $this->mail_config['mail_reply_name']);
         $mail->Subject = $this->filterText($alert, $log, 'Missed Call Alert: [origin_number] called your ad: [advert] in [campaign].');
         $mail->Body = $message;
         $mail->IsHTML(true);

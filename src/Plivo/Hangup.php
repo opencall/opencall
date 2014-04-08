@@ -40,7 +40,7 @@ class Hangup extends Lockable
         return $log;
     }
 
-    public function run($post)
+    public function run($post, $mail_config)
     {
         try
         {
@@ -69,7 +69,7 @@ class Hangup extends Lockable
 
             // alerts
             $al_repo = new AlertRepo($this->pdo);
-            $al_sender = new AlertSender($al_repo);
+            $al_sender = new AlertSender($al_repo, $mail_config);
             $al_sender->send($log);
 
             // aggregate

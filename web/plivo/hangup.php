@@ -27,6 +27,6 @@ $zmq_socket->connect($zmq_server);
 
 // hangup
 $hangup = new Hangup($pdo, $redis, $zmq_socket);
-$hangup->run($_POST);
+$hangup->run($_POST, $config['leadrescue']);
 
 echo '';
