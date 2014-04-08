@@ -27,6 +27,12 @@ monolog:
 assetic:
     use_controller: true
 
+parameters:
+    mongo.url: 54.254.140.2 
+    mongo.username: mongowebuser 
+    mongo.password: 873qyh3qd
+    mongo.db: calltracking-HK 
+        
 #swiftmailer:
 #    delivery_address: me@example.com
 #
