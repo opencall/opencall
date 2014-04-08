@@ -11,6 +11,7 @@ use React\EventLoop\Factory as EventLoopFactory;
 use React\ZMQ\Context;
 use LiveLog\Pusher;
 use Plivo\Log\Repository as LogRepo;
+use Symfony\Component\Yaml\Parser;
 
 $pid = pcntl_fork();
 
@@ -25,10 +26,13 @@ else
 {
     echo "websocket server up and running.\n";
 
-    // pdo setup
-    $dsn = 'mysql:host=db.oncall;dbname=oncall';
-    $user = 'webuser';
-    $pass = 'lks8jw23';
+    $yaml = new Parser();
+    $config = $yaml->parse(file_get_contents(__DIR__ . '/../app/config/plivo.yml'));
+
+    // setup mysql
+    $dsn = 'mysql:host=' . $config['database']['host'] . ';dbname=' . $config['database']['db_name'];
+    $user = $config['database']['user'];
+    $pass = $config['database']['pass'];
     $pdo = new PDO($dsn, $user, $pass);
 
     $loop = EventLoopFactory::create();
@@ -36,11 +40,11 @@ else
 
     $context = new Context($loop);
     $pull = $context->getSocket(ZMQ::SOCKET_PULL);
-    $pull->bind('tcp://127.0.0.1:5555');
+    $pull->bind($config['livelog']['zmq_server']);
     $pull->on('message', array($pusher, 'onLogEntry'));
 
     $websock = new Server($loop);
-    $websock->listen(8080, '0.0.0.0');
+    $websock->listen($config['livelog']['websocket_port'], $config['livelog']['websocket_ip']);
     $server = new IoServer(
         new HttpServer(
             new WsServer(

@@ -6,3 +6,6 @@ vendor/*
 app/config/parameters.yml
 sql_calltracking/*
 web/plivo/emulate/*
+web/plivo/emulator/*
+app/config/plivo.yml.live
+app/config/plivo.yml.emulate
