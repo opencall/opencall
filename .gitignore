@@ -4,3 +4,5 @@ cache/*
 app/cache/*
 vendor/*
 app/config/parameters.yml
+sql_calltracking/*
+web/plivo/emulate/*
