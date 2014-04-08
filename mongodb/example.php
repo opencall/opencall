@@ -1,17 +1,12 @@
 <?php
-error_reporting(E_ALL);
-ini_set('display_errors', '1');
-$username = 'mongowebuser';
-$password = '873qyh3qd';
-$host = '54.254.140.2';
+$username = $container->getParameter('mongo.username');
+$password = $container->getParameter('mongo.password');
+$host = $container->getParameter('mongo.host');
+$mongoUrl = $container->getParameter('mongo.url');
+$db = $container->getParameter('mongo.db');
 
-
-
-$db = new Mongo('mongodb://54.254.140.2', array(
+$db = new Mongo($mongoUrl, array(
     'username' => $username,
     'password' => $password,
-    'db'       => 'calltracking-HK'
+    'db'       => $db
 ));
-
-
-?>
