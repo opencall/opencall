@@ -44,7 +44,7 @@ class Router
         {
             $act_params = array();
             $act_params['language'] = 'en-GB';
-            $act_params['text'] = 'This number does not have a valid destination. Please contact CallTracking for more information.';
+            $act_params['text'] = 'This number does not have a valid destination. Please contact Opencall for more information.';
 
             $resp->addAction(new Action(Action::TYPE_SPEAK, $act_params));
 

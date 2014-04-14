@@ -35,12 +35,7 @@ Page header
 	color: #bbe000;
 }
 
-#sideFeedback {
-	margin: 20px 0px 0px 0px; 
-	padding: 20px; 
-	font-size: 11px; 
-	color:#888;
-}
+
 
 /***
 Body
@@ -686,7 +681,6 @@ Landscape phone to portrait tablet
 }
 
 @media(max-width:979px) {
-	#sideFeedback { display: none; }
 
 	.navbar-inverse .nav>li>a, .navbar-inverse .nav>li>a:visited {
 		color: #000;
@@ -697,9 +691,6 @@ Landscape phone to portrait tablet
 	}
 }
 
-@media(min-width:768px) and (max-width:979px){
-		#sideFeedback { display: none; }
-}
 
 		/*.row-fluid .span6 {
 			width: 47.6%;
