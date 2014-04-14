@@ -63,14 +63,6 @@
                 <source>text.submit</source>
                 <target>Submit</target>
             </trans-unit>
-            <trans-unit id="204">
-                <source>text.have_feedback</source>
-                <target>有意見？</target>
-            </trans-unit>
-            <trans-unit id="205">
-                <source>text.feedback</source>
-                <target>請告訴我們–這是為你而設的平台。我們希望為你提供所需要的和確保運作無誤。</target>
-            </trans-unit>
             <trans-unit id="206">
                 <source>text.email</source>
                 <target>電郵</target>
@@ -125,7 +117,7 @@
             </trans-unit>
             <trans-unit id="219">
                 <source>text.footer</source>
-                <target>© 2013 - 2014 CallTracking, All Rights Reserved. By logging into a CallTracking account you agree to our Terms of Service: http://www.calltracking.hk/terms-of-service/</target>
+                <target>© 2013 - 2014 Opencall, All Rights Reserved. By logging into a Opencall account you agree to our Terms of Service: http://www.calltracking.hk/terms-of-service/</target>
             </trans-unit>
 
 
@@ -163,11 +155,11 @@
             </trans-unit>
             <trans-unit id="309">
                 <source>menu.call_log</source>
-                <target>LiveLog&#8482;</target>
+                <target>LiveLog</target>
             </trans-unit>
             <trans-unit id="310">
                 <source>menu.lead_rescue</source>
-                <target>LeadRescue&#8482;</target>
+                <target>LeadRescue</target>
             </trans-unit>
 
             <trans-unit id="401">
@@ -719,11 +711,11 @@
             </trans-unit>
             <trans-unit id="1408">
                 <source>title.call_log</source>
-                <target>LiveLog&#8482;</target>
+                <target>LiveLog</target>
             </trans-unit>
             <trans-unit id="1409">
                 <source>title.lead_rescue</source>
-                <target>LeadRescue&#8482;</target>
+                <target>LeadRescue</target>
             </trans-unit>
 
         </body>

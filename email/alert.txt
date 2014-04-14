@@ -16,10 +16,5 @@ href="[lead_rescue_url]">[lead_rescue_url]</a>
 </p>
 
 <p>
-<b>Powered by LeadRescue&#8482;</b> - a CallTracking Service<br />
-</p>
-
-<p>
-<a
-href="http://www.calltracking.hk/?utm_source=leadrescue-signature&utm_medium=email&utm_campaign=email+signatures"><img src="http://www.calltracking.hk/email-signature.png" /></a>
+<b>Powered by LeadRescue</b> - an <a href="http://www.ocall.org/?utm_source=leadrescue-signature&utm_medium=email&utm_campaign=email+signatures">Opencall</a> Service<br />
 </p>

@@ -76,7 +76,7 @@
 
                     {% if not is_granted('ROLE_ADMIN') %}
                     <li>
-                        <a href="mailto:feedback@calltracking.hk"><i class="icon-heart"></i>{% trans %}menu.support{% endtrans %}</a>
+                        <a href="mailto:hello@ocall.org"><i class="icon-heart"></i>{% trans %}menu.support{% endtrans %}</a>
                     </li>
                     {% endif %}
 
@@ -110,12 +110,6 @@
 			<!-- BEGIN SIDEBAR MENU -->   
             {{ menu.display_group(sidebar_menu) }}
 			<!-- END SIDEBAR MENU -->
-            <div id="sideFeedback">
-                <h3 style="font-size: 14px; margin:0px;padding:0px;"><i class="icon-comment"></i> &nbsp;&nbsp; {% trans %}text.have_feedback{% endtrans %}</h3>
-                <p>{% trans %}text.feedback{% endtrans %}
-                    <br>{% trans %}text.email{% endtrans %}: <a href="mailto:feedback@calltracking.hk">feedback@calltracking.hk</a>
-                </p>
-            </div>
 		</div>
 		<!-- END SIDEBAR -->
 		<!-- BEGIN PAGE -->
@@ -128,7 +122,7 @@
 	<!-- BEGIN FOOTER -->
 	<div class="footer">
 		<div class="footer-inner">
-			&copy; {% trans %}text.footer{% endtrans %}
+			Powered By <a href="http://www.ocall.org/?utm_source=footer-link&utm_medium=self-hosted&utm_campaign=branding">Opencall</a>.
 		</div>
 		<div class="footer-tools">
 			<span class="go-top">

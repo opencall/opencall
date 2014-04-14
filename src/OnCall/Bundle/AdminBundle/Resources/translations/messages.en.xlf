@@ -63,14 +63,6 @@
                 <source>text.submit</source>
                 <target>Submit</target>
             </trans-unit>
-            <trans-unit id="204">
-                <source>text.have_feedback</source>
-                <target>Have some feedback?</target>
-            </trans-unit>
-            <trans-unit id="205">
-                <source>text.feedback</source>
-                <target>Please let us know - this platform is for you. We want to provide the features you need and ensure a bug free experience.</target>
-            </trans-unit>
             <trans-unit id="206">
                 <source>text.email</source>
                 <target>E-mail</target>
@@ -125,7 +117,7 @@
             </trans-unit>
             <trans-unit id="219">
                 <source>text.footer</source>
-                <target>© 2013 - 2014 CallTracking, All Rights Reserved. By logging into a CallTracking account you agree to our Terms of Service: http://www.calltracking.hk/terms-of-service/</target>
+                <target>Powered By <a href="http://www.ocall.org/?utm_source=footer-link&utm_medium=self-hosted&utm_campaign=branding">Opencall</a></target>
             </trans-unit>
 
 
@@ -163,11 +155,11 @@
             </trans-unit>
             <trans-unit id="309">
                 <source>menu.call_log</source>
-                <target>LiveLog&#8482;</target>
+                <target>LiveLog</target>
             </trans-unit>
             <trans-unit id="310">
                 <source>menu.lead_rescue</source>
-                <target>LeadRescue&#8482;</target>
+                <target>LeadRescue</target>
             </trans-unit>
 
             <trans-unit id="401">
@@ -204,7 +196,7 @@
             </trans-unit>
             <trans-unit id="409">
                 <source>client.delete_text</source>
-                <target>Deleting a client will remove all phone numbers from your adverts and relinquish them, making them available to all CallTracking customers to use. Please note, you will be billed for the remainder of the month for these phone numbers. Press "Delete" to proceed.</target>
+                <target>Deleting a client will remove all phone numbers from your adverts and relinquish them, making them available to all Opencall customers to use. Please note, you will be billed for the remainder of the month for these phone numbers. Press "Delete" to proceed.</target>
             </trans-unit>
 
 
@@ -222,7 +214,7 @@
             </trans-unit>
             <trans-unit id="504">
                 <source>num.delete_text</source>
-                <target>Relinquishing a number will permanently remove it from this client account and it will be re-entered into the pool for all CallTracking customers to use. Please note, you will be billed for the remainder of the month for this phone number. Press "Delete Number" to proceed.</target>
+                <target>Relinquishing a number will permanently remove it from this client account and it will be re-entered into the pool for all Opencall customers to use. Please note, you will be billed for the remainder of the month for this phone number. Press "Delete Number" to proceed.</target>
             </trans-unit>
             <trans-unit id="505">
                 <source>num.number</source>
@@ -760,11 +752,11 @@
             </trans-unit>
             <trans-unit id="1408">
                 <source>title.call_log</source>
-                <target>LiveLog&#8482;</target>
+                <target>LiveLog</target>
             </trans-unit>
             <trans-unit id="1409">
                 <source>title.lead_rescue</source>
-                <target>LeadRescue&#8482;</target>
+                <target>LeadRescue</target>
             </trans-unit>
 
         </body>
