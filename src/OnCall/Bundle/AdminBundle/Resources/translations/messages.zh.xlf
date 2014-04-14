@@ -117,7 +117,7 @@
             </trans-unit>
             <trans-unit id="219">
                 <source>text.footer</source>
-                <target>© 2013 - 2014 Opencall, All Rights Reserved. By logging into a Opencall account you agree to our Terms of Service: http://www.calltracking.hk/terms-of-service/</target>
+                <target>Powered By Opencall - http://www.ocall.org</target>
             </trans-unit>
 
 

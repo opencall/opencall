@@ -117,7 +117,7 @@
             </trans-unit>
             <trans-unit id="219">
                 <source>text.footer</source>
-                <target>Powered By <a href="http://www.ocall.org/?utm_source=footer-link&utm_medium=self-hosted&utm_campaign=branding">Opencall</a></target>
+                <target>Powered By Opencall - http://www.ocall.org</target>
             </trans-unit>
 
 
