@@ -325,6 +325,9 @@ hr {
 Header and header elements.
 ***/
 
+#welcome a, #welcome a:visited{
+	color: #000!important;
+}
 .border {
   border: 1px solid red;
 }
@@ -349,7 +352,7 @@ Header and header elements.
 
 .header .brand img {
   margin-left: 20px;
-  margin-top: -7px;
+  margin-top: -4px;
 }
 
 .header .btn-navbar {
