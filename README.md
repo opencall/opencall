@@ -13,7 +13,7 @@ the database platform.
 
 ## Installation and Usage
 
-Documentation can be founded on the [Opencall Website] (http://www.ocall.org/docs/).
+Documentation can be found on the [Opencall Website] (http://www.ocall.org/docs/).
 
 
 ## Contributing
