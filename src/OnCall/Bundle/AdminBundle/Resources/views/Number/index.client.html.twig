@@ -44,10 +44,10 @@ $(document).ready(function() {
             </ul>
 
             {{ flash.display_flash_messages }}
-            <!--
-            <button class="btn green" style="margin-bottom: 4px;"  data-toggle="modal" href="#requestNumbers"><i class="icon-plus"></i> Request More Numbers</button> 
+            
+            <button class="btn green" style="margin-bottom: 4px;"  data-toggle="modal" href="#requestNumbers"><i class="icon-plus"></i> Add Phone Numbers</button> 
             <br /><br /><br />
-            -->
+            
 
             {% trans %}num.filter_usage{% endtrans %}:
             <select id="filter_usage" class="small m-wrap" tabindex="1">
@@ -70,32 +70,16 @@ $(document).ready(function() {
             <div id="requestNumbers" class="modal hide fade" tabindex="-1" data-width="760">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
-                    <h3>Request Numbers</h3>
-                    <ul>
-                        <li>Numbers will be provisioned within 24 hours (Mon-Fri)</li>
-                        <li>Numbers will be charged at HKD 29/month (pro rata)</li>
-                    </ul>
+                    <h3>Add Phone Numbers</h3>
+					<br />
+					To add tracking phone numbers to your account, please refer to our <a href="http://www.ocall.org/docs/first-setup/" target="_blank">First Setup</a> guide.<br /><br />
+					If you already have numbers, please email us on <a href="mailto:numbers@ocall.org?subject=Add Number Request">numbers@ocall.org</a> and tell us the number(s) you have bought, including country code and your Opencall account username.
+					<br /><br />
 
-                </div>
-                <div class="modal-body">
-                    <div class="row-fluid">
-                        <div class="span12">
-                            <h4>Number Details</h4>
-                            <p>
-                                How many phone numbers do you require?*<br />
-                                <input name="number" type="text" class="span12 m-wrap">
-                            </p>
-                            <p>
-                                Do you have any special requirements for the numbers?*<br />
-                                <textarea name="requirements" class="span12 m-wrap"></textarea>
-                            </p>
-                        </div>
-                    </div>
                 </div>
         
                 <div class="modal-footer">
-                    <button type="button" data-dismiss="modal" class="btn">Cancel</button>
-                    <input type="submit" class="btn green" value="Request Numbers" />
+                    <button type="button" data-dismiss="modal" class="btn">Close</button>
                 </div>
             </div> 
             </form>
@@ -129,9 +113,9 @@ $(document).ready(function() {
                         <th>{% trans %}num.adgroup{% endtrans %}</th>
                         <th>{% trans %}num.campaign{% endtrans %}</th>
                         <th>{% trans %}num.type{% endtrans %}</th>
-                        <th>{% trans %}num.cost{% endtrans %} (HKD)</th>
+                        <!--<th>{% trans %}num.cost{% endtrans %}</th>-->
                         <th style="width:90px;">{% trans %}num.date_add{% endtrans %}</th>
-                        <th>{% trans %}num.last_called{% endtrans %}<br /><small>dd/mm/yy hh:mm</small></th>
+                        <!--<th>{% trans %}num.last_called{% endtrans %}<br /><small>dd/mm/yy hh:mm</small></th>-->
                         <th>{% trans %}num.action{% endtrans %}</th>
                     </tr>
                 </thead>
@@ -156,9 +140,9 @@ $(document).ready(function() {
                             <td>{{ num.getCampaignFormatted }}</td>
                         {% endif %}
                         <td>{{ num.getTypeText }}</td>
-                        <td>{{ num.getPriceResaleFormatted }}</td>
+                        <!--<td>{{ num.getPriceResaleFormatted }}</td>-->
                         <td>{{ num.getDateAssignFormatted }}</td>
-                        <td>{{ num.getDateLastCallFormatted }}</td>
+                        <!--<td>{{ num.getDateLastCallFormatted }}</td>-->
                         <td>
                             {% if (not num.isAssigned) %}
                             <button href="#deleteNumber" data-toggle="modal" data-id="{{ num.getID }}" role="button" class="btn mini delete_num">{% trans %}text.relinquish{% endtrans %}</button>

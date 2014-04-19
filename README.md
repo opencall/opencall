@@ -4,8 +4,7 @@
 
 Call tracking is a method of monitoring inbound phone calls. It allows you to record conversations, 
 track key statistics such as caller id, call duration, call source and a variety of other metrics. 
-Why? It helps you to reduce advertising budget wastage, increase sales and improve customer service. 
-Opencall is the world’s first (and only) open source call tracking software. 
+Why? It helps you to reduce advertising budget wastage, increase sales and improve customer service.
 
 The software is available under the GPL v3 license, is written in PHP and utilises MySQL as 
 the database platform.
