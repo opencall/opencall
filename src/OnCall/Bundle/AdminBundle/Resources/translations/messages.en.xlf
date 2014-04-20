@@ -497,7 +497,7 @@
             </trans-unit>
             <trans-unit id="1110">
                 <source>advert.speak_message</source>
-                <target>Speak a message at the beginning of the call</target>
+                <target>Speak a message at the start of the call</target>
             </trans-unit>
             <trans-unit id="1111">
                 <source>advert.advert_destination</source>

@@ -54,7 +54,7 @@
 }
 
 .modal.fade.in {
-	top: 50%;
+	top: -1px;
 }
 
 .modal-body {
